@@ -1,0 +1,19 @@
+
+<svg width="700" height="300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="top: 0px; left: 0px; position: absolute;">
+<g>
+    <path class="rgraph_background_grid" d="M35 45 L695 45 M35 89 L695 89 M35 133 L695 133 M35 177 L695 177 M35 221 L695 221 M35 265 L695 265 M35 265 L695 265" stroke="#ddd" fill="rgba(0,0,0,0)" stroke-width="1" shape-rendering="crispEdges" stroke-dasharray="" style="pointer-events: none;"></path>
+    <%=if title do %>
+    <text tag="title" data-tag="title" fill="black" x="365" y="19" font-size="16pt" font-weight="bold" font-family="Arial, Verdana, sans-serif" font-style="normal" text-anchor="middle" dominant-baseline="bottom" text-decoration="none" style="pointer-events: none;"><%=title%></text>
+    <% end %>
+    <%= if sub_title do %>
+    <text tag="subtitle" data-tag="subtitle" fill="#aaa" x="365" y="24" font-size="14pt" font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal" text-anchor="middle" dominant-baseline="hanging" text-decoration="none" style="pointer-events: none;"><%=sub_title%></text>
+    <% end %>
+    <%=for bar <- bars do %>
+    <rect stroke="rgba(0,0,0,0)" fill="<%=bar.color %>" x="<%=bar.x %>" y="<%=bar.y %>" width="<%=bar.width %>" height="<%=bar.height %>" stroke-width="1"  filter=""></rect>
+    <% end %>
+    <path d="M35 265 L695 265" fill="black" stroke="black" stroke-width="3" shape-rendering="crispEdges" stroke-linecap="square"></path><text tag="labels.xaxis" data-tag="labels.xaxis" fill="black" x="62.5" y="278" font-size="16pt" font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal" text-anchor="middle" dominant-baseline="hanging" text-decoration="none" style="pointer-events: none;">Jan</text>
+    <%=for label <- labels do %>
+    <text tag="<%=label.axis %>" fill="black" x="<%=label.x %>" y="<%=label.y %>" font-size="<%=label.font_size %>" font-weight="<%=label.font_weight %>" font-family="Arial, Verdana, sans-serif" font-style="normal" text-anchor="middle" dominant-baseline="hanging" text-decoration="none" style="pointer-events: none;"><%=label.text %></text>
+    <% end %>
+</g>
+</svg>
