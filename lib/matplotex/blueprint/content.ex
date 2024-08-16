@@ -1,4 +1,4 @@
-defmodule Matplotex.Blueprint.Areal.Content do
+defmodule Matplotex.Blueprint.Content do
   @type t :: %__MODULE__{
           width: number(),
           height: number(),

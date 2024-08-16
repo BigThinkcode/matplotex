@@ -1,7 +1,7 @@
-defmodule Matplotex.Blueprint.Areal.Chart do
-  alias Matplotex.Blueprint.Areal.Content
-  alias Matplotex.Blueprint.Areal.Label
-  alias Matplotex.Blueprint.Areal.Line
+defmodule Matplotex.Blueprint.Chart do
+  alias Matplotex.Blueprint.Content
+  alias Matplotex.Blueprint.Label
+  alias Matplotex.Blueprint.Line
   @type dataset() :: %{x: list(), y: list()}
   @type labels() :: [Label.t()] | map()
   @type lines() :: [Line.t()]

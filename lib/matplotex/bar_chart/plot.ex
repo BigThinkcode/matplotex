@@ -1,7 +1,7 @@
-defmodule Matplotex.Draw.BarChart do
-  alias Matplotex.Blueprint.Areal
-  alias Matplotex.Blueprint.Areal.Chart
-  use Matplotex.Blueprint.Areal
+defmodule Matplotex.BarChart.Plot do
+
+  alias Matplotex.Blueprint.Chart
+  use Matplotex.Blueprint
 
   @x_data_range_start_at 0
 
@@ -24,7 +24,7 @@ defmodule Matplotex.Draw.BarChart do
   %{
       "dataset" => [44, 56, 67, 67, 89, 14, 57, 33, 59, 67, 90, 34],
       "x_labels" => ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-      "color_palette" =>  "#5cf",
+      "color_palette" =>  ["#5cf"],
       "width" => 700,
       "margin" => 15,
       "height" => 300,
@@ -35,14 +35,14 @@ defmodule Matplotex.Draw.BarChart do
     }
 
   """
-  @impl Areal
+  @impl Blueprint
   def new(params) do
     params
     |> generate_chart_params()
     |> Chart.new()
   end
 
-  @impl Areal
+  @impl Blueprint
   def set_content(chartset) do
   end
 
