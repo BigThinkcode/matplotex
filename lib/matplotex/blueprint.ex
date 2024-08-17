@@ -9,7 +9,6 @@ defmodule Matplotex.Blueprint do
   defmacro __using__(_) do
     quote do
       @behaviour Matplotex.Blueprint
-      import Matplotex.Blueprint.Content
     end
   end
 end

@@ -1,5 +1,4 @@
 defmodule Matplotex.Blueprint.Chart do
-  alias Matplotex.Blueprint.Content
   alias Matplotex.Blueprint.Label
   alias Matplotex.Blueprint.Line
   @type dataset() :: %{x: list(), y: list()}
@@ -23,7 +22,7 @@ defmodule Matplotex.Blueprint.Chart do
         }
   @type t() :: %__MODULE__{
           axis_lines: list(),
-          content: Content.t(),
+          content: any(),
           components: list(),
           color_palette: list(),
           dataset: dataset(),
@@ -33,6 +32,8 @@ defmodule Matplotex.Blueprint.Chart do
           label_offset: label_offset(),
           label_prefix: label_prefix(),
           labels: labels(),
+          show_axis: boolean(),
+          show_grid_lines: boolean(),
           margin: float(),
           ticks: lines(),
           type: atom(),
@@ -56,6 +57,8 @@ defmodule Matplotex.Blueprint.Chart do
     :label_prefix,
     :labels,
     :margin,
+    :show_axis,
+    :show_grid_lines,
     :ticks,
     :type,
     :valid?,

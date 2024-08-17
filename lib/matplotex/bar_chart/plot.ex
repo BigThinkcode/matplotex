@@ -1,9 +1,12 @@
 defmodule Matplotex.BarChart.Plot do
 
   alias Matplotex.Blueprint.Chart
+  alias Matplotex.BarChart.Content
   use Matplotex.Blueprint
 
   @x_data_range_start_at 0
+  @y_data_range_start_at 0
+  @tick_length 5
 
   @type params() :: %{
           dataset: list(),
@@ -35,15 +38,45 @@ defmodule Matplotex.BarChart.Plot do
     }
 
   """
-  @impl Blueprint
+  @impl true
   def new(params) do
     params
     |> generate_chart_params()
     |> Chart.new()
   end
 
-  @impl Blueprint
-  def set_content(chartset) do
+  @impl true
+  def set_content(
+         %Chart{
+           dataset: %{y: y_dataset},
+           width: width,
+           height: height,
+           label_offset: %{x: x_label_offset, y: y_label_offset},
+           margin: margin
+         } = chartset
+       ) do
+    dlength =
+      y_dataset
+      |> List.flatten()
+      |> length()
+
+    content_width = width - y_label_offset - 2 * margin
+    usize = content_width / dlength
+    umargin = usize * 0.1
+    u_width = usize - umargin
+
+    %{
+      chartset
+      | content: %Content{
+          width: content_width,
+          height: height - x_label_offset - 2 * margin,
+          x: margin + y_label_offset,
+          y: margin + x_label_offset,
+          u_margin: umargin,
+          u_width: u_width,
+          tick_length: @tick_length
+        }
+    }
   end
 
   defp generate_chart_params(params) do
@@ -62,10 +95,12 @@ defmodule Matplotex.BarChart.Plot do
       label_prefix: label_prefix,
       labels: labels,
       margin: Map.get(params, "margin"),
+      show_axis_lines: Map.get(params, "show_axis_lines", true),
+      show_grid_lines: Map.get(params, "show_grid_lines", true),
       type: __MODULE__,
       width: Map.get(params, "width"),
       y_max: y_max,
-      y_scale: y_scale
+      y_scale: y_scale,
     }
   end
 
@@ -85,7 +120,7 @@ defmodule Matplotex.BarChart.Plot do
     y_max = calculate_y_max(y_max, y_scale)
 
     y_labels =
-      0..div(y_max, y_scale) |> Enum.map(fn value -> "#{value * y_scale}#{y_label_prefix}" end)
+      @y_data_range_start_at..div(y_max, y_scale) |> Enum.map(fn value -> "#{value * y_scale}#{y_label_prefix}" end)
 
     {%{x: Map.get(params, "x_labels"), y: y_labels}, y_max, y_scale, %{x: "", y: y_label_prefix}}
   end
