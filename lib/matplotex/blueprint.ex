@@ -8,6 +8,7 @@ defmodule Matplotex.Blueprint do
 
   defmacro __using__(_) do
     quote do
+      import Matplotex.Blueprint.Algebra
       @behaviour Matplotex.Blueprint
     end
   end
