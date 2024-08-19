@@ -1,16 +1,16 @@
 defmodule Matplotex.Blueprint do
   alias Matplotex.Blueprint.Chart
 
-  @callback new(params :: map()) :: Chart.t()
-  @callback validate_params(params :: map()) :: Chart.t()
-  @callback set_content(chartset :: Chart.t()) :: Chart.t()
-  @callback add_elements(chartset :: Chart.t()) :: Chart.t()
-  @callback generate_svg(chartset :: Chart.t()) :: String.t()
+  @callback new(params :: map()) :: any()
+  @callback validate_params(params :: map()) :: any()
+  @callback set_content(graphset :: any()) :: any()
+  @callback add_elements(graphset :: any()) :: any()
+  @callback generate_svg(graphset :: any()) :: any()
 
   defmacro __using__(_) do
     quote do
       import Matplotex.Utils.Algebra
-      alias Matplotex.Blueprint.Chart
+      import Matplotex.Blueprint.Frame
       @behaviour Matplotex.Blueprint
     end
   end
