@@ -23,9 +23,9 @@ defmodule Matplotex.Blueprint.Chart do
   @type t() :: %__MODULE__{
           axis_lines: list(),
           content: any(),
-          components: list(),
           color_palette: list(),
           dataset: dataset(),
+          elements: any(),
           errors: list(),
           grid_lines: lines(),
           height: float(),
@@ -35,21 +35,21 @@ defmodule Matplotex.Blueprint.Chart do
           show_axis: boolean(),
           show_grid_lines: boolean(),
           margin: float(),
-          ticks: lines(),
           type: atom(),
           valid?: boolean(),
-          width: float(),
-          x_max: float(),
-          y_max: float(),
-          y_scale: float()
+          width: number(),
+          x_max: number(),
+          x_scale: number(),
+          y_max: number(),
+          y_scale: number()
         }
 
   defstruct [
     :axis_lines,
     :content,
     :color_palette,
-    :components,
     :dataset,
+    :elements,
     :errors,
     :grid_lines,
     :height,
@@ -59,11 +59,11 @@ defmodule Matplotex.Blueprint.Chart do
     :margin,
     :show_axis,
     :show_grid_lines,
-    :ticks,
     :type,
     :valid?,
     :width,
     :x_max,
+    :x_scale,
     :y_max,
     :y_scale
   ]
