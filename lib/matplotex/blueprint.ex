@@ -9,10 +9,7 @@ defmodule Matplotex.Blueprint do
 
   defmacro __using__(_) do
     quote do
-      import Matplotex.Blueprint.Algebra
-      alias Matplotex.BarChart.Bar
-      alias Matplotex.Blueprint.Label
-      alias Matplotex.Blueprint.Line
+      import Matplotex.Utils.Algebra
       alias Matplotex.Blueprint.Chart
       @behaviour Matplotex.Blueprint
     end

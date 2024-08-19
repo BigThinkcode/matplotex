@@ -1,4 +1,4 @@
-defmodule Matplotex.Blueprint.Algebra do
+defmodule Matplotex.Utils.Algebra do
   alias Nx
 
   @tensor_data_type_bits 64
