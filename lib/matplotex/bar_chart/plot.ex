@@ -141,19 +141,19 @@
 #     |> Range.to_list()
 #   end
 
-#   defp generate_labels(params, y_data) do
-#     y_label_prefix = Map.get(params, "y_label_prefix")
+# defp generate_labels(params, y_data) do
+#   y_label_prefix = Map.get(params, "y_label_prefix")
 
-#     y_scale = Map.get(params, "y_scale")
-#     y_max = Enum.max(y_data)
-#     y_max = calculate_y_max(y_max, y_scale)
+#   y_scale = Map.get(params, "y_scale")
+#   y_max = Enum.max(y_data)
+#   y_max = calculate_y_max(y_max, y_scale)
 
-#     y_labels =
-#       @y_data_range_start_at..div(y_max, y_scale)
-#       |> Enum.map(fn value -> "#{value * y_scale}#{y_label_prefix}" end)
+#   y_labels =
+#     @y_data_range_start_at..div(y_max, y_scale)
+#     |> Enum.map(fn value -> "#{value * y_scale}#{y_label_prefix}" end)
 
-#     {%{x: Map.get(params, "x_labels"), y: y_labels}, y_max, y_scale, %{x: "", y: y_label_prefix}}
-#   end
+#   {%{x: Map.get(params, "x_labels"), y: y_labels}, y_max, y_scale, %{x: "", y: y_label_prefix}}
+# end
 
 #   defp calculate_y_max(y_max, y_scale) do
 #     if rem(y_max, y_scale) == 0 do
