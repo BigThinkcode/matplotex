@@ -1,5 +1,4 @@
 defmodule Matplotex.Blueprint.Frame do
-
   @type dataset1_d() :: %{x: list()}
   @type dataset2_d() :: %{x: list(), y: list()}
   @type font() :: %{size: String.t(), weight: String.t(), color: String.t()}
@@ -44,17 +43,41 @@ defmodule Matplotex.Blueprint.Frame do
     :type
   ]
   defmacro frame(name, do: block) do
+    build_struct(name, block)
+  end
+
+  def build_struct(name, block) do
+    prequest =
+      quote do
+        try do
+          import Matplotex.Blueprint.Frame
+          unquote(block)
+        after
+          :ok
+        end
+      end
+
+    postquest =
+      quote unquote: false do
+        defstruct Enum.reverse(@frame_struct_fields)
+        # @type t() :: generate_type()
+      end
+
+    quote do
+      unquote(prequest)
+      unquote(postquest)
+    end
+  end
+
+  defmacro __before_compile__(_) do
     quote do
       Module.register_attribute(__MODULE__, :fame_struct_fields, accumulate: true)
-      Module.register_attribute(__MODULE__, :frame_field_types, accumulate: true )
+      Module.register_attribute(__MODULE__, :frame_field_types, accumulate: true)
       Module.put_attribute(__MODULE__, :frame_struct_fields, unquote(@common_fields))
+      IO.inspect(@frame_struct_fields)
+      IO.inspect(@frame_struct_fields)
       Module.put_attribute(__MODULE__, :frame_field_types, unquote(@field_ypes))
-      unquote(block)
-
-      defstruct Module.get_attribute(__MODULE__, :frame_struct_fields)
-      # @type t() :: generate_type()
     end
-
   end
 
   # defp generate_type() do
@@ -65,7 +88,8 @@ defmodule Matplotex.Blueprint.Frame do
 
   defmacro field(name) do
     quote do
-      Module.put_attribute(__MODULE__,:frame_struct_fields, unquote(name))
+      Module.put_attribute(__MODULE__, :frame_struct_fields, unquote(name))
+      IO.inspect(@frame_struct_fields)
       # Module.put_attribute(:frame_field_types, {name, unquote(type)})
     end
   end
