@@ -26,7 +26,7 @@ defmodule Matplotex.BarChart.Content do
     :tick_length,
     :x_max,
     :y_max,
-   :label_offset,
+    :label_offset,
     :label_suffix,
     :color_palette
   ]

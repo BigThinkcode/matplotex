@@ -21,10 +21,11 @@ defmodule Matplotex.BarChartTest do
       ],
       "color_palette" => ["#5cf"],
       "width" => 700,
-      "margin" => 15,
+      "x_margin" => 15,
+      "y_margin" => 15,
       "height" => 300,
       "y_scale" => 20,
-      "y_label_prefix" => "K",
+      "y_label_suffix" => "K",
       "y_label_offset" => 40,
       "x_label_offset" => 20
     }
@@ -34,9 +35,14 @@ defmodule Matplotex.BarChartTest do
 
   describe "new/1" do
     test "create a Chart struct for valid data", %{params: params} do
-      assert %BarChart{size: %{width: width, height: height}} = BarChart.new(params)
+      assert {%BarChart{size: %{width: width, height: height}}, _} = BarChart.new(params)
       assert width == Map.get(params, "width")
       assert height == Map.get(params, "height")
+    end
+
+    test "raise error for invalid input", %{params: params} do
+      invalid_params = Map.replace(params, "height", "nonumber")
+      assert_raise(Matplotex.InputError, fn -> BarChart.new(invalid_params) end)
     end
   end
 end

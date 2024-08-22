@@ -30,23 +30,55 @@ defmodule Matplotex.BarChart do
 
   frame()
   @impl true
-  @spec new(params()) :: Matplotex.BarChart.t()
+  @spec new(params()) :: {Matplotex.BarChart.t(), map()}
   def new(params) do
     params =
       params
+      |> validate_params()
       |> generate_chart_params()
-    {content_params, params} =
-    Map.merge(%__MODULE__{}, params)
+
+    {params, content_params} = segregate_content(params, [:label_offset, :label_suffix])
+    {Map.merge(%__MODULE__{}, params), content_params}
+  end
+
+  @spec validate_params(params()) :: {:ok, params()} | {:error, String.t()}
+  @impl true
+  def validate_params(params) do
+    validator()
+    |> validate_keys(params)
+    |> run_validator(validator(), params)
+  end
+
+  @impl true
+  def validator() do
+    %{
+      "dataset" => fn dataset -> validate_dataset(dataset) end,
+      "x_labels" => fn x_labels -> is_list(x_labels) end,
+      "color_palette" => fn color_palette ->
+        is_list(color_palette) or is_binary(color_palette)
+      end,
+      "width" => fn width -> is_number(width) end,
+      "height" => fn height -> is_number(height) end,
+      "x_margin" => fn x_margin -> is_number(x_margin) end,
+      "y_margin" => fn y_margin -> is_number(y_margin) end,
+      "y_scale" => fn y_scale -> is_number(y_scale) end,
+      "y_label_suffix" => fn yls -> is_binary(yls) end,
+      "y_label_offset" => fn ylo -> is_number(ylo) end,
+      "x_label_offset" => fn xlo -> is_number(xlo) end
+    }
   end
 
   @impl true
   def set_content(
-        %__MODULE__{
-          dataset: %{y: y_dataset},
-          size: %{width: width, height: height},
-          label_offset: %{x: x_label_offset, y: y_label_offset},
-          margin: %{x_margin: x_margin, y_margin: y_margin}
-        } = chartset
+        {%__MODULE__{
+           dataset: %{y: y_dataset},
+           size: %{width: width, height: height},
+           margin: %{x_margin: x_margin, y_margin: y_margin}
+         } = chartset,
+         %{
+           label_offset: %{x: x_label_offset, y: y_label_offset} = label_offset,
+           label_sufix: label_sufix
+         }}
       ) do
     dlength =
       y_dataset
@@ -67,7 +99,9 @@ defmodule Matplotex.BarChart do
           y: x_margin + x_label_offset,
           u_margin: umargin,
           u_width: u_width,
-          tick_length: @tick_length
+          tick_length: @tick_length,
+          label_offset: label_offset,
+          label_suffix: label_sufix
         }
     }
   end
@@ -80,13 +114,13 @@ defmodule Matplotex.BarChart do
     |> add_bars_and_labels()
   end
 
-  defp generate_chart_params(params) do
+  defp generate_chart_params({:ok, params}) do
     y_data = Map.get(params, "dataset")
     x_data = params |> Map.get("x_labels") |> generate_x_data()
     dataset = %{x: x_data, y: y_data}
 
     label_offset = label_offset(params)
-    {labels, y_max, y_scale, label_prefix} = generate_labels(params, y_data)
+    {labels, y_max, y_scale, label_sufix} = generate_labels(params, y_data)
 
     %{
       color_palette: Map.get(params, "color_palette", @default_color_palette),
@@ -157,12 +191,16 @@ defmodule Matplotex.BarChart do
 
   defp add_grid_lines(
          %__MODULE__{
-           content: %Content{height: content_height, width: content_width, x: cx},
-           y_max: y_max,
+           content: %Content{
+             height: content_height,
+             width: content_width,
+             x: cx,
+             label_suffix: %{y: y_label_prefix},
+             label_offset: %{y: y_label_offset},
+             y_max: y_max
+           },
            scale: %{y: y_scale},
-           dataset: %{y: dataset},
-           label_suffix: %{y: y_label_prefix},
-           label_offset: %{y: y_label_offset}
+           dataset: %{y: dataset}
          } = chartset
        ) do
     grids = (y_max / y_scale) |> trunc()
@@ -201,8 +239,7 @@ defmodule Matplotex.BarChart do
   defp add_bars_and_labels(
          %__MODULE__{
            dataset: %{y: dataset},
-           content: %Content{width: width, height: height},
-           y_max: ymax,
+           content: %Content{width: width, height: height, y_max: ymax},
            element: %Element{labels: labels, ticks: ticks} = elements
          } = chartset
        ) do
@@ -242,9 +279,13 @@ defmodule Matplotex.BarChart do
 
   defp generate_bars(transformed, %__MODULE__{
          label: %{x: xlabels},
-         color_palette: color,
-         label_offset: %{x: x_label_offset},
-         content: %Content{height: height, u_width: u_width} = content
+         content:
+           %Content{
+             height: height,
+             u_width: u_width,
+             color_palette: color,
+             label_offset: %{x: x_label_offset}
+           } = content
        }) do
     transformed
     |> Enum.zip(xlabels)
@@ -284,5 +325,17 @@ defmodule Matplotex.BarChart do
     else
       y_max - rem(y_max, y_scale) + y_scale
     end
+  end
+
+  defp validate_keys(validator, params) do
+    params_keys = keys_mapset(params)
+    validator_keys = keys_mapset(validator)
+    MapSet.subset?(validator_keys, params_keys)
+  end
+
+  defp keys_mapset(map) do
+    map
+    |> Map.keys()
+    |> MapSet.new()
   end
 end
