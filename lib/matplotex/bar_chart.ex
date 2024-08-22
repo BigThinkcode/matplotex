@@ -48,7 +48,7 @@ defmodule Matplotex.BarChart do
     |> validate_keys(params)
     |> run_validator(validator(), params)
   end
-
+#TODO - Move this data to validator module
   @impl true
   def validator() do
     %{
@@ -326,7 +326,7 @@ defmodule Matplotex.BarChart do
       y_max - rem(y_max, y_scale) + y_scale
     end
   end
-
+  # TODO - move this to validator module
   defp validate_keys(validator, params) do
     params_keys = keys_mapset(params)
     validator_keys = keys_mapset(validator)
