@@ -22,38 +22,20 @@ defmodule Matplotex.BarChart do
           y_margin: number(),
           height: number(),
           y_scale: number(),
-          y_label_prefix: String.t(),
+          y_label_sufix: String.t(),
           x_label_offset: number(),
           y_label_offset: number()
         }
-  @type t() :: %__MODULE__{
-          dataset: dataset1_d() | dataset2_d(),
-          label: label(),
-          scale: scale(),
-          grid: grid(),
-          title: title(),
-          size: size(),
-          tick: tick(),
-          margin: margin(),
-          valid: valid(),
-          axis: axis(),
-          element: element(),
-          type: module(),
-          x_max: number() | nil,
-          y_max: number() | nil,
-          label_offset: label() | nil,
-          label_suffix: label() | nil,
-          color_palette: String.t()| nil
-        }
+  @type t() :: frame_struct()
 
-  frame([:x_max, :y_max, :label_offset, :label_suffix, :color_palette])
+  frame()
   @impl true
   @spec new(params()) :: Matplotex.BarChart.t()
   def new(params) do
     params =
       params
       |> generate_chart_params()
-
+    {content_params, params} =
     Map.merge(%__MODULE__{}, params)
   end
 
@@ -110,7 +92,7 @@ defmodule Matplotex.BarChart do
       color_palette: Map.get(params, "color_palette", @default_color_palette),
       dataset: dataset,
       label_offset: label_offset,
-      label_suffix: label_prefix,
+      label_suffix: label_sufix,
       label: labels,
       margin: %{
         x_margin: Map.get(params, "x_margin", @default_margin),

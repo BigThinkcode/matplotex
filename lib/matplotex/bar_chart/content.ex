@@ -1,4 +1,5 @@
 defmodule Matplotex.BarChart.Content do
+  @type color_palette() :: list() | String.t()
   @type t :: %__MODULE__{
           width: number(),
           height: number(),
@@ -8,7 +9,10 @@ defmodule Matplotex.BarChart.Content do
           u_width: number(),
           tick_length: number(),
           x_max: number(),
-          y_max: number()
+          y_max: number(),
+          label_offset: number(),
+          label_suffix: String.t(),
+          color_palette: color_palette()
         }
 
   @type ordinate :: {atom(), integer()}
@@ -21,7 +25,10 @@ defmodule Matplotex.BarChart.Content do
     :u_width,
     :tick_length,
     :x_max,
-    :y_max
+    :y_max,
+   :label_offset,
+    :label_suffix,
+    :color_palette
   ]
 
   def new(params), do: Map.merge(%__MODULE__{}, params)

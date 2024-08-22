@@ -14,15 +14,11 @@ defmodule Matplotex.Blueprint.Frame do
     :element,
     :type
   ]
-  defmacro frame(fields) do
-    build_struct(fields)
+  defmacro frame() do
+    build_struct()
   end
 
-  defp build_struct(fields) do
-    reg =
-      quote do
-        Module.register_attribute(__MODULE__, :frame_struct_fields, accumulate: true)
-      end
+  defp build_struct() do
 
     types =
       quote do
@@ -39,8 +35,9 @@ defmodule Matplotex.Blueprint.Frame do
         @type valid() :: :ok | {:error, String.t()}| nil
         @type axis() :: :on | :off | nil
         @type element() :: any()
+        @type content() :: any()
 
-        @type frame() :: %{
+        @type frame_struct() :: %__MODULE__{
                 dataset: dataset1_d() | dataset2_d(),
                 label: label(),
                 scale: scale(),
@@ -56,24 +53,14 @@ defmodule Matplotex.Blueprint.Frame do
               }
       end
 
-    # IO.inspect(@frame_struct_fields)
-    # Module.put_attribute(__MODULE__, :frame_field_types, unquote(@field_ypes))
-    prequest =
-      quote do
-        Module.put_attribute(__MODULE__, :frame_struct_fields, unquote(@common_fields))
-        Module.put_attribute(__MODULE__, :frame_struct_fields, unquote(fields))
-      end
-
-    postquest =
-      quote unquote: false do
-        defstruct @frame_struct_fields |> Enum.reverse() |> List.flatten()
+    build_struct =
+      quote  do
+        defstruct unquote(@common_fields)
       end
 
     quote do
       unquote(types)
-      unquote(reg)
-      unquote(prequest)
-      unquote(postquest)
+      unquote(build_struct)
     end
   end
 end
