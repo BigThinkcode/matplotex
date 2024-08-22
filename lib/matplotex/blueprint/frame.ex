@@ -49,7 +49,8 @@ defmodule Matplotex.Blueprint.Frame do
                 valid: valid(),
                 axis: axis(),
                 element: element(),
-                type: module()
+                type: module(),
+                content: any()
               }
       end
 
