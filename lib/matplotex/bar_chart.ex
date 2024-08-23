@@ -324,6 +324,10 @@ defmodule Matplotex.BarChart do
     end)
   end
 
+  def generate_svg(graphset) do
+
+  end
+
   defp calculate_y_max(y_max, y_scale) do
     if rem(y_max, y_scale) == 0 do
       y_max
@@ -338,6 +342,8 @@ defmodule Matplotex.BarChart do
     validator_keys = keys_mapset(validator)
     MapSet.subset?(validator_keys, params_keys)
   end
+
+
 
   defp keys_mapset(map) do
     map

@@ -4,7 +4,7 @@ defmodule Matplotex.Blueprint do
   @callback validator() :: map()
   @callback set_content(graphset :: any()) :: any()
   @callback add_elements(graphset :: any()) :: any()
-  # @callback generate_svg(graphset :: any()) :: any()
+  @callback generate_svg(graphset :: any()) :: any()
 
   defmacro __using__(_) do
     quote do
