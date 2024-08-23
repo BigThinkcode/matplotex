@@ -1,7 +1,6 @@
 defmodule Matplotex.BarChartTest do
   use Matplotex.PlotCase, async: true
   alias Matplotex.BarChart
-  import Matplotex.FrameHelpers
   alias Matplotex.BarChart.Content
   alias Matplotex.BarChart.Element
 
@@ -39,7 +38,8 @@ defmodule Matplotex.BarChartTest do
     {:ok,
      %{
        params: input_params,
-       new_barset: new_barchart,
+       new_barchart: new_barchart,
+       content_params: content_params,
        barchart_with_content: barchart_with_content
      }}
   end
@@ -70,11 +70,12 @@ defmodule Matplotex.BarChartTest do
 
   describe "set_content/1" do
     test "should return a barchart with content", %{
-      params: %{"width" => width, "height" => height} = params,
-      new_barchart: new_barchart
+      params: %{"width" => width, "height" => height},
+      new_barchart: new_barchart,
+      content_params: content_params
     } do
       assert %BarChart{content: %Content{width: content_width, height: content_height}} =
-               BarChart.set_content(new_barchart)
+               BarChart.set_content({new_barchart, content_params})
 
       assert content_width < width
       assert content_height < height
@@ -83,8 +84,7 @@ defmodule Matplotex.BarChartTest do
 
   describe "add_elements/1" do
     test "sholuld return a barchart with elements", %{
-      params: params,
-      barhcart_with_content: barchart_with_content
+      barchart_with_content: barchart_with_content
     } do
       assert %BarChart{element: %Element{bars: bars, ticks: ticks, labels: labels}} =
                BarChart.add_elements(barchart_with_content)

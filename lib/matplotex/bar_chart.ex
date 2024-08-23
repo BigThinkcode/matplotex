@@ -12,7 +12,7 @@ defmodule Matplotex.BarChart do
   @default_x_label_offset 20
   @tick_length 5
   @default_color_palette ["#5cf"]
-  @content_fields [:label_offset, :label_suffix]
+  @content_fields [:label_offset, :label_suffix, :y_max]
 
   @type params() :: %{
           dataset: dataset1_d(),
@@ -38,9 +38,8 @@ defmodule Matplotex.BarChart do
       |> validate_params()
       |> generate_chart_params()
       |> segregate_content(@content_fields)
-      |> tap(fn x -> IO.inspect(x) end)
 
-    {Map.merge(%__MODULE__{}, params), content_params}
+    {struct(__MODULE__, params), content_params}
   end
 
   @spec validate_params(params()) :: {:ok, params()} | {:error, String.t()}
@@ -80,7 +79,8 @@ defmodule Matplotex.BarChart do
          } = chartset,
          %{
            label_offset: %{x: x_label_offset, y: y_label_offset} = label_offset,
-           label_sufix: label_sufix
+           label_suffix: label_sufix,
+           y_max: y_max
          }}
       ) do
     dlength =
@@ -104,7 +104,8 @@ defmodule Matplotex.BarChart do
           u_width: u_width,
           tick_length: @tick_length,
           label_offset: label_offset,
-          label_suffix: label_sufix
+          label_suffix: label_sufix,
+          y_max: y_max
         }
     }
   end
@@ -172,6 +173,7 @@ defmodule Matplotex.BarChart do
     {%{x: Map.get(params, "x_labels"), y: y_labels}, y_max, y_scale, %{x: "", y: y_label_prefix}}
   end
 
+  #TODO - Make it common to all
   defp add_axis_lines(
          %__MODULE__{
            content: %Content{x: content_x, height: height},
@@ -188,10 +190,11 @@ defmodule Matplotex.BarChart do
       x2: width,
       y2: y
     }
+   element = %Element{axis: [xaxis,yaxis]}
 
-    %{chartset | axis_lines: [xaxis, yaxis]}
+    %{chartset | element: element }
   end
-
+  #TODO - Try to make it a common function to all plots turn grid on or off
   defp add_grid_lines(
          %__MODULE__{
            content: %Content{
@@ -207,7 +210,6 @@ defmodule Matplotex.BarChart do
          } = chartset
        ) do
     grids = (y_max / y_scale) |> trunc()
-
     {grid_lines, {labels, ticks}} =
       1..grids
       |> Enum.map(fn grid ->
@@ -236,7 +238,7 @@ defmodule Matplotex.BarChart do
       |> Enum.unzip()
       |> then(fn {grid_lines, labels} -> {grid_lines, Enum.unzip(labels)} end)
 
-    %{chartset | element: %Element{ticks: ticks, labels: labels}, grid_lines: grid_lines}
+    %{chartset | element: %Element{ticks: ticks, labels: labels, grid: grid_lines}}
   end
 
   defp add_bars_and_labels(
@@ -256,7 +258,9 @@ defmodule Matplotex.BarChart do
         {0, ymax},
         []
       )
-      |> generate_bars(chartset)
+      |> generate_elements(chartset)
+      |> Enum.unzip()
+      |> then(fn {bars, labels} -> {bars, Enum.unzip(labels)} end)
 
     %{
       chartset
@@ -280,7 +284,7 @@ defmodule Matplotex.BarChart do
   def transform_dataset([], _width, _height, _xminmax, _yminmax, transformed),
     do: transformed
 
-  defp generate_bars(transformed, %__MODULE__{
+  defp generate_elements(transformed, %__MODULE__{
          label: %{x: xlabels},
          content:
            %Content{
@@ -318,8 +322,6 @@ defmodule Matplotex.BarChart do
           type: "tick.xaxis"
         }}}
     end)
-    |> Enum.unzip()
-    |> then(fn {bars, labels} -> {bars, Enum.unzip(labels)} end)
   end
 
   defp calculate_y_max(y_max, y_scale) do
