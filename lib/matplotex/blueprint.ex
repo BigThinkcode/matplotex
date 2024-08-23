@@ -11,6 +11,7 @@ defmodule Matplotex.Blueprint do
       import Matplotex.Utils.Algebra
       import Matplotex.Blueprint.Frame
       import Matplotex.Utils.Helpers
+      import Matplotex.Validation.Helpers
       alias Matplotex.Element.Line
       alias Matplotex.Element.Label
       @behaviour Matplotex.Blueprint

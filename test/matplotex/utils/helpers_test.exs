@@ -1,6 +1,6 @@
 defmodule Matplotex.Utils.HelpersTest do
   use ExUnit.Case
-  alias Matplotex.Utils.Helpers
+  alias Matplotex.Validation.Helpers
 
   describe "run_validator/2" do
     test "return error for invalid input" do

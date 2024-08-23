@@ -12,6 +12,7 @@ defmodule Matplotex.BarChart do
   @default_x_label_offset 20
   @tick_length 5
   @default_color_palette ["#5cf"]
+  @content_fields [:label_offset, :label_suffix]
 
   @type params() :: %{
           dataset: dataset1_d(),
@@ -32,12 +33,13 @@ defmodule Matplotex.BarChart do
   @impl true
   @spec new(params()) :: {Matplotex.BarChart.t(), map()}
   def new(params) do
-    params =
+    {params, content_params} =
       params
       |> validate_params()
       |> generate_chart_params()
+      |> segregate_content(@content_fields)
+      |> tap(fn x -> IO.inspect(x) end)
 
-    {params, content_params} = segregate_content(params, [:label_offset, :label_suffix])
     {Map.merge(%__MODULE__{}, params), content_params}
   end
 
@@ -48,7 +50,8 @@ defmodule Matplotex.BarChart do
     |> validate_keys(params)
     |> run_validator(validator(), params)
   end
-#TODO - Move this data to validator module
+
+  # TODO - Move this data to validator module
   @impl true
   def validator() do
     %{
@@ -326,6 +329,7 @@ defmodule Matplotex.BarChart do
       y_max - rem(y_max, y_scale) + y_scale
     end
   end
+
   # TODO - move this to validator module
   defp validate_keys(validator, params) do
     params_keys = keys_mapset(params)
