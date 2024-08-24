@@ -173,7 +173,7 @@ defmodule Matplotex.BarChart do
     {%{x: Map.get(params, "x_labels"), y: y_labels}, y_max, y_scale, %{x: "", y: y_label_prefix}}
   end
 
-  #TODO - Make it common to all
+  # TODO - Make it common to all
   defp add_axis_lines(
          %__MODULE__{
            content: %Content{x: content_x, height: height},
@@ -190,11 +190,13 @@ defmodule Matplotex.BarChart do
       x2: width,
       y2: y
     }
-   element = %Element{axis: [xaxis,yaxis]}
 
-    %{chartset | element: element }
+    element = %Element{axis: [xaxis, yaxis]}
+
+    %{chartset | element: element}
   end
-  #TODO - Try to make it a common function to all plots turn grid on or off
+
+  # TODO - Try to make it a common function to all plots turn grid on or off
   defp add_grid_lines(
          %__MODULE__{
            content: %Content{
@@ -210,6 +212,7 @@ defmodule Matplotex.BarChart do
          } = chartset
        ) do
     grids = (y_max / y_scale) |> trunc()
+
     {grid_lines, {labels, ticks}} =
       1..grids
       |> Enum.map(fn grid ->
@@ -248,6 +251,7 @@ defmodule Matplotex.BarChart do
            element: %Element{labels: labels, ticks: ticks} = elements
          } = chartset
        ) do
+    # TODO - A Tick is the combination of tick line and label convert these into tick
     {bars, {xlabels, xticks}} =
       dataset
       |> Enum.with_index()
@@ -325,7 +329,6 @@ defmodule Matplotex.BarChart do
   end
 
   def generate_svg(graphset) do
-
   end
 
   defp calculate_y_max(y_max, y_scale) do
@@ -342,8 +345,6 @@ defmodule Matplotex.BarChart do
     validator_keys = keys_mapset(validator)
     MapSet.subset?(validator_keys, params_keys)
   end
-
-
 
   defp keys_mapset(map) do
     map

@@ -4,7 +4,8 @@ defmodule Matplotex.BarChart.Bar do
           y: number(),
           width: number(),
           height: number(),
-          color: String.t()
+          color: String.t(),
+          stroke: String.t()
         }
-  defstruct [:x, :y, :width, :height, :color]
+  defstruct [:x, :y, :width, :height, :color, :stroke]
 end
