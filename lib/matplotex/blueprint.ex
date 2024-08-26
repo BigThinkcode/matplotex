@@ -14,6 +14,7 @@ defmodule Matplotex.Blueprint do
       import Matplotex.Validation.Helpers
       alias Matplotex.Element.Line
       alias Matplotex.Element.Label
+      alias Matplotex.Element.Tick
       @behaviour Matplotex.Blueprint
     end
   end

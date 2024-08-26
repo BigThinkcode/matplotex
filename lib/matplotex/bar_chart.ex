@@ -203,9 +203,10 @@ defmodule Matplotex.BarChart do
              height: content_height,
              width: content_width,
              x: cx,
-             label_suffix: %{y: y_label_prefix},
+             label_suffix: %{y: y_label_suffix},
              label_offset: %{y: y_label_offset},
-             y_max: y_max
+             y_max: y_max,
+             tick_length: tick_length
            },
            scale: %{y: y_scale},
            dataset: %{y: dataset}
@@ -213,7 +214,7 @@ defmodule Matplotex.BarChart do
        ) do
     grids = (y_max / y_scale) |> trunc()
 
-    {grid_lines, {labels, ticks}} =
+    {grid_lines, ticks} =
       1..grids
       |> Enum.map(fn grid ->
         y_scale = grid * y_scale
@@ -228,20 +229,25 @@ defmodule Matplotex.BarChart do
             content_height
           )
 
-        {%Line{type: "grid.xaxis", x1: cx, x2: content_width, y1: y, y2: y},
-         {%Label{
-            axis: "labels.yaxis",
-            x: cx - y_label_offset,
-            y: y,
-            font_size: "16pt",
-            font_weight: "normal",
-            text: "#{y_scale}#{y_label_prefix}"
-          }, %Line{type: "tick.yaxis", x1: cx, x2: cx - @tick_length, y1: y, y2: y}}}
+        # TODO - Take font details from input
+        {
+          %Line{type: "grid.xaxis", x1: cx, x2: content_width, y1: y, y2: y},
+          %Tick{
+            label: %Label{
+              type: "tick.yaxis",
+              x: cx - y_label_offset,
+              y: y,
+              font_size: "16pt",
+              font_weight: "normal",
+              text: "#{y_scale}#{y_label_suffix}"
+            },
+            tick_line: %Line{type: "tick.yaxis", x1: cx, x2: cx - tick_length, y1: y, y2: y}
+          }
+        }
       end)
       |> Enum.unzip()
-      |> then(fn {grid_lines, labels} -> {grid_lines, Enum.unzip(labels)} end)
 
-    %{chartset | element: %Element{ticks: ticks, labels: labels, grid: grid_lines}}
+    %{chartset | element: %Element{ticks: ticks, grid: grid_lines}}
   end
 
   defp add_bars_and_labels(
@@ -259,8 +265,7 @@ defmodule Matplotex.BarChart do
         width,
         height,
         {0, length(dataset)},
-        {0, ymax},
-        []
+        {0, ymax}
       )
       |> generate_elements(chartset)
       |> Enum.unzip()
@@ -272,21 +277,27 @@ defmodule Matplotex.BarChart do
     }
   end
 
-  def transform_dataset([{y, x} | dataset], width, height, xminmax, yminmax, transformed) do
-    transforms = transformation(x, y, xminmax, yminmax, width, height)
+  # def transform_dataset([{y, x} | dataset], width, height, xminmax, yminmax, transformed) do
+  #   transforms = transformation(x, y, xminmax, yminmax, width, height)
 
-    transform_dataset(
-      dataset,
-      width,
-      height,
-      xminmax,
-      yminmax,
-      transformed ++ [transforms]
-    )
+  #   transform_dataset(
+  #     dataset,
+  #     width,
+  #     height,
+  #     xminmax,
+  #     yminmax,
+  #     transformed ++ [transforms]
+  #   )
+  # end
+
+  # def transform_dataset([], _width, _height, _xminmax, _yminmax, transformed),
+  #   do: transformed
+
+  def transform_dataset(dataset, xminmax, yminmax, width, height) do
+    Enum.map(dataset, fn {y, x} ->
+      transformation(x, y, xminmax, yminmax, width, height)
+    end)
   end
-
-  def transform_dataset([], _width, _height, _xminmax, _yminmax, transformed),
-    do: transformed
 
   defp generate_elements(transformed, %__MODULE__{
          label: %{x: xlabels},
@@ -310,21 +321,23 @@ defmodule Matplotex.BarChart do
          height: bar_height,
          color: color
        },
-       {%Label{
-          axis: "labels.xaxis",
-          x: Content.transform({:x, x}, content),
-          y: height + x_label_offset,
-          font_size: "16pt",
-          font_weight: "normal",
-          text: label
-        },
-        %Line{
-          x1: Content.x_axis_tick(x, content),
-          y1: height,
-          x2: Content.x_axis_tick(x, content),
-          y2: height + @tick_length,
-          type: "tick.xaxis"
-        }}}
+       %Tick{
+         label: %Label{
+           type: "tick.xaxis",
+           x: Content.transform({:x, x}, content),
+           y: height + x_label_offset,
+           font_size: "16pt",
+           font_weight: "normal",
+           text: label
+         },
+         tick_line: %Line{
+           x1: Content.x_axis_tick(x, content),
+           y1: height,
+           x2: Content.x_axis_tick(x, content),
+           y2: height + @tick_length,
+           type: "tick.xaxis"
+         }
+       }}
     end)
   end
 
