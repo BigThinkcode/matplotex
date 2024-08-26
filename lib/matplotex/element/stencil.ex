@@ -1,5 +1,5 @@
 defmodule Matplotex.Element.Stencil do
-  def sigil_L(line, []) do
+  def line(line) do
     ~s(
     <line x1="#{line.x1}"
     y1="#{line.y1}"
@@ -9,13 +9,14 @@ defmodule Matplotex.Element.Stencil do
     stroke="#{line.stroke}"
     stroke-width="#{line.stroke_width}"
     shape-rendering="#{line.shape_rendering}"
-    stroke-linecap="#{line.stroke_linecap}">
+    stroke-linecap="#{line.stroke_linecap}"/>
+
     )
   end
 
-  def sigil_B(label, []) do
+  def label(label) do
     ~s(
-        <text tag="#{label.axis}"
+        <text tag="#{label.type}"
          fill="#{label.fill}"
          x="#{label.x}"
          y="#{label.y}"
@@ -29,7 +30,7 @@ defmodule Matplotex.Element.Stencil do
     )
   end
 
-  def sigil_Re(rect, []) do
+  def rect(rect) do
     ~s(
     <rect stroke="#{rect.stroke}"
     fill="#{rect.color}"
@@ -42,10 +43,10 @@ defmodule Matplotex.Element.Stencil do
     </rect>)
   end
 
-  def sigil_Ti(tick, []) do
+  def tick(tick) do
     ~s(
-    #{~L(tick.tick_line)}
-    #{~B(tick.label)}
+    #{line(tick.tick_line)}
+    #{label(tick.label)}
     )
   end
 end

@@ -1,8 +1,27 @@
 defmodule Matplotex.BarChart do
+  @moduledoc """
+  Module wraps the functions to generate a barchart by input in a format of
+   %{
+          dataset: dataset1_d(),
+          x_labels: list(),
+          color_palette: String.t() | list(),
+          width: number(),
+          x_margin: number(),
+          y_margin: number(),
+          height: number(),
+          y_scale: number(),
+          y_label_sufix: String.t(),
+          x_label_offset: number(),
+          y_label_offset: number()
+        }
+
+
+  """
   use Matplotex.Blueprint
   alias Matplotex.BarChart.Content
   alias Matplotex.BarChart.Bar
   alias Matplotex.BarChart.Element
+  alias Matplotex.BarChart.GenerateSvg
   @x_data_range_start_at 0
   @y_data_range_start_at 0
   @default_margin 15
@@ -11,8 +30,11 @@ defmodule Matplotex.BarChart do
   @default_ylabel_offset 30
   @default_x_label_offset 20
   @tick_length 5
-  @default_color_palette ["#5cf"]
-  @content_fields [:label_offset, :label_suffix, :y_max]
+  @default_color_palette "#5cf"
+  @content_fields [:label_offset, :label_suffix, :y_max, :color_palette]
+  @stroke_grid "#ddd"
+
+  @stroke_width_grid 1
 
   @type params() :: %{
           dataset: dataset1_d(),
@@ -30,6 +52,14 @@ defmodule Matplotex.BarChart do
   @type t() :: frame_struct()
 
   frame()
+
+  def create(params) do
+    params
+    |>new()
+    |>set_content()
+    |>add_elements()
+    |>generate_svg()
+  end
   @impl true
   @spec new(params()) :: {Matplotex.BarChart.t(), map()}
   def new(params) do
@@ -50,7 +80,7 @@ defmodule Matplotex.BarChart do
     |> run_validator(validator(), params)
   end
 
-  # TODO - Move this data to validator module
+  # TODO: Move this data to validator module
   @impl true
   def validator() do
     %{
@@ -80,7 +110,8 @@ defmodule Matplotex.BarChart do
          %{
            label_offset: %{x: x_label_offset, y: y_label_offset} = label_offset,
            label_suffix: label_sufix,
-           y_max: y_max
+           y_max: y_max,
+           color_palette: color_palette
          }}
       ) do
     dlength =
@@ -92,7 +123,6 @@ defmodule Matplotex.BarChart do
     usize = content_width / dlength
     umargin = usize * 0.1
     u_width = usize - umargin
-
     %{
       chartset
       | content: %Content{
@@ -105,13 +135,15 @@ defmodule Matplotex.BarChart do
           tick_length: @tick_length,
           label_offset: label_offset,
           label_suffix: label_sufix,
-          y_max: y_max
+          y_max: y_max,
+          color_palette: color_palette
         }
     }
   end
 
   @impl true
   def add_elements(chartset) do
+
     chartset
     |> add_axis_lines()
     |> add_grid_lines()
@@ -124,13 +156,13 @@ defmodule Matplotex.BarChart do
     dataset = %{x: x_data, y: y_data}
 
     label_offset = label_offset(params)
-    {labels, y_max, y_scale, label_sufix} = generate_labels(params, y_data)
+    {labels, y_max, y_scale, label_suffix} = generate_labels(params, y_data)
 
     %{
       color_palette: Map.get(params, "color_palette", @default_color_palette),
       dataset: dataset,
       label_offset: label_offset,
-      label_suffix: label_sufix,
+      label_suffix: label_suffix,
       label: labels,
       margin: %{
         x_margin: Map.get(params, "x_margin", @default_margin),
@@ -160,7 +192,7 @@ defmodule Matplotex.BarChart do
   end
 
   defp generate_labels(params, y_data) do
-    y_label_prefix = Map.get(params, "y_label_prefix")
+    y_label_suffix = Map.get(params, "y_label_suffix")
 
     y_scale = Map.get(params, "y_scale")
     y_max = Enum.max(y_data)
@@ -168,12 +200,12 @@ defmodule Matplotex.BarChart do
 
     y_labels =
       @y_data_range_start_at..div(y_max, y_scale)
-      |> Enum.map(fn value -> "#{value * y_scale}#{y_label_prefix}" end)
+      |> Enum.map(fn value -> "#{value * y_scale}#{y_label_suffix}" end)
 
-    {%{x: Map.get(params, "x_labels"), y: y_labels}, y_max, y_scale, %{x: "", y: y_label_prefix}}
+    {%{x: Map.get(params, "x_labels"), y: y_labels}, y_max, y_scale, %{x: "", y: y_label_suffix}}
   end
 
-  # TODO - Make it common to all
+  # TODO: Make it common to all
   defp add_axis_lines(
          %__MODULE__{
            content: %Content{x: content_x, height: height},
@@ -182,7 +214,6 @@ defmodule Matplotex.BarChart do
        ) do
     yaxis = %Line{type: "axis.xaxis", x1: content_x, y1: height, x2: content_x, y2: 0}
     y = height
-
     xaxis = %Line{
       type: "axis.xaxis",
       x1: content_x,
@@ -196,7 +227,8 @@ defmodule Matplotex.BarChart do
     %{chartset | element: element}
   end
 
-  # TODO - Try to make it a common function to all plots turn grid on or off
+
+  # TODO: Try to make it a common function to all plots turn grid on or off
   defp add_grid_lines(
          %__MODULE__{
            content: %Content{
@@ -208,6 +240,8 @@ defmodule Matplotex.BarChart do
              y_max: y_max,
              tick_length: tick_length
            },
+           size: %{width: grid_x2},
+           element: element,
            scale: %{y: y_scale},
            dataset: %{y: dataset}
          } = chartset
@@ -229,16 +263,14 @@ defmodule Matplotex.BarChart do
             content_height
           )
 
-        # TODO - Take font details from input
+        # TODO: Take font details from input
         {
-          %Line{type: "grid.xaxis", x1: cx, x2: content_width, y1: y, y2: y},
+          %Line{type: "grid.xaxis", x1: cx, x2: grid_x2, y1: y, y2: y, stroke: @stroke_grid, stroke_width: @stroke_width_grid},
           %Tick{
             label: %Label{
               type: "tick.yaxis",
               x: cx - y_label_offset,
               y: y,
-              font_size: "16pt",
-              font_weight: "normal",
               text: "#{y_scale}#{y_label_suffix}"
             },
             tick_line: %Line{type: "tick.yaxis", x1: cx, x2: cx - tick_length, y1: y, y2: y}
@@ -247,33 +279,31 @@ defmodule Matplotex.BarChart do
       end)
       |> Enum.unzip()
 
-    %{chartset | element: %Element{ticks: ticks, grid: grid_lines}}
+    %{chartset | element: %Element{element | ticks: ticks, grid: grid_lines}}
   end
 
   defp add_bars_and_labels(
          %__MODULE__{
            dataset: %{y: dataset},
            content: %Content{width: width, height: height, y_max: ymax},
-           element: %Element{labels: labels, ticks: ticks} = elements
+           element: %Element{ ticks: ticks} = elements
          } = chartset
        ) do
-    # TODO - A Tick is the combination of tick line and label convert these into tick
-    {bars, {xlabels, xticks}} =
+    {bars, xticks} =
       dataset
       |> Enum.with_index()
       |> transform_dataset(
-        width,
-        height,
         {0, length(dataset)},
-        {0, ymax}
+        {0, ymax},
+        width,
+        height
       )
       |> generate_elements(chartset)
       |> Enum.unzip()
-      |> then(fn {bars, labels} -> {bars, Enum.unzip(labels)} end)
 
     %{
       chartset
-      | element: %{elements | bars: bars, labels: labels ++ xlabels, ticks: ticks ++ xticks}
+      | element: %{elements | bars: bars, ticks: ticks ++ xticks}
     }
   end
 
@@ -340,8 +370,9 @@ defmodule Matplotex.BarChart do
        }}
     end)
   end
-
+@impl true
   def generate_svg(graphset) do
+    GenerateSvg.generate(graphset, "")
   end
 
   defp calculate_y_max(y_max, y_scale) do
@@ -352,7 +383,7 @@ defmodule Matplotex.BarChart do
     end
   end
 
-  # TODO - move this to validator module
+  # TODO: move this to validator module
   defp validate_keys(validator, params) do
     params_keys = keys_mapset(params)
     validator_keys = keys_mapset(validator)

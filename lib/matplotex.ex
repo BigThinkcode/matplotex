@@ -12,7 +12,7 @@ defmodule Matplotex do
       :world
 
   """
-  def hello do
-    :world
+  def barchart(params) do
+    Matplotex.BarChart.create(params)
   end
 end

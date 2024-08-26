@@ -9,7 +9,7 @@ defmodule Matplotex.Element.Line do
           stroke: String.t(),
           stroke_width: number(),
           shape_rendering: number(),
-          stroke_linecp: number()
+          stroke_linecap: number()
         }
   defstruct [
     :type,
@@ -17,10 +17,10 @@ defmodule Matplotex.Element.Line do
     :y1,
     :x2,
     :y2,
-    :fill,
-    :stroke,
-    :stroke_width,
-    :shape_rendering,
-    :stroke_linecp
+    stroke: "black",
+    fill: "rgba(0,0,0,0)",
+    stroke_width: "3",
+    shape_rendering: "crispEdges",
+    stroke_linecap: "square"
   ]
 end

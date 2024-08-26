@@ -34,13 +34,15 @@ defmodule Matplotex.BarChartTest do
 
     {new_barchart, content_params} = BarChart.new(input_params)
     barchart_with_content = BarChart.set_content({new_barchart, content_params})
+    barchart_with_elements = BarChart.add_elements(barchart_with_content)
 
     {:ok,
      %{
        params: input_params,
        new_barchart: new_barchart,
        content_params: content_params,
-       barchart_with_content: barchart_with_content
+       barchart_with_content: barchart_with_content,
+       barchart_with_elements: barchart_with_elements
      }}
   end
 
@@ -86,12 +88,20 @@ defmodule Matplotex.BarChartTest do
     test "sholuld return a barchart with elements", %{
       barchart_with_content: barchart_with_content
     } do
-      assert %BarChart{element: %Element{bars: bars, ticks: ticks, labels: labels}} =
+      assert %BarChart{element: %Element{bars: bars, ticks: ticks}} =
                BarChart.add_elements(barchart_with_content)
 
       assert length(bars) > 0
       assert length(ticks) > 0
-      assert length(labels) > 0
+
+    end
+  end
+
+  describe "generate_svg/1" do
+    test "should return a svg string for dataset", %{barchart_with_elements: bar_chart_with_elements} do
+      IO.inspect(bar_chart_with_elements.element.axis, label: "The Axis")
+      svg = BarChart.generate_svg(bar_chart_with_elements)
+      IO.puts(svg)
     end
   end
 end
