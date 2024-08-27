@@ -15,6 +15,11 @@ defmodule Matplotex.BarChart do
           y_label_offset: number()
         }
   TODO: Barchart for multiple data for a catogory
+  TODO: Control for show grid line on x y axis
+  TODO: Control for show axis line
+  TODO: Set title
+  TODO: Accept id for the svg element from params
+  TODO: Apply some validation before generating svg
 
   TODO: Horizontal Barchart
   TODO: Compatibility with phoenix LiveView
