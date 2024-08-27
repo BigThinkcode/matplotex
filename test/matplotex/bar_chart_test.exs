@@ -93,15 +93,15 @@ defmodule Matplotex.BarChartTest do
 
       assert length(bars) > 0
       assert length(ticks) > 0
-
     end
   end
 
   describe "generate_svg/1" do
-    test "should return a svg string for dataset", %{barchart_with_elements: bar_chart_with_elements} do
-      IO.inspect(bar_chart_with_elements.element.axis, label: "The Axis")
+    test "should return a svg string for dataset", %{
+      barchart_with_elements: bar_chart_with_elements
+    } do
       svg = BarChart.generate_svg(bar_chart_with_elements)
-      IO.puts(svg)
+      assert is_binary(svg)
     end
   end
 end
