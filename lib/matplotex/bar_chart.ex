@@ -14,7 +14,11 @@ defmodule Matplotex.BarChart do
           x_label_offset: number(),
           y_label_offset: number()
         }
+  TODO: Barchart for multiple data for a catogory
 
+  TODO: Horizontal Barchart
+  TODO: Compatibility with phoenix LiveView
+  TODO: Tooltip css
 
   """
   use Matplotex.Blueprint
@@ -55,11 +59,12 @@ defmodule Matplotex.BarChart do
 
   def create(params) do
     params
-    |>new()
-    |>set_content()
-    |>add_elements()
-    |>generate_svg()
+    |> new()
+    |> set_content()
+    |> add_elements()
+    |> generate_svg()
   end
+
   @impl true
   @spec new(params()) :: {Matplotex.BarChart.t(), map()}
   def new(params) do
@@ -123,6 +128,7 @@ defmodule Matplotex.BarChart do
     usize = content_width / dlength
     umargin = usize * 0.1
     u_width = usize - umargin
+
     %{
       chartset
       | content: %Content{
@@ -143,7 +149,6 @@ defmodule Matplotex.BarChart do
 
   @impl true
   def add_elements(chartset) do
-
     chartset
     |> add_axis_lines()
     |> add_grid_lines()
@@ -214,6 +219,7 @@ defmodule Matplotex.BarChart do
        ) do
     yaxis = %Line{type: "axis.xaxis", x1: content_x, y1: height, x2: content_x, y2: 0}
     y = height
+
     xaxis = %Line{
       type: "axis.xaxis",
       x1: content_x,
@@ -226,7 +232,6 @@ defmodule Matplotex.BarChart do
 
     %{chartset | element: element}
   end
-
 
   # TODO: Try to make it a common function to all plots turn grid on or off
   defp add_grid_lines(
@@ -265,7 +270,15 @@ defmodule Matplotex.BarChart do
 
         # TODO: Take font details from input
         {
-          %Line{type: "grid.xaxis", x1: cx, x2: grid_x2, y1: y, y2: y, stroke: @stroke_grid, stroke_width: @stroke_width_grid},
+          %Line{
+            type: "grid.xaxis",
+            x1: cx,
+            x2: grid_x2,
+            y1: y,
+            y2: y,
+            stroke: @stroke_grid,
+            stroke_width: @stroke_width_grid
+          },
           %Tick{
             label: %Label{
               type: "tick.yaxis",
@@ -286,7 +299,7 @@ defmodule Matplotex.BarChart do
          %__MODULE__{
            dataset: %{y: dataset},
            content: %Content{width: width, height: height, y_max: ymax},
-           element: %Element{ ticks: ticks} = elements
+           element: %Element{ticks: ticks} = elements
          } = chartset
        ) do
     {bars, xticks} =
@@ -370,7 +383,8 @@ defmodule Matplotex.BarChart do
        }}
     end)
   end
-@impl true
+
+  @impl true
   def generate_svg(graphset) do
     GenerateSvg.generate(graphset, "")
   end
