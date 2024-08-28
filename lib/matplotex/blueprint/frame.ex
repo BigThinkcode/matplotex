@@ -1,4 +1,5 @@
 defmodule Matplotex.Blueprint.Frame do
+  @default_margin 10
   @common_fields [
     :id,
     :content,
@@ -9,11 +10,11 @@ defmodule Matplotex.Blueprint.Frame do
     :title,
     :size,
     :tick,
-    :margin,
     :valid,
     :axis,
     :element,
-    :type
+    :type,
+    margin: @default_margin
   ]
   defmacro frame() do
     build_struct()

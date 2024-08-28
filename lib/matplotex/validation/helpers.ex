@@ -1,6 +1,28 @@
 defmodule Matplotex.Validation.Helpers do
   alias Matplotex.InputError
 
+  def validator() do
+    %{
+      "id" => fn id -> is_binary(id) end,
+      "title" => fn title -> is_binary(title) end,
+      "stroke_width" => fn sw -> is_binary(sw) or is_number(sw) end,
+      "legends" => fn legends -> is_boolean(legends) end,
+      "dataset" => fn dataset -> validate_dataset(dataset) end,
+      "x_labels" => fn x_labels -> is_list(x_labels) end,
+      "color_palette" => fn color_palette ->
+        is_list(color_palette) or is_binary(color_palette)
+      end,
+      "width" => fn width -> is_number(width) end,
+      "height" => fn height -> is_number(height) end,
+      "x_margin" => fn x_margin -> is_number(x_margin) end,
+      "y_margin" => fn y_margin -> is_number(y_margin) end,
+      "y_scale" => fn y_scale -> is_number(y_scale) end,
+      "y_label_suffix" => fn yls -> is_binary(yls) end,
+      "y_label_offset" => fn ylo -> is_number(ylo) end,
+      "x_label_offset" => fn xlo -> is_number(xlo) end
+    }
+  end
+
   def run_validator(true, validator, params) do
     Enum.filter(params, fn {k, v} ->
       validator_fun = Map.get(validator, k)
@@ -35,4 +57,22 @@ defmodule Matplotex.Validation.Helpers do
   end
 
   def validate_dataset(_), do: false
+
+  def validate_params(params) do
+    validator()
+    |> validate_keys(params)
+    |> run_validator(validator(), params)
+  end
+
+  defp validate_keys(validator, params) do
+    params_keys = keys_mapset(params)
+    validator_keys = keys_mapset(validator)
+    MapSet.subset?(validator_keys, params_keys)
+  end
+
+  defp keys_mapset(map) do
+    map
+    |> Map.keys()
+    |> MapSet.new()
+  end
 end

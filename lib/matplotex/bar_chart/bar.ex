@@ -11,5 +11,13 @@ defmodule Matplotex.BarChart.Bar do
           stroke: String.t(),
           stroke_width: number()
         }
-  defstruct [:x, :y, :width, :height, :color, stroke: @default_stroke , stroke_width: @default_stroke_width]
+  defstruct [
+    :x,
+    :y,
+    :width,
+    :height,
+    :color,
+    stroke: @default_stroke,
+    stroke_width: @default_stroke_width
+  ]
 end

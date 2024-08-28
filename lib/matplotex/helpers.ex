@@ -42,5 +42,4 @@ defmodule Matplotex.Helpers do
       "x_label_offset" => 20
     }
   end
-
 end

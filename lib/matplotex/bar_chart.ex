@@ -82,34 +82,6 @@ defmodule Matplotex.BarChart do
     {struct(__MODULE__, params), content_params}
   end
 
-  @spec validate_params(params()) :: {:ok, params()} | {:error, String.t()}
-  @impl true
-  def validate_params(params) do
-    validator()
-    |> validate_keys(params)
-    |> run_validator(validator(), params)
-  end
-
-  # TODO: Move this data to validator module
-  @impl true
-  def validator() do
-    %{
-      "dataset" => fn dataset -> validate_dataset(dataset) end,
-      "x_labels" => fn x_labels -> is_list(x_labels) end,
-      "color_palette" => fn color_palette ->
-        is_list(color_palette) or is_binary(color_palette)
-      end,
-      "width" => fn width -> is_number(width) end,
-      "height" => fn height -> is_number(height) end,
-      "x_margin" => fn x_margin -> is_number(x_margin) end,
-      "y_margin" => fn y_margin -> is_number(y_margin) end,
-      "y_scale" => fn y_scale -> is_number(y_scale) end,
-      "y_label_suffix" => fn yls -> is_binary(yls) end,
-      "y_label_offset" => fn ylo -> is_number(ylo) end,
-      "x_label_offset" => fn xlo -> is_number(xlo) end
-    }
-  end
-
   @impl true
   def set_content(
         {%__MODULE__{
@@ -400,18 +372,5 @@ defmodule Matplotex.BarChart do
     else
       y_max - rem(y_max, y_scale) + y_scale
     end
-  end
-
-  # TODO: move this to validator module
-  defp validate_keys(validator, params) do
-    params_keys = keys_mapset(params)
-    validator_keys = keys_mapset(validator)
-    MapSet.subset?(validator_keys, params_keys)
-  end
-
-  defp keys_mapset(map) do
-    map
-    |> Map.keys()
-    |> MapSet.new()
   end
 end
