@@ -12,14 +12,16 @@ defmodule Matplotex.Validation.Helpers do
       "color_palette" => fn color_palette ->
         is_list(color_palette) or is_binary(color_palette)
       end,
-      "width" => fn width -> is_number(width) end,
-      "height" => fn height -> is_number(height) end,
-      "x_margin" => fn x_margin -> is_number(x_margin) end,
-      "y_margin" => fn y_margin -> is_number(y_margin) end,
-      "y_scale" => fn y_scale -> is_number(y_scale) end,
+      "width" => fn width -> is_a_space(width) end,
+      "height" => fn height -> is_a_space(height) end,
+      "x_margin" => fn x_margin -> is_a_space(x_margin) end,
+      "y_margin" => fn y_margin -> is_a_space(y_margin) end,
+      "y_scale" => fn y_scale -> is_a_space(y_scale) end,
       "y_label_suffix" => fn yls -> is_binary(yls) end,
-      "y_label_offset" => fn ylo -> is_number(ylo) end,
-      "x_label_offset" => fn xlo -> is_number(xlo) end
+      "y_label_offset" => fn ylo -> is_a_space(ylo) end,
+      "x_label_offset" => fn xlo -> is_a_space(xlo) end,
+      "labels" => fn labels -> is_list(labels) end,
+      "margin" => fn margin -> is_a_space(margin) end
     }
   end
 
@@ -67,7 +69,7 @@ defmodule Matplotex.Validation.Helpers do
   defp validate_keys(validator, params) do
     params_keys = keys_mapset(params)
     validator_keys = keys_mapset(validator)
-    MapSet.subset?(validator_keys, params_keys)
+    MapSet.subset?(params_keys, validator_keys)
   end
 
   defp keys_mapset(map) do
@@ -75,4 +77,5 @@ defmodule Matplotex.Validation.Helpers do
     |> Map.keys()
     |> MapSet.new()
   end
+  defp is_a_space(value), do: is_number(value) and value >= 0
 end

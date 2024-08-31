@@ -11,6 +11,7 @@ defmodule Matplotex.PieChart do
   """
 
 
+  alias Matplotex.PieChart.Element
   alias Matplotex.PieChart.Legend
 
   alias Matplotex.PieChart.Slice
@@ -20,13 +21,14 @@ defmodule Matplotex.PieChart do
   @default_size 400
   @width_key "width"
   @height_key "height"
-  @content_params ~w(color_palette, legends, stroke_width)a
+  @label_key "labels"
+  @content_params [:color_palette, :legends, :stroke_width]
   @full_circle 2 * :math.pi()
   @label_roatetion_radius_percentage 0.2
   @slice_label_type "label.slice"
 
   defmodule SliceAcc do
-    defstruct [:slices, :datasum, :legend_frame, :x1, :y1]
+    defstruct [:slices, :datasum, :legend_frame, :x1, :y1, :legends]
   end
 
 
@@ -35,7 +37,7 @@ defmodule Matplotex.PieChart do
           id: word(),
           title: word(),
           dataset: list(),
-          label: list(),
+          labels: list(),
           color_palette: list(),
           stroke_width: number(),
           width: number(),
@@ -49,13 +51,13 @@ defmodule Matplotex.PieChart do
   def new(params) do
     # Fields are dataset, title, size, margin, valid, element, type
     # type: pie chart, dataset from params combination of  data and labels,
-    params =
+    {params, content_params} =
       params
       |> validate_params()
       |> generate_chart_params()
       |> segregate_content(@content_params)
 
-    struct(__MODULE__, params)
+    {struct(__MODULE__, params), content_params}
   end
 
   @impl true
@@ -65,6 +67,7 @@ defmodule Matplotex.PieChart do
         {%__MODULE__{size: %{width: width, height: height}, margin: margin, dataset: dataset} =
            graphset, content_params}
       ) do
+    content = struct(%Content{}, content_params)
     c_width = width - margin * 2
     c_height = height - margin * 2
     radius = c_height / 2
@@ -77,7 +80,7 @@ defmodule Matplotex.PieChart do
     %__MODULE__{
       graphset
       | content: %Content{
-          content_params
+          content
           | width: c_width,
             height: c_height,
             radius: radius,
@@ -95,9 +98,9 @@ defmodule Matplotex.PieChart do
     # adding elements means adding slices and legends and labels
     # dataset to its_percentage and slices
     # generate angle
-    slices = generate_slices(graphset)
+    %__MODULE__.SliceAcc{slices: slices, labels: labels, legends: legends} = generate_slices(graphset)
 
-    graphset
+    %__MODULE__{graphset | element: %Element{slices: slices, labels: labels, legends: legends}}
   end
 
   @impl true
@@ -128,6 +131,8 @@ defmodule Matplotex.PieChart do
       datacombo,
       %__MODULE__.SliceAcc{
         slices: [],
+        labels: [],
+        legends: [],
         x1: x1,
         y1: y1,
         datasum: total,
@@ -136,6 +141,8 @@ defmodule Matplotex.PieChart do
       fn {data, {label, color}},
          %__MODULE__.SliceAcc{
            slices: slices,
+           labels: labels,
+           legends: legends,
            x1: x1,
            y1: y1,
            datasum: total,
@@ -164,20 +171,23 @@ defmodule Matplotex.PieChart do
                      y2: y2,
                      radius: radius,
                      data: data,
-                     label: %Label{x: lx, y: ly, text: label, type: @slice_label_type},
-                     legend: %Legend{x: legend_x, y: legend_y, color: color},
                      color: color
                    }}
                 ],
+              labels: labels ++ [%Label{x: lx, y: ly, text: label, type: @slice_label_type}],
+              legends: legends ++ [%Legend{x: legend_x, y: legend_y, color: color}],
+
             legend_frame: %LegendFrame{legend_frame | x: legend_x, y: legend_y + legend_uheight}
         }
       end
     )
+
   end
 
   defp generate_chart_params({:ok, params}) do
     {width, params} = Map.pop(params, @width_key, @default_size)
     {height, params} = Map.pop(params, @height_key, @default_size)
+    {labels, params} = Map.pop(params, @label_key)
     size = %{width: width, height: height}
     params = for {k, v} <- params, into: %{}, do: {String.to_atom(k), v}
     Map.put(params, :size, size)
