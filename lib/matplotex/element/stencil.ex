@@ -49,4 +49,18 @@ defmodule Matplotex.Element.Stencil do
     #{label(tick.label)}
     )
   end
+
+  def slice(slice) do
+    """
+    <path d="M #{slice.x1} #{slice.y1}
+     A #{slice.radius} #{slice.radius} 0 0 1 #{slice.x2} #{slice.y2}
+     L 0 100
+     Z" fill="#f66" />
+
+    <text x="50" y="50" font-family="Verdana" font-size="24" fill="black"
+        transform="rotate(-45 50 50)">
+    Rotated Text
+    </text>
+    """
+  end
 end

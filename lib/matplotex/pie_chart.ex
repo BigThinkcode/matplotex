@@ -10,7 +10,6 @@ defmodule Matplotex.PieChart do
   ></path>
   """
 
-
   alias Matplotex.PieChart.Element
   alias Matplotex.PieChart.Legend
 
@@ -28,9 +27,8 @@ defmodule Matplotex.PieChart do
   @slice_label_type "label.slice"
 
   defmodule SliceAcc do
-    defstruct [:slices, :datasum, :legend_frame, :x1, :y1, :legends]
+    defstruct [:slices, :datasum, :legend_frame, :x1, :y1, :legends, :labels]
   end
-
 
   @type word() :: String.t()
   @type params() :: %{
@@ -98,15 +96,14 @@ defmodule Matplotex.PieChart do
     # adding elements means adding slices and legends and labels
     # dataset to its_percentage and slices
     # generate angle
-    %__MODULE__.SliceAcc{slices: slices, labels: labels, legends: legends} = generate_slices(graphset)
+    %__MODULE__.SliceAcc{slices: slices, labels: labels, legends: legends} =
+      generate_slices(graphset)
 
     %__MODULE__{graphset | element: %Element{slices: slices, labels: labels, legends: legends}}
   end
 
   @impl true
-  def generate_svg(_graphset) do
-    # Before generating svg it structs with x1 y1, x2, y2, radius, of the slice
-    ""
+  def generate_svg(%__MODULE__{element: element}) do
   end
 
   defp generate_slices(%__MODULE__{
@@ -116,6 +113,8 @@ defmodule Matplotex.PieChart do
            radius: radius,
            x1: x1,
            y1: y1,
+           cx: cx,
+           cy: cy,
            color_palette: color_palette,
            legend_frame: legend_frame
          }
@@ -125,7 +124,6 @@ defmodule Matplotex.PieChart do
     total = Enum.sum(dataset)
 
     datacombo = label |> Enum.zip(color_palette) |> Enum.zip(dataset)
-
 
     Enum.reduce(
       datacombo,
@@ -138,7 +136,7 @@ defmodule Matplotex.PieChart do
         datasum: total,
         legend_frame: legend_frame
       },
-      fn {data, {label, color}},
+      fn {{label, color}, data},
          %__MODULE__.SliceAcc{
            slices: slices,
            labels: labels,
@@ -174,14 +172,12 @@ defmodule Matplotex.PieChart do
                      color: color
                    }}
                 ],
-              labels: labels ++ [%Label{x: lx, y: ly, text: label, type: @slice_label_type}],
-              legends: legends ++ [%Legend{x: legend_x, y: legend_y, color: color}],
-
+            labels: labels ++ [%Label{x: lx, y: ly, text: label, type: @slice_label_type}],
+            legends: legends ++ [%Legend{x: legend_x, y: legend_y, color: color}],
             legend_frame: %LegendFrame{legend_frame | x: legend_x, y: legend_y + legend_uheight}
         }
       end
     )
-
   end
 
   defp generate_chart_params({:ok, params}) do
@@ -190,6 +186,6 @@ defmodule Matplotex.PieChart do
     {labels, params} = Map.pop(params, @label_key)
     size = %{width: width, height: height}
     params = for {k, v} <- params, into: %{}, do: {String.to_atom(k), v}
-    Map.put(params, :size, size)
+    Map.merge(params, %{size: size, label: labels})
   end
 end
