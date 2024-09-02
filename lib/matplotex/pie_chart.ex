@@ -133,7 +133,6 @@ defmodule Matplotex.PieChart do
         legends: [],
         x1: x1,
         y1: y1,
-        datasum: total,
         legend_frame: legend_frame
       },
       fn {{label, color}, data},
@@ -143,7 +142,6 @@ defmodule Matplotex.PieChart do
            legends: legends,
            x1: x1,
            y1: y1,
-           datasum: total,
            legend_frame:
              %LegendFrame{x: legend_x, y: legend_y, uheight: legend_uheight} = legend_frame
          } = acc ->
@@ -169,10 +167,13 @@ defmodule Matplotex.PieChart do
                      y2: y2,
                      radius: radius,
                      data: data,
-                     color: color
+                     color: color,
+                     cx: cx,
+                     cy: cy
                    }}
                 ],
-            labels: labels ++ [%Label{x: lx, y: ly, text: label, type: @slice_label_type}],
+            labels:
+              labels ++ [%Label{x: lx, y: ly, text: "#{label}-#{data}", type: @slice_label_type}],
             legends: legends ++ [%Legend{x: legend_x, y: legend_y, color: color}],
             legend_frame: %LegendFrame{legend_frame | x: legend_x, y: legend_y + legend_uheight}
         }
