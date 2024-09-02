@@ -10,6 +10,7 @@ defmodule Matplotex.PieChart do
   ></path>
   """
 
+  alias Matplotex.PieChart.GenerateSvg
   alias Matplotex.PieChart.Element
   alias Matplotex.PieChart.Legend
 
@@ -45,7 +46,17 @@ defmodule Matplotex.PieChart do
         }
   frame()
   @type t() :: frame_struct()
+
+  def create(params) do
+    params
+    |>new()
+    |>set_content()
+    |>add_elements()
+    |>generate_svg()
+  end
+
   @impl true
+  @spec new(params()) :: {__MODULE__.t(),map()}
   def new(params) do
     # Fields are dataset, title, size, margin, valid, element, type
     # type: pie chart, dataset from params combination of  data and labels,
@@ -70,10 +81,10 @@ defmodule Matplotex.PieChart do
     c_height = height - margin * 2
     radius = c_height / 2
     legend_uheight = c_height / length(dataset)
-    legend_frame = %LegendFrame{x: c_height + margin, y: margin, uheight: legend_uheight}
+    legend_frame = %LegendFrame{x: c_height + 2*margin, y: margin, uheight: legend_uheight}
     cx = radius + margin
     cy = height - (radius + margin)
-    y1 = height - margin
+    y1 =  margin
 
     %__MODULE__{
       graphset
@@ -103,7 +114,8 @@ defmodule Matplotex.PieChart do
   end
 
   @impl true
-  def generate_svg(%__MODULE__{element: element}) do
+  def generate_svg(%__MODULE__{} = chartset) do
+   GenerateSvg.generate(chartset,"")
   end
 
   defp generate_slices(%__MODULE__{
@@ -148,8 +160,8 @@ defmodule Matplotex.PieChart do
         angle = data / total * @full_circle
         cos = :math.cos(angle)
         sin = :math.sin(angle)
-        x2 = radius * cos
-        y2 = radius * sin
+        x2 = cx + radius * cos
+        y2 = cy + radius * sin
 
         label_rotation_radius = radius * @label_roatetion_radius_percentage
         lx = label_rotation_radius * cos
@@ -160,7 +172,7 @@ defmodule Matplotex.PieChart do
           | slices:
               slices ++
                 [
-                  {%Slice{
+                  %Slice{
                      x1: x1,
                      y1: y1,
                      x2: x2,
@@ -170,11 +182,11 @@ defmodule Matplotex.PieChart do
                      color: color,
                      cx: cx,
                      cy: cy
-                   }}
+                   }
                 ],
             labels:
               labels ++ [%Label{x: lx, y: ly, text: "#{label}-#{data}", type: @slice_label_type}],
-            legends: legends ++ [%Legend{x: legend_x, y: legend_y, color: color}],
+            legends: legends ++ [%Legend{x: legend_x, y: legend_y, color: color, label: "#{label}-#{data}"}],
             legend_frame: %LegendFrame{legend_frame | x: legend_x, y: legend_y + legend_uheight}
         }
       end

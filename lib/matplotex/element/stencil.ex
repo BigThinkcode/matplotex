@@ -54,8 +54,14 @@ defmodule Matplotex.Element.Stencil do
     """
     <path d="M #{slice.x1} #{slice.y1}
      A #{slice.radius} #{slice.radius} 0 0 1 #{slice.x2} #{slice.y2}
-     L 0 #{slice.cx}
+     L #{slice.cy} #{slice.cx}
      Z" fill="#{slice.color}" />
+    """
+  end
+  def legend(legend) do
+    """
+    #{rect(legend)}
+    #{label(legend.label)}
     """
   end
 end
