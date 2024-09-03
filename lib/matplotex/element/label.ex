@@ -17,13 +17,15 @@ defmodule Matplotex.Element.Label do
           fill: word(),
           font_family: word(),
           font_style: word(),
-          dominant_baseline: word()
+          dominant_baseline: word(),
+          rotate: number()
         }
   defstruct [
     :type,
     :x,
     :y,
     :text,
+    :rotate,
     font_size: @default_font_size,
     font_weight: @default_font_weight,
     fill: @default_fill,

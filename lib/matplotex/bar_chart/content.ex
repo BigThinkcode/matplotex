@@ -14,7 +14,6 @@ defmodule Matplotex.BarChart.Content do
           label_suffix: String.t(),
           color_palette: color_palette()
         }
-
   @type ordinate :: {atom(), integer()}
   defstruct [
     :width,
@@ -30,6 +29,8 @@ defmodule Matplotex.BarChart.Content do
     :label_suffix,
     :color_palette
   ]
+
+  # TODO - Accept labels and legends on or off through input params
 
   def new(params), do: Map.merge(%__MODULE__{}, params)
   @spec transform(ordinate(), __MODULE__.t()) :: number()

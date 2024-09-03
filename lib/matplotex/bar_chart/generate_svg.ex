@@ -3,7 +3,6 @@ defmodule Matplotex.BarChart.GenerateSvg do
   alias Matplotex.BarChart.Element
   alias Matplotex.Element.Stencil
 
-
   def generate(barset, svg) do
     {barset.element, svg}
     |> add_axis_lines()
@@ -60,6 +59,4 @@ defmodule Matplotex.BarChart.GenerateSvg do
   end
 
   defp add_ticks(chart_svg), do: chart_svg
-
-
 end

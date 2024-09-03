@@ -77,5 +77,6 @@ defmodule Matplotex.Validation.Helpers do
     |> Map.keys()
     |> MapSet.new()
   end
+
   defp is_a_space(value), do: is_number(value) and value >= 0
 end
