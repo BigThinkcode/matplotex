@@ -170,7 +170,7 @@ defmodule Matplotex.PieChart do
         y2 = cy + radius * sin
 
         label_rotation_radius = radius * @label_roatetion_radius_percentage
-
+        # TODO: give clear rotation for labels also
         label_roatation_angle = angle + angle / 2
         lcos = :math.cos(label_roatation_angle)
         lsin = :math.sin(label_roatation_angle)
