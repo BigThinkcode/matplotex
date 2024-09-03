@@ -16,9 +16,9 @@ defmodule Matplotex.PieChartTest do
       "legends" => true
     }
 
-    {pie_chart, content_params} = PieChart.new(params)
-    chartset_with_content = PieChart.set_content({pie_chart, content_params})
-    chartset_with_element = PieChart.add_elements(chartset_with_content)
+    {pie_chart, content_params} = PieChart.Plot.new(PieChart,params)
+    chartset_with_content = PieChart.Plot.set_content({pie_chart, content_params})
+    chartset_with_element = PieChart.Plot.add_elements(chartset_with_content)
 
     {:ok,
      %{
@@ -32,7 +32,7 @@ defmodule Matplotex.PieChartTest do
 
   describe "new/1" do
     test "return pie_chart set and content params", %{params: params} do
-      assert {pie_chart, content_params} = PieChart.new(params)
+      assert {pie_chart, content_params} = PieChart.Plot.new(PieChart,params)
       assert pie_chart.id == Map.get(params, "id")
       assert content_params.legends
     end
@@ -43,13 +43,14 @@ defmodule Matplotex.PieChartTest do
       content_params: content_params,
       chartset: chartset
     } do
-      assert %PieChart{content: %Content{}} = PieChart.set_content({chartset, content_params})
+      assert %PieChart{content: %Content{}} = PieChart.Plot.set_content({chartset, content_params})
     end
   end
 
   describe "add_elements/1" do
     test "will return a chartset with elements", %{chartset_with_content: chartset} do
-      assert %PieChart{element: %Element{} = element} = PieChart.add_elements(chartset)
+      assert %PieChart{element: %Element{slices: slices}} = PieChart.Plot.add_elements(chartset)
+      assert length(slices) > 0
     end
   end
 
@@ -57,8 +58,8 @@ defmodule Matplotex.PieChartTest do
     test "will generate svg by a chartset with valid elements", %{
       chartset_with_elements: chartset
     } do
-      svg = PieChart.generate_svg(chartset)
-      IO.puts(svg)
+      svg = PieChart.Plot.generate_svg(chartset)
+      assert is_binary(svg)
     end
   end
 end

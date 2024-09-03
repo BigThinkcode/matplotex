@@ -1,5 +1,5 @@
 defmodule Matplotex.Blueprint do
-  @callback new(params :: map()) :: any()
+  @callback new(graph :: module(),params :: map()) :: any()
   @callback set_content(graphset :: any()) :: any()
   @callback add_elements(graphset :: any()) :: any()
   @callback generate_svg(graphset :: any()) :: any()
@@ -7,7 +7,7 @@ defmodule Matplotex.Blueprint do
   defmacro __using__(_) do
     quote do
       import Matplotex.Utils.Algebra
-      import Matplotex.Blueprint.Frame
+
       import Matplotex.Utils.Helpers
       import Matplotex.Validation.Helpers
       alias Matplotex.Element.Line
