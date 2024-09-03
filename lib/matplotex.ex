@@ -15,4 +15,8 @@ defmodule Matplotex do
   def barchart(params) do
     Matplotex.BarChart.create(params)
   end
+
+  def pie_chart(params) do
+    Matplotex.PieChart.create(params)
+  end
 end

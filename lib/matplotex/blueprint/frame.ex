@@ -1,5 +1,7 @@
 defmodule Matplotex.Blueprint.Frame do
+  @default_margin 10
   @common_fields [
+    :id,
     :content,
     :dataset,
     :label,
@@ -8,11 +10,11 @@ defmodule Matplotex.Blueprint.Frame do
     :title,
     :size,
     :tick,
-    :margin,
     :valid,
     :axis,
     :element,
-    :type
+    :type,
+    margin: @default_margin
   ]
   defmacro frame() do
     build_struct()
@@ -39,6 +41,7 @@ defmodule Matplotex.Blueprint.Frame do
         @type content() :: any()
 
         @type frame_struct() :: %__MODULE__{
+                id: any(),
                 dataset: dataset1_d() | dataset2_d(),
                 label: label(),
                 scale: scale(),

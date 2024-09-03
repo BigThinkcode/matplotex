@@ -15,7 +15,7 @@ defmodule Matplotex.Element.Stencil do
   end
 
   def label(label) do
-    ~s(
+    """
         <text tag="#{label.type}"
          fill="#{label.fill}"
          x="#{label.x}"
@@ -24,10 +24,11 @@ defmodule Matplotex.Element.Stencil do
          font-weight="#{label.font_weight}"
          font-family="#{label.font_family}"
          font-style="#{label.font_style}"
+         transform="rotate(#{label.rotate}, #{label.x}, #{label.y})"
          dominant-baseline="#{label.dominant_baseline}">
          #{label.text}
         </text>
-    )
+    """
   end
 
   def rect(rect) do
@@ -48,5 +49,21 @@ defmodule Matplotex.Element.Stencil do
     #{line(tick.tick_line)}
     #{label(tick.label)}
     )
+  end
+
+  def slice(slice) do
+    """
+    <path d="M #{slice.x1} #{slice.y1}
+     A #{slice.radius} #{slice.radius} 0 0 1 #{slice.x2} #{slice.y2}
+     L #{slice.cy} #{slice.cx}
+     Z" fill="#{slice.color}" />
+    """
+  end
+
+  def legend(legend) do
+    """
+    #{rect(legend)}
+    #{label(legend.label)}
+    """
   end
 end

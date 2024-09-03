@@ -43,4 +43,16 @@ defmodule Matplotex.Helpers do
     }
   end
 
+  def pie_chart_params() do
+    %{
+      "id" => "chart-container",
+      "dataset" => [280, 45, 133, 152, 278, 221, 56],
+      "labels" => ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "color_palette" => ["#f66", "pink", "orange", "gray", "#fcc", "green", "#0f0"],
+      "width" => 700,
+      "height" => 400,
+      "margin" => 15,
+      "legends" => true
+    }
+  end
 end

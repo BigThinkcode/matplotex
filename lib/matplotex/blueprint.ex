@@ -1,7 +1,5 @@
 defmodule Matplotex.Blueprint do
   @callback new(params :: map()) :: any()
-  @callback validate_params(params :: map()) :: any()
-  @callback validator() :: map()
   @callback set_content(graphset :: any()) :: any()
   @callback add_elements(graphset :: any()) :: any()
   @callback generate_svg(graphset :: any()) :: any()
