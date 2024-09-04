@@ -1,5 +1,6 @@
 defmodule Matplotex.Blueprint.Frame do
   @default_margin 10
+  @show_by_default true
   @common_fields [
     :id,
     :content,
@@ -14,7 +15,11 @@ defmodule Matplotex.Blueprint.Frame do
     :axis,
     :element,
     :type,
-    margin: @default_margin
+    margin: @default_margin,
+    show_x_axis: @show_by_default,
+    show_y_axis: @show_by_default,
+    show_v_grid: @show_by_default,
+    show_h_grid: @show_by_default
   ]
   defmacro frame() do
     build_struct()
@@ -54,7 +59,11 @@ defmodule Matplotex.Blueprint.Frame do
                 axis: axis(),
                 element: element(),
                 type: module(),
-                content: any()
+                content: any(),
+                show_x_axis: boolean(),
+                show_y_axis: boolean(),
+                show_v_grid: boolean(),
+                show_h_grid: boolean()
               }
       end
 
