@@ -15,6 +15,7 @@ defmodule Matplotex.Blueprint.Frame do
     :axis,
     :element,
     :type,
+    :grid_coordinates,
     margin: @default_margin,
     show_x_axis: @show_by_default,
     show_y_axis: @show_by_default,
@@ -58,12 +59,13 @@ defmodule Matplotex.Blueprint.Frame do
                 valid: valid(),
                 axis: axis(),
                 element: element(),
-                type: module(),
+                type: String.t(),
                 content: any(),
                 show_x_axis: boolean(),
                 show_y_axis: boolean(),
                 show_v_grid: boolean(),
-                show_h_grid: boolean()
+                show_h_grid: boolean(),
+                grid_coordinates: dataset2_d()
               }
       end
 

@@ -6,7 +6,7 @@ defmodule Matplotex.Element.AxisLine do
     xaxis = generate_axis(chartset, :x)
     yaxis = generate_axis(chartset, :y)
 
-    {xaxis, yaxis}
+    [xaxis, yaxis]
   end
   defp generate_axis(         %{
     content: %{x: content_x, height: height},

@@ -19,6 +19,7 @@ defmodule Matplotex.PieChart do
           title: word(),
           dataset: list(),
           labels: list(),
+
           color_palette: list(),
           stroke_width: number(),
           width: number(),

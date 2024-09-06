@@ -14,6 +14,7 @@ defmodule Matplotex.LinePlot do
     x_margin: number(),
     y_margin: number(),
     line_width: number(),
+    color_palette: list(),
     title: title(),
     x_label_offset: number(),
     y_label_offset: number(),
