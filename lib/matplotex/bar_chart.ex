@@ -26,28 +26,26 @@ defmodule Matplotex.BarChart do
   TODO: Tooltip css
 
   """
-import Matplotex.Blueprint.Frame
+  import Matplotex.Blueprint.Frame
 
-alias Matplotex.BarChart.Plot
+  alias Matplotex.BarChart.Plot
 
   @type params() :: %{
-    dataset: dataset1_d(),
-    x_labels: list(),
-    color_palette: String.t() | list(),
-    width: number(),
-    x_margin: number(),
-    y_margin: number(),
-    height: number(),
-    y_scale: number(),
-    y_label_sufix: String.t(),
-    x_label_offset: number(),
-    y_label_offset: number()
-  }
-@type t() :: frame_struct()
+          dataset: dataset1_d(),
+          x_labels: list(),
+          color_palette: String.t() | list(),
+          width: number(),
+          x_margin: number(),
+          y_margin: number(),
+          height: number(),
+          y_scale: number(),
+          y_label_sufix: String.t(),
+          x_label_offset: number(),
+          y_label_offset: number()
+        }
+  @type t() :: frame_struct()
 
-frame()
-
-
+  frame()
 
   def create(params) do
     __MODULE__
@@ -56,4 +54,4 @@ frame()
     |> Plot.add_elements()
     |> Plot.generate_svg()
   end
-  end
+end

@@ -1,5 +1,4 @@
 defmodule Matplotex.PieChart.Plot do
-
   alias Matplotex.PieChart.GenerateSvg
   alias Matplotex.PieChart.Element
   alias Matplotex.PieChart.Legend
@@ -18,17 +17,15 @@ defmodule Matplotex.PieChart.Plot do
   @full_circle 2 * :math.pi()
   @label_roatetion_radius_percentage 0.2
   @slice_label_type "label.slice"
-  @start_angle -:math.pi()/2
+  @start_angle -:math.pi() / 2
 
   defmodule SliceAcc do
     defstruct [:slices, :datasum, :legend_frame, :x1, :y1, :legends, :labels, :start_angle]
   end
 
-
-
   @impl true
-  @spec new(module(),PieChart.params()) :: {PieChart.t(), map()}
-  def new(module,params) do
+  @spec new(module(), PieChart.params()) :: {PieChart.t(), map()}
+  def new(module, params) do
     # Fields are dataset, title, size, margin, valid, element, type
     # type: pie chart, dataset from params combination of  data and labels,
     {params, content_params} =
@@ -56,9 +53,6 @@ defmodule Matplotex.PieChart.Plot do
     cx = radius + margin
     cy = height - (radius + margin)
     y1 = margin
-
-
-
 
     %PieChart{
       graphset

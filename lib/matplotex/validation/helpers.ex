@@ -1,7 +1,7 @@
 defmodule Matplotex.Validation.Helpers do
   alias Matplotex.InputError
 
- #TODO: Move module specific validators to particular module
+  # TODO: Move module specific validators to particular module
   def validator() do
     %{
       "id" => fn id -> is_binary(id) end,
@@ -26,13 +26,17 @@ defmodule Matplotex.Validation.Helpers do
       "margin" => fn margin -> is_a_space(margin) end,
       "line_width" => fn line_width -> is_a_space(line_width) end,
       "show_x_axis" => fn show_x_axis -> is_boolean(show_x_axis) end,
-      "show_y_axis" =>  fn show_y_axis -> is_boolean(show_y_axis) end,
+      "show_y_axis" => fn show_y_axis -> is_boolean(show_y_axis) end,
       "show_v_grid" => fn show_v_grid -> is_boolean(show_v_grid) end,
-      "show_h_grid" => fn show_h_grid -> is_boolean(show_h_grid) end
+      "show_h_grid" => fn show_h_grid -> is_boolean(show_h_grid) end,
+      "type" => fn type -> is_binary(type) end,
+      "x_label" => fn label -> is_binary(label) end,
+      "y_label" => fn label -> is_binary(label) end,
+      "show_ticks" => fn show -> is_boolean(show) end
     }
   end
 
-    def run_validator(true, validator, params) do
+  def run_validator(true, validator, params) do
     Enum.filter(params, fn {k, v} ->
       validator_fun = Map.get(validator, k)
 

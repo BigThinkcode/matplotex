@@ -33,12 +33,17 @@ defmodule Matplotex.Utils.Algebra do
   end
 
   def rotation({x, y}, theeta) do
-    Nx.tensor([
-      [:math.cos(theeta), -:math.sin(theeta)],
-      [:math.sin(theeta), :math.sin(theeta)]
-    ], type: {:f, @tensor_data_type_bits})
-    |>Nx.dot([x, y])
-    |>Nx.to_flat_list()
-    |>List.to_tuple()
+    Nx.tensor(
+      [
+        [:math.cos(theeta), -:math.sin(theeta)],
+        [:math.sin(theeta), :math.sin(theeta)]
+      ],
+      type: {:f, @tensor_data_type_bits}
+    )
+    |> Nx.dot([x, y])
+    |> Nx.to_flat_list()
+    |> List.to_tuple()
   end
+
+  def transform_to_svg({x, y}, height), do: {x, height - y}
 end

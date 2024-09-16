@@ -19,10 +19,9 @@ defmodule Matplotex.BarChart.Plot do
 
   @stroke_width_grid 1
 
-
   @impl true
-  @spec new(module(),BarChart.params()) :: {Matplotex.BarChart.t(), map()}
-  def new(module,params) do
+  @spec new(module(), BarChart.params()) :: {Matplotex.BarChart.t(), map()}
+  def new(module, params) do
     {params, content_params} =
       params
       |> validate_params()
@@ -247,7 +246,6 @@ defmodule Matplotex.BarChart.Plot do
     }
   end
 
-
   def transform_dataset(dataset, xminmax, yminmax, width, height) do
     Enum.map(dataset, fn {y, x} ->
       transformation(x, y, xminmax, yminmax, width, height)
@@ -308,5 +306,4 @@ defmodule Matplotex.BarChart.Plot do
       y_max - rem(y_max, y_scale) + y_scale
     end
   end
-
 end
