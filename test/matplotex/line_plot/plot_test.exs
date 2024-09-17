@@ -1,4 +1,5 @@
 defmodule Matplotex.LinePlot.PlotTest do
+  alias Matplotex.FrameHelpers
   alias Matplotex.LinePlot.Element
   alias Matplotex.LinePlot.Content
   use Matplotex.PlotCase
@@ -7,30 +8,7 @@ defmodule Matplotex.LinePlot.PlotTest do
   alias Matplotex.LinePlot
 
   setup do
-    params = %{
-      "id" => "line-plot",
-      "dataset" => [
-        [1, 9, 8, 4, 6, 5, 3],
-        [1, 6, 5, 3, 3, 8, 6]
-      ],
-      "show_x_axis" => true,
-      "show_y_axis" => true,
-      "show_v_grid" => true,
-      "show_h_grid" => true,
-      "x_labels" => ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-      "width" => 700,
-      "height" => 400,
-      "x_margin" => 20,
-      "y_margin" => 10,
-      "x_label_offset" => 20,
-      "y_label_offset" => 20,
-      "y_scale" => 1,
-      "x_scale" => 1,
-      "color_palette" => ["654520", "6CBEC7"],
-      "type" => "line_chart",
-      "x_label" => "Days",
-      "y_label" => "Count"
-    }
+    params = FrameHelpers.lineplot_params()
     {line_plot, content_params}  = Plot.new(LinePlot,params)
     line_plot_with_content = Plot.set_content({line_plot, content_params})
     {:ok, %{params: params, line_plot: line_plot, content_params: content_params, line_plot_with_content: line_plot_with_content}}
@@ -42,7 +20,6 @@ defmodule Matplotex.LinePlot.PlotTest do
 
       assert Map.keys(content_params)|> Enum.sort() == [
                :color_palette,
-               :label_offset,
                :y_max,
                :x_max,
                :line_width,

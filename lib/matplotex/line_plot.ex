@@ -1,4 +1,5 @@
 defmodule Matplotex.LinePlot do
+  alias Matplotex.LinePlot.Plot
   import Matplotex.Blueprint.Frame
 
   @type params() :: %{
@@ -25,5 +26,11 @@ defmodule Matplotex.LinePlot do
   frame()
   @type t() :: frame_struct()
   def create(params) do
+    __MODULE__
+    |>Plot.new(params)
+    |>Plot.set_content()
+    |>Plot.add_elements()
+    |>Plot.generate_svg()
+
   end
 end

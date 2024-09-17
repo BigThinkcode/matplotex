@@ -1,7 +1,9 @@
 defmodule Matplotex.Element.Stencil do
   def line(line) do
     ~s(
-    <line x1="#{line.x1}"
+    <line
+    type="#{line.type}"
+    x1="#{line.x1}"
     y1="#{line.y1}"
     x2="#{line.x2}"
     y2="#{line.y2}"
@@ -24,7 +26,7 @@ defmodule Matplotex.Element.Stencil do
          font-weight="#{label.font_weight}"
          font-family="#{label.font_family}"
          font-style="#{label.font_style}"
-         transform="rotate(#{label.rotate}, #{label.x}, #{label.y})"
+         transform="#{rotate(label.rotate, label.x, label.y)}"
          dominant-baseline="#{label.dominant_baseline}">
          #{label.text}
         </text>
@@ -66,4 +68,7 @@ defmodule Matplotex.Element.Stencil do
     #{label(legend.label)}
     """
   end
+
+  defp rotate(nil, _, _),do: nil
+  defp rotate(rotate, x, y), do: "rotate(#{rotate}, #{x}, #{y})"
 end

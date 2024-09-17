@@ -1,4 +1,5 @@
 defmodule Matplotex.LinePlot.Plot do
+  alias Matplotex.LinePlot.GenerateSvg
   alias Matplotex.LinePlot.Element
   use Matplotex.Blueprint
   alias Matplotex.LinePlot
@@ -8,11 +9,14 @@ defmodule Matplotex.LinePlot.Plot do
   alias Matplotex.Element.Line
   @default_size 400
   @default_margin 15
-  @label_offset 20
   @scale 10
   @tick_length 5
+  @tick_xaxis "tick.xaxis"
+  @tick_yaxis "tick.yaxis"
+  @plot_line "line.plot"
+  @label_offset 20
 
-  @content_fields [:label_offset, :x_max, :y_max, :line_width, :color_palette]
+  @content_fields [ :x_max, :y_max, :line_width, :color_palette, :label_offset]
 
   @spec new(atom() | struct(), map()) :: {struct(), any()}
   def new(graph, params) do
@@ -29,17 +33,18 @@ defmodule Matplotex.LinePlot.Plot do
         {%LinePlot{
            size: %{width: width, height: height},
            margin: %{x_margin: x_margin, y_margin: y_margin}
-         } = plotset, %{label_offset: %{x: x_label_offset, y: y_label_offset}} = content_params}
+         } = plotset,  %{label_offset: %{x: x_label_offset, y: y_label_offset}} =content_params}
       ) do
     content = struct(Content, content_params)
+    content_height = height - 2 * y_margin - y_label_offset
 
     %LinePlot{
       plotset
       | content: %Content{
           content
-          | width: width - y_label_offset - 2 * x_margin,
-            height: height - x_label_offset - 2 * y_margin,
-            x: x_margin + y_label_offset,
+          | width: width - 2 * x_margin - x_label_offset,
+            height: content_height,
+            x: x_margin + x_label_offset ,
             y: y_margin + y_label_offset
         }
     }
@@ -63,6 +68,10 @@ defmodule Matplotex.LinePlot.Plot do
     "Invalid line plot #{inspect(errors)}"
   end
 
+  def generate_svg(graphset) do
+    GenerateSvg.generate(graphset, "")
+  end
+
   defp add_labels(%LinePlot{element: element, margin: %{x_margin: x_margin,y_margin: y_margin}, label: label, content: %Content{height: content_height, width: content_width }} = plotset) do
     x_label = Map.get(label, :x)
     y_label = Map.get(label, :y)
@@ -75,19 +84,21 @@ defmodule Matplotex.LinePlot.Plot do
   defp add_labels(%LinePlot{errors: errors} = plotset) do
     %LinePlot{plotset | valid: false, errors: errors ++ ["Not a valid line plot to add labels required fields are:   #{inspect([ margin: plotset.margin, content: plotset.content ])} "]}
   end
-  defp add_ticks(%LinePlot{grid_coordinates: %{x: x_grid_coords, y: y_grid_coords}, element: element, content: %Content{x: content_x, y: content_y}, tick: %{x: x_ticks,y: y_ticks}} = plotset) do
-  x_ticks =   x_ticks|>Enum.zip(x_grid_coords)|>Enum.map(fn {label, {x, y}} ->
+  defp add_ticks(%LinePlot{grid_coordinates: %{h: h_grid_coords, v: v_grid_coords},size: %{height: height}, element: element, content: %Content{height: content_height},tick: %{x: x_ticks,y: y_ticks}} = plotset) do
+  x_ticks =   x_ticks|>Enum.zip(v_grid_coords)|>Enum.map(fn {label, {x, y}} ->
+    y = svgfy(y, height)
+
       %Tick{
         #TODO: Make tick length  also from input
-        label: %Label{x: x, y: y+@tick_length, text: label},
-        tick_line: %Line{x1: x, y1: y, x2: x, y2: y+@tick_length}
+        label: %Label{type: @tick_xaxis, x: x, y: y+@tick_length, text: label},
+        tick_line: %Line{type: @tick_xaxis, x1: x, y1: y, x2: x, y2: y+@tick_length}
 
       }
      end)
-    y_ticks = y_ticks|>Enum.zip(y_grid_coords)|>Enum.map(fn {label, {x, y}} ->
+    y_ticks = y_ticks|>Enum.zip(h_grid_coords)|>Enum.map(fn {label, {x, y}} ->
     %Tick{
-      label: %Label{x: x - @tick_length, y: y, text: label},
-      tick_line: %Line{x1: x, y1: y, x2: x + @tick_length, y2: y}
+      label: %Label{type: @tick_yaxis, x: x - @tick_length, y: svgfy(y,content_height), text: label},
+      tick_line: %Line{type: @tick_yaxis, x1: x, y1: svgfy(y,content_height), x2: x + @tick_length, y2: svgfy(y,content_height)}
     }
     end)
 
@@ -113,7 +124,7 @@ defmodule Matplotex.LinePlot.Plot do
       dataset
       |> Enum.zip(color_palette)
       |> Enum.map(&generate_plot_lines(&1, plotset))
-      |>List.flatten()
+      |> List.flatten()
 
     element = %Element{element | lines: plot_lines}
     %LinePlot{plotset | element: element}
@@ -134,28 +145,29 @@ defmodule Matplotex.LinePlot.Plot do
          }
        }) do
 
-    [x_minmax, y_minmax] =
+    dataset = [0] ++ dataset
+
+    [y_minmax, x_minmax] =
       dataset
       |> Enum.with_index()
       |> Enum.unzip()
       |> Tuple.to_list()
       |> Enum.map(&Enum.min_max/1)
 
-    {contentx_tr, contenty_tr} =
-      transformation(content_x, content_y, x_minmax, y_minmax, content_width, content_height)
-      |> transform_to_svg(content_height)
-
+    # {contentx_tr, contenty_tr} =
+    #   transformation(content_x, content_y, x_minmax, y_minmax, content_width, content_height)
     dataset
     |> Enum.with_index()
-    |> Enum.reduce({[], %{x1: contentx_tr, y1: contenty_tr}}, fn {x, y},
+    |> Enum.reduce({[], %{x1: content_x, y1: svgfy(content_y, content_height)}}, fn {y, x},
                                                                  {lines, %{x1: x1, y1: y1}} ->
       {x2_tr, y2_tr} =
         transformation(x, y, x_minmax, y_minmax, content_width, content_height)
-        |> transform_to_svg(content_height)
-
+      x2 = x2_tr + content_x
+      y2 = y2_tr + content_y
+      IO.inspect({{x,y},{x1, y1}, {x2, y2}, x_minmax, y_minmax, content_width, content_height})
       {lines ++
-         [%Line{x1: x1, x2: x2_tr, y1: y1, y2: y2_tr, stroke: color, stroke_width: line_width}],
-       %{x1: x2_tr, y1: y2_tr}}
+         [%Line{type: @plot_line, x1: x1, x2: x2, y1: y1, y2: y2, stroke: color, stroke_width: line_width}],
+       %{x1: x2, y1: y2}}
     end)
     |> then(fn {lines, _} -> lines end)
   end
@@ -170,9 +182,9 @@ defmodule Matplotex.LinePlot.Plot do
          %LinePlot{dataset: dataset, tick: %{x: x_labels}, type: "line_chart"} = plotset
        ) do
     x_minmax = 0..length(x_labels) |> Enum.min_max()
-    y_minmax = dataset |> List.flatten() |> Enum.min_max()
+    y_max = dataset |> List.flatten() |> Enum.max()
 
-    GridLine.generate_grid_lines(plotset, x_minmax, y_minmax)
+    GridLine.generate_grid_lines(plotset, x_minmax, {0, y_max})
   end
 
   defp add_grid_lines(plotset), do: plotset
@@ -199,12 +211,13 @@ defmodule Matplotex.LinePlot.Plot do
       margin: margin,
       tick: tick,
       scale: scale,
-      label_offset: label_offset,
       x_max: x_max,
       y_max: y_max,
-      label: label
+      label: label,
+      label_offset: label_offset
     })
   end
+
 
   defp size(params) do
     {width, params} = Map.pop(params, :width, @default_size)
@@ -225,11 +238,6 @@ defmodule Matplotex.LinePlot.Plot do
     {%{x: x_labels, y: y_labels}, params}
   end
 
-  defp label_offset(params) do
-    {x_label_offset, params} = Map.pop(params, :x_label_offset, @label_offset)
-    {y_label_offset, params} = Map.pop(params, :y_label_offset, @label_offset)
-    {%{x: x_label_offset, y: y_label_offset}, params}
-  end
 
   defp scale(params) do
     {x_scale, params} = Map.pop(params, :x_scale, @scale)
@@ -242,6 +250,12 @@ defmodule Matplotex.LinePlot.Plot do
     {y_label, params} = Map.pop(params, :y_label)
     {%{x: x_label, y: y_label}, params}
   end
+  defp label_offset(params) do
+    {x_label_offset, params} = Map.pop(params, :x_label_offset, @label_offset)
+    {y_label_offset, params} = Map.pop(params, :y_label_offset, @label_offset)
+    {%{x: x_label_offset, y: y_label_offset}, params}
+  end
+
 
   defp xymax(%{dataset: [x, y]}) when is_list(x) and is_list(y) do
     {Enum.max(x), Enum.max(y)}

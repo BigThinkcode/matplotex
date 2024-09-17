@@ -5,7 +5,7 @@ defmodule Matplotex.Element.GridLine do
   @stroke_grid "#ddd"
   @v_grid_type "grid.vertical"
   @h_grid_type "grid.horizontal"
-
+  @point_zero 0
   @stroke_width_grid 1
 
   def generate_grid_lines(
@@ -23,7 +23,7 @@ defmodule Matplotex.Element.GridLine do
     x_max = calculate_max(x_max, x_scale)
     y_max = calculate_max(y_max, y_scale)
 
-    {x_grid_coords, x_grid_lines} =
+    {h_grid_coords, h_grid_lines} =
       generate_grids(
         {x_scale, content_x, content_y, content_width, content_height, {x_min, x_max},
          {y_min, y_max}},
@@ -32,7 +32,7 @@ defmodule Matplotex.Element.GridLine do
         :h_grid
       )
 
-    {y_grid_coords, y_grid_lines} =
+    {v_grid_coords, v_grid_lines} =
       generate_grids(
         {y_scale, content_x, content_y, content_width, content_height, {x_min, x_max},
          {y_min, y_max}},
@@ -43,8 +43,8 @@ defmodule Matplotex.Element.GridLine do
 
     %{
       chartset
-      | element: %{element | grid: %{x: x_grid_lines, y: y_grid_lines}},
-        grid_coordinates: %{x: x_grid_coords, y: y_grid_coords}
+      | element: %{element | grid: h_grid_lines ++ v_grid_lines},
+        grid_coordinates: %{h: h_grid_coords, v: v_grid_coords}
     }
   end
 
@@ -59,32 +59,30 @@ defmodule Matplotex.Element.GridLine do
 
     1..grids
     |> Enum.map(fn grid ->
-      x_point = content_x
-      y_point = content_y + grid * y_scale
+      y_point = grid * y_scale
 
-      coords =
-        {x_trans, y_trans} =
+
+        {_x_trans, y_trans} =
         Algebra.transformation(
-          x_point,
+          @point_zero,
           y_point,
           x_min_max,
           y_min_max,
           content_width,
           content_height
         )
-        |> Algebra.transform_to_svg(content_height)
-
+      y = Algebra.svgfy(y_trans + content_y, content_height)
       line = %Line{
         type: @h_grid_type,
-        x1: x_trans,
-        y1: y_trans,
+        x1: content_x,
+        y1: y,
         x2: width,
-        y2: y_trans,
+        y2: y,
         stroke: @stroke_grid,
         stroke_width: @stroke_width_grid
       }
 
-      {coords, line}
+      {{content_x, y_trans}, line}
     end)
     |> Enum.unzip()
   end
@@ -99,24 +97,22 @@ defmodule Matplotex.Element.GridLine do
 
     1..grids
     |> Enum.map(fn grid ->
-      x_point = content_x + grid * y_scale
-      y_point = content_y
+      x_point =  grid * y_scale
 
-      coords =
-        {x_trans, y_trans} =
-        Algebra.transformation(x_point, y_point, x_min_max, y_min_max, content_width, content_height) |>Algebra.transform_to_svg(content_height)
+        {x_trans, _y_trans} =
+        Algebra.transformation(x_point, @point_zero, x_min_max, y_min_max, content_width, content_height)
 
       line = %Line{
         type: @v_grid_type,
-        x1: x_trans,
-        y1: y_trans,
-        x2: x_trans,
-        y2: height,
+        x1: x_trans + content_x,
+        y1: Algebra.svgfy(content_y, height),
+        x2: x_trans + content_x,
+        y2: Algebra.svgfy(height, height),
         stroke: @stroke_grid,
         stroke_width: @stroke_width_grid
       }
 
-      {coords, line}
+      {{x_trans, content_y}, line}
     end)
     |> Enum.unzip()
   end

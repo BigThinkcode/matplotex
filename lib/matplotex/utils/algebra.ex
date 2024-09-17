@@ -15,6 +15,8 @@ defmodule Matplotex.Utils.Algebra do
   def transformation(x, y, {xmin, xmax}, {ymin, ymax}, svg_width, svg_height) do
     sx = svg_width / (xmax - xmin)
     sy = svg_height / (ymax - ymin)
+
+    # TODO: work for the datasets which has values in a range way far from zero in both direction
     tx = -xmin * sx
     ty = svg_height - ymin * sy
     point_matrix = Nx.tensor([x, y, 1], type: {:f, @tensor_data_type_bits})
@@ -45,5 +47,5 @@ defmodule Matplotex.Utils.Algebra do
     |> List.to_tuple()
   end
 
-  def transform_to_svg({x, y}, height), do: {x, height - y}
+def svgfy(y, height), do: height - y
 end
