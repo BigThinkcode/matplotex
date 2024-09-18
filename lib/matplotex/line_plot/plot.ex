@@ -142,7 +142,8 @@ defmodule Matplotex.LinePlot.Plot do
            width: content_width,
            line_width: line_width,
            height: content_height
-         }
+         },
+         size: %{height: height}
        }) do
 
     dataset = [0] ++ dataset
@@ -156,15 +157,17 @@ defmodule Matplotex.LinePlot.Plot do
 
     # {contentx_tr, contenty_tr} =
     #   transformation(content_x, content_y, x_minmax, y_minmax, content_width, content_height)
+    IO.inspect({content_y, content_height}, label: "The co")
     dataset
     |> Enum.with_index()
-    |> Enum.reduce({[], %{x1: content_x, y1: svgfy(content_y, content_height)}}, fn {y, x},
+    |> Enum.reduce({[], %{x1: content_x, y1: svgfy(content_y, height)}}, fn {y, x},
                                                                  {lines, %{x1: x1, y1: y1}} ->
       {x2_tr, y2_tr} =
         transformation(x, y, x_minmax, y_minmax, content_width, content_height)
+      # IO.inspect({x,y, x1, y1}, label: "The values")
       x2 = x2_tr + content_x
-      y2 = y2_tr + content_y
-      IO.inspect({{x,y},{x1, y1}, {x2, y2}, x_minmax, y_minmax, content_width, content_height})
+      y2 = y2_tr
+      IO.inspect({{x,y},{x1, y1}, x_minmax, y_minmax, content_width, content_height})
       {lines ++
          [%Line{type: @plot_line, x1: x1, x2: x2, y1: y1, y2: y2, stroke: color, stroke_width: line_width}],
        %{x1: x2, y1: y2}}
