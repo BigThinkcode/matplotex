@@ -55,4 +55,29 @@ defmodule Matplotex.Helpers do
       "legends" => true
     }
   end
+
+  def lineplot_params() do
+    %{
+      "id" => "line-plot",
+      "dataset" => [
+        [1, 9, 8, 4, 6, 5, 3],
+        [1, 6, 5, 3, 3, 8, 6]
+      ],
+      "x_labels" => ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      "y_labels" => [0,1,2,3,4,5,6,7,8,9],
+      "width" => 700,
+      "height" => 400,
+      "x_margin" => 20,
+      "y_margin" => 10,
+      "x_label_offset" => 40,
+      "y_label_offset" => 40,
+      "y_scale" => 1,
+      "x_scale" => 1,
+      "color_palette" => ["red", "green"],
+      "type" => "line_chart",
+      "x_label" => "Days",
+      "y_label" => "Count",
+      "line_width" => 3
+    }
+  end
 end

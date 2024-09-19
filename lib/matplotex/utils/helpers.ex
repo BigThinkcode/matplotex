@@ -19,4 +19,8 @@ defmodule Matplotex.Utils.Helpers do
       {tparams, Map.put(content_params, field, content)}
     end)
   end
+
+  def fetch_errors(graphset) do
+    Map.get(graphset, :errors, [])
+  end
 end

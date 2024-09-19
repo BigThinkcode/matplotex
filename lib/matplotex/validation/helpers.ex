@@ -1,6 +1,7 @@
 defmodule Matplotex.Validation.Helpers do
   alias Matplotex.InputError
 
+  # TODO: Move module specific validators to particular module
   def validator() do
     %{
       "id" => fn id -> is_binary(id) end,
@@ -9,6 +10,7 @@ defmodule Matplotex.Validation.Helpers do
       "legends" => fn legends -> is_boolean(legends) end,
       "dataset" => fn dataset -> validate_dataset(dataset) end,
       "x_labels" => fn x_labels -> is_list(x_labels) end,
+      "y_labels" => fn x_labels -> is_list(x_labels) end,
       "color_palette" => fn color_palette ->
         is_list(color_palette) or is_binary(color_palette)
       end,
@@ -17,11 +19,21 @@ defmodule Matplotex.Validation.Helpers do
       "x_margin" => fn x_margin -> is_a_space(x_margin) end,
       "y_margin" => fn y_margin -> is_a_space(y_margin) end,
       "y_scale" => fn y_scale -> is_a_space(y_scale) end,
+      "x_scale" => fn y_scale -> is_a_space(y_scale) end,
       "y_label_suffix" => fn yls -> is_binary(yls) end,
       "y_label_offset" => fn ylo -> is_a_space(ylo) end,
       "x_label_offset" => fn xlo -> is_a_space(xlo) end,
       "labels" => fn labels -> is_list(labels) end,
-      "margin" => fn margin -> is_a_space(margin) end
+      "margin" => fn margin -> is_a_space(margin) end,
+      "line_width" => fn line_width -> is_a_space(line_width) end,
+      "show_x_axis" => fn show_x_axis -> is_boolean(show_x_axis) end,
+      "show_y_axis" => fn show_y_axis -> is_boolean(show_y_axis) end,
+      "show_v_grid" => fn show_v_grid -> is_boolean(show_v_grid) end,
+      "show_h_grid" => fn show_h_grid -> is_boolean(show_h_grid) end,
+      "type" => fn type -> is_binary(type) end,
+      "x_label" => fn label -> is_binary(label) end,
+      "y_label" => fn label -> is_binary(label) end,
+      "show_ticks" => fn show -> is_boolean(show) end
     }
   end
 

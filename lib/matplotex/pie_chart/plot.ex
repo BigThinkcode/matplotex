@@ -1,5 +1,4 @@
 defmodule Matplotex.PieChart.Plot do
-
   alias Matplotex.PieChart.GenerateSvg
   alias Matplotex.PieChart.Element
   alias Matplotex.PieChart.Legend
@@ -8,6 +7,7 @@ defmodule Matplotex.PieChart.Plot do
   alias Matplotex.PieChart.Content
   alias Content.LegendFrame
   alias Matplotex.PieChart
+
   use Matplotex.Blueprint
   @default_size 400
   @width_key "width"
@@ -17,17 +17,15 @@ defmodule Matplotex.PieChart.Plot do
   @full_circle 2 * :math.pi()
   @label_roatetion_radius_percentage 0.2
   @slice_label_type "label.slice"
-  @start_angle 0
+  @start_angle -:math.pi() / 2
 
   defmodule SliceAcc do
     defstruct [:slices, :datasum, :legend_frame, :x1, :y1, :legends, :labels, :start_angle]
   end
 
-
-
   @impl true
-  @spec new(module(),PieChart.params()) :: {PieChart.t(), map()}
-  def new(module,params) do
+  @spec new(module(), PieChart.params()) :: {PieChart.t(), map()}
+  def new(module, params) do
     # Fields are dataset, title, size, margin, valid, element, type
     # type: pie chart, dataset from params combination of  data and labels,
     {params, content_params} =
@@ -146,6 +144,8 @@ defmodule Matplotex.PieChart.Plot do
         lx = cx + label_rotation_radius * lcos
         ly = cy + label_rotation_radius * lsin
         label_rotation_angle_degrees = label_roatation_angle * (180 / :math.pi())
+
+        # rot_max = MathFunc.homogeneous_transformation_matrix(:math.pi()/2 , 0, 0 )
 
         %__MODULE__.SliceAcc{
           acc

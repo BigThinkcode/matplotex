@@ -32,7 +32,7 @@ defmodule Matplotex.BarChartTest do
       "x_label_offset" => 20
     }
 
-    {new_barchart, content_params} = BarChart.Plot.new(BarChart,input_params)
+    {new_barchart, content_params} = BarChart.Plot.new(BarChart, input_params)
     barchart_with_content = BarChart.Plot.set_content({new_barchart, content_params})
     barchart_with_elements = BarChart.Plot.add_elements(barchart_with_content)
 
@@ -48,14 +48,16 @@ defmodule Matplotex.BarChartTest do
 
   describe "new/1" do
     test "create a Chart struct for valid data", %{params: params} do
-      assert {%BarChart{size: %{width: width, height: height}}, _} = BarChart.Plot.new(BarChart,params)
+      assert {%BarChart{size: %{width: width, height: height}}, _} =
+               BarChart.Plot.new(BarChart, params)
+
       assert width == Map.get(params, "width")
       assert height == Map.get(params, "height")
     end
 
     test "raise error for invalid input", %{params: params} do
       invalid_params = Map.replace(params, "height", "nonumber")
-      assert_raise(Matplotex.InputError, fn -> BarChart.Plot.new(BarChart,invalid_params) end)
+      assert_raise(Matplotex.InputError, fn -> BarChart.Plot.new(BarChart, invalid_params) end)
     end
 
     test "raise error for invalid dataset", %{params: %{"dataset" => dataset} = params} do
@@ -65,7 +67,7 @@ defmodule Matplotex.BarChartTest do
       assert_raise(
         Matplotex.InputError,
         "Invalid input [{\"dataset\", [\"nonumber\", 44, 56, 67, 67, 89, 14, 57, 33, 59, 67, 90, 34]}]",
-        fn -> BarChart.Plot.new(BarChart,invalid_params) end
+        fn -> BarChart.Plot.new(BarChart, invalid_params) end
       )
     end
   end

@@ -16,7 +16,7 @@ defmodule Matplotex.PieChartTest do
       "legends" => true
     }
 
-    {pie_chart, content_params} = PieChart.Plot.new(PieChart,params)
+    {pie_chart, content_params} = PieChart.Plot.new(PieChart, params)
     chartset_with_content = PieChart.Plot.set_content({pie_chart, content_params})
     chartset_with_element = PieChart.Plot.add_elements(chartset_with_content)
 
@@ -32,7 +32,7 @@ defmodule Matplotex.PieChartTest do
 
   describe "new/1" do
     test "return pie_chart set and content params", %{params: params} do
-      assert {pie_chart, content_params} = PieChart.Plot.new(PieChart,params)
+      assert {pie_chart, content_params} = PieChart.Plot.new(PieChart, params)
       assert pie_chart.id == Map.get(params, "id")
       assert content_params.legends
     end
@@ -43,7 +43,8 @@ defmodule Matplotex.PieChartTest do
       content_params: content_params,
       chartset: chartset
     } do
-      assert %PieChart{content: %Content{}} = PieChart.Plot.set_content({chartset, content_params})
+      assert %PieChart{content: %Content{}} =
+               PieChart.Plot.set_content({chartset, content_params})
     end
   end
 
