@@ -10,6 +10,7 @@ defmodule Matplotex.Validation.Helpers do
       "legends" => fn legends -> is_boolean(legends) end,
       "dataset" => fn dataset -> validate_dataset(dataset) end,
       "x_labels" => fn x_labels -> is_list(x_labels) end,
+      "y_labels" => fn x_labels -> is_list(x_labels) end,
       "color_palette" => fn color_palette ->
         is_list(color_palette) or is_binary(color_palette)
       end,

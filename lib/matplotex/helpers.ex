@@ -64,6 +64,7 @@ defmodule Matplotex.Helpers do
         [1, 6, 5, 3, 3, 8, 6]
       ],
       "x_labels" => ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      "y_labels" => [0,1,2,3,4,5,6,7,8,9],
       "width" => 700,
       "height" => 400,
       "x_margin" => 20,

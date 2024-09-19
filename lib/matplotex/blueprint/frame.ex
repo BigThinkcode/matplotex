@@ -12,7 +12,6 @@ defmodule Matplotex.Blueprint.Frame do
     :title,
     :size,
     :tick,
-
     :axis,
     :element,
     :type,

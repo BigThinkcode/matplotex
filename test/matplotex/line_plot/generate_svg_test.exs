@@ -9,25 +9,32 @@ defmodule Matplotex.LinePlot.GenerateSvgTest do
 
   setup do
     params = FrameHelpers.lineplot_params()
-   line_plot =  LinePlot
-    |>Plot.new(params)
-    |>Plot.set_content()
-    |>Plot.add_elements()
+
+    line_plot =
+      LinePlot
+      |> Plot.new(params)
+      |> Plot.set_content()
+      |> Plot.add_elements()
 
     {:ok, %{line_plot: line_plot}}
   end
 
   describe "generate/2" do
-    test "will add axis line elements", %{line_plot: %LinePlot{element: %Element{axis: axis}} = lineplot} do
+    test "will add axis line elements", %{
+      line_plot: %LinePlot{element: %Element{axis: axis}} = lineplot
+    } do
       axis = hd(axis)
       assert GenerateSvg.generate(lineplot, "") =~ Stencil.line(axis)
-
     end
+
     test "will add grid lines", %{line_plot: %LinePlot{element: %Element{grid: grids}} = lineplot} do
       grid = hd(grids)
       assert GenerateSvg.generate(lineplot, "") =~ Stencil.line(grid)
     end
-    test "will add plot lines", %{line_plot: %LinePlot{element: %Element{lines: lines}} = lineplot} do
+
+    test "will add plot lines", %{
+      line_plot: %LinePlot{element: %Element{lines: lines}} = lineplot
+    } do
       line = hd(lines)
       assert GenerateSvg.generate(lineplot, "") =~ Stencil.line(line)
     end
@@ -42,5 +49,4 @@ defmodule Matplotex.LinePlot.GenerateSvgTest do
       assert GenerateSvg.generate(lineplot, "") =~ Stencil.tick(tick)
     end
   end
-
 end

@@ -49,7 +49,7 @@ defmodule Matplotex.Element.GridLine do
   end
 
   defp generate_grids(
-         {y_scale, content_x, content_y, content_width, content_height, x_min_max,
+         {y_scale, content_x,_content_y, content_width, content_height, x_min_max,
           {_y_min, y_max} = y_min_max},
          %{width: width},
          true,
@@ -61,8 +61,7 @@ defmodule Matplotex.Element.GridLine do
     |> Enum.map(fn grid ->
       y_point = grid * y_scale
 
-
-        {_x_trans, y_trans} =
+      {_x_trans, y_trans} =
         Algebra.transformation(
           @point_zero,
           y_point,
@@ -71,13 +70,15 @@ defmodule Matplotex.Element.GridLine do
           content_width,
           content_height
         )
-      y = Algebra.svgfy(y_trans + content_y, content_height)
+
+
+
       line = %Line{
         type: @h_grid_type,
         x1: content_x,
-        y1: y,
+        y1: y_trans,
         x2: width,
-        y2: y,
+        y2: y_trans,
         stroke: @stroke_grid,
         stroke_width: @stroke_width_grid
       }
@@ -88,7 +89,8 @@ defmodule Matplotex.Element.GridLine do
   end
 
   defp generate_grids(
-         {y_scale, content_x, content_y, content_width, content_height, {_x_min, x_max} = x_min_max, y_min_max},
+         {y_scale, content_x, content_y, content_width, content_height,
+          {_x_min, x_max} = x_min_max, y_min_max},
          %{height: height},
          true,
          :v_grid
@@ -97,15 +99,22 @@ defmodule Matplotex.Element.GridLine do
 
     1..grids
     |> Enum.map(fn grid ->
-      x_point =  grid * y_scale
+      x_point = grid * y_scale
 
-        {x_trans, _y_trans} =
-        Algebra.transformation(x_point, @point_zero, x_min_max, y_min_max, content_width, content_height)
+      {x_trans, _y_trans} =
+        Algebra.transformation(
+          x_point,
+          @point_zero,
+          x_min_max,
+          y_min_max,
+          content_width,
+          content_height
+        )
 
       line = %Line{
         type: @v_grid_type,
         x1: x_trans + content_x,
-        y1: Algebra.svgfy(content_y, height),
+        y1: content_y,
         x2: x_trans + content_x,
         y2: Algebra.svgfy(height, height),
         stroke: @stroke_grid,

@@ -27,10 +27,9 @@ defmodule Matplotex.LinePlot do
   @type t() :: frame_struct()
   def create(params) do
     __MODULE__
-    |>Plot.new(params)
-    |>Plot.set_content()
-    |>Plot.add_elements()
-    |>Plot.generate_svg()
-
+    |> Plot.new(params)
+    |> Plot.set_content()
+    |> Plot.add_elements()
+    |> Plot.generate_svg()
   end
 end

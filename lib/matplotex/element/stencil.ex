@@ -69,6 +69,6 @@ defmodule Matplotex.Element.Stencil do
     """
   end
 
-  defp rotate(nil, _, _),do: nil
+  defp rotate(nil, _, _), do: nil
   defp rotate(rotate, x, y), do: "rotate(#{rotate}, #{x}, #{y})"
 end

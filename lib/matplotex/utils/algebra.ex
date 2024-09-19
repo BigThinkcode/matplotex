@@ -47,5 +47,5 @@ defmodule Matplotex.Utils.Algebra do
     |> List.to_tuple()
   end
 
-def svgfy(y, height), do: height - y
+  def svgfy(y, height), do: height - y
 end
