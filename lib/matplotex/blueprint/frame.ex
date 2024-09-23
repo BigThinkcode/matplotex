@@ -5,7 +5,8 @@ defmodule Matplotex.Blueprint.Frame do
   @common_fields [
     :id,
     :content,
-    :dataset,
+    :data,
+    :dataset, #TODO: change dataset to data, should deprecat this field
     :label,
     :scale,
     :grid,
@@ -16,6 +17,8 @@ defmodule Matplotex.Blueprint.Frame do
     :element,
     :type,
     :grid_coordinates,
+    :x_lim,
+    :y_lim,
     errors: [],
     valid: @valid_by_default,
     margin: @default_margin,
@@ -23,7 +26,7 @@ defmodule Matplotex.Blueprint.Frame do
     show_y_axis: @show_by_default,
     show_v_grid: @show_by_default,
     show_h_grid: @show_by_default,
-    show_ticks: @show_by_default
+    show_ticks: @show_by_default,
   ]
   defmacro frame() do
     build_struct()
@@ -48,11 +51,14 @@ defmodule Matplotex.Blueprint.Frame do
         @type axis() :: :on | :off | nil
         @type element() :: any()
         @type content() :: any()
+        @type limit() :: {number(), number()} | any()
+
 
         @type frame_struct() :: %__MODULE__{
                 id: any(),
                 dataset: dataset1_d() | dataset2_d(),
-                label: label(),
+                data: any(),
+                label: label(), # set xlabel set y label
                 scale: scale(),
                 grid: grid(),
                 title: title(),
@@ -70,7 +76,9 @@ defmodule Matplotex.Blueprint.Frame do
                 show_h_grid: boolean(),
                 errors: list(),
                 grid_coordinates: dataset2_d(),
-                show_ticks: boolean()
+                show_ticks: boolean(),
+                x_lim: limit(),
+                y_lim: limit()
               }
       end
 

@@ -1,8 +1,11 @@
-# defmodule MatplotexTest do
-#   use ExUnit.Case
-#   doctest Matplotex
+defmodule MatplotexTest do
+  use Matplotex.PlotCase
 
-#   test "greets the world" do
-#     assert Matplotex.hello() == :world
-#   end
-# end
+  test "plot can create a figure with axes by data" do
+    x = [1,3,7,4,2,5,6]
+    y = [1,3,7,4,2,5,6]
+
+   assert figure =  Matplotex.plot(x,y)
+   assert figure.axes.data == {x,y}
+  end
+end

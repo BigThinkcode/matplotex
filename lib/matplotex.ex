@@ -19,4 +19,7 @@ defmodule Matplotex do
   def pie_chart(params) do
     Matplotex.PieChart.create(params)
   end
+  def plot(x, y) do
+    Matplotex.LinePlot.create(x,y)
+  end
 end
