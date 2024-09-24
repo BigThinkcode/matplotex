@@ -1,4 +1,5 @@
 defmodule Matplotex.Blueprint.Frame do
+  alias Matplotex.Figure.Legend
   @default_margin 10
   @show_by_default true
   @valid_by_default true
@@ -17,8 +18,8 @@ defmodule Matplotex.Blueprint.Frame do
     :element,
     :type,
     :grid_coordinates,
-    :x_lim,
-    :y_lim,
+    :limit,
+    :legend,
     errors: [],
     valid: @valid_by_default,
     margin: @default_margin,
@@ -51,7 +52,9 @@ defmodule Matplotex.Blueprint.Frame do
         @type axis() :: :on | :off | nil
         @type element() :: any()
         @type content() :: any()
-        @type limit() :: {number(), number()} | any()
+        @type limit() :: %{x: number(),y: number()} | any()
+        @type legend() :: Legend.t() | any()
+
 
 
         @type frame_struct() :: %__MODULE__{
@@ -77,8 +80,8 @@ defmodule Matplotex.Blueprint.Frame do
                 errors: list(),
                 grid_coordinates: dataset2_d(),
                 show_ticks: boolean(),
-                x_lim: limit(),
-                y_lim: limit()
+                limit: limit(),
+                legend: legend(),
               }
       end
 
