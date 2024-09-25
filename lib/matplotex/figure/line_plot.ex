@@ -1,6 +1,7 @@
 defmodule Matplotex.LinePlot do
+  alias Matplotex.Figure.Text
+  alias Matplotex.Figure.Font
   alias Matplotex.Figure
-
   alias Matplotex.LinePlot.Plotter
   alias Matplotex.Figure.Legend
   import Matplotex.Blueprint.Frame
@@ -26,24 +27,26 @@ defmodule Matplotex.LinePlot do
           x_scale: number()
         }
 
-  frame()
+  frame(legend: %Legend{})
   @type t() :: frame_struct()
   def create(x,y) do
     %Figure{axes: Plotter.new(__MODULE__, x, y)}
   end
-  def add_label(%__MODULE__{label: nil} = axes,{key,label}) when is_binary(label) do
+  def add_label(%__MODULE__{label: nil} = axes,{key,label}, opts) when is_binary(label) do
   label =  Map.new()
-           |>Map.put(key, label)
+           |>Map.put(key, create_text(label, opts))
    update_label(axes, label)
   end
-  def add_label(%__MODULE__{label: label} = axes, {key,label}) when is_binary(label) do
-    label = Map.put(label, key, label)
+  def add_label(%__MODULE__{label: ax_label} = axes, {key,label}, opts) when is_binary(label) do
+    label = Map.put(ax_label, key, create_text(label, opts))
     update_label(axes, label)
   end
   def add_label(_axes, _label) do
    raise Matplotex.InputError, keys: [:label], message: "Invalid input"
   end
-  def add_title(axes, title) when is_binary(title) do
+
+  def add_title(axes, title, opts) when is_binary(title) do
+     title = create_text(title, opts)
     %{axes | title: title}
   end
   def add_title(_,_) do
@@ -84,6 +87,39 @@ defmodule Matplotex.LinePlot do
     legend = Map.merge(legend, params)
     %{axes | legend: legend}
   end
+
+
+  def materialize(figure) do
+
+    axes =
+      maybe_set_size(figure)
+    # set width and heigh
+    # calcualte spaces for labels and axis
+    # generate svg equalent elements for the plot
+    # generate svg elements for legend
+    # generate svg elements for labels and axis
+    # generate svg elements for data points
+    # generate svg elements for grid lines
+    # generate svg elements for title
+    # generate svg elements for x and y labels
+    # generate svg elements for x and y ticks
+    # generate svg elements for x and y limits
+    # generate svg elements for legend
+    # generate svg elements for plot background
+    # generate svg elements for plot border
+
+
+  end
+
+  defp maybe_set_size(%Figure{axes: %__MODULE__{size: %{width: _, height: _}} = axes}) do
+    axes
+  end
+  defp maybe_set_size(%Figure{axes: %__MODULE__{} = axes, figsize: {width, height}, margin: margin}) do
+
+
+  end
+
+
   defp update_tick(axes, tick) do
     %{axes | tick: tick}
   end
@@ -94,4 +130,12 @@ defmodule Matplotex.LinePlot do
   defp update_limit(axes, limit) do
     %{axes | limit: limit}
   end
+
+
+  defp create_text(label, opts) do
+    {font_params, _opts} = Keyword.split(opts, Font.font_keys())
+    font_params = Enum.into(font_params, %{})
+    font = struct(Font, font_params)
+    Text.new(label, font)
+   end
 end

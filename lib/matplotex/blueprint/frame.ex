@@ -1,39 +1,16 @@
 defmodule Matplotex.Blueprint.Frame do
+
   alias Matplotex.Figure.Legend
-  @default_margin 10
+  @default_margin 0.1
   @show_by_default true
   @valid_by_default true
-  @common_fields [
-    :id,
-    :content,
-    :data,
-    :dataset, #TODO: change dataset to data, should deprecat this field
-    :label,
-    :scale,
-    :grid,
-    :title,
-    :size,
-    :tick,
-    :axis,
-    :element,
-    :type,
-    :grid_coordinates,
-    :limit,
-    :legend,
-    errors: [],
-    valid: @valid_by_default,
-    margin: @default_margin,
-    show_x_axis: @show_by_default,
-    show_y_axis: @show_by_default,
-    show_v_grid: @show_by_default,
-    show_h_grid: @show_by_default,
-    show_ticks: @show_by_default,
-  ]
-  defmacro frame() do
-    build_struct()
+  defmacro frame(opts \\ []) do
+    build_struct(opts)
   end
 
-  defp build_struct() do
+  defp build_struct(opts) do
+     legend = Keyword.get(opts, :legend)
+
     types =
       quote do
         @type dataset1_d() :: list() | nil
@@ -81,13 +58,38 @@ defmodule Matplotex.Blueprint.Frame do
                 grid_coordinates: dataset2_d(),
                 show_ticks: boolean(),
                 limit: limit(),
-                legend: legend(),
+                legend: legend()
               }
       end
 
     build_struct =
       quote do
-        defstruct unquote(@common_fields)
+        defstruct unquote([
+          :id,
+          :content,
+          :data,
+          :dataset, #TODO: change dataset to data, should deprecate this field
+          :label,
+          :scale,
+          :grid,
+          :title,
+          :size,
+          :tick,
+          :axis,
+          :element,
+          :type,
+          :grid_coordinates,
+          :limit,
+          legend: legend,
+          errors: [],
+          valid: @valid_by_default,
+          margin: @default_margin,
+          show_x_axis: @show_by_default,
+          show_y_axis: @show_by_default,
+          show_v_grid: @show_by_default,
+          show_h_grid: @show_by_default,
+          show_ticks: @show_by_default,
+        ])
       end
 
     quote do

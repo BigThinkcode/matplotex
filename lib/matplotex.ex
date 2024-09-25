@@ -25,16 +25,16 @@ alias Matplotex.Figure
     Matplotex.LinePlot.create(x,y)
   end
   @spec set_xlabel(Figure.t(), String.t()) :: Figure.t()
-  def set_xlabel(figure, label) do
-    Figure.add_label(figure, {:x, label})
+  def set_xlabel(figure, label, opts \\[]) do
+    Figure.add_label(figure, {:x, label}, opts)
   end
   @spec set_ylabel(Figure.t(), String.t()) :: Figure.t()
-  def set_ylabel(figure, label) do
-    Figure.add_label(figure, {:y, label})
+  def set_ylabel(figure, label, opts \\ []) do
+    Figure.add_label(figure, {:y, label}, opts)
   end
   @spec set_title(Figure.t(), String.t()) :: Figure.t()
-  def set_title(figure, title) do
-    Figure.add_title(figure, title)
+  def set_title(figure, title, opts \\ []) do
+    Figure.add_title(figure, title, opts)
   end
   @spec set_xticks(Figure.t(), list()) :: Figure.t()
   def set_xticks(figure, ticks) do
@@ -62,5 +62,8 @@ alias Matplotex.Figure
   end
   def legend(figure, labels) when is_list(labels) do
     Figure.add_legend(figure, %{labels: labels})
+  end
+  def set_rc_params(figure, rc_params) do
+    Figure.set_rc_params(figure, rc_params)
   end
 end
