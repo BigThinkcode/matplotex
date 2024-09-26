@@ -75,6 +75,10 @@ defmodule Matplotex do
     Figure.add_legend(figure, %{labels: labels})
   end
 
+  def figure(figure, params) do
+    Figure.update_figure(figure, params)
+  end
+
   def set_rc_params(figure, rc_params) do
     Figure.set_rc_params(figure, rc_params)
   end

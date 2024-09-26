@@ -92,4 +92,16 @@ defmodule MatplotexTest do
     assert figure.rc_params.x_tick_font_size == 12
     assert figure.rc_params.y_tick_font_size == 16
   end
+
+  test "figure updates the params of the figure", %{figure: figure} do
+    size = {5, 4}
+    figure = Matplotex.figure(figure, %{figsize: size})
+    assert figure.figsize == size
+  end
+
+  test "raise error if invalid params passed", %{figure: figure} do
+    assert_raise Matplotex.InputError, "Invalid keys", fn ->
+      Matplotex.figure(figure, %{invalid: "im not valid"})
+    end
+  end
 end

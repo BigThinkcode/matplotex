@@ -47,6 +47,20 @@ defmodule Matplotex.Figure do
   def add_legend(%__MODULE__{axes: %module{} = axes} = figure, params),
     do: %{figure | axes: module.add_legend(axes, params)}
 
+  def update_figure(figure, params) do
+    if valid_params?(params) do
+      Map.merge(figure, params)
+    else
+      raise Matplotex.InputError, message: "Invalid keys"
+    end
+  end
+
+  defp valid_params?(params) do
+    param_keys = Map.keys(params)
+    fig_keys = Map.keys(%__MODULE__{})
+    Enum.any?(param_keys, fn key -> key in fig_keys end)
+  end
+
   def set_rc_params(figure, params) when is_list(params) do
     params = Enum.into(params, %{})
     update_rc_params(figure, params)
