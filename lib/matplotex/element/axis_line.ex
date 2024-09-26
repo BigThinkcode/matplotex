@@ -16,8 +16,6 @@ defmodule Matplotex.Element.AxisLine do
          },
          :x
        ) do
-
-
     %Line{
       type: "axis.xaxis",
       x1: content_x,

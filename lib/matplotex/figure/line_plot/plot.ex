@@ -135,10 +135,11 @@ defmodule Matplotex.LinePlot.Plot do
       |> Enum.zip(v_grid_coords)
       |> Enum.map(fn {label, {x, y}} ->
         x = x + content_x
+
         %Tick{
           # TODO: Make tick length  also from input
-          label: %Label{type: @tick_xaxis, x: x , y: y + @tick_length, text: label},
-          tick_line: %Line{type: @tick_xaxis, x1: x , y1: y, x2: x , y2: y + @tick_length}
+          label: %Label{type: @tick_xaxis, x: x, y: y + @tick_length, text: label},
+          tick_line: %Line{type: @tick_xaxis, x1: x, y1: y, x2: x, y2: y + @tick_length}
         }
       end)
 
@@ -146,11 +147,10 @@ defmodule Matplotex.LinePlot.Plot do
       y_ticks
       |> Enum.zip(h_grid_coords)
       |> Enum.map(fn {label, {x, y}} ->
-
         %Tick{
           label: %Label{
             type: @tick_yaxis,
-            x: x - x_label_offset ,
+            x: x - x_label_offset,
             y: y,
             text: label
           },
@@ -158,7 +158,7 @@ defmodule Matplotex.LinePlot.Plot do
             type: @tick_yaxis,
             x1: x,
             y1: y,
-            x2: x - @tick_length ,
+            x2: x - @tick_length,
             y2: y
           }
         }
@@ -218,19 +218,14 @@ defmodule Matplotex.LinePlot.Plot do
     # {contentx_tr, contenty_tr} =
     #   transformation(content_x, content_y, x_minmax, y_minmax, content_width, content_height)
 
-
     dataset
     |> Enum.with_index()
-    |> Enum.reduce({[], %{x1: content_x, y1: content_y}}, fn {y, x},
-                                                                            {lines,
-                                                                             %{x1: x1, y1: y1}} ->
+    |> Enum.reduce({[], %{x1: content_x, y1: content_y}}, fn {y, x}, {lines, %{x1: x1, y1: y1}} ->
       {x2_tr, y2_tr} =
         transformation(x, y, x_minmax, y_minmax, content_width, content_height)
 
-
       x2 = x2_tr + content_x
       y2 = y2_tr
-
 
       {lines ++
          [
@@ -312,7 +307,7 @@ defmodule Matplotex.LinePlot.Plot do
     {x_labels, params} = Map.pop(params, :x_labels, [])
     {y_labels, params} = Map.pop(params, :y_labels, [])
 
-   #TODO: it only support positive values starting from zero convert it to make capable of handling any rang
+    # TODO: it only support positive values starting from zero convert it to make capable of handling any rang
     # TODO: A way to identify weather the graph requires y ticks or not
     {%{x: x_labels, y: y_labels}, params}
   end

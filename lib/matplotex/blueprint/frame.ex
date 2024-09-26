@@ -1,5 +1,4 @@
 defmodule Matplotex.Blueprint.Frame do
-
   alias Matplotex.Figure.Legend
   @default_margin 0.1
   @show_by_default true
@@ -9,7 +8,7 @@ defmodule Matplotex.Blueprint.Frame do
   end
 
   defp build_struct(opts) do
-     legend = Keyword.get(opts, :legend)
+    legend = Keyword.get(opts, :legend)
 
     types =
       quote do
@@ -29,16 +28,15 @@ defmodule Matplotex.Blueprint.Frame do
         @type axis() :: :on | :off | nil
         @type element() :: any()
         @type content() :: any()
-        @type limit() :: %{x: number(),y: number()} | any()
+        @type limit() :: %{x: number(), y: number()} | any()
         @type legend() :: Legend.t() | any()
-
-
 
         @type frame_struct() :: %__MODULE__{
                 id: any(),
                 dataset: dataset1_d() | dataset2_d(),
                 data: any(),
-                label: label(), # set xlabel set y label
+                # set xlabel set y label
+                label: label(),
                 scale: scale(),
                 grid: grid(),
                 title: title(),
@@ -65,31 +63,32 @@ defmodule Matplotex.Blueprint.Frame do
     build_struct =
       quote do
         defstruct unquote([
-          :id,
-          :content,
-          :data,
-          :dataset, #TODO: change dataset to data, should deprecate this field
-          :label,
-          :scale,
-          :grid,
-          :title,
-          :size,
-          :tick,
-          :axis,
-          :element,
-          :type,
-          :grid_coordinates,
-          :limit,
-          legend: legend,
-          errors: [],
-          valid: @valid_by_default,
-          margin: @default_margin,
-          show_x_axis: @show_by_default,
-          show_y_axis: @show_by_default,
-          show_v_grid: @show_by_default,
-          show_h_grid: @show_by_default,
-          show_ticks: @show_by_default,
-        ])
+                    :id,
+                    :content,
+                    :data,
+                    # TODO: change dataset to data, should deprecate this field
+                    :dataset,
+                    :label,
+                    :scale,
+                    :grid,
+                    :title,
+                    :size,
+                    :tick,
+                    :axis,
+                    :element,
+                    :type,
+                    :grid_coordinates,
+                    :limit,
+                    legend: legend,
+                    errors: [],
+                    valid: @valid_by_default,
+                    margin: @default_margin,
+                    show_x_axis: @show_by_default,
+                    show_y_axis: @show_by_default,
+                    show_v_grid: @show_by_default,
+                    show_h_grid: @show_by_default,
+                    show_ticks: @show_by_default
+                  ])
       end
 
     quote do

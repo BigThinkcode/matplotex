@@ -49,7 +49,7 @@ defmodule Matplotex.Element.GridLine do
   end
 
   defp generate_grids(
-         {y_scale, content_x,_content_y, content_width, content_height, x_min_max,
+         {y_scale, content_x, _content_y, content_width, content_height, x_min_max,
           {_y_min, y_max} = y_min_max},
          %{width: width},
          true,
@@ -70,8 +70,6 @@ defmodule Matplotex.Element.GridLine do
           content_width,
           content_height
         )
-
-
 
       line = %Line{
         type: @h_grid_type,
