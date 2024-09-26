@@ -1,10 +1,13 @@
 defmodule Matplotex.LinePlot do
+  alias Matplotex.Figure.RcParams
   alias Matplotex.Figure.Text
   alias Matplotex.Figure.Font
   alias Matplotex.Figure
   alias Matplotex.LinePlot.Plotter
   alias Matplotex.Figure.Legend
   import Matplotex.Blueprint.Frame
+
+  @pt_to_inch 1/72
 
   @type params() :: %{
           id: String.t(),
@@ -129,9 +132,30 @@ defmodule Matplotex.LinePlot do
 
   defp maybe_set_size(%Figure{
          axes: %__MODULE__{} = axes,
-         figsize: {width, height},
-         margin: margin
-       }) do
+         figsize: figsize,
+         margin: margin,
+         rc_params: rc_params,
+       } = figure) do
+      {width, height} =  figsize
+        |>peel_margin(margin)
+        |>slice_text_spaces(rc_params)
+      axes = %__MODULE__{axes| size: %{width: width, height: height}}
+      %Figure{figure | axes: axes}
+
+  end
+
+  defp peel_margin({width, height}, margin) do
+    {width - 2*width*margin, height - 2*height*margin}
+  end
+
+  defp slice_text_spaces({width, height}, rc_params) do
+    x_label_font_size = Map.get(rc_params, :x_label_font_size, 14)
+    y_label_font_size = Map.get(rc_params, :y_label_font_size, 14)
+    title_font = Map.get(rc_params, :title_font, 18)
+    x_label_offset = x_label_font_size * @pt_to_inch
+    y_label_offset = y_label_font_size * @pt_to_inch
+    title_offset = title_font * @pt_to_inch
+    {width - x_label_offset, height - y_label_offset- title_offset}
   end
 
   defp update_tick(axes, tick) do

@@ -7,7 +7,11 @@ defmodule Matplotex.Figure.RcParams do
   @grid_linestyle "--"
 
   @legend_location "top right"
-  @default_font_size "16pt"
+  @default_font_size 16
+  @grid_linewidth 1
+  @grid_line_alpha 0.5
+  @font_uom "pt"
+
   defstruct figure_size: @default_figsize,
             figure_dpi: @default_dpi,
             line_width: @line_width,
@@ -20,5 +24,8 @@ defmodule Matplotex.Figure.RcParams do
             legend_location: @legend_location,
             title_font: @default_font_size,
             grid_color: @grid_color,
-            grid_linestyle: @grid_linestyle
+            grid_linestyle: @grid_linestyle,
+            grid_linewidth: @grid_linewidth,
+            grid_alpha: @grid_line_alpha,
+            font_uom: @font_uom
 end
