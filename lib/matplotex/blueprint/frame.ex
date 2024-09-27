@@ -75,6 +75,8 @@ defmodule Matplotex.Blueprint.Frame do
                     :size,
                     :tick,
                     :axis,
+                    :center,
+                    :bottom_left_corner,
                     :element,
                     :type,
                     :grid_coordinates,

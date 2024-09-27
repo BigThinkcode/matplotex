@@ -1,4 +1,5 @@
 defmodule MatplotexTest do
+  alias Matplotex.InputError
   use Matplotex.PlotCase
 
   setup do
@@ -9,12 +10,22 @@ defmodule MatplotexTest do
     {:ok, %{figure: figure}}
   end
 
-  test "plot can create a figure with axes by data" do
+  test "plot can create a figure with axes by data and setup tick and limits" do
     x = [1, 3, 7, 4, 2, 5, 6]
     y = [1, 3, 7, 4, 2, 5, 6]
 
     assert figure = Matplotex.plot(x, y)
     assert figure.axes.data == {x, y}
+    assert figure.axes.limit.x == {0, 8, 1}
+    assert figure.axes.limit.y == {0, 8, 1}
+    assert figure.axes.tick.x == 0..8 |> Enum.to_list()
+    assert figure.axes.tick.y == 0..8 |> Enum.to_list()
+  end
+
+  test "raise error for invalid input" do
+    assert_raise InputError, "Invalid x and y values for plot, x and y should be in list", fn ->
+      Matplotex.plot("ser", "ser")
+    end
   end
 
   test "adds xlabel to the figure ", %{figure: figure} do

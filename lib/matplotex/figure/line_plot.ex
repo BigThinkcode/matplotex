@@ -7,7 +7,8 @@ defmodule Matplotex.LinePlot do
   alias Matplotex.Figure.Legend
   import Matplotex.Blueprint.Frame
 
-  @pt_to_inch 1/72
+  @pt_to_inch 1 / 72
+  @dpi 96
 
   @type params() :: %{
           id: String.t(),
@@ -62,7 +63,7 @@ defmodule Matplotex.LinePlot do
     raise Matplotex.InputError, keys: [:title], message: "Invalid Input"
   end
 
-  def add_tick(%__MODULE__{tick: nil} = axes, {key, ticks}) when is_list(ticks) do
+  def add_ticks(%__MODULE__{tick: nil} = axes, {key, ticks}) when is_list(ticks) do
     tick =
       Map.new()
       |> Map.put(key, ticks)
@@ -70,12 +71,12 @@ defmodule Matplotex.LinePlot do
     update_tick(axes, tick)
   end
 
-  def add_tick(%__MODULE__{tick: tick} = axes, {key, ticks}) when is_list(ticks) do
+  def add_ticks(%__MODULE__{tick: tick} = axes, {key, ticks}) when is_list(ticks) do
     tick = Map.put(tick, key, ticks)
     update_tick(axes, tick)
   end
 
-  def add_tick(_, _) do
+  def add_ticks(_, _) do
     raise Matplotex.InputError, keys: [:tick], message: "Invalid Input"
   end
 
@@ -130,32 +131,71 @@ defmodule Matplotex.LinePlot do
     axes
   end
 
-  defp maybe_set_size(%Figure{
-         axes: %__MODULE__{} = axes,
-         figsize: figsize,
-         margin: margin,
-         rc_params: rc_params,
-       } = figure) do
-      {width, height} =  figsize
-        |>peel_margin(margin)
-        |>slice_text_spaces(rc_params)
-      axes = %__MODULE__{axes| size: %{width: width, height: height}}
-      %Figure{figure | axes: axes}
+  defp maybe_set_size(
+         %Figure{
+           axes: %__MODULE__{tick: ticks} = axes,
+           figsize: figsize,
+           margin: margin,
+           rc_params: rc_params
+         } = figure
+       ) do
+    {{width, height}, cx, cy} =
+      figsize
+      |> peel_margin(margin)
+      |> peel_label_offsets(rc_params)
+      |> peel_tick_offsets(rc_params, ticks)
+      |> calculate_corner(figsize)
+      |> peel_margin(margin, figsize)
 
+    axes = %__MODULE__{
+      axes
+      | size: %{width: width * @dpi, height: height * @dpi},
+        bottom_left_corner: {cx * @dpi, cy * @dpi}
+    }
+
+    %Figure{figure | axes: axes}
+  end
+
+  defp calculate_corner({width, height}, {f_width, f_height}) do
+    {width, height, f_width - width, f_height - height}
   end
 
   defp peel_margin({width, height}, margin) do
-    {width - 2*width*margin, height - 2*height*margin}
+    {width - width * margin, height - height * margin}
   end
 
-  defp slice_text_spaces({width, height}, rc_params) do
-    x_label_font_size = Map.get(rc_params, :x_label_font_size, 14)
-    y_label_font_size = Map.get(rc_params, :y_label_font_size, 14)
-    title_font = Map.get(rc_params, :title_font, 18)
+  defp peel_margin({width, height, cx, cy}, margin, {f_width, f_height}) do
+    {{width - f_width * margin, height - f_height * margin}, cx, cy}
+  end
+
+  defp peel_label_offsets({width, height}, rc_params) do
+    x_label_font_size = RcParams.get_rc(rc_params, :get_x_label_font_size)
+    y_label_font_size = RcParams.get_rc(rc_params, :get_y_label_font_size)
+
     x_label_offset = x_label_font_size * @pt_to_inch
     y_label_offset = y_label_font_size * @pt_to_inch
-    title_offset = title_font * @pt_to_inch
-    {width - x_label_offset, height - y_label_offset- title_offset}
+    {width - x_label_offset, height - y_label_offset}
+  end
+
+  defp peel_tick_offsets({width, height}, rc_params, %{y: y_ticks}) do
+    tick_size = y_ticks |> Enum.max_by(fn tick -> tick_length(tick) end) |> tick_length()
+    y_tick_font_size = RcParams.get_rc(rc_params, :get_y_tick_font_size)
+    x_tick_font_size = RcParams.get_rc(rc_params, :get_x_tick_font_size)
+    y_tick_offset = y_tick_font_size * @pt_to_inch * tick_size
+    x_tick_offset = x_tick_font_size * @pt_to_inch
+    {width - y_tick_offset, height - x_tick_offset}
+  end
+
+  defp tick_length(tick) when is_integer(tick) do
+    tick |> Integer.to_string() |> String.length()
+  end
+
+  defp tick_length(tick) when is_binary(tick) do
+    String.length(tick)
+  end
+
+  defp tick_length(tick) when is_float(tick) do
+    tick |> Float.to_string() |> String.length()
   end
 
   defp update_tick(axes, tick) do

@@ -3,6 +3,7 @@ defmodule Matplotex do
   Module to generate a graph.
   """
   alias Matplotex.Figure
+
   def barchart(params) do
     Matplotex.BarChart.create(params)
   end
@@ -70,6 +71,7 @@ defmodule Matplotex do
   def set_title(figure, title, opts \\ []) do
     Figure.add_title(figure, title, opts)
   end
+
   @doc """
   Sets X tick labels for the graph with given font details
 
@@ -96,6 +98,7 @@ defmodule Matplotex do
   def set_yticks(figure, ticks) do
     Figure.add_ticks(figure, {:y, ticks})
   end
+
   @doc """
   Sets X and Y limits for the graph with given details
 
@@ -105,7 +108,7 @@ defmodule Matplotex do
       %Matplotex.Figure{}
 
   """
-    @spec set_xlim(Figure.t(), tuple()) :: Figure.t()
+  @spec set_xlim(Figure.t(), tuple()) :: Figure.t()
   def set_xlim(figure, xlim) do
     Figure.set_limit(figure, {:x, xlim})
   end
@@ -161,30 +164,30 @@ defmodule Matplotex do
     Figure.update_figure(figure, params)
   end
 
- @doc """
- Function to update rc params, rc stands for runtime configuration
- ## Examples
+  @doc """
+  Function to update rc params, rc stands for runtime configuration
+  ## Examples
 
-      iex> Matplotex.set_rc_params(figure, figure_size: {10,6}, figure_dpi: 100)
+       iex> Matplotex.set_rc_params(figure, figure_size: {10,6}, figure_dpi: 100)
 
- ### The RC params are
-            figure_size: Figure size
-            figure_dpi: dots per inch
-            line_width: Main line width(axis, border, etc)
-            line_style: Main line style("--", "-")
-            x_tick_font_size: X tick font size,
-            y_tick_font_size: Y tick font size
-            x_label_font_size: X label font size
-            y_label_font_size: y label font size
-            legend_font_size: Legends font size
-            legend_location: Legend location
-            title_font: Title font size
-            grid_color: grid color
-            grid_linestyle:  grid linestyle
-            grid_linewidth: grid line width
-            grid_alpha: grid line alpha
-            font_uom: font unit of measurement
- """
+  ### The RC params are
+             figure_size: Figure size
+             figure_dpi: dots per inch
+             line_width: Main line width(axis, border, etc)
+             line_style: Main line style("--", "-")
+             x_tick_font_size: X tick font size,
+             y_tick_font_size: Y tick font size
+             x_label_font_size: X label font size
+             y_label_font_size: y label font size
+             legend_font_size: Legends font size
+             legend_location: Legend location
+             title_font: Title font size
+             grid_color: grid color
+             grid_linestyle:  grid linestyle
+             grid_linewidth: grid line width
+             grid_alpha: grid line alpha
+             font_uom: font unit of measurement
+  """
   def set_rc_params(figure, rc_params) do
     Figure.set_rc_params(figure, rc_params)
   end
