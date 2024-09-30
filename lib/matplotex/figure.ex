@@ -47,6 +47,8 @@ defmodule Matplotex.Figure do
   def add_legend(%__MODULE__{axes: %module{} = axes} = figure, params),
     do: %{figure | axes: module.add_legend(axes, params)}
 
+  def materialize(%__MODULE__{axes: %module{}} = figure), do: module.materialize(figure)
+
   def update_figure(figure, params) do
     if valid_params?(params) do
       Map.merge(figure, params)

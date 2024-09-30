@@ -12,7 +12,6 @@ defmodule Matplotex.Element.Stencil do
     stroke-width="#{line.stroke_width}"
     shape-rendering="#{line.shape_rendering}"
     stroke-linecap="#{line.stroke_linecap}"/>
-
     )
   end
 

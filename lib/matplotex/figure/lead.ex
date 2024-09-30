@@ -33,7 +33,9 @@ defmodule Matplotex.Figure.Lead do
     %Figure{figure | axes: axes}
   end
 
-  def set_spines(_), do: ArgumentError
+  def set_spines(_) do
+    raise ArgumentError, message: "Figure does't contain enough data to proceed"
+  end
 
   def draw_spines(
         %Figure{
@@ -54,6 +56,10 @@ defmodule Matplotex.Figure.Lead do
     element = [left, right, top, bottom]
     axes = %{axes | element: element}
     %Figure{figure | axes: axes}
+  end
+
+  def draw_spines(_figure) do
+    raise ArgumentError, message: "Figure does't contain enough data to proceed"
   end
 
   defp calculate_corners({width, height}, {f_width, f_height}, margin) do

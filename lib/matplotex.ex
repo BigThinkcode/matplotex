@@ -2,6 +2,7 @@ defmodule Matplotex do
   @moduledoc """
   Module to generate a graph.
   """
+  alias Matplotex.Figure.Sketch
   alias Matplotex.Figure
 
   def barchart(params) do
@@ -190,5 +191,11 @@ defmodule Matplotex do
   """
   def set_rc_params(figure, rc_params) do
     Figure.set_rc_params(figure, rc_params)
+  end
+
+  def show(figure) do
+    figure
+    |> Figure.materialize()
+    |> Sketch.call()
   end
 end

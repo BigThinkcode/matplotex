@@ -1,6 +1,6 @@
 defmodule Matplotex.LinePlot do
+  alias Matplotex.Figure.Sketch
   alias Matplotex.Figure.Lead
-  alias Matplotex.Figure.RcParams
   alias Matplotex.Figure.Text
   alias Matplotex.Figure.Font
   alias Matplotex.Figure

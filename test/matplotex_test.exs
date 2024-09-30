@@ -1,4 +1,6 @@
 defmodule MatplotexTest do
+  alias Matplotex.LinePlot
+  alias Matplotex.Figure
   alias Matplotex.InputError
   use Matplotex.PlotCase
 
@@ -114,5 +116,32 @@ defmodule MatplotexTest do
     assert_raise Matplotex.InputError, "Invalid keys", fn ->
       Matplotex.figure(figure, %{invalid: "im not valid"})
     end
+  end
+
+  test "svg string with border lines", %{figure: figure} do
+    frame_width = 8
+    frame_height = 6
+    size = {frame_width, frame_height}
+    margin = 0.1
+    font_size = 0
+    title_font_size = 0
+    ticks = [1, 2, 3, 4, 5, 6, 7]
+
+    figure_mater =
+      figure
+      |> Matplotex.figure(%{figsize: size, margin: margin})
+      |> Matplotex.set_title("The Plot Title")
+      |> Matplotex.set_xticks(ticks)
+      |> Matplotex.set_yticks(ticks)
+      |> Matplotex.set_rc_params(
+        x_tick_font_size: font_size,
+        y_tick_font_size: font_size,
+        title_font_size: title_font_size,
+        x_label_font_size: font_size,
+        y_label_font_size: font_size,
+        title_font_size: title_font_size
+      )
+
+    assert Matplotex.show(figure_mater) |> tap(fn x -> IO.puts(x) end) |> is_binary()
   end
 end
