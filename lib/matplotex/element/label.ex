@@ -1,4 +1,6 @@
 defmodule Matplotex.Element.Label do
+  alias Matplotex.Element
+  @behaviour Element
   @default_fill "black"
   @default_font_family "Arial, Verdana, sans-serif"
   @default_font_style "normal"
@@ -33,4 +35,24 @@ defmodule Matplotex.Element.Label do
     font_style: @default_font_style,
     dominant_baseline: @default_dominant_baseline
   ]
+
+  def assemble(label) do
+    """
+        <text tag="#{label.type}"
+         fill="#{label.fill}"
+         x="#{label.x}"
+         y="#{label.y}"
+         font-size="#{label.font_size}"
+         font-weight="#{label.font_weight}"
+         font-family="#{label.font_family}"
+         font-style="#{label.font_style}"
+         transform="#{rotate(label.rotate, label.x, label.y)}"
+         dominant-baseline="#{label.dominant_baseline}">
+         #{label.text}
+        </text>
+    """
+  end
+
+  defp rotate(nil, _, _), do: nil
+  defp rotate(rotate, x, y), do: "rotate(#{rotate}, #{x}, #{y})"
 end

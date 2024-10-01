@@ -9,7 +9,7 @@ defmodule Matplotex.Blueprint.Frame do
 
   defp build_struct(opts) do
     legend = Keyword.get(opts, :legend)
-
+    coords = Keyword.get(opts, :coords)
     types =
       quote do
         @type dataset1_d() :: list() | nil
@@ -84,6 +84,7 @@ defmodule Matplotex.Blueprint.Frame do
                     :type,
                     :grid_coordinates,
                     :limit,
+                    coords: coords,
                     legend: legend,
                     errors: [],
                     valid: @valid_by_default,

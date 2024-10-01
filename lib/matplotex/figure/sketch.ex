@@ -9,7 +9,7 @@ defmodule Matplotex.Figure.Sketch do
   end
 
   def call(_) do
-    raise(ArgumentError, message: "missing some keys to pattern match")
+    raise(ArgumentError, message: "invalid figure")
   end
 
   defp build_elements(elements) do

@@ -8,7 +8,7 @@ defmodule Matplotex.Figure.RcParams do
 
   @legend_location "top right"
   @default_font_size 16
-  @default_title_font_size 24
+  @default_title_font_size 18
   @grid_linewidth 1
   @grid_line_alpha 0.5
   @font_uom "pt"

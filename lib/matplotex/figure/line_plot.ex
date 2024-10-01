@@ -1,4 +1,5 @@
 defmodule Matplotex.LinePlot do
+  alias Matplotex.Figure.Coords
   alias Matplotex.Figure.Sketch
   alias Matplotex.Figure.Lead
   alias Matplotex.Figure.Text
@@ -29,7 +30,7 @@ defmodule Matplotex.LinePlot do
           x_scale: number()
         }
 
-  frame(legend: %Legend{})
+  frame(legend: %Legend{}, coords: %Coords{})
   @type t() :: frame_struct()
   def create(x, y) do
     %Figure{axes: Plotter.new(__MODULE__, x, y)}
@@ -110,9 +111,7 @@ defmodule Matplotex.LinePlot do
       figure
       |> Lead.set_spines()
       |> Lead.draw_spines()
-
-    # set width and heigh
-    # calcualte spaces for labels and axis
+      |> Lead.set_title()
     # generate svg equalent elements for the plot
     # generate svg elements for legend
     # generate svg elements for labels and axis
