@@ -16,8 +16,9 @@ defmodule Matplotex.Figure.Lead do
       ) do
     {{width, height}, {bottom_left, top_left, bottom_right, top_right}} =
       figure
-      |> peel_margin(margin)
-      |> peel_label_offsets(rc_params)
+      |> peel_margin()
+      |> peel_label_offsets()
+      |> peel_title_offsets()
       |> peel_tick_offsets(rc_params, ticks)
       |> calculate_corners(figsize, margin)
       |> peel_margin(margin, figsize)
@@ -78,33 +79,68 @@ defmodule Matplotex.Figure.Lead do
       {rx * @dpi, ty * @dpi}}}
   end
 
-  defp peel_margin(%Figure{figsize: {width, height}, axes: %{coords: coords} = axes, margin: margin } = figure) do
-    label_coords = {width *margin, height - heigt * margin}
+  defp peel_margin(
+         %Figure{figsize: {width, height}, axes: %{coords: coords} = axes, margin: margin} =
+           figure
+       ) do
+    label_coords = {width * margin, height - height * margin}
 
-    {%Figure{figure | axes: %{axes | coords: %{coords | title: {width * margin, height * margin},y_label: label_coords, x_label: label_coords}}}, {width - width * margin, height - height * margin}}
-
+    {%Figure{
+       figure
+       | axes: %{
+           axes
+           | coords: %{
+               coords
+               | title: {width * margin, height * margin},
+                 y_label: label_coords,
+                 x_label: label_coords
+             }
+         }
+     }, {width - width * margin, height - height * margin}}
   end
 
   defp peel_margin({width, height, corners}, margin, {f_width, f_height}) do
     {{width - f_width * margin, height - f_height * margin}, corners}
   end
 
-  defp peel_label_offsets({%Figure{axes: %{coords: %Coords{x_label: {xlx, xly}, y_label: {ylx, yly}} = coords} = axes, rc_params: rc_params = figure},{width, height}}) do
+  defp peel_label_offsets(
+         {%Figure{
+            axes: %{coords: %Coords{x_label: {xlx, xly}, y_label: {ylx, yly}} = coords} = axes,
+            rc_params: rc_params = figure
+          }, {width, height}}
+       ) do
     x_label_font_size = RcParams.get_rc(rc_params, :get_x_label_font_size)
     y_label_font_size = RcParams.get_rc(rc_params, :get_y_label_font_size)
 
     x_label_offset = x_label_font_size * @pt_to_inch
     y_label_offset = y_label_font_size * @pt_to_inch
 
-    {%Figure{figure | axes: %{axes | coords: %{coords | x_ticks: {xlx + y_label_offset, xly - x_label_offset}, y_ticks: {ylx + y_label_offset,yly - x_label_offset}}}},
-    {width - x_label_offset, height - y_label_offset}}
+    {%Figure{
+       figure
+       | axes: %{
+           axes
+           | coords: %{
+               coords
+               | x_ticks: {xlx + y_label_offset, xly - x_label_offset},
+                 y_ticks: {ylx + y_label_offset, yly - x_label_offset}
+             }
+         }
+     }, {width - x_label_offset, height - y_label_offset}}
   end
-  defp peel_title_offsets({width, height}, rc_params) do
+
+  defp peel_title_offsets(
+         {%Figure{
+            axes: %{coords: %Coords{x_ticks: {tickx, _ticky}} = coords} = axes,
+            figsize: {_, height},
+            margin: margin
+          } = figure, {width, height}}
+       ) do
     title_font_size = RcParams.get_rc(rc_params, :get_title_font_size)
 
     title_offset = title_font_size * @pt_to_inch
 
-    {width, height - title_offset}
+    {%Figure{figure | axes: %{axes | %{coords: %{coords | title: {tickx}}}}},
+     {width, height - title_offset}}
   end
 
   defp peel_tick_offsets({width, height}, rc_params, %{y: y_ticks}) do
