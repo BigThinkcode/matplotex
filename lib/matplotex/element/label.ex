@@ -28,6 +28,8 @@ defmodule Matplotex.Element.Label do
     :y,
     :text,
     :rotate,
+    :width,
+    :height,
     font_size: @default_font_size,
     font_weight: @default_font_weight,
     fill: @default_fill,
@@ -36,20 +38,26 @@ defmodule Matplotex.Element.Label do
     dominant_baseline: @default_dominant_baseline
   ]
 
+ @impl true
   def assemble(label) do
     """
+    <svg x="#{label.x}" y="#{label.y}" width="#{label.width}" height="#{label.height}" stroke="blank" stroke-width="0" fill="white">
+
         <text tag="#{label.type}"
          fill="#{label.fill}"
-         x="#{label.x}"
-         y="#{label.y}"
+         x="50%"
+         y="50%"
          font-size="#{label.font_size}"
          font-weight="#{label.font_weight}"
          font-family="#{label.font_family}"
          font-style="#{label.font_style}"
          transform="#{rotate(label.rotate, label.x, label.y)}"
-         dominant-baseline="#{label.dominant_baseline}">
+         dominant-baseline="middle"
+         text-anchor="middle"
+         >
          #{label.text}
         </text>
+        </svg>
     """
   end
 

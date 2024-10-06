@@ -1,3 +1,3 @@
 defmodule Matplotex.LinePlotTest do
- use Matplotex.PlotCase
+  use Matplotex.PlotCase
 end

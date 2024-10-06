@@ -10,6 +10,7 @@ defmodule Matplotex.Blueprint.Frame do
   defp build_struct(opts) do
     legend = Keyword.get(opts, :legend)
     coords = Keyword.get(opts, :coords)
+
     types =
       quote do
         @type dataset1_d() :: list() | nil
@@ -19,7 +20,7 @@ defmodule Matplotex.Blueprint.Frame do
         @type label() :: %{x: String.t() | nil, y: String.t() | nil, font: font() | nil} | nil
         @type scale() :: %{x: number() | nil, y: number() | nil, aspect_ratio: number | nil} | nil
         @type grid() :: %{x_scale: number() | nil, y_scale: number() | nil} | nil
-        @type title() :: %{title: String.t() | nil, font_size: font() | nil} | nil
+        @type title() :: %{title: String.t() | nil, font_size: font() | nil, height: number() | nil} | nil
         @type size() :: %{height: number() | nil, width: number() | nil} | nil
         @type tick() ::
                 %{x_scale: number() | nil, y_scale: number() | nil, font: font() | nil} | nil
@@ -76,10 +77,6 @@ defmodule Matplotex.Blueprint.Frame do
                     :tick,
                     :axis,
                     :center,
-                    :bottom_left,
-                    :top_left,
-                    :bottom_right,
-                    :top_right,
                     :element,
                     :type,
                     :grid_coordinates,
@@ -87,6 +84,7 @@ defmodule Matplotex.Blueprint.Frame do
                     coords: coords,
                     legend: legend,
                     errors: [],
+                    show_title: false,
                     valid: @valid_by_default,
                     margin: @default_margin,
                     show_x_axis: @show_by_default,

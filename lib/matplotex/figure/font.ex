@@ -10,7 +10,7 @@ defmodule Matplotex.Figure.Font do
             font_style: @default_font_style,
             font_family: @default_font_family,
             font_weight: @default_font_weight,
-            color: @default_font_color,
+            fill: @default_font_color,
             unit_of_measurement: @font_unit
 
   def font_keys() do

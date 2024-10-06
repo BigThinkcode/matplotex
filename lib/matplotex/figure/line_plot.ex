@@ -1,6 +1,5 @@
 defmodule Matplotex.LinePlot do
   alias Matplotex.Figure.Coords
-  alias Matplotex.Figure.Sketch
   alias Matplotex.Figure.Lead
   alias Matplotex.Figure.Text
   alias Matplotex.Figure.Font
@@ -55,7 +54,7 @@ defmodule Matplotex.LinePlot do
 
   def add_title(axes, title, opts) when is_binary(title) do
     title = create_text(title, opts)
-    %{axes | title: title}
+    %{axes | title: title, show_title: true}
   end
 
   def add_title(_, _) do
@@ -111,7 +110,8 @@ defmodule Matplotex.LinePlot do
       figure
       |> Lead.set_spines()
       |> Lead.draw_spines()
-      |> Lead.set_title()
+      |> Lead.entitle()
+
     # generate svg equalent elements for the plot
     # generate svg elements for legend
     # generate svg elements for labels and axis
