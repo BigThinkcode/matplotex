@@ -15,13 +15,13 @@ defmodule Matplotex.Figure.RcParams do
   @font_uom "pt"
   @tick_line_length 5
   @font %Font{}
-  defstruct [ x_tick_font: @font,
-   y_tick_font: @font,
-   x_label_font: @font,
-   y_label_font: @font,
-   title_font: %Font{font_size: @default_title_font_size},
-   legend_font: @font,
-    figure_size: @default_figsize,
+  defstruct x_tick_font: @font,
+            y_tick_font: @font,
+            x_label_font: @font,
+            y_label_font: @font,
+            title_font: %Font{font_size: @default_title_font_size},
+            legend_font: @font,
+            figure_size: @default_figsize,
             figure_dpi: @default_dpi,
             line_width: @line_width,
             line_style: @line_style,
@@ -37,7 +37,7 @@ defmodule Matplotex.Figure.RcParams do
             grid_linewidth: @grid_linewidth,
             grid_alpha: @grid_line_alpha,
             font_uom: @font_uom,
-            tick_line_length: @tick_line_length]
+            tick_line_length: @tick_line_length
 
   def get_rc(%__MODULE__{} = rc_param, get_func) do
     apply(__MODULE__, get_func, [rc_param])
@@ -104,6 +104,7 @@ defmodule Matplotex.Figure.RcParams do
   def get_tick_line_length(%__MODULE__{tick_line_length: tick_line_length}) do
     tick_line_length
   end
+
   def get_title_font(%__MODULE__{title_font: title_font}) do
     title_font
   end
@@ -115,8 +116,8 @@ defmodule Matplotex.Figure.RcParams do
   defp convert_font_size(font_size) when is_binary(font_size) do
     String.to_integer(font_size)
   end
+
   defp convert_font_size(font_size) when is_number(font_size) do
     font_size
   end
-
 end

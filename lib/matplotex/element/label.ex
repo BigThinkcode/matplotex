@@ -17,6 +17,7 @@ defmodule Matplotex.Element.Label do
           font_weight: word(),
           text: word(),
           fill: word(),
+          height: number(),
           font_family: word(),
           font_style: word(),
           dominant_baseline: word(),
@@ -38,7 +39,7 @@ defmodule Matplotex.Element.Label do
     dominant_baseline: @default_dominant_baseline
   ]
 
- @impl true
+  @impl true
   def assemble(label) do
     """
     <svg x="#{label.x}" y="#{label.y}" width="#{label.width}" height="#{label.height}" stroke="blank" stroke-width="0" fill="white">

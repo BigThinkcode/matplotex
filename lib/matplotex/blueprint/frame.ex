@@ -20,7 +20,8 @@ defmodule Matplotex.Blueprint.Frame do
         @type label() :: %{x: String.t() | nil, y: String.t() | nil, font: font() | nil} | nil
         @type scale() :: %{x: number() | nil, y: number() | nil, aspect_ratio: number | nil} | nil
         @type grid() :: %{x_scale: number() | nil, y_scale: number() | nil} | nil
-        @type title() :: %{title: String.t() | nil, font_size: font() | nil, height: number() | nil} | nil
+        @type title() ::
+                %{title: String.t() | nil, font_size: font() | nil, height: number() | nil} | nil
         @type size() :: %{height: number() | nil, width: number() | nil} | nil
         @type tick() ::
                 %{x_scale: number() | nil, y_scale: number() | nil, font: font() | nil} | nil
