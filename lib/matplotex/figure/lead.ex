@@ -130,7 +130,7 @@ defmodule Matplotex.Figure.Lead do
            figsize: {f_width, _},
            rc_params: rc_params,
            axes:
-             %{coords: %Coords{x_label: {xlx, _}, y_label: {_ylx, yly}, title: {_, ytt}} = coords} =
+             %{coords: %Coords{x_label: {xlx, _}, y_label: {_ylx, yly}, title: {_, ytt}} = coords, title: title} =
                axes
          } = figure
        ) do
@@ -152,7 +152,7 @@ defmodule Matplotex.Figure.Lead do
                 top_right: top_right,
                 bottom_right: bottom_right,
                 top_left: top_left
-            }
+            }, title: %{title | height: title_offset}
         }
     }
   end
@@ -189,15 +189,16 @@ defmodule Matplotex.Figure.Lead do
         %Figure{
           axes:
             %{
-              coords: %Coords{title: {ttx, tty}},
+              coords: %Coords{title: {ttx, tty}, top_left: top_left, top_right: top_right},
               title: %{text: text, height: height},
-              size: %{width: width},
               element: elements
             } = axes,
           rc_params: rc_params
         } = figure
       ) do
     title_font = rc_params |> RcParams.get_rc(:get_title_font) |> Map.from_struct()
+
+    width = calculate_distance(top_left, top_right)
 
     title =
       %Label{type: "figure.title", x: ttx, y: tty, text: text, height: height, width: width}
@@ -310,7 +311,7 @@ defmodule Matplotex.Figure.Lead do
 
   defp ytick_offset(y_ticks, font_size) do
     tick_size = y_ticks |> Enum.max_by(fn tick -> tick_length(tick) end) |> tick_length()
-    font_size * @pt_to_inch * tick_size
+    font_size * @pt_to_inch * tick_size + @tick_line_offset + @padding
   end
 
   defp xtick_offset(font_size) do
@@ -355,5 +356,9 @@ defmodule Matplotex.Figure.Lead do
   defp merge_structs(%module{} = st, params) do
     params = st |> Map.from_struct() |> Map.merge(params)
     struct(module, params)
+  end
+
+  defp calculate_distance({x1, y1}, {x2, y2}) do
+    :math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
   end
 end
