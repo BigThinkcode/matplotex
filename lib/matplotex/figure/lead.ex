@@ -5,7 +5,6 @@ defmodule Matplotex.Figure.Lead do
   alias Matplotex.Figure.RcParams
   alias Matplotex.Figure
   @pt_to_inch 1 / 72
-  @dpi 96
   @padding 10 / 96
   @tick_line_offset 5 / 96
 
@@ -130,7 +129,10 @@ defmodule Matplotex.Figure.Lead do
            figsize: {f_width, _},
            rc_params: rc_params,
            axes:
-             %{coords: %Coords{x_label: {xlx, _}, y_label: {_ylx, yly}, title: {_, ytt}} = coords, title: title} =
+             %{
+               coords: %Coords{x_label: {xlx, _}, y_label: {_ylx, yly}, title: {_, ytt}} = coords,
+               title: title
+             } =
                axes
          } = figure
        ) do
@@ -152,66 +154,13 @@ defmodule Matplotex.Figure.Lead do
                 top_right: top_right,
                 bottom_right: bottom_right,
                 top_left: top_left
-            }, title: %{title | height: title_offset}
+            },
+            title: %{title | height: title_offset}
         }
     }
   end
 
-  def draw_spines(
-        %Figure{
-          axes:
-            %{
-              coords: %Coords{
-                bottom_left: {blx, bly},
-                bottom_right: {brx, bry},
-                top_left: {tlx, tly},
-                top_right: {trx, yrt}
-              }
-            } = axes
-        } = figure
-      ) do
-    # Four Line struct representing each corners
-    left = %Line{x1: blx, y1: bly, x2: tlx, y2: tly, type: "spine.left"}
-    right = %Line{x1: brx, y1: bry, x2: trx, y2: yrt, type: "spine.right"}
-    top = %Line{x1: tlx, y1: tly, x2: trx, y2: yrt, type: "spine.top"}
-    bottom = %Line{x1: blx, y1: bly, x2: brx, y2: bry, type: "spine.bottom"}
-    element = [left, right, top, bottom]
-    axes = %{axes | element: element}
-    %Figure{figure | axes: axes}
-  end
-
-  def draw_spines(_figure) do
-    raise ArgumentError, message: "Figure does't contain enough data to proceed"
-  end
-
   # TODO: Sort out how the user gets the control on font of the all texts
-  def entitle(
-        %Figure{
-          axes:
-            %{
-              coords: %Coords{title: {ttx, tty}, top_left: top_left, top_right: top_right},
-              title: %{text: text, height: height},
-              element: elements
-            } = axes,
-          rc_params: rc_params
-        } = figure
-      ) do
-    title_font = rc_params |> RcParams.get_rc(:get_title_font) |> Map.from_struct()
-
-    width = calculate_distance(top_left, top_right)
-
-    title =
-      %Label{type: "figure.title", x: ttx, y: tty, text: text, height: height, width: width}
-      |> merge_structs(title_font)
-
-    %Figure{figure | axes: %{axes | element: elements ++ [title]}}
-  end
-
-  def entitle(%Figure{axes: %{show_title: false}} = figure), do: figure
-
-  def entitle(_figure) do
-    raise ArgumentError, message: "Figure does't contain enough data to proceed"
-  end
 
   # defp calculate_corners(
   #        {%Figure{axes: %{coords: coords} = axes, figsize: {f_width, f_height}, margin: margin} =
@@ -351,14 +300,5 @@ defmodule Matplotex.Figure.Lead do
 
   defp tick_length(tick) when is_float(tick) do
     tick |> Float.to_string() |> String.length()
-  end
-
-  defp merge_structs(%module{} = st, params) do
-    params = st |> Map.from_struct() |> Map.merge(params)
-    struct(module, params)
-  end
-
-  defp calculate_distance({x1, y1}, {x2, y2}) do
-    :math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
   end
 end

@@ -109,6 +109,14 @@ defmodule Matplotex.Figure.RcParams do
     title_font
   end
 
+  def get_x_label_font(%__MODULE__{x_label_font: x_label_font}) do
+    x_label_font
+  end
+
+  def get_y_label_font(%__MODULE__{y_label_font: y_label_font}) do
+    y_label_font
+  end
+
   defp convert_font_size(<<font_size::binary-size(2)>> <> "pt") do
     String.to_integer(font_size)
   end
