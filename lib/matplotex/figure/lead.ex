@@ -143,6 +143,8 @@ defmodule Matplotex.Figure.Lead do
     rightx = f_width - f_width * margin
     top_right = {rightx, topy}
     bottom_right = {rightx, yly}
+    width = rightx  - xlx
+    height = topy - yly
 
     %Figure{
       figure
@@ -155,6 +157,7 @@ defmodule Matplotex.Figure.Lead do
                 bottom_right: bottom_right,
                 top_left: top_left
             },
+            size: {width, height},
             title: %{title | height: title_offset}
         }
     }

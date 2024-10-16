@@ -8,6 +8,8 @@ defmodule Matplotex.Figure.Coords do
     :bottom_left,
     :top_left,
     :bottom_right,
-    :top_right
+    :top_right,
+    :hgrids,
+    :vgrids
   ]
 end

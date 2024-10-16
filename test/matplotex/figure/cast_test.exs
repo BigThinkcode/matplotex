@@ -37,18 +37,47 @@ defmodule Matplotex.Figure.CastTest do
                figure
                |> Lead.set_spines()
                |> Cast.cast_label()
+
       assert Enum.filter(elements, fn x -> x.type == "figure.x_label" end) |> length() == 1
       assert Enum.filter(elements, fn x -> x.type == "figure.y_label" end) |> length() == 1
     end
   end
-  describe "cast_ticks/1" do
+  describe "cast_xticks/1" do
     test "add element for tick in axes", %{figure: figure} do
-      assert %Figure{axes: %{element: elements}, tick: %{x: x_ticks, y: y_ticks}} =
+      assert %Figure{axes: %{element: elements,tick: %{x: x_ticks, y: y_ticks}}} =
                figure
                |> Lead.set_spines()
-               |> Cast.cast_ticks()
+               |> Cast.cast_xticks()
       assert Enum.filter(elements, fn x -> x.type == "figure.x_tick" end) |> length() == length(x_ticks)
-      assert Enum.filter(elements, fn x -> x.type == "figure.y_tick" end) |> length() == length(y_ticks)
     end
   end
+  describe "cast_yticks/1" do
+    test "add element for tick in axes", %{figure: figure} do
+      assert %Figure{axes: %{element: elements, tick: %{ y: y_ticks}}} =
+               figure
+               |> Lead.set_spines()
+               |> Cast.cast_yticks()
+               assert Enum.filter(elements, fn x -> x.type == "figure.y_tick" end) |> length() == length(y_ticks)
+      end
+  end
+  describe "cast_hgrids/1" do
+    test "add elements for horizontal grids", %{figure: figure} do
+      assert %Figure{axes: %{element: elements, tick: %{y: y_ticks}}} =
+               figure
+               |> Lead.set_spines()
+               |> Cast.cast_hgrids()
+               assert Enum.filter(elements, fn x -> x.type == "figure.h_grid" end) |> length() == length(y_ticks)
+
+    end
+  end
+  describe "cast_vgrids/1" do
+    test "add elements for vertical grids", %{figure: figure} do
+
+    assert %Figure{axes: %{element: elements, tick: %{x: x_ticks}}} =
+         figure
+         |> Lead.set_spines()
+         |> Cast.cast_vgrids()
+         assert Enum.filter(elements, fn x -> x.type == "figure.v_grid" end) |> length() == length(x_ticks)
+  end
+end
 end

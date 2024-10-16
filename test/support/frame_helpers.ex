@@ -42,6 +42,8 @@ defmodule Matplotex.FrameHelpers do
     |> Matplotex.set_title("The Plot Title")
     |> Matplotex.set_xticks(ticks)
     |> Matplotex.set_yticks(ticks)
+    |> Matplotex.set_xlabel("The X Label")
+    |> Matplotex.set_ylabel("The Y Label")
     |> Matplotex.set_rc_params(
       x_tick_font_size: font_size,
       y_tick_font_size: font_size,
