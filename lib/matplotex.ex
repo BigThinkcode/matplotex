@@ -87,7 +87,7 @@ defmodule Matplotex do
     Figure.add_ticks(figure, {:x, ticks})
   end
 
-  #TODO: Set x and y ticks with value and label for string inputs
+  # TODO: Set x and y ticks with value and label for string inputs
 
   @doc """
   Sets Y tick labels for the graph with given details

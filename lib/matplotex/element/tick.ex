@@ -1,5 +1,4 @@
 defmodule Matplotex.Element.Tick do
-
   alias Matplotex.Element
   alias Matplotex.Element.Line
   alias Matplotex.Element.Label
