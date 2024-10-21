@@ -1,7 +1,7 @@
 defmodule Matplotex.Figure.RcParams do
   alias Matplotex.Figure.Font
   @default_figsize {8, 6}
-  @default_dpi 100
+  @default_dpi 96
   @line_width 2
   @line_style "-"
   @grid_color "#ddd"

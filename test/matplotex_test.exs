@@ -40,11 +40,11 @@ defmodule MatplotexTest do
     label = "Label with font"
     font_size = 12
     color = "red"
-    font_opts = [font_size: font_size, color: color]
+    font_opts = [font_size: font_size, fill: color]
     figure = Matplotex.set_xlabel(figure, label, font_opts)
     assert figure.axes.label.x.text == label
     assert figure.axes.label.x.font.font_size == font_size
-    assert figure.axes.label.x.font.color == color
+    assert figure.axes.label.x.font.fill == color
   end
 
   test "adds ylabel to the figure ", %{figure: figure} do
@@ -63,11 +63,11 @@ defmodule MatplotexTest do
     title = "My Plot"
     font_size = 12
     color = "red"
-    font_opts = [font_size: font_size, color: color]
+    font_opts = [font_size: font_size, fill: color]
     figure = Matplotex.set_title(figure, title, font_opts)
     assert figure.axes.title.text == title
     assert figure.axes.title.font.font_size == font_size
-    assert figure.axes.title.font.color == color
+    assert figure.axes.title.font.fill == color
   end
 
   test "adds legend to the figure ", %{figure: figure} do
@@ -131,6 +131,8 @@ defmodule MatplotexTest do
       figure
       |> Matplotex.figure(%{figsize: size, margin: margin})
       |> Matplotex.set_title("The Plot Title")
+      |> Matplotex.set_xlabel("X Axis")
+      |> Matplotex.set_ylabel("Y Axis")
       |> Matplotex.set_xticks(ticks)
       |> Matplotex.set_yticks(ticks)
       |> Matplotex.set_rc_params(
@@ -142,6 +144,6 @@ defmodule MatplotexTest do
         title_font_size: title_font_size
       )
 
-    assert Matplotex.show(figure_mater) |> tap(fn x -> IO.puts(x) end) |> is_binary()
+    assert Matplotex.show(figure_mater) |> is_binary()
   end
 end

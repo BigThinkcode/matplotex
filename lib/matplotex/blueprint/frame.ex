@@ -10,6 +10,9 @@ defmodule Matplotex.Blueprint.Frame do
   defp build_struct(opts) do
     legend = Keyword.get(opts, :legend)
     coords = Keyword.get(opts, :coords)
+    dimension = Keyword.get(opts, :dimension)
+    tick = Keyword.get(opts, :tick)
+    limit = Keyword.get(opts, :limit)
 
     types =
       quote do
@@ -75,14 +78,15 @@ defmodule Matplotex.Blueprint.Frame do
                     :grid,
                     :title,
                     :size,
-                    :tick,
                     :axis,
                     :center,
                     :type,
                     :grid_coordinates,
-                    :limit,
+                    tick: tick,
+                    limit: limit,
                     coords: coords,
                     legend: legend,
+                    dimension: dimension,
                     errors: [],
                     element: [],
                     show_title: false,
@@ -92,7 +96,10 @@ defmodule Matplotex.Blueprint.Frame do
                     show_y_axis: @show_by_default,
                     show_v_grid: @show_by_default,
                     show_h_grid: @show_by_default,
+                    show_x_ticks: @show_by_default,
+                    show_y_ticks: @show_by_default,
                     show_ticks: @show_by_default
+
                   ])
       end
 

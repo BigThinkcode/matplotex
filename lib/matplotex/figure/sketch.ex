@@ -4,6 +4,7 @@ defmodule Matplotex.Figure.Sketch do
 
   def call(%Figure{axes: %{element: elements}, figsize: {width, height}}) do
     elements
+    |> flipy(height)
     |> build_elements()
     |> wrap_with_tag(width * @dpi, height * @dpi)
   end
@@ -34,5 +35,11 @@ defmodule Matplotex.Figure.Sketch do
       </g>
       </svg>
       )
+  end
+
+  defp flipy(elements, height) do
+    Enum.map(elements, fn %module{} = elem ->
+      module.flipy(elem, height)
+    end)
   end
 end

@@ -1,6 +1,6 @@
 defmodule Matplotex.Element.Label do
   alias Matplotex.Element
-  @behaviour Element
+  use Element
   @default_fill "black"
   @default_font_family "Arial, Verdana, sans-serif"
   @default_font_style "normal"
@@ -17,7 +17,6 @@ defmodule Matplotex.Element.Label do
           font_weight: word(),
           text: word(),
           fill: word(),
-          height: number(),
           font_family: word(),
           font_style: word(),
           dominant_baseline: word(),
@@ -29,8 +28,6 @@ defmodule Matplotex.Element.Label do
     :y,
     :text,
     :rotate,
-    :width,
-    :height,
     font_size: @default_font_size,
     font_weight: @default_font_weight,
     fill: @default_fill,
@@ -42,26 +39,34 @@ defmodule Matplotex.Element.Label do
   @impl true
   def assemble(label) do
     """
-    <svg x="#{label.x}" y="#{label.y}" width="#{label.width}" height="#{label.height}" stroke="blank" stroke-width="0" fill="white">
-
         <text tag="#{label.type}"
          fill="#{label.fill}"
-         x="50%"
-         y="50%"
+         x="#{get_x(label)}"
+         y="#{get_y(label)}"
          font-size="#{label.font_size}"
          font-weight="#{label.font_weight}"
          font-family="#{label.font_family}"
          font-style="#{label.font_style}"
-         transform="#{rotate(label.rotate, label.x, label.y)}"
+         transform="#{rotate(label)}"
          dominant-baseline="middle"
          text-anchor="middle"
          >
          #{label.text}
         </text>
-        </svg>
     """
   end
 
-  defp rotate(nil, _, _), do: nil
-  defp rotate(rotate, x, y), do: "rotate(#{rotate}, #{x}, #{y})"
+  defp rotate(%{rotate: nil}), do: nil
+
+  defp rotate(%{rotate: rotate, x: x, y: y}),
+    do: "rotate(#{rotate}, #{to_pixel(x)}, #{to_pixel(y)})"
+
+  def get_x(%{x: x}), do: to_pixel(x)
+  def get_y(%{y: y}), do: to_pixel(y)
+  def get_width(%{width: width}), do: to_pixel(width)
+  def get_height(%{height: height}), do: to_pixel(height)
+  @impl Element
+  def flipy(%__MODULE__{y: y} = label, height)  do
+    %__MODULE__{label | y: height - y}
+  end
 end

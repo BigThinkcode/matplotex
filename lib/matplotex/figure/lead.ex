@@ -1,7 +1,6 @@
 defmodule Matplotex.Figure.Lead do
-  alias Matplotex.Element.Label
+  alias Matplotex.Figure.Dimension
   alias Matplotex.Figure.Coords
-  alias Matplotex.Element.Line
   alias Matplotex.Figure.RcParams
   alias Matplotex.Figure
   @pt_to_inch 1 / 72
@@ -45,18 +44,29 @@ defmodule Matplotex.Figure.Lead do
            rc_params: rc_params,
            margin: margin,
            figsize: {f_width, f_height},
-           axes: %{coords: coords, tick: %{y: y_ticks}} = axes
+           axes: %{coords: coords, tick: %{y: y_ticks}, dimension: dimension} = axes
          } = figure
        ) do
     y_label_font_size = RcParams.get_rc(rc_params, :get_y_label_font_size)
     y_tick_font_size = RcParams.get_rc(rc_params, :get_y_tick_font_size)
+    label_offset = label_offset(y_label_font_size)
+    y_tick_offset = ytick_offset(y_ticks, y_tick_font_size)
+    y_tick_height = label_offset(y_tick_font_size)
 
     x_labelx =
-      f_width * margin + label_offset(y_label_font_size) + ytick_offset(y_ticks, y_tick_font_size)
+      f_width * margin + label_offset + y_tick_offset
 
     %Figure{
       figure
-      | axes: %{axes | coords: %Coords{coords | x_label: {x_labelx, f_height * margin}}}
+      | axes: %{
+          axes
+          | coords: %Coords{coords | x_label: {x_labelx, f_height * margin}},
+            dimension: %Dimension{
+              dimension
+              | y_label: {0, label_offset},
+                y_tick: {y_tick_offset, y_tick_height}
+            }
+        }
     }
   end
 
@@ -65,18 +75,29 @@ defmodule Matplotex.Figure.Lead do
            rc_params: rc_params,
            margin: margin,
            figsize: {f_width, f_height},
-           axes: %{coords: coords} = axes
+           axes: %{coords: coords, dimension: dimension, tick: %{x: x_ticks}} = axes
          } = figure
        ) do
     x_label_font_size = RcParams.get_rc(rc_params, :get_x_label_font_size)
     x_tick_font_size = RcParams.get_rc(rc_params, :get_x_tick_font_size)
+    xlabel_offset = label_offset(x_label_font_size)
+    x_tick_offset = xtick_offset(x_tick_font_size)
+    x_tick_width = ytick_offset(x_ticks, x_tick_font_size)
 
     y_labely =
-      f_height * margin + label_offset(x_label_font_size) + xtick_offset(x_tick_font_size)
+      f_height * margin + xlabel_offset + x_tick_offset
 
     %Figure{
       figure
-      | axes: %{axes | coords: %Coords{coords | y_label: {f_width * margin, y_labely}}}
+      | axes: %{
+          axes
+          | coords: %Coords{coords | y_label: {f_width * margin, y_labely}},
+            dimension: %Dimension{
+              dimension
+              | x_label: {0, xlabel_offset},
+                x_tick: {x_tick_width, x_tick_offset}
+            }
+        }
     }
   end
 
@@ -119,7 +140,7 @@ defmodule Matplotex.Figure.Lead do
 
     %Figure{
       figure
-      | axes: %{axes | coords: %Coords{coords | y_ticks: {ylx - ylabel_offset, yly}}}
+      | axes: %{axes | coords: %Coords{coords | y_ticks: {ylx + ylabel_offset, yly}}}
     }
   end
 
