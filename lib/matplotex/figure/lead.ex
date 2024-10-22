@@ -39,6 +39,12 @@ defmodule Matplotex.Figure.Lead do
     |> set_border_coords()
   end
 
+  defp set_xlabel_coords(%Figure{axes: %{tick: %{y: nil}, show_y_ticks: true}} = figure) do
+    figure
+    |> generate_yticks()
+    |> set_xlabel_coords()
+  end
+
   defp set_xlabel_coords(
          %Figure{
            rc_params: rc_params,
@@ -68,6 +74,14 @@ defmodule Matplotex.Figure.Lead do
             }
         }
     }
+  end
+
+  defp set_xlabel_coords(%Figure{} = figure), do: figure
+
+  defp set_ylabel_coords(%Figure{axes: %{tick: %{x: nil}, show_x_ticks: true}} = figure) do
+    figure
+    |> generate_xticks()
+    |> set_ylabel_coords()
   end
 
   defp set_ylabel_coords(
@@ -100,6 +114,8 @@ defmodule Matplotex.Figure.Lead do
         }
     }
   end
+
+  defp set_ylabel_coords(%Figure{} = figure), do: figure
 
   defp set_title_coords(
          %Figure{
@@ -324,5 +340,13 @@ defmodule Matplotex.Figure.Lead do
 
   defp tick_length(tick) when is_float(tick) do
     tick |> Float.to_string() |> String.length()
+  end
+
+  defp generate_yticks(%Figure{axes: %module{} = axes} = figure) do
+    %Figure{figure | axes: module.generate_yticks(axes)}
+  end
+
+  defp generate_xticks(%Figure{axes: %module{} = axes} = figure) do
+    %Figure{figure | axes: module.generate_xticks(axes)}
   end
 end

@@ -81,6 +81,7 @@ defmodule Matplotex.Figure.Cast do
     title_font = rc_params |> RcParams.get_rc(:get_title_font) |> Map.from_struct()
 
     {ttx, tty} = calculate_center(coords, title_coord, :x)
+
     title =
       %Label{
         type: "figure.title",
@@ -148,7 +149,7 @@ defmodule Matplotex.Figure.Cast do
         } = figure
       ) do
     xlabel_coords = Map.get(coords, :x_label)
-    {x,y} = calculate_center(coords,xlabel_coords, :x)
+    {x, y} = calculate_center(coords, xlabel_coords, :x)
     label_font = rc_params |> RcParams.get_rc(:get_x_label_font) |> Map.from_struct()
 
     x_label =
@@ -156,7 +157,7 @@ defmodule Matplotex.Figure.Cast do
         type: "figure.x_label",
         x: x,
         y: y,
-        text: x_label,
+        text: x_label
       }
       |> merge_structs(label_font)
 
@@ -172,7 +173,7 @@ defmodule Matplotex.Figure.Cast do
       ) do
     ylabel_coords = Map.get(coords, :y_label)
 
-    {x,y} = calculate_center(coords,ylabel_coords, :y)
+    {x, y} = calculate_center(coords, ylabel_coords, :y)
     label_font = rc_params |> RcParams.get_rc(:get_y_label_font) |> Map.from_struct()
 
     y_label =
@@ -201,7 +202,8 @@ defmodule Matplotex.Figure.Cast do
               coords: %Coords{bottom_left: {blx, bly}, x_ticks: {_xtx, xty}} = coords
             } = axes
         } = figure
-      ) when is_list(x_ticks) do
+      )
+      when is_list(x_ticks) do
     x_ticks = confine_tick(x_ticks, xlim)
 
     {xtick_elements, vgridxs} =
@@ -213,7 +215,7 @@ defmodule Matplotex.Figure.Cast do
           type: @xtick_type,
           x: tick_position,
           y: xty,
-          text: label,
+          text: label
         }
 
         # TODO: find a mechanism to pass custom font for ticks
@@ -232,11 +234,6 @@ defmodule Matplotex.Figure.Cast do
     elements = elements ++ xtick_elements
     vgrids = Enum.map(vgridxs, fn g -> {g, bly} end)
     %Figure{figure | axes: %{axes | element: elements, coords: %{coords | vgrids: vgrids}}}
-  end
-  def cast_xticks(%Figure{axes: %{tick: %{x: nil}, show_x_ticks: true}} = figure) do
-    figure
-    |>generate_xticks()
-    |>cast_xticks()
   end
 
   def cast_xticks(%Figure{axes: %{tick: %{x: _}, limit: %{x: nil}, show_x_ticks: true}} = figure) do
@@ -291,14 +288,6 @@ defmodule Matplotex.Figure.Cast do
     hgrids = Enum.map(hgridys, fn g -> {blx, g} end)
     %Figure{figure | axes: %{axes | element: elements, coords: %{coords | hgrids: hgrids}}}
   end
-
-
-  def cast_yticks(%Figure{axes: %{tick: %{y: nil}, show_y_ticks: true}} = figure) do
-    figure
-    |>generate_yticks()
-    |>cast_yticks()
-  end
-
 
   def cast_yticks(%Figure{axes: %{tick: %{y: _}, limit: %{y: nil}, show_y_ticks: true}} = figure) do
     figure
@@ -393,12 +382,12 @@ defmodule Matplotex.Figure.Cast do
     Enum.min_max(ticks)
   end
 
-  defp calculate_center(%Coords{bottom_left: bottom_left, bottom_right: bottom_right},{x,y}, :x) do
-    {calculate_distance(bottom_left, bottom_right)/2 + x, y}
+  defp calculate_center(%Coords{bottom_left: bottom_left, bottom_right: bottom_right}, {x, y}, :x) do
+    {calculate_distance(bottom_left, bottom_right) / 2 + x, y}
   end
 
-  defp calculate_center(%Coords{bottom_left: bottom_left, top_left: top_left},{x, y}, :y) do
-    {x,calculate_distance(bottom_left, top_left)/2 + y}
+  defp calculate_center(%Coords{bottom_left: bottom_left, top_left: top_left}, {x, y}, :y) do
+    {x, calculate_distance(bottom_left, top_left) / 2 + y}
   end
 
   defp merge_structs(%module{} = st, params) do
@@ -411,12 +400,11 @@ defmodule Matplotex.Figure.Cast do
   end
 
   defp rotate_label(:y), do: -90
-  defp rotate_label(_), do: nil
 
   defp set_xlim_from_ticks(%Figure{axes: %module{tick: %{x: xtick}} = axes} = figure) do
     {xmin, xmax} = min_max(xtick)
 
-    xscale = xmax / length(xtick)
+    xscale = xmax / (length(xtick) - 1)
 
     xlim = {round(xmin - xscale), round(xmax + xscale)}
 
@@ -427,23 +415,32 @@ defmodule Matplotex.Figure.Cast do
 
   defp set_ylim_from_ticks(%Figure{axes: %module{tick: %{y: ytick}} = axes} = figure) do
     {ymin, ymax} = min_max(ytick)
-    yscale = ymax / length(ytick)
+    yscale = ymax / (length(ytick) - 1)
     ylim = {round(ymin - yscale), round(ymax + yscale)}
     axes = module.set_limit(axes, {:y, ylim})
     %Figure{figure | axes: axes}
   end
 
-  defp confine_tick(ticks, {min, max}) do
-    Enum.filter(ticks, fn tick ->
-      tick > min && tick < max
+  defp confine_tick(ticks, {min, max} = lim) do
+    ticks
+    |> append_lim(lim)
+    |> Enum.filter(fn tick ->
+      tick >= min && tick <= max
     end)
   end
 
-  defp generate_xticks(%Figure{axes: %module{} = axes} = figure) do
-   %Figure{figure | axes: module.generate_xticks(axes)}
-  end
-  defp generate_yticks(%Figure{axes: %module{} = axes} = figure) do
-    %Figure{figure | axes: module.generate_yticks(axes)}
-   end
+  defp append_lim(ticks, {min, max}) do
+    with_min =
+      if Enum.min(ticks) > min do
+        [min] ++ ticks
+      else
+        ticks
+      end
 
+    if Enum.max(with_min) < max do
+      with_min ++ [max]
+    else
+      with_min
+    end
+  end
 end

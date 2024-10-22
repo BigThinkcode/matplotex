@@ -13,6 +13,7 @@ defmodule Matplotex.Blueprint.Frame do
     dimension = Keyword.get(opts, :dimension)
     tick = Keyword.get(opts, :tick)
     limit = Keyword.get(opts, :limit)
+    title = Keyword.get(opts, :title)
 
     types =
       quote do
@@ -76,12 +77,12 @@ defmodule Matplotex.Blueprint.Frame do
                     :label,
                     :scale,
                     :grid,
-                    :title,
                     :size,
                     :axis,
                     :center,
                     :type,
                     :grid_coordinates,
+                    title: title,
                     tick: tick,
                     limit: limit,
                     coords: coords,
@@ -99,7 +100,6 @@ defmodule Matplotex.Blueprint.Frame do
                     show_x_ticks: @show_by_default,
                     show_y_ticks: @show_by_default,
                     show_ticks: @show_by_default
-
                   ])
       end
 

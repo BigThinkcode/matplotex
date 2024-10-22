@@ -66,7 +66,7 @@ defmodule Matplotex.Element.Label do
   def get_width(%{width: width}), do: to_pixel(width)
   def get_height(%{height: height}), do: to_pixel(height)
   @impl Element
-  def flipy(%__MODULE__{y: y} = label, height)  do
+  def flipy(%__MODULE__{y: y} = label, height) do
     %__MODULE__{label | y: height - y}
   end
 end

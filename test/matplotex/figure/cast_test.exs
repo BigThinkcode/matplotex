@@ -63,22 +63,21 @@ defmodule Matplotex.Figure.CastTest do
         |> Lead.set_spines()
         |> Cast.cast_xticks()
 
-      assert Enum.filter(elements, fn x -> x.type == "figure.x_tick" end) |> length() == 3
+      assert Enum.filter(elements, fn x -> x.type == "figure.x_tick" end) |> length() == 5
     end
+
     test "ticks will get generated if no ticks added" do
       x = [1, 3, 7, 4, 2, 5, 6]
       y = [1, 3, 7, 4, 2, 5, 6]
-    figure = Matplotex.plot(x, y)
+      figure = Matplotex.plot(x, y)
 
       %Figure{axes: %{data: {x, _y}, tick: %{x: x_ticks}, element: elements}} =
         figure
         |> Lead.set_spines()
         |> Cast.cast_xticks()
 
-
       assert Enum.filter(elements, fn x -> x.type == "figure.x_tick" end) |> length() ==
-        length(x_ticks)
-
+               length(x_ticks)
     end
   end
 
