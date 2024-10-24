@@ -82,8 +82,8 @@ defmodule Matplotex.Helpers do
   end
 
   def line_plot() do
-    x = [1, 5, 3, 4, 2, 7, 6]
-    y = [1, 3, 7, 4, 2, 5, 6]
+    x = [1, 2, 3, 4, 6, 6, 7]
+    y = [1, 3, 4, 4, 5, 6, 7]
 
     frame_width = 8
     frame_height = 6
@@ -102,7 +102,7 @@ defmodule Matplotex.Helpers do
     |> Matplotex.set_xticks(ticks)
     |> Matplotex.set_yticks(ticks)
     |> Matplotex.set_xlim({1,7})
-    |> Matplotex.set_ylim({1,7})
+    |> Matplotex.set_ylim({3,7})
     |> Matplotex.set_rc_params(
       x_tick_font_size: font_size,
       y_tick_font_size: font_size,

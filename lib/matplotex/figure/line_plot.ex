@@ -1,4 +1,5 @@
 defmodule Matplotex.LinePlot do
+  alias Matplotex.Figure.RcParams
   alias Matplotex.Element.Line
   alias Matplotex.Figure.Coords
   alias Matplotex.Figure
@@ -17,10 +18,14 @@ defmodule Matplotex.LinePlot do
     |> materialize_lines()
   end
 
-  defp materialize_lines(%Figure{axes: %{data: {x, y},limit: %{x: xlim, y: ylim},size: {width, height},coords: %Coords{bottom_left: blc}, element: elements} = axes} = figure) do
-   line_elements =  Enum.zip(x, y)
+  defp materialize_lines(%Figure{axes: %{data: {x, y},limit: %{x: xlim, y: ylim},size: {width, height},coords: %Coords{bottom_left: {blx, bly}}, element: elements} = axes, rc_params: %RcParams{chart_padding: padding}} = figure) do
+  px = width * padding
+  py = height * padding
+  width = width - px
+  height = height - py
+    line_elements =  Enum.zip(x, y)
     |>Enum.map(fn {x, y} ->
-      transformation(x, y, xlim, ylim, width, height, blc)
+      transformation(x, y, xlim, ylim, width, height, {blx + px, bly + py})
     end)
     |> capture([])
     elements = elements ++ line_elements
@@ -36,12 +41,15 @@ defmodule Matplotex.LinePlot do
     sx = svg_width / (xmax - xmin)
     sy = svg_height / (ymax - ymin)
 
+    tx = tx - xmin * sx
+    ty = ty - ymin * sy
+
     # TODO: work for the datasets which has values in a range way far from zero in both directi
     point_matrix = Nx.tensor([x, y, 1], type: {:f, @tensor_data_type_bits})
 
     Nx.tensor(
       [
-        [sx, 0, tx],
+        [sx, 0, tx ],
         [0, sy, ty],
         [0, 0, 1]
       ],

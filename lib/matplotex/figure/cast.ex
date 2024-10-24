@@ -6,7 +6,6 @@ defmodule Matplotex.Figure.Cast do
   alias Matplotex.Figure.Coords
   alias Matplotex.Figure
   @tickline_offset 5 / 96
-  @padding 0.05
   @xtick_type "figure.x_tick"
   @ytick_type "figure.y_tick"
   @stroke_grid "#ddd"
@@ -75,10 +74,9 @@ defmodule Matplotex.Figure.Cast do
               title: %{text: text},
               element: elements
             } = axes,
-          rc_params: rc_params
+          rc_params: %RcParams{title_font: title_font}
         } = figure
       ) do
-    title_font = rc_params |> RcParams.get_rc(:get_title_font) |> Map.from_struct()
 
     {ttx, tty} = calculate_center(coords, title_coord, :x)
 
@@ -145,12 +143,11 @@ defmodule Matplotex.Figure.Cast do
   def cast_xlabel(
         %Figure{
           axes: %{label: %{x: x_label}, coords: coords, element: element} = axes,
-          rc_params: rc_params
+          rc_params: %RcParams{x_label_font: label_font}
         } = figure
       ) do
     xlabel_coords = Map.get(coords, :x_label)
     {x, y} = calculate_center(coords, xlabel_coords, :x)
-    label_font = rc_params |> RcParams.get_rc(:get_x_label_font) |> Map.from_struct()
 
     x_label =
       %Label{
@@ -168,13 +165,12 @@ defmodule Matplotex.Figure.Cast do
   def cast_ylabel(
         %Figure{
           axes: %{label: %{y: y_label}, coords: coords, element: element} = axes,
-          rc_params: rc_params
+          rc_params: %RcParams{y_label_font: label_font}
         } = figure
       ) do
     ylabel_coords = Map.get(coords, :y_label)
 
     {x, y} = calculate_center(coords, ylabel_coords, :y)
-    label_font = rc_params |> RcParams.get_rc(:get_y_label_font) |> Map.from_struct()
 
     y_label =
       %Label{
@@ -197,19 +193,22 @@ defmodule Matplotex.Figure.Cast do
               tick: %{x: x_ticks},
               limit: %{x: {_min, _max} = xlim},
               size: {width, _height},
+              data: {x_data,y_data},
               element: elements,
               show_x_ticks: true,
               coords: %Coords{bottom_left: {blx, bly}, x_ticks: {_xtx, xty}} = coords
-            } = axes
+            } = axes,
+            rc_params: %RcParams{x_tick_font: tick_font, chart_padding: padding}
         } = figure
       )
       when is_list(x_ticks) do
-    x_ticks = confine_tick(x_ticks, xlim)
+    x_ticks = confine_value(x_ticks, xlim)
+    x_data = confine_value(x_data, xlim)
 
     {xtick_elements, vgridxs} =
       Enum.map(x_ticks, fn tick ->
         {tick_position, label} =
-          plotify_tick(tick, xlim, width - width * @padding, blx + width * @padding)
+          plotify_tick(tick, xlim,x_data, width - width * padding, blx + width * padding)
 
         label = %Label{
           type: @xtick_type,
@@ -217,6 +216,8 @@ defmodule Matplotex.Figure.Cast do
           y: xty,
           text: label
         }
+        |>merge_structs(tick_font)
+
 
         # TODO: find a mechanism to pass custom font for ticks
         line = %Line{
@@ -233,7 +234,7 @@ defmodule Matplotex.Figure.Cast do
 
     elements = elements ++ xtick_elements
     vgrids = Enum.map(vgridxs, fn g -> {g, bly} end)
-    %Figure{figure | axes: %{axes | element: elements, coords: %{coords | vgrids: vgrids}}}
+    %Figure{figure | axes: %{axes |data: {x_data, y_data}, element: elements, coords: %{coords | vgrids: vgrids}}}
   end
 
   def cast_xticks(%Figure{axes: %{tick: %{x: _}, limit: %{x: nil}, show_x_ticks: true}} = figure) do
@@ -253,16 +254,19 @@ defmodule Matplotex.Figure.Cast do
               element: elements,
               coords: %Coords{bottom_left: {blx, bly}, y_ticks: {ytx, _yty}} = coords,
               limit: %{y: {_min, _max} = ylim},
+              data: {x_data, y_data},
               show_y_ticks: true
-            } = axes
+            } = axes,
+            rc_params: %RcParams{y_tick_font: tick_font, chart_padding: padding}
         } = figure
       ) do
-    y_ticks = confine_tick(y_ticks, ylim)
+    y_ticks = confine_value(y_ticks, ylim)
+    y_data = confine_value(y_data, ylim)
 
     {ytick_elements, hgridys} =
       Enum.map(y_ticks, fn tick ->
         {tick_position, label} =
-          plotify_tick(tick, ylim, height - height * @padding, bly + height * @padding)
+          plotify_tick(tick, ylim,y_data, height - height * padding, bly + height * padding)
 
         label = %Label{
           type: @ytick_type,
@@ -270,6 +274,7 @@ defmodule Matplotex.Figure.Cast do
           x: ytx,
           text: label
         }
+        |> merge_structs(tick_font)
 
         # TODO: find a mechanism to pass custom font for ticks
         line = %Line{
@@ -286,7 +291,7 @@ defmodule Matplotex.Figure.Cast do
 
     elements = elements ++ ytick_elements
     hgrids = Enum.map(hgridys, fn g -> {blx, g} end)
-    %Figure{figure | axes: %{axes | element: elements, coords: %{coords | hgrids: hgrids}}}
+    %Figure{figure | axes: %{axes |data: {x_data, y_data}, element: elements, coords: %{coords | hgrids: hgrids}}}
   end
 
   def cast_yticks(%Figure{axes: %{tick: %{y: _}, limit: %{y: nil}, show_y_ticks: true}} = figure) do
@@ -359,17 +364,17 @@ defmodule Matplotex.Figure.Cast do
     %Figure{figure | axes: %{axes | element: elements}}
   end
 
-  defp plotify_tick({value, label}, lim, axis_size, transition) do
-    {plotify(value, lim, axis_size, transition), label}
+  defp plotify_tick({value, label}, lim,data, axis_size, transition) do
+    {plotify(value, lim, data,axis_size, transition), label}
   end
 
-  defp plotify_tick(value, lim, axis_size, transition) do
-    {plotify(value, lim, axis_size, transition), value}
+  defp plotify_tick(value, lim,data, axis_size, transition) do
+    {plotify(value, lim, data, axis_size, transition), value}
   end
 
-  defp plotify(value, {min, max}, axis_size, transition) do
-    s = axis_size / (max - min)
-    value * s + transition
+  defp plotify(value, {minl, maxl}, data, axis_size, transition) do
+    s = axis_size / (maxl - minl)
+    (value * s + transition) - minl * s
   end
 
   defp min_max([{_pos, _label} | _] = ticks) do
@@ -390,8 +395,9 @@ defmodule Matplotex.Figure.Cast do
     {x, calculate_distance(bottom_left, top_left) / 2 + y}
   end
 
-  defp merge_structs(%module{} = st, params) do
-    params = st |> Map.from_struct() |> Map.merge(params)
+  defp merge_structs(%module{} = st, sst) do
+    sst = Map.from_struct(sst)
+    params = st |> Map.from_struct() |> Map.merge(sst)
     struct(module, params)
   end
 
@@ -421,7 +427,7 @@ defmodule Matplotex.Figure.Cast do
     %Figure{figure | axes: axes}
   end
 
-  defp confine_tick(ticks, {min, max} = lim) do
+  defp confine_value(ticks, {min, max} = lim) do
     ticks
     |> append_lim(lim)
     |> Enum.filter(fn tick ->
