@@ -115,7 +115,7 @@ defmodule Matplotex.Figure.Areal do
 
       defp update_limit(limit, _,_), do: limit
 
-      def materialize(figure) do
+      def materialized(figure) do
         figure
         |> Lead.set_spines()
         |> Cast.cast_spines()

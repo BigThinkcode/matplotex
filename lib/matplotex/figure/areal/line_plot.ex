@@ -14,9 +14,9 @@ defmodule Matplotex.LinePlot do
     y = determine_numeric_value(y)
     %Figure{axes: struct(__MODULE__, %{data: {x, y}})}
   end
-  def materialized(figure) do
+  def materialize(figure) do
     figure
-    |>__MODULE__.materialize()
+    |>__MODULE__.materialized()
     |> materialize_lines()
   end
 
