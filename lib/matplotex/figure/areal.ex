@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Areal do
+  alias Matplotex.Figure.TwoD
   defmacro __using__(_) do
     quote do
       @before_compile unquote(__MODULE__)
@@ -54,15 +55,14 @@ defmodule Matplotex.Figure.Areal do
         raise Matplotex.InputError, keys: [:title], message: "Invalid Input"
       end
 
-      def add_ticks(%__MODULE__{tick: nil} = axes, {key, ticks}) when is_list(ticks) do
-        tick =
-          Map.new()
-          |> Map.put(key, ticks)
-
-        update_tick(axes, tick)
-      end
 
       def add_ticks(%__MODULE__{tick: tick} = axes, {key, ticks}) when is_list(ticks) do
+        ticks = if number_based?(ticks) do
+          ticks
+        else
+          Enum.with_index(ticks)
+        end
+
         tick = Map.put(tick, key, ticks)
         update_tick(axes, tick)
       end
@@ -92,29 +92,28 @@ defmodule Matplotex.Figure.Areal do
 
       def generate_xticks(%__MODULE__{data: {x, _y}, tick: tick, limit: limit} = axes) do
         {xticks, xlim} =
-          if number_based?(x) do
             generate_ticks(x)
-          else
-            generate_ticks_with_pos(x)
-          end
-
         tick = Map.put(tick, :x, xticks)
-        limit = Map.put(limit, :x, xlim)
+        limit = update_limit(limit, :x, xlim)
         %__MODULE__{axes | tick: tick, limit: limit}
       end
 
       def generate_yticks(%__MODULE__{data: {_x, y}, tick: tick, limit: limit} = axes) do
         {xticks, ylim} =
-          if number_based?(y) do
             generate_ticks(y)
-          else
-            generate_ticks_with_pos(y)
-          end
-
         tick = Map.put(tick, :y, xticks)
-        limit = Map.put(limit, :y, ylim)
+        limit = update_limit(limit, :y, ylim)
         %__MODULE__{axes | tick: tick, limit: limit}
       end
+
+      defp update_limit(%TwoD{x: nil} = limit, :x, xlim) do
+        %TwoD{limit | x: xlim}
+      end
+      defp update_limit(%TwoD{y: nil} = limit, :y, ylim) do
+        %TwoD{limit | y: ylim}
+      end
+
+      defp update_limit(limit, _,_), do: limit
 
       def materialize(figure) do
         figure
@@ -147,21 +146,19 @@ defmodule Matplotex.Figure.Areal do
         Text.new(label, font)
       end
 
-      defp number_based?(data) do
+      def number_based?(data) do
         Enum.all?(data, &is_number/1)
+      end
+      defp generate_ticks([{_l, _v}| _] =data) do
+        {data, min_max(data)}
       end
 
       defp generate_ticks(data) do
-        {min, max} = Enum.min_max(data)
+        {min, max} = lim = Enum.min_max(data)
         step = (max - min) / (length(data) - 1)
-        {min, max} = lim = {round(min - step), round(max + step)}
         {min..max |> Enum.into([], fn d -> d * step end), lim}
       end
 
-      defp generate_ticks_with_pos(data) do
-        ticks = Enum.with_index(data)
-        {ticks, min_max(ticks)}
-      end
 
       defp min_max([{_pos, _label} | _] = ticks) do
         ticks

@@ -342,6 +342,10 @@ defmodule Matplotex.Figure.Lead do
     tick |> Float.to_string() |> String.length()
   end
 
+  defp tick_length({label, _v}) when is_binary(label) do
+    String.length(label)
+  end
+
   defp generate_yticks(%Figure{axes: %module{} = axes} = figure) do
     %Figure{figure | axes: module.generate_yticks(axes)}
   end

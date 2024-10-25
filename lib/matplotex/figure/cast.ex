@@ -204,11 +204,11 @@ defmodule Matplotex.Figure.Cast do
       when is_list(x_ticks) do
     x_ticks = confine_value(x_ticks, xlim)
     x_data = confine_value(x_data, xlim)
-
     {xtick_elements, vgridxs} =
       Enum.map(x_ticks, fn tick ->
         {tick_position, label} =
-          plotify_tick(tick, xlim,x_data, width - width * padding, blx + width * padding)
+          plotify_tick(tick, xlim, width - width * padding, blx + width * padding)
+
 
         label = %Label{
           type: @xtick_type,
@@ -266,7 +266,7 @@ defmodule Matplotex.Figure.Cast do
     {ytick_elements, hgridys} =
       Enum.map(y_ticks, fn tick ->
         {tick_position, label} =
-          plotify_tick(tick, ylim,y_data, height - height * padding, bly + height * padding)
+          plotify_tick(tick, ylim, height - height * padding, bly + height * padding)
 
         label = %Label{
           type: @ytick_type,
@@ -364,23 +364,24 @@ defmodule Matplotex.Figure.Cast do
     %Figure{figure | axes: %{axes | element: elements}}
   end
 
-  defp plotify_tick({value, label}, lim,data, axis_size, transition) do
-    {plotify(value, lim, data,axis_size, transition), label}
+  defp plotify_tick({label, value}, lim, axis_size, transition) do
+
+    {plotify(value, lim, axis_size, transition), label}
   end
 
-  defp plotify_tick(value, lim,data, axis_size, transition) do
-    {plotify(value, lim, data, axis_size, transition), value}
+  defp plotify_tick(value, lim, axis_size, transition) do
+    {plotify(value, lim, axis_size, transition), value}
   end
 
-  defp plotify(value, {minl, maxl}, data, axis_size, transition) do
+  defp plotify(value, {minl, maxl}, axis_size, transition) do
     s = axis_size / (maxl - minl)
     (value * s + transition) - minl * s
   end
 
   defp min_max([{_pos, _label} | _] = ticks) do
     ticks
-    |> Enum.min_max_by(fn {pos, _label} -> pos end)
-    |> then(fn {{pos_min, _label_min}, {pos_max, _label_max}} -> {pos_min, pos_max} end)
+    |> Enum.min_max_by(fn {_labe, pos} -> pos end)
+    |> then(fn {{ _label_min, pos_min}, { _label_max, pos_max}} -> {pos_min, pos_max} end)
   end
 
   defp min_max(ticks) do
@@ -426,7 +427,12 @@ defmodule Matplotex.Figure.Cast do
     axes = module.set_limit(axes, {:y, ylim})
     %Figure{figure | axes: axes}
   end
-
+  defp confine_value([{_l, _v}|_]=ticks, {min, max}) do
+    ticks
+    |> Enum.filter(fn {_l, tick} ->
+      tick >= min && tick <= max
+    end)
+  end
   defp confine_value(ticks, {min, max} = lim) do
     ticks
     |> append_lim(lim)
@@ -434,6 +440,7 @@ defmodule Matplotex.Figure.Cast do
       tick >= min && tick <= max
     end)
   end
+
 
   defp append_lim(ticks, {min, max}) do
     with_min =

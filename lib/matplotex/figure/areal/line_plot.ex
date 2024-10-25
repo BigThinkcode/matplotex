@@ -10,6 +10,8 @@ defmodule Matplotex.LinePlot do
   use Matplotex.Figure.Areal
 
   def create(x, y) do
+    x = determine_numeric_value(x)
+    y = determine_numeric_value(y)
     %Figure{axes: struct(__MODULE__, %{data: {x, y}})}
   end
   def materialized(figure) do
@@ -23,7 +25,11 @@ defmodule Matplotex.LinePlot do
   py = height * padding
   width = width - px
   height = height - py
-    line_elements =  Enum.zip(x, y)
+
+
+  line_elements =
+    x
+    |>Enum.zip(y)
     |>Enum.map(fn {x, y} ->
       transformation(x, y, xlim, ylim, width, height, {blx + px, bly + py})
     end)
@@ -36,7 +42,12 @@ defmodule Matplotex.LinePlot do
     capture(to_capture,captured ++ [%Line{x1: x1, y1: y1, x2: x2, y2: y2}])
   end
   defp capture(_, captured), do: captured
-
+  def transformation({ _label,value}, y, xminmax, yminmax, width, height, transition) do
+    transformation(value, y, xminmax, yminmax, width, height, transition)
+  end
+  def transformation(x, { _label,value}, y, xminmax, yminmax, width, transition) do
+    transformation(x, value, y, xminmax, yminmax, width, transition)
+  end
   def transformation(x, y, {xmin, xmax}, {ymin, ymax}, svg_width, svg_height, {tx, ty}) do
     sx = svg_width / (xmax - xmin)
     sy = svg_height / (ymax - ymin)
@@ -58,6 +69,17 @@ defmodule Matplotex.LinePlot do
     |> Nx.dot(point_matrix)
     |> Nx.to_flat_list()
     |> then(fn [x_trans, y_trans, _] -> {x_trans, y_trans} end)
+  end
+
+  defp determine_numeric_value(data) when is_list(data) do
+    if  number_based?(data) do
+      data
+    else
+      data_with_label(data)
+    end
+  end
+  defp data_with_label(data) do
+    Enum.with_index(data)
   end
 
 end
