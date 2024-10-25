@@ -13,7 +13,7 @@ defmodule Matplotex.MixProject do
   end
 
   defp elixirc_paths(:test), do: elixirc_paths(:dev) ++ ["test/support"]
-  defp elixirc_paths(:dev), do: ["lib"]
+  defp elixirc_paths(_), do: ["lib"]
 
   # Run "mix help compile.app" to learn about applications.
   def application do

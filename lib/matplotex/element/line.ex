@@ -1,4 +1,7 @@
 defmodule Matplotex.Element.Line do
+  alias Matplotex.Element
+  use Element
+
   @type t() :: %__MODULE__{
           type: String.t(),
           x1: number(),
@@ -23,4 +26,31 @@ defmodule Matplotex.Element.Line do
     shape_rendering: "crispEdges",
     stroke_linecap: "square"
   ]
+
+  @impl true
+  def assemble(line) do
+    ~s(
+    <line
+    type="#{line.type}"
+    x1="#{get_x1(line)}"
+    y1="#{get_y1(line)}"
+    x2="#{get_x2(line)}"
+    y2="#{get_y2(line)}"
+    fill="#{line.fill}"
+    stroke="#{line.stroke}"
+    stroke-width="#{line.stroke_width}"
+    shape-rendering="#{line.shape_rendering}"
+    stroke-linecap="#{line.stroke_linecap}"/>
+
+    )
+  end
+
+  def get_x1(%{x1: x1}), do: to_pixel(x1)
+  def get_x2(%{x2: x2}), do: to_pixel(x2)
+  def get_y1(%{y1: y1}), do: to_pixel(y1)
+  def get_y2(%{y2: y2}), do: to_pixel(y2)
+  @impl Element
+  def flipy(%__MODULE__{y1: y1, y2: y2} = line, height) do
+    %__MODULE__{line | y1: height - y1, y2: height - y2}
+  end
 end

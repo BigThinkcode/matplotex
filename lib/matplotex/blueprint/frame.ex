@@ -1,35 +1,20 @@
 defmodule Matplotex.Blueprint.Frame do
-  @default_margin 10
+  alias Matplotex.Figure.Legend
+  @default_margin 0.1
   @show_by_default true
   @valid_by_default true
-  @common_fields [
-    :id,
-    :content,
-    :dataset,
-    :label,
-    :scale,
-    :grid,
-    :title,
-    :size,
-    :tick,
-    :axis,
-    :element,
-    :type,
-    :grid_coordinates,
-    errors: [],
-    valid: @valid_by_default,
-    margin: @default_margin,
-    show_x_axis: @show_by_default,
-    show_y_axis: @show_by_default,
-    show_v_grid: @show_by_default,
-    show_h_grid: @show_by_default,
-    show_ticks: @show_by_default
-  ]
-  defmacro frame() do
-    build_struct()
+  defmacro frame(opts \\ []) do
+    build_struct(opts)
   end
 
-  defp build_struct() do
+  defp build_struct(opts) do
+    legend = Keyword.get(opts, :legend)
+    coords = Keyword.get(opts, :coords)
+    dimension = Keyword.get(opts, :dimension)
+    tick = Keyword.get(opts, :tick)
+    limit = Keyword.get(opts, :limit)
+    title = Keyword.get(opts, :title)
+
     types =
       quote do
         @type dataset1_d() :: list() | nil
@@ -39,7 +24,8 @@ defmodule Matplotex.Blueprint.Frame do
         @type label() :: %{x: String.t() | nil, y: String.t() | nil, font: font() | nil} | nil
         @type scale() :: %{x: number() | nil, y: number() | nil, aspect_ratio: number | nil} | nil
         @type grid() :: %{x_scale: number() | nil, y_scale: number() | nil} | nil
-        @type title() :: %{title: String.t() | nil, font_size: font() | nil} | nil
+        @type title() ::
+                %{title: String.t() | nil, font_size: font() | nil, height: number() | nil} | nil
         @type size() :: %{height: number() | nil, width: number() | nil} | nil
         @type tick() ::
                 %{x_scale: number() | nil, y_scale: number() | nil, font: font() | nil} | nil
@@ -48,10 +34,14 @@ defmodule Matplotex.Blueprint.Frame do
         @type axis() :: :on | :off | nil
         @type element() :: any()
         @type content() :: any()
+        @type limit() :: %{x: number(), y: number()} | any()
+        @type legend() :: Legend.t() | any()
 
         @type frame_struct() :: %__MODULE__{
                 id: any(),
                 dataset: dataset1_d() | dataset2_d(),
+                data: any(),
+                # set xlabel set y label
                 label: label(),
                 scale: scale(),
                 grid: grid(),
@@ -70,13 +60,47 @@ defmodule Matplotex.Blueprint.Frame do
                 show_h_grid: boolean(),
                 errors: list(),
                 grid_coordinates: dataset2_d(),
-                show_ticks: boolean()
+                show_ticks: boolean(),
+                limit: limit(),
+                legend: legend()
               }
       end
 
     build_struct =
       quote do
-        defstruct unquote(@common_fields)
+        defstruct unquote([
+                    :id,
+                    :content,
+                    :data,
+                    # TODO: change dataset to data, should deprecate this field
+                    :dataset,
+                    :label,
+                    :scale,
+                    :grid,
+                    :size,
+                    :axis,
+                    :center,
+                    :type,
+                    :grid_coordinates,
+                    title: title,
+                    tick: tick,
+                    limit: limit,
+                    coords: coords,
+                    legend: legend,
+                    dimension: dimension,
+                    errors: [],
+                    element: [],
+                    show_title: false,
+                    valid: @valid_by_default,
+                    margin: @default_margin,
+                    show_x_axis: @show_by_default,
+                    show_y_axis: @show_by_default,
+                    show_v_grid: @show_by_default,
+                    show_h_grid: @show_by_default,
+                    show_x_ticks: @show_by_default,
+                    show_y_ticks: @show_by_default,
+                    show_ticks: @show_by_default
+                  ])
       end
 
     quote do

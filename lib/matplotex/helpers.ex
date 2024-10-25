@@ -14,34 +14,6 @@ defmodule Matplotex.Helpers do
     :ok
   end
 
-  def barchart_params() do
-    %{
-      "dataset" => [44, 56, 67, 67, 89, 14, 57, 33, 59, 67, 90, 34],
-      "x_labels" => [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
-      ],
-      "color_palette" => "#5cf",
-      "width" => 700,
-      "x_margin" => 15,
-      "y_margin" => 15,
-      "height" => 300,
-      "y_scale" => 20,
-      "y_label_suffix" => "K",
-      "y_label_offset" => 40,
-      "x_label_offset" => 20
-    }
-  end
 
   def pie_chart_params() do
     %{
@@ -64,7 +36,7 @@ defmodule Matplotex.Helpers do
         [1, 6, 5, 3, 3, 8, 6]
       ],
       "x_labels" => ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-      "y_labels" => [0,1,2,3,4,5,6,7,8,9],
+      "y_labels" => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
       "width" => 700,
       "height" => 400,
       "x_margin" => 20,
@@ -79,5 +51,72 @@ defmodule Matplotex.Helpers do
       "y_label" => "Count",
       "line_width" => 3
     }
+  end
+
+  def line_plot() do
+    x = [1, 2, 3, 4, 6, 6, 7]
+    y = [1, 3, 4, 4, 5, 6, 7]
+
+    frame_width = 8
+    frame_height = 6
+    size = {frame_width, frame_height}
+    margin = 0.05
+    font_size = "16pt"
+    title_font_size = "18pt"
+    ticks = [1, 2, 3, 4, 5, 6, 7]
+
+    x
+    |> Matplotex.plot(y)
+    |> Matplotex.figure(%{figsize: size, margin: margin})
+    |> Matplotex.set_title("The Plot Title")
+    |> Matplotex.set_xlabel("X Axis")
+    |> Matplotex.set_ylabel("Y Axis")
+    |> Matplotex.set_xticks(ticks)
+    |> Matplotex.set_yticks(ticks)
+    |> Matplotex.set_xlim({1,7})
+    |> Matplotex.set_ylim({1,7})
+    |> Matplotex.set_rc_params(
+      x_tick_font_size: font_size,
+      y_tick_font_size: font_size,
+      title_font_size: title_font_size,
+      x_label_font_size: font_size,
+      y_label_font_size: font_size,
+      title_font_size: title_font_size
+    )
+    |> Matplotex.show()
+  end
+
+  def line_plotc() do
+    x = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    y = [1, 3, 4, 4, 5, 6, 7]
+
+    frame_width = 8
+    frame_height = 6
+    size = {frame_width, frame_height}
+    margin = 0.05
+    font_size = "16pt"
+    title_font_size = "18pt"
+    ticks = [1, 2, 3, 4, 5, 6, 7]
+    xticks = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+
+    x
+    |> Matplotex.plot(y)
+    |> Matplotex.figure(%{figsize: size, margin: margin})
+    |> Matplotex.set_title("The Plot Title")
+    |> Matplotex.set_xlabel("X Axis")
+    |> Matplotex.set_ylabel("Y Axis")
+    |> Matplotex.set_xticks(xticks)
+    |> Matplotex.set_yticks(ticks)
+    |> Matplotex.set_xlim({0,7})
+    |> Matplotex.set_ylim({0,7})
+    |> Matplotex.set_rc_params(
+      x_tick_font_size: font_size,
+      y_tick_font_size: font_size,
+      title_font_size: title_font_size,
+      x_label_font_size: font_size,
+      y_label_font_size: font_size,
+      title_font_size: title_font_size
+    )
+    |> Matplotex.show()
   end
 end
