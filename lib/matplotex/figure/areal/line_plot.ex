@@ -1,4 +1,5 @@
 defmodule Matplotex.LinePlot do
+  alias Matplotex.Figure.Areal
   alias Matplotex.Figure.RcParams
   alias Matplotex.Element.Line
   alias Matplotex.Figure.Coords
@@ -8,12 +9,14 @@ defmodule Matplotex.LinePlot do
   @tensor_data_type_bits 64
 
   use Matplotex.Figure.Areal
-
+@impl Areal
   def create(x, y) do
     x = determine_numeric_value(x)
     y = determine_numeric_value(y)
     %Figure{axes: struct(__MODULE__, %{data: {x, y}})}
   end
+
+  @impl Areal
   def materialize(figure) do
     figure
     |>__MODULE__.materialized()
@@ -69,17 +72,6 @@ defmodule Matplotex.LinePlot do
     |> Nx.dot(point_matrix)
     |> Nx.to_flat_list()
     |> then(fn [x_trans, y_trans, _] -> {x_trans, y_trans} end)
-  end
-
-  defp determine_numeric_value(data) when is_list(data) do
-    if  number_based?(data) do
-      data
-    else
-      data_with_label(data)
-    end
-  end
-  defp data_with_label(data) do
-    Enum.with_index(data)
   end
 
 end

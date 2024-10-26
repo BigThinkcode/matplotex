@@ -1,7 +1,12 @@
 defmodule Matplotex.Figure.Areal do
+
   alias Matplotex.Figure.TwoD
+  @callback create(list(),list()) :: struct()
+  @callback materialize(struct()) :: struct()
   defmacro __using__(_) do
+
     quote do
+      @behaviour Matplotex.Figure.Areal
       @before_compile unquote(__MODULE__)
     end
   end
@@ -145,6 +150,18 @@ defmodule Matplotex.Figure.Areal do
         font = struct(Font, font_params)
         Text.new(label, font)
       end
+
+      def determine_numeric_value(data) when is_list(data) do
+        if  number_based?(data) do
+          data
+        else
+          data_with_label(data)
+        end
+      end
+      defp data_with_label(data) do
+        Enum.with_index(data)
+      end
+
 
       def number_based?(data) do
         Enum.all?(data, &is_number/1)
