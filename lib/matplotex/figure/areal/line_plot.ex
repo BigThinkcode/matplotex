@@ -9,7 +9,7 @@ defmodule Matplotex.LinePlot do
   @tensor_data_type_bits 64
 
   use Matplotex.Figure.Areal
-@impl Areal
+  @impl Areal
   def create(x, y) do
     x = determine_numeric_value(x)
     y = determine_numeric_value(y)
@@ -19,38 +19,54 @@ defmodule Matplotex.LinePlot do
   @impl Areal
   def materialize(figure) do
     figure
-    |>__MODULE__.materialized()
+    |> __MODULE__.materialized()
     |> materialize_lines()
   end
 
-  defp materialize_lines(%Figure{axes: %{data: {x, y},limit: %{x: xlim, y: ylim},size: {width, height},coords: %Coords{bottom_left: {blx, bly}}, element: elements} = axes, rc_params: %RcParams{chart_padding: padding}} = figure) do
-  px = width * padding
-  py = height * padding
-  width = width - px
-  height = height - py
+  defp materialize_lines(
+         %Figure{
+           axes:
+             %{
+               data: {x, y},
+               limit: %{x: xlim, y: ylim},
+               size: {width, height},
+               coords: %Coords{bottom_left: {blx, bly}},
+               element: elements
+             } = axes,
+           rc_params: %RcParams{chart_padding: padding}
+         } = figure
+       ) do
+    px = width * padding
+    py = height * padding
+    width = width - px
+    height = height - py
 
+    line_elements =
+      x
+      |> Enum.zip(y)
+      |> Enum.map(fn {x, y} ->
+        transformation(x, y, xlim, ylim, width, height, {blx + px, bly + py})
+      end)
+      |> capture([])
 
-  line_elements =
-    x
-    |>Enum.zip(y)
-    |>Enum.map(fn {x, y} ->
-      transformation(x, y, xlim, ylim, width, height, {blx + px, bly + py})
-    end)
-    |> capture([])
     elements = elements ++ line_elements
     %Figure{figure | axes: %{axes | element: elements}}
   end
 
-  defp capture([{x1, y1} | [{x2, y2} | _] = to_capture ], captured ) do
-    capture(to_capture,captured ++ [%Line{x1: x1, y1: y1, x2: x2, y2: y2}])
+  defp capture([{x1, y1} | [{x2, y2} | _] = to_capture], captured) do
+    capture(to_capture, captured ++ [%Line{type: "plot.line", x1: x1, y1: y1, x2: x2, y2: y2}])
   end
+
   defp capture(_, captured), do: captured
-  def transformation({ _label,value}, y, xminmax, yminmax, width, height, transition) do
+
+  def transformation({_label, value}, y, xminmax, yminmax, width, height, transition) do
     transformation(value, y, xminmax, yminmax, width, height, transition)
   end
-  def transformation(x, { _label,value}, y, xminmax, yminmax, width, transition) do
+
+  def transformation(x, {_label, value}, y, xminmax, yminmax, width, transition) do
     transformation(x, value, y, xminmax, yminmax, width, transition)
   end
+
   def transformation(x, y, {xmin, xmax}, {ymin, ymax}, svg_width, svg_height, {tx, ty}) do
     sx = svg_width / (xmax - xmin)
     sy = svg_height / (ymax - ymin)
@@ -63,7 +79,7 @@ defmodule Matplotex.LinePlot do
 
     Nx.tensor(
       [
-        [sx, 0, tx ],
+        [sx, 0, tx],
         [0, sy, ty],
         [0, 0, 1]
       ],
@@ -73,5 +89,4 @@ defmodule Matplotex.LinePlot do
     |> Nx.to_flat_list()
     |> then(fn [x_trans, y_trans, _] -> {x_trans, y_trans} end)
   end
-
 end

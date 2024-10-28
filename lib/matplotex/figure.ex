@@ -47,6 +47,9 @@ defmodule Matplotex.Figure do
   def add_legend(%__MODULE__{axes: %module{} = axes} = figure, params),
     do: %{figure | axes: module.add_legend(axes, params)}
 
+  def hide_v_grid(%__MODULE__{axes: %module{} = axes} = figure),
+    do: %{figure | axes: module.hide_v_grid(axes)}
+
   def materialize(%__MODULE__{axes: %module{}} = figure), do: module.materialize(figure)
 
   def update_figure(figure, params) do

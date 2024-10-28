@@ -14,7 +14,6 @@ defmodule Matplotex.Helpers do
     :ok
   end
 
-
   def pie_chart_params() do
     %{
       "id" => "chart-container",
@@ -73,8 +72,8 @@ defmodule Matplotex.Helpers do
     |> Matplotex.set_ylabel("Y Axis")
     |> Matplotex.set_xticks(ticks)
     |> Matplotex.set_yticks(ticks)
-    |> Matplotex.set_xlim({1,7})
-    |> Matplotex.set_ylim({1,7})
+    |> Matplotex.set_xlim({1, 7})
+    |> Matplotex.set_ylim({1, 7})
     |> Matplotex.set_rc_params(
       x_tick_font_size: font_size,
       y_tick_font_size: font_size,
@@ -107,8 +106,42 @@ defmodule Matplotex.Helpers do
     |> Matplotex.set_ylabel("Y Axis")
     |> Matplotex.set_xticks(xticks)
     |> Matplotex.set_yticks(ticks)
-    |> Matplotex.set_xlim({0,7})
-    |> Matplotex.set_ylim({0,7})
+    |> Matplotex.set_xlim({0, 7})
+    |> Matplotex.set_ylim({0, 7})
+    |> Matplotex.set_rc_params(
+      x_tick_font_size: font_size,
+      y_tick_font_size: font_size,
+      title_font_size: title_font_size,
+      x_label_font_size: font_size,
+      y_label_font_size: font_size,
+      title_font_size: title_font_size
+    )
+    |> Matplotex.show()
+  end
+
+  def bar() do
+    x = [1, 3, 7, 4, 2, 5, 6]
+    y = [1, 3, 7, 4, 2, 5, 6]
+
+    frame_width = 8
+    frame_height = 6
+    size = {frame_width, frame_height}
+    margin = 0.1
+    font_size = 0
+    title_font_size = 0
+    ticks = [1, 2, 3, 4, 5, 6, 7]
+
+    x
+    |> Matplotex.bar(y)
+    |> Matplotex.figure(%{figsize: size, margin: margin})
+    |> Matplotex.set_title("The Plot Title")
+    |> Matplotex.set_xticks(ticks)
+    |> Matplotex.set_yticks(ticks)
+    |> Matplotex.set_xlabel("The X Label")
+    |> Matplotex.set_ylabel("The Y Label")
+    |> Matplotex.set_xlim({1, 7})
+    |> Matplotex.set_ylim({1, 7})
+    |> Matplotex.hide_v_grid()
     |> Matplotex.set_rc_params(
       x_tick_font_size: font_size,
       y_tick_font_size: font_size,
