@@ -5,8 +5,8 @@ defmodule Matplotex do
   alias Matplotex.Figure.Sketch
   alias Matplotex.Figure
 
-  def barchart(params) do
-    Matplotex.BarChart.create(params)
+  def bar(x, y) do
+    Matplotex.Figure.Areal.BarChart.create(x, y)
   end
 
   def pie_chart(params) do
@@ -165,6 +165,10 @@ defmodule Matplotex do
 
   def figure(figure, params) do
     Figure.update_figure(figure, params)
+  end
+
+  def hide_v_grid(figure) do
+    Figure.hide_v_grid(figure)
   end
 
   @doc """

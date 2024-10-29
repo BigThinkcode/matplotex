@@ -1,7 +1,12 @@
 defmodule Matplotex.Figure.Areal do
   alias Matplotex.Figure.TwoD
+  @callback create(list(), list()) :: struct()
+  @callback materialize(struct()) :: struct()
+  @callback plotify(number(), tuple(), number(), number(), list(), atom()) :: number()
   defmacro __using__(_) do
     quote do
+      @behaviour Matplotex.Figure.Areal
+      import Matplotex.Figure.Areal, only: [transformation: 7]
       @before_compile unquote(__MODULE__)
     end
   end
@@ -55,16 +60,20 @@ defmodule Matplotex.Figure.Areal do
         raise Matplotex.InputError, keys: [:title], message: "Invalid Input"
       end
 
-
       def add_ticks(%__MODULE__{tick: tick} = axes, {key, ticks}) when is_list(ticks) do
-        ticks = if number_based?(ticks) do
-          ticks
-        else
-          Enum.with_index(ticks)
-        end
+        ticks =
+          if number_based?(ticks) do
+            ticks
+          else
+            Enum.with_index(ticks, 1)
+          end
 
         tick = Map.put(tick, key, ticks)
         update_tick(axes, tick)
+      end
+
+      def hide_v_grid(axes) do
+        %{axes | show_v_grid: false}
       end
 
       def add_ticks(_, _) do
@@ -92,7 +101,8 @@ defmodule Matplotex.Figure.Areal do
 
       def generate_xticks(%__MODULE__{data: {x, _y}, tick: tick, limit: limit} = axes) do
         {xticks, xlim} =
-            generate_ticks(x)
+          generate_ticks(x)
+
         tick = Map.put(tick, :x, xticks)
         limit = update_limit(limit, :x, xlim)
         %__MODULE__{axes | tick: tick, limit: limit}
@@ -100,7 +110,8 @@ defmodule Matplotex.Figure.Areal do
 
       def generate_yticks(%__MODULE__{data: {_x, y}, tick: tick, limit: limit} = axes) do
         {xticks, ylim} =
-            generate_ticks(y)
+          generate_ticks(y)
+
         tick = Map.put(tick, :y, xticks)
         limit = update_limit(limit, :y, ylim)
         %__MODULE__{axes | tick: tick, limit: limit}
@@ -109,11 +120,12 @@ defmodule Matplotex.Figure.Areal do
       defp update_limit(%TwoD{x: nil} = limit, :x, xlim) do
         %TwoD{limit | x: xlim}
       end
+
       defp update_limit(%TwoD{y: nil} = limit, :y, ylim) do
         %TwoD{limit | y: ylim}
       end
 
-      defp update_limit(limit, _,_), do: limit
+      defp update_limit(limit, _, _), do: limit
 
       def materialized(figure) do
         figure
@@ -146,10 +158,23 @@ defmodule Matplotex.Figure.Areal do
         Text.new(label, font)
       end
 
+      def determine_numeric_value(data) when is_list(data) do
+        if number_based?(data) do
+          data
+        else
+          data_with_label(data)
+        end
+      end
+
+      defp data_with_label(data) do
+        Enum.with_index(data, 1)
+      end
+
       def number_based?(data) do
         Enum.all?(data, &is_number/1)
       end
-      defp generate_ticks([{_l, _v}| _] =data) do
+
+      defp generate_ticks([{_l, _v} | _] = data) do
         {data, min_max(data)}
       end
 
@@ -158,7 +183,6 @@ defmodule Matplotex.Figure.Areal do
         step = (max - min) / (length(data) - 1)
         {min..max |> Enum.into([], fn d -> d * step end), lim}
       end
-
 
       defp min_max([{_pos, _label} | _] = ticks) do
         ticks
@@ -170,5 +194,48 @@ defmodule Matplotex.Figure.Areal do
         Enum.min_max(ticks)
       end
     end
+  end
+
+  @tensor_data_type_bits 64
+
+  alias Nx
+
+  def transformation({_label, value}, y, xminmax, yminmax, width, height, transition) do
+    transformation(value, y, xminmax, yminmax, width, height, transition)
+  end
+
+  def transformation(x, {_label, value}, y, xminmax, yminmax, width, transition) do
+    transformation(x, value, y, xminmax, yminmax, width, transition)
+  end
+
+  def transformation(
+        x,
+        y,
+        {xmin, xmax},
+        {ymin, ymax},
+        svg_width,
+        svg_height,
+        {transition_x, transition_y}
+      ) do
+    sx = svg_width / (xmax - xmin)
+    sy = svg_height / (ymax - ymin)
+
+    tx = transition_x - xmin * sx
+    ty = transition_y - ymin * sy
+
+    # TODO: work for the datasets which has values in a range way far from zero in both directi
+    point_matrix = Nx.tensor([x, y, 1], type: {:f, @tensor_data_type_bits})
+
+    Nx.tensor(
+      [
+        [sx, 0, tx],
+        [0, sy, ty],
+        [0, 0, 1]
+      ],
+      type: {:f, @tensor_data_type_bits}
+    )
+    |> Nx.dot(point_matrix)
+    |> Nx.to_flat_list()
+    |> then(fn [x_trans, y_trans, _] -> {x_trans, y_trans} end)
   end
 end
