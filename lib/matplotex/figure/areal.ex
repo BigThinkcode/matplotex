@@ -2,6 +2,7 @@ defmodule Matplotex.Figure.Areal do
   alias Matplotex.Figure.TwoD
   @callback create(list(), list()) :: struct()
   @callback materialize(struct()) :: struct()
+  @callback plotify(number(), tuple(), number(), number(), list(), atom()) :: number()
   defmacro __using__(_) do
     quote do
       @behaviour Matplotex.Figure.Areal

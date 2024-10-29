@@ -5,8 +5,6 @@ defmodule Matplotex.Figure.Areal.BarChart do
   alias Matplotex.Figure.Coords
   alias Matplotex.Figure
 
-
-
   @upadding 0.05
 
   alias Matplotex.Figure.Areal
@@ -38,7 +36,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
          } = figure
        ) do
     px = width * padding
-    width = width - px
+    width = width - px * 2
 
     IO.inspect(x)
     IO.inspect(y)
@@ -49,7 +47,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
     bar_elements =
       x
       |> Enum.zip(y)
-      |>tap(fn x -> IO.inspect(x) end)
+      |> tap(fn x -> IO.inspect(x) end)
       |> Enum.map(fn {x, y} ->
         transformation(x, y, xlim, ylim, width, height, {blx + px, bly})
       end)
@@ -60,19 +58,30 @@ defmodule Matplotex.Figure.Areal.BarChart do
     %Figure{figure | axes: %{axes | element: elements_with_bar}}
   end
 
+  @impl Areal
+  def plotify(value, {minl, maxl}, axis_size, transition, data, :x) do
+    offset = axis_size / length(data) / 2
+    s = axis_size / (maxl - minl)
+    value * s + transition - minl * s + offset
+  end
+
+  def plotify(value, {minl, maxl}, axis_size, transition, _data, :y) do
+    s = axis_size / (maxl - minl)
+    value * s + transition - minl * s
+  end
+
   defp capture([{x, y} | to_capture], bar_width, bly, captured) do
     bar =
-      %Rect{type: "figure.bar", x: x, y: y, width: bar_width, height: y-bly}
+      %Rect{type: "figure.bar", x: x, y: y, width: bar_width, height: y - bly}
+
     # IO.inspect({x * 96, y * 96})
     capture(
       to_capture,
       bar_width,
       bly,
-      captured ++[bar]
+      captured ++ [bar]
     )
   end
 
   defp capture(_, _, _, captured), do: captured
-
-
 end
