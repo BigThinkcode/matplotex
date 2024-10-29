@@ -61,7 +61,8 @@ defmodule Matplotex.Figure.Areal.BarChart do
   end
 
   defp capture([{x, y} | to_capture], bar_width, bly, captured) do
-    bar = %Rect{type: "figure.bar", x: x, y: y, width: bar_width, height: y-bly}
+    bar =
+      %Rect{type: "figure.bar", x: x, y: y, width: bar_width, height: y-bly}
     # IO.inspect({x * 96, y * 96})
     capture(
       to_capture,

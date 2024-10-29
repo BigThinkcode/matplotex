@@ -74,6 +74,7 @@ defmodule Matplotex.Helpers do
     |> Matplotex.set_yticks(ticks)
     |> Matplotex.set_xlim({4, 7})
     |> Matplotex.set_ylim({4, 7})
+    # TODO: Setting limits are not taking the proper xy values
     |> Matplotex.set_rc_params(
       x_tick_font_size: font_size,
       y_tick_font_size: font_size,

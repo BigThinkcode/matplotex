@@ -48,7 +48,7 @@ defmodule Matplotex.Element.Rect do
   def get_width(%{width: width}), do: to_pixel(width)
   def get_height(%{height: height}), do: to_pixel(height)
   @impl Element
-  def flipy(%__MODULE__{y: y} = label, height) do
-    %__MODULE__{label | y: height - y}
+  def flipy(%__MODULE__{y: y} = rect, height) do
+    %__MODULE__{rect| y: height - y}
   end
 end
