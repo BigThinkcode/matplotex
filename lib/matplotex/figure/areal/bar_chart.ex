@@ -4,9 +4,8 @@ defmodule Matplotex.Figure.Areal.BarChart do
 
   alias Matplotex.Figure.Coords
   alias Matplotex.Figure
-  alias Nx
 
-  @tensor_data_type_bits 64
+
 
   @upadding 0.05
 
@@ -35,13 +34,14 @@ defmodule Matplotex.Figure.Areal.BarChart do
                coords: %Coords{bottom_left: {blx, bly}},
                element: elements
              } = axes,
-           rc_params: %RcParams{chart_padding: padding}
+           rc_params: %RcParams{x_padding: padding}
          } = figure
        ) do
     px = width * padding
-    py = height * padding
     width = width - px
-    height = height - py
+
+    IO.inspect(x)
+    IO.inspect(y)
 
     unit_space = width / length(x)
     bar_width = unit_space - unit_space * @upadding
@@ -49,6 +49,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
     bar_elements =
       x
       |> Enum.zip(y)
+      |>tap(fn x -> IO.inspect(x) end)
       |> Enum.map(fn {x, y} ->
         transformation(x, y, xlim, ylim, width, height, {blx + px, bly})
       end)
@@ -59,53 +60,18 @@ defmodule Matplotex.Figure.Areal.BarChart do
     %Figure{figure | axes: %{axes | element: elements_with_bar}}
   end
 
-  defp capture([{x, height} | to_capture], bar_width, bly, captured) do
+  defp capture([{x, y} | to_capture], bar_width, bly, captured) do
+    bar = %Rect{type: "figure.bar", x: x, y: y, width: bar_width, height: y-bly}
+    # IO.inspect({x * 96, y * 96})
     capture(
       to_capture,
       bar_width,
       bly,
-      captured ++ [%Rect{type: "figure.bar", x: x, y: bly, width: bar_width, height: height}]
+      captured ++[bar]
     )
   end
 
   defp capture(_, _, _, captured), do: captured
 
-  def transformation({_label, value}, y, xminmax, yminmax, width, height, transition) do
-    transformation(value, y, xminmax, yminmax, width, height, transition)
-  end
 
-  def transformation(x, {_label, value}, y, xminmax, yminmax, width, transition) do
-    transformation(x, value, y, xminmax, yminmax, width, transition)
-  end
-
-  def transformation(
-        x,
-        y,
-        {xmin, xmax},
-        {ymin, ymax},
-        svg_width,
-        svg_height,
-        {transition_x, transition_y}
-      ) do
-    sx = svg_width / (xmax - xmin)
-    sy = svg_height / (ymax - ymin)
-
-    tx = transition_x - xmin * sx
-    ty = transition_y - ymin * sy
-
-    # TODO: work for the datasets which has values in a range way far from zero in both directi
-    point_matrix = Nx.tensor([x, y, 1], type: {:f, @tensor_data_type_bits})
-
-    Nx.tensor(
-      [
-        [sx, 0, tx],
-        [0, sy, ty],
-        [0, 0, 1]
-      ],
-      type: {:f, @tensor_data_type_bits}
-    )
-    |> Nx.dot(point_matrix)
-    |> Nx.to_flat_list()
-    |> then(fn [x_trans, y_trans, _] -> {x_trans, y_trans - transition_y} end)
-  end
 end

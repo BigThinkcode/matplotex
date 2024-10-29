@@ -5,6 +5,7 @@ defmodule Matplotex.Figure.Areal do
   defmacro __using__(_) do
     quote do
       @behaviour Matplotex.Figure.Areal
+      import Matplotex.Figure.Areal, only: [transformation: 7]
       @before_compile unquote(__MODULE__)
     end
   end
@@ -63,7 +64,7 @@ defmodule Matplotex.Figure.Areal do
           if number_based?(ticks) do
             ticks
           else
-            Enum.with_index(ticks)
+            Enum.with_index(ticks, 1)
           end
 
         tick = Map.put(tick, key, ticks)
@@ -165,7 +166,7 @@ defmodule Matplotex.Figure.Areal do
       end
 
       defp data_with_label(data) do
-        Enum.with_index(data)
+        Enum.with_index(data, 1)
       end
 
       def number_based?(data) do
@@ -192,5 +193,48 @@ defmodule Matplotex.Figure.Areal do
         Enum.min_max(ticks)
       end
     end
+  end
+
+  @tensor_data_type_bits 64
+
+  alias Nx
+
+  def transformation({_label, value}, y, xminmax, yminmax, width, height, transition) do
+    transformation(value, y, xminmax, yminmax, width, height, transition)
+  end
+
+  def transformation(x, {_label, value}, y, xminmax, yminmax, width, transition) do
+    transformation(x, value, y, xminmax, yminmax, width, transition)
+  end
+
+  def transformation(
+        x,
+        y,
+        {xmin, xmax},
+        {ymin, ymax},
+        svg_width,
+        svg_height,
+        {transition_x, transition_y}
+      ) do
+    sx = svg_width / (xmax - xmin)
+    sy = svg_height / (ymax - ymin)
+
+    tx = transition_x - xmin * sx
+    ty = transition_y - ymin * sy
+
+    # TODO: work for the datasets which has values in a range way far from zero in both directi
+    point_matrix = Nx.tensor([x, y, 1], type: {:f, @tensor_data_type_bits})
+
+    Nx.tensor(
+      [
+        [sx, 0, tx],
+        [0, sy, ty],
+        [0, 0, 1]
+      ],
+      type: {:f, @tensor_data_type_bits}
+    )
+    |> Nx.dot(point_matrix)
+    |> Nx.to_flat_list()
+    |> then(fn [x_trans, y_trans, _] -> {x_trans, y_trans} end)
   end
 end

@@ -198,16 +198,16 @@ defmodule Matplotex.Figure.Cast do
               show_x_ticks: true,
               coords: %Coords{bottom_left: {blx, bly}, x_ticks: {_xtx, xty}} = coords
             } = axes,
-            rc_params: %RcParams{x_tick_font: tick_font, chart_padding: padding}
+            rc_params: %RcParams{x_tick_font: tick_font, x_padding: x_padding}
         } = figure
       )
       when is_list(x_ticks) do
-    x_ticks = confine_value(x_ticks, xlim)
-    x_data = confine_value(x_data, xlim)
+    x_ticks = confine_ticks(x_ticks, xlim)
+    x_data = confine_data(x_data, xlim)
     {xtick_elements, vgridxs} =
       Enum.map(x_ticks, fn tick ->
         {tick_position, label} =
-          plotify_tick(tick, xlim, width - width * padding, blx + width * padding)
+          plotify_tick(tick, xlim, width - width * x_padding * 2, blx + width * x_padding)
 
 
         label = %Label{
@@ -257,16 +257,16 @@ defmodule Matplotex.Figure.Cast do
               data: {x_data, y_data},
               show_y_ticks: true
             } = axes,
-            rc_params: %RcParams{y_tick_font: tick_font, chart_padding: padding}
+            rc_params: %RcParams{y_tick_font: tick_font, y_padding: padding}
         } = figure
       ) do
-    y_ticks = confine_value(y_ticks, ylim)
-    y_data = confine_value(y_data, ylim)
+    y_ticks = confine_ticks(y_ticks, ylim)
+    y_data = confine_data(y_data, ylim)
 
     {ytick_elements, hgridys} =
       Enum.map(y_ticks, fn tick ->
         {tick_position, label} =
-          plotify_tick(tick, ylim, height - height * padding, bly + height * padding)
+          plotify_tick(tick, ylim, height - height * padding * 2, bly + height * padding)
 
         label = %Label{
           type: @ytick_type,
@@ -427,15 +427,24 @@ defmodule Matplotex.Figure.Cast do
     axes = module.set_limit(axes, {:y, ylim})
     %Figure{figure | axes: axes}
   end
-  defp confine_value([{_l, _v}|_]=ticks, {min, max}) do
+  defp confine_ticks([{_l, _v}|_]=ticks, {min, max}) do
     ticks
     |> Enum.filter(fn {_l, tick} ->
       tick >= min && tick <= max
     end)
   end
-  defp confine_value(ticks, {min, max} = lim) do
+  defp confine_ticks(ticks, {min, max} = lim) do
     ticks
     |> append_lim(lim)
+    |> Enum.filter(fn tick ->
+      tick >= min && tick <= max
+    end)
+  end
+  defp confine_data([{_l, _v}|_]=data, {min, max}) do
+    confine_ticks(data, {min, max})
+  end
+  defp confine_data(data, {min, max}) do
+    data
     |> Enum.filter(fn tick ->
       tick >= min && tick <= max
     end)

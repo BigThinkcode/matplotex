@@ -39,7 +39,8 @@ defmodule Matplotex.Figure.RcParams do
             grid_alpha: @grid_line_alpha,
             font_uom: @font_uom,
             tick_line_length: @tick_line_length,
-            chart_padding: @chart_padding
+            x_padding: @chart_padding,
+            y_padding: @chart_padding
 
   def get_rc(%__MODULE__{} = rc_param, get_func) do
     apply(__MODULE__, get_func, [rc_param])

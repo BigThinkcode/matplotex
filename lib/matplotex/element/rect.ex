@@ -5,6 +5,8 @@ defmodule Matplotex.Element.Rect do
   @default_stroke "rgba(0,0,0,0)"
   use Element
 
+
+
   @type t :: %__MODULE__{
           x: number(),
           y: number(),

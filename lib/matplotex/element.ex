@@ -6,10 +6,11 @@ defmodule Matplotex.Element do
   def to_pixel(inch) when is_number(inch), do: inch * 96
   def to_pixel(_), do: 0
 
-  defmacro __using__(_) do
+  defmacro __using__(_opts) do
     quote do
       @behaviour Matplotex.Element
       import Matplotex.Element, only: [to_pixel: 1]
+
     end
   end
 end

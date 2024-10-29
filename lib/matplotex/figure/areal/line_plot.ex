@@ -4,9 +4,9 @@ defmodule Matplotex.LinePlot do
   alias Matplotex.Element.Line
   alias Matplotex.Figure.Coords
   alias Matplotex.Figure
-  alias Nx
 
-  @tensor_data_type_bits 64
+
+
 
   use Matplotex.Figure.Areal
   @impl Areal
@@ -33,11 +33,11 @@ defmodule Matplotex.LinePlot do
                coords: %Coords{bottom_left: {blx, bly}},
                element: elements
              } = axes,
-           rc_params: %RcParams{chart_padding: padding}
+           rc_params: %RcParams{x_padding: x_padding, y_padding: y_padding}
          } = figure
        ) do
-    px = width * padding
-    py = height * padding
+    px = width * x_padding
+    py = height * y_padding
     width = width - px
     height = height - py
 
@@ -59,34 +59,5 @@ defmodule Matplotex.LinePlot do
 
   defp capture(_, captured), do: captured
 
-  def transformation({_label, value}, y, xminmax, yminmax, width, height, transition) do
-    transformation(value, y, xminmax, yminmax, width, height, transition)
-  end
 
-  def transformation(x, {_label, value}, y, xminmax, yminmax, width, transition) do
-    transformation(x, value, y, xminmax, yminmax, width, transition)
-  end
-
-  def transformation(x, y, {xmin, xmax}, {ymin, ymax}, svg_width, svg_height, {tx, ty}) do
-    sx = svg_width / (xmax - xmin)
-    sy = svg_height / (ymax - ymin)
-
-    tx = tx - xmin * sx
-    ty = ty - ymin * sy
-
-    # TODO: work for the datasets which has values in a range way far from zero in both directi
-    point_matrix = Nx.tensor([x, y, 1], type: {:f, @tensor_data_type_bits})
-
-    Nx.tensor(
-      [
-        [sx, 0, tx],
-        [0, sy, ty],
-        [0, 0, 1]
-      ],
-      type: {:f, @tensor_data_type_bits}
-    )
-    |> Nx.dot(point_matrix)
-    |> Nx.to_flat_list()
-    |> then(fn [x_trans, y_trans, _] -> {x_trans, y_trans} end)
-  end
 end
