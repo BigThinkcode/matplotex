@@ -40,16 +40,12 @@ defmodule Matplotex.Figure.Areal.BarChart do
     px = width * padding
     width = width - px * 2 - offset
 
-    IO.inspect(x)
-    IO.inspect(y)
-
     unit_space = width / length(x)
     bar_width = unit_space - unit_space * @upadding
 
     bar_elements =
       x
       |> Enum.zip(y)
-      |> tap(fn x -> IO.inspect(x) end)
       |> Enum.map(fn {x, y} ->
         transformation(x, y, xlim, ylim, width, height, {blx + px, bly})
       end)

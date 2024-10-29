@@ -9,6 +9,10 @@ defmodule Matplotex do
     Matplotex.Figure.Areal.BarChart.create(x, y)
   end
 
+  def scatter(x, y) do
+    Matplotex.Figure.Areal.Scatter.create(x, y)
+  end
+
   def pie_chart(params) do
     Matplotex.PieChart.create(params)
   end
