@@ -35,8 +35,10 @@ defmodule Matplotex.Figure.Areal.BarChart do
            rc_params: %RcParams{x_padding: padding}
          } = figure
        ) do
+
+    offset = width/length(x) / 2
     px = width * padding
-    width = width - px * 2
+    width = width - px * 2 - offset
 
     IO.inspect(x)
     IO.inspect(y)
@@ -61,7 +63,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
   @impl Areal
   def plotify(value, {minl, maxl}, axis_size, transition, data, :x) do
     offset = axis_size / length(data) / 2
-    s = axis_size / (maxl - minl)
+    s = (axis_size - offset) / (maxl - minl)
     value * s + transition - minl * s + offset
   end
 
