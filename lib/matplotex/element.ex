@@ -10,7 +10,6 @@ defmodule Matplotex.Element do
     quote do
       @behaviour Matplotex.Element
       import Matplotex.Element, only: [to_pixel: 1]
-
     end
   end
 end

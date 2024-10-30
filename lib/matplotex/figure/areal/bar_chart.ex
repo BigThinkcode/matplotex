@@ -9,6 +9,16 @@ defmodule Matplotex.Figure.Areal.BarChart do
 
   alias Matplotex.Figure.Areal
   use Areal
+
+  frame(
+    legend: %Legend{},
+    coords: %Coords{},
+    dimension: %Dimension{},
+    tick: %TwoD{},
+    limit: %TwoD{},
+    title: %Text{}
+  )
+
   @impl Areal
   def create(x, y) do
     x = determine_numeric_value(x)
@@ -35,8 +45,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
            rc_params: %RcParams{x_padding: padding}
          } = figure
        ) do
-
-    offset = width/length(x) / 2
+    offset = width / length(x) / 2
     px = width * padding
     width = width - px * 2 - offset
 

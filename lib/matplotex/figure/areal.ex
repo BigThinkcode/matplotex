@@ -1,37 +1,32 @@
 defmodule Matplotex.Figure.Areal do
   alias Matplotex.Figure.TwoD
-  @callback create(list(), list()) :: struct()
+  @callback create(struct(), list(), list(), keyword()) :: struct()
   @callback materialize(struct()) :: struct()
   @callback plotify(number(), tuple(), number(), number(), list(), atom()) :: number()
   defmacro __using__(_) do
     quote do
       @behaviour Matplotex.Figure.Areal
+      alias Matplotex.Figure.TwoD
+      alias Matplotex.Figure.Dimension
+      alias Matplotex.Figure.Coords
+      alias Matplotex.Figure.Text
+      alias Matplotex.Figure.Legend
+
       import Matplotex.Figure.Areal, only: [transformation: 7]
+      import Matplotex.Blueprint.Frame
       @before_compile unquote(__MODULE__)
     end
   end
 
   defmacro __before_compile__(_env) do
     quote do
-      alias Matplotex.Figure.TwoD
-      alias Matplotex.Figure.Dimension
       alias Matplotex.Figure.Cast
-      alias Matplotex.Figure.Coords
+
       alias Matplotex.Figure.Lead
-      alias Matplotex.Figure.Text
       alias Matplotex.Figure.Font
       alias Matplotex.Figure
-      alias Matplotex.Figure.Legend
-      import Matplotex.Blueprint.Frame
 
-      frame(
-        legend: %Legend{},
-        coords: %Coords{},
-        dimension: %Dimension{},
-        tick: %TwoD{},
-        limit: %TwoD{},
-        title: %Text{}
-      )
+      alias Matplotex.Figure.Text
 
       def add_label(%__MODULE__{label: nil} = axes, {key, label}, opts) when is_binary(label) do
         label =

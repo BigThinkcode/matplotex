@@ -20,6 +20,7 @@ defmodule Matplotex.Element.Line do
     :y1,
     :x2,
     :y2,
+    linestyle: "-",
     stroke: "black",
     fill: "rgba(0,0,0,0)",
     stroke_width: "3",

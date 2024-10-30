@@ -71,9 +71,8 @@ defmodule Matplotex.Blueprint.Frame do
         defstruct unquote([
                     :id,
                     :content,
-                    :data,
                     # TODO: change dataset to data, should deprecate this field
-                    :dataset,
+
                     :label,
                     :scale,
                     :grid,
@@ -82,6 +81,8 @@ defmodule Matplotex.Blueprint.Frame do
                     :center,
                     :type,
                     :grid_coordinates,
+                    :data,
+                    dataset: [],
                     title: title,
                     tick: tick,
                     limit: limit,

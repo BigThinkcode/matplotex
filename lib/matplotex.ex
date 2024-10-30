@@ -2,6 +2,7 @@ defmodule Matplotex do
   @moduledoc """
   Module to generate a graph.
   """
+  alias Matplotex.LinePlot
   alias Matplotex.Figure.Sketch
   alias Matplotex.Figure
 
@@ -28,8 +29,8 @@ defmodule Matplotex do
   """
 
   @spec plot(list(), list()) :: Figure.t()
-  def plot(x, y) do
-    Matplotex.LinePlot.create(x, y)
+  def plot(x, y, opts \\ []) do
+    Matplotex.LinePlot.create(%Figure{axes: %LinePlot{}}, x, y, opts)
   end
 
   @doc """

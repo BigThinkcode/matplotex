@@ -1,4 +1,7 @@
 defmodule Matplotex.LinePlot do
+  alias Matplotex.Element.Circle
+  alias Matplotex.LinePlot
+  alias Matplotex.Figure.Dataset
   alias Matplotex.Figure.Areal
   alias Matplotex.Figure.RcParams
   alias Matplotex.Element.Line
@@ -6,11 +9,26 @@ defmodule Matplotex.LinePlot do
   alias Matplotex.Figure
 
   use Matplotex.Figure.Areal
+
+  frame(
+    legend: %Legend{},
+    coords: %Coords{},
+    dimension: %Dimension{},
+    tick: %TwoD{},
+    limit: %TwoD{},
+    title: %Text{}
+  )
+
+  @marker_size 5
+
   @impl Areal
-  def create(x, y) do
+  def create(%Figure{axes: %LinePlot{dataset: data} = axes} = figure, x, y, opts \\ []) do
     x = determine_numeric_value(x)
     y = determine_numeric_value(y)
-    %Figure{axes: struct(__MODULE__, %{data: {x, y}})}
+    opts = Enum.into(opts, %{})
+    dataset = Map.merge(%Dataset{x: x, y: y}, opts)
+    datasets = data ++ [dataset]
+    %Figure{figure | axes: %{axes | data: flatten_for_data(datasets), dataset: datasets}}
   end
 
   @impl Areal
@@ -24,7 +42,7 @@ defmodule Matplotex.LinePlot do
          %Figure{
            axes:
              %{
-               data: {x, y},
+               dataset: data,
                limit: %{x: xlim, y: ylim},
                size: {width, height},
                coords: %Coords{bottom_left: {blx, bly}},
@@ -39,12 +57,13 @@ defmodule Matplotex.LinePlot do
     height = height - py * 2
 
     line_elements =
-      x
-      |> Enum.zip(y)
-      |> Enum.map(fn {x, y} ->
-        transformation(x, y, xlim, ylim, width, height, {blx + px, bly + py})
+      data
+      |> Enum.map(fn dataset ->
+        dataset
+        |> do_transform(xlim, ylim, width, height, {blx + px, bly + py})
+        |> capture()
       end)
-      |> capture([])
+      |>List.flatten()
 
     elements = elements ++ line_elements
     %Figure{figure | axes: %{axes | element: elements}}
@@ -56,9 +75,51 @@ defmodule Matplotex.LinePlot do
     value * s + transition - minl * s
   end
 
-  defp capture([{x1, y1} | [{x2, y2} | _] = to_capture], captured) do
-    capture(to_capture, captured ++ [%Line{type: "plot.line", x1: x1, y1: y1, x2: x2, y2: y2}])
+  defp do_transform(%Dataset{x: x, y: y} = dataset, xlim, ylim, width, height, transition) do
+    transformed =
+      x
+      |> Enum.zip(y)
+      |> Enum.map(fn {x, y} ->
+        transformation(x, y, xlim, ylim, width, height, transition)
+      end)
+
+    %Dataset{dataset | transformed: transformed}
   end
 
-  defp capture(_, captured), do: captured
+  defp capture(%Dataset{transformed: transformed} = dataset) do
+    capture(transformed, [], dataset)
+  end
+
+  defp capture([{x1, y1} | [{x2, y2} | _] = to_capture], captured, %Dataset{
+         color: color,
+         marker: marker,
+         linestyle: linestyle
+  } = dataset) do
+    capture(
+      to_capture,
+      captured ++
+        [
+          %Line{type: "plot.line", x1: x1, y1: y1, x2: x2, y2: y2, fill: color, linestyle: linestyle},
+            generate_marker(marker, x1, y1, color)
+        ], dataset
+    )
+  end
+
+  defp capture([{x, y}], captured, %Dataset{color: color, marker: marker}) do
+    captured ++ [generate_marker(marker, x, y, color)]
+  end
+
+
+  defp flatten_for_data(datasets) do
+    datasets
+    |> Enum.map(fn %{x: x, y: y} -> {x, y} end)
+    |> Enum.unzip()
+    |> then(fn {xs, ys} ->
+      {xs |> List.flatten() |> MapSet.new() |> MapSet.to_list(),
+       ys |> List.flatten() |> MapSet.new() |> MapSet.to_list()}
+    end)
+  end
+
+  defp generate_marker(nil, _, _, _), do: nil
+  defp generate_marker("o", x, y, fill), do: %Circle{type: "plot.marker", cx: x, cy: y, fill: fill, r: @marker_size}
 end
