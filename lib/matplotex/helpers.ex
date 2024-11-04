@@ -192,4 +192,20 @@ defmodule Matplotex.Helpers do
     |> Matplotex.show()
     |> copy()
   end
+  def multiline_plot() do
+    x = [1, 2, 3, 4, 5]
+    y1 = [1, 4, 9, 16, 25]     # Dataset 1
+    y2 = [1, 3, 6, 10, 15]     # Dataset 2
+    y3 = [2, 5, 7, 12, 17]     # Dataset 3
+
+      x
+      |> Matplotex.plot(y1, color: "blue", linestyle: "_", marker: "o", label: "Dataset 1")
+      |> Matplotex.plot(x,y2, color: "red", linestyle: "--", marker: "^", label: "Dataset 2")
+      |> Matplotex.plot(x,y3, color: "green", linestyle: "-.", marker: "s", label: "Dataset 3")
+      |> Matplotex.set_title("Title")
+      |> Matplotex.set_xlabel("X-Axis")
+      |> Matplotex.set_ylabel("Y-Axis")
+      |> Matplotex.show()
+      |>copy()
+  end
 end

@@ -95,13 +95,13 @@ defmodule MatplotexTest do
       "x_label_font_size" => 14,
       "y_label_font_size" => 10,
       "line_width" => 2,
-      "line_style" => "-"
+      "line_style" => "_"
     }
 
     figure = Matplotex.set_rc_params(figure, rc_params)
 
     assert figure.rc_params.line_width == 2
-    assert figure.rc_params.line_style == "-"
+    assert figure.rc_params.line_style == "_"
     assert figure.rc_params.x_tick_font_size == 12
     assert figure.rc_params.y_tick_font_size == 16
   end

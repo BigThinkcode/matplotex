@@ -1,7 +1,7 @@
 defmodule Matplotex.Figure.Dataset do
   @default_color "blue"
   @default_marker "o"
-  @default_linestyle "-"
+  @default_linestyle "_"
   @default_width 0.2
   @default_marker_size 3
 
@@ -16,4 +16,10 @@ defmodule Matplotex.Figure.Dataset do
     linestyle: @default_linestyle,
     marker_size: @default_marker_size
   ]
+
+
+
+  def cast(dataset, values) do
+    struct(dataset, values)
+  end
 end

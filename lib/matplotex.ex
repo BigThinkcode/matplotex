@@ -29,10 +29,17 @@ defmodule Matplotex do
   """
 
   @spec plot(list(), list()) :: Figure.t()
-  def plot(x, y, opts \\ []) do
+  def plot(x, y) do
+    plot(x, y, [])
+  end
+  def plot(x, y, opts) do
     Matplotex.LinePlot.create(%Figure{axes: %LinePlot{}}, x, y, opts)
   end
 
+  def plot(%Figure{} = figure, x, y, opts) do
+
+    Matplotex.LinePlot.create(figure, x, y, opts)
+  end
   @doc """
   Sets X and Y labels for the graph with given font details
 

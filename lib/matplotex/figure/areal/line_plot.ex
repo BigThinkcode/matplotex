@@ -1,4 +1,7 @@
 defmodule Matplotex.LinePlot do
+  alias Matplotex.Figure.Marker
+  alias Matplotex.Element.Rect
+  alias Matplotex.Element.Polygon
   alias Matplotex.Element.Circle
   alias Matplotex.LinePlot
   alias Matplotex.Figure.Dataset
@@ -25,10 +28,10 @@ defmodule Matplotex.LinePlot do
   def create(%Figure{axes: %LinePlot{dataset: data} = axes} = figure, x, y, opts \\ []) do
     x = determine_numeric_value(x)
     y = determine_numeric_value(y)
-    opts = Enum.into(opts, %{})
-    dataset = Map.merge(%Dataset{x: x, y: y}, opts)
+    dataset = Dataset.cast(%Dataset{x: x, y: y}, opts)
     datasets = data ++ [dataset]
-    %Figure{figure | axes: %{axes | data: flatten_for_data(datasets), dataset: datasets}}
+    xydata= flatten_for_data(datasets)
+    %Figure{figure | axes: %{axes | data: xydata, dataset: datasets}}
   end
 
   @impl Areal
@@ -99,14 +102,14 @@ defmodule Matplotex.LinePlot do
       to_capture,
       captured ++
         [
-          %Line{type: "plot.line", x1: x1, y1: y1, x2: x2, y2: y2, fill: color, linestyle: linestyle},
-            generate_marker(marker, x1, y1, color)
+          %Line{type: "plot.line", x1: x1, y1: y1, x2: x2, y2: y2, stroke: color, fill: color, linestyle: linestyle},
+           Marker.generate_marker(marker, x1, y1, color,@marker_size)
         ], dataset
     )
   end
 
   defp capture([{x, y}], captured, %Dataset{color: color, marker: marker}) do
-    captured ++ [generate_marker(marker, x, y, color)]
+    captured ++ [Marker.generate_marker(marker, x, y, color,@marker_size)]
   end
 
 
@@ -120,6 +123,5 @@ defmodule Matplotex.LinePlot do
     end)
   end
 
-  defp generate_marker(nil, _, _, _), do: nil
-  defp generate_marker("o", x, y, fill), do: %Circle{type: "plot.marker", cx: x, cy: y, fill: fill, r: @marker_size}
+
 end

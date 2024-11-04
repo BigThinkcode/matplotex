@@ -90,7 +90,7 @@ defmodule Matplotex.Figure.Areal do
       end
 
       def add_legend(%__MODULE__{legend: legend} = axes, params) do
-        legend = Map.merge(legend, params)
+        legend = struct(legend, params)
         %{axes | legend: legend}
       end
 
@@ -176,6 +176,7 @@ defmodule Matplotex.Figure.Areal do
       defp generate_ticks(data) do
         {min, max} = lim = Enum.min_max(data)
         step = (max - min) / (length(data) - 1)
+        step = round(step)
         {min..max |> Enum.into([], fn d -> d * step end), lim}
       end
 
