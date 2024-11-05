@@ -1,6 +1,7 @@
 defmodule Matplotex.Figure.Areal do
+  alias Matplotex.Figure.Dataset
   alias Matplotex.Figure.TwoD
-  @callback create(struct(), list(), list(), keyword()) :: struct()
+  @callback create(struct(), any(), keyword()) :: struct()
   @callback materialize(struct()) :: struct()
   @callback plotify(number(), tuple(), number(), number(), list(), atom()) :: number()
   defmacro __using__(_) do
@@ -12,7 +13,7 @@ defmodule Matplotex.Figure.Areal do
       alias Matplotex.Figure.Text
       alias Matplotex.Figure.Legend
 
-      import Matplotex.Figure.Areal, only: [transformation: 7]
+      import Matplotex.Figure.Areal, only: [transformation: 7, do_transform: 6]
       import Matplotex.Blueprint.Frame
       @before_compile unquote(__MODULE__)
     end
@@ -25,8 +26,12 @@ defmodule Matplotex.Figure.Areal do
       alias Matplotex.Figure.Lead
       alias Matplotex.Figure.Font
       alias Matplotex.Figure
+      alias Matplotex.Figure.Dataset
 
       alias Matplotex.Figure.Text
+
+
+
 
       def add_label(%__MODULE__{label: nil} = axes, {key, label}, opts) when is_binary(label) do
         label =
@@ -160,7 +165,19 @@ defmodule Matplotex.Figure.Areal do
           data_with_label(data)
         end
       end
+      def flatten_for_data(datasets) do
+        datasets
+        |> Enum.map(fn %{x: x, y: y} -> {x, y} end)
+        |> Enum.unzip()
+        |> then(fn {xs, ys} ->
+          {unify_data(xs),
+           unify_data(ys)}
+        end)
+      end
 
+      def unify_data(data) do
+       data |> List.flatten() |> MapSet.new() |> MapSet.to_list()
+      end
       defp data_with_label(data) do
         Enum.with_index(data, 1)
       end
@@ -234,4 +251,17 @@ defmodule Matplotex.Figure.Areal do
     |> Nx.to_flat_list()
     |> then(fn [x_trans, y_trans, _] -> {x_trans, y_trans} end)
   end
+  def do_transform(%Dataset{x: x, y: y} = dataset, xlim, ylim, width, height, transition) do
+    transformed =
+      x
+      |> Enum.zip(y)
+      |> Enum.map(fn {x, y} ->
+        transformation(x, y, xlim, ylim, width, height, transition)
+      end)
+
+    %Dataset{dataset | transformed: transformed}
+  end
+
+
+
 end

@@ -5,9 +5,14 @@ defmodule Matplotex do
   alias Matplotex.LinePlot
   alias Matplotex.Figure.Sketch
   alias Matplotex.Figure
+  alias Matplotex.Figure.Areal.BarChart
 
-  def bar(x, y) do
-    Matplotex.Figure.Areal.BarChart.create(x, y)
+
+  def bar(pos, values, width) do
+    bar(pos, values, width, [])
+  end
+  def bar(pos, values, width, opts) do
+    BarChart.create(%Figure{axes: %BarChart{}}, {pos, values, width}, opts)
   end
 
   def scatter(x, y) do
@@ -33,12 +38,11 @@ defmodule Matplotex do
     plot(x, y, [])
   end
   def plot(x, y, opts) do
-    Matplotex.LinePlot.create(%Figure{axes: %LinePlot{}}, x, y, opts)
+    Matplotex.LinePlot.create(%Figure{axes: %LinePlot{}}, {x,y}, opts)
   end
 
   def plot(%Figure{} = figure, x, y, opts) do
-
-    Matplotex.LinePlot.create(figure, x, y, opts)
+    Matplotex.LinePlot.create(figure, {x, y}, opts)
   end
   @doc """
   Sets X and Y labels for the graph with given font details

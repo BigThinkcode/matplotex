@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Areal.Scatter do
+  alias Matplotex.Figure.Dataset
   alias Matplotex.Element.Circle
   alias Matplotex.Figure.Areal
   alias Matplotex.Figure.RcParams
@@ -18,12 +19,15 @@ defmodule Matplotex.Figure.Areal.Scatter do
     title: %Text{}
   )
 
-  @impl Areal
-  def create(x, y) do
+  def create(%Figure{axes: %__MODULE__{dataset: data} = axes} = figure, {x,y}, opts \\ []) do
     x = determine_numeric_value(x)
     y = determine_numeric_value(y)
-    %Figure{axes: struct(__MODULE__, %{data: {x, y}})}
+    dataset = Dataset.cast(%Dataset{x: x, y: y}, opts)
+    datasets = data ++ [dataset]
+    xydata= flatten_for_data(datasets)
+    %Figure{figure | axes: %{axes | data: xydata, dataset: datasets}}
   end
+
 
   @impl Areal
   def materialize(figure) do

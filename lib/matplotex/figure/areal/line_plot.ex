@@ -1,9 +1,5 @@
 defmodule Matplotex.LinePlot do
   alias Matplotex.Figure.Marker
-  alias Matplotex.Element.Rect
-  alias Matplotex.Element.Polygon
-  alias Matplotex.Element.Circle
-  alias Matplotex.LinePlot
   alias Matplotex.Figure.Dataset
   alias Matplotex.Figure.Areal
   alias Matplotex.Figure.RcParams
@@ -24,8 +20,7 @@ defmodule Matplotex.LinePlot do
 
   @marker_size 5
 
-  @impl Areal
-  def create(%Figure{axes: %LinePlot{dataset: data} = axes} = figure, x, y, opts \\ []) do
+  def create(%Figure{axes: %__MODULE__{dataset: data} = axes} = figure, {x,y}, opts \\ []) do
     x = determine_numeric_value(x)
     y = determine_numeric_value(y)
     dataset = Dataset.cast(%Dataset{x: x, y: y}, opts)
@@ -78,16 +73,7 @@ defmodule Matplotex.LinePlot do
     value * s + transition - minl * s
   end
 
-  defp do_transform(%Dataset{x: x, y: y} = dataset, xlim, ylim, width, height, transition) do
-    transformed =
-      x
-      |> Enum.zip(y)
-      |> Enum.map(fn {x, y} ->
-        transformation(x, y, xlim, ylim, width, height, transition)
-      end)
 
-    %Dataset{dataset | transformed: transformed}
-  end
 
   defp capture(%Dataset{transformed: transformed} = dataset) do
     capture(transformed, [], dataset)
@@ -113,15 +99,7 @@ defmodule Matplotex.LinePlot do
   end
 
 
-  defp flatten_for_data(datasets) do
-    datasets
-    |> Enum.map(fn %{x: x, y: y} -> {x, y} end)
-    |> Enum.unzip()
-    |> then(fn {xs, ys} ->
-      {xs |> List.flatten() |> MapSet.new() |> MapSet.to_list(),
-       ys |> List.flatten() |> MapSet.new() |> MapSet.to_list()}
-    end)
-  end
+
 
 
 end

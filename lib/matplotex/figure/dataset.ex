@@ -7,6 +7,7 @@ defmodule Matplotex.Figure.Dataset do
 
   defstruct [
     :label,
+    :pos,
     width: @default_width,
     x: [],
     y: [],
