@@ -30,9 +30,6 @@ defmodule Matplotex.Figure.Areal do
 
       alias Matplotex.Figure.Text
 
-
-
-
       def add_label(%__MODULE__{label: nil} = axes, {key, label}, opts) when is_binary(label) do
         label =
           Map.new()
@@ -100,6 +97,8 @@ defmodule Matplotex.Figure.Areal do
       end
 
       def generate_xticks(%__MODULE__{data: {x, _y}, tick: tick, limit: limit} = axes) do
+        IO.inspect(x, label: "Thex for ticks")
+
         {xticks, xlim} =
           generate_ticks(x)
 
@@ -109,10 +108,12 @@ defmodule Matplotex.Figure.Areal do
       end
 
       def generate_yticks(%__MODULE__{data: {_x, y}, tick: tick, limit: limit} = axes) do
-        {xticks, ylim} =
+        IO.inspect(y, label: "The y for ticks")
+
+        {yticks, ylim} =
           generate_ticks(y)
 
-        tick = Map.put(tick, :y, xticks)
+        tick = Map.put(tick, :y, yticks)
         limit = update_limit(limit, :y, ylim)
         %__MODULE__{axes | tick: tick, limit: limit}
       end
@@ -165,19 +166,20 @@ defmodule Matplotex.Figure.Areal do
           data_with_label(data)
         end
       end
+
       def flatten_for_data(datasets) do
         datasets
         |> Enum.map(fn %{x: x, y: y} -> {x, y} end)
         |> Enum.unzip()
         |> then(fn {xs, ys} ->
-          {unify_data(xs),
-           unify_data(ys)}
+          {unify_data(xs), unify_data(ys)}
         end)
       end
 
       def unify_data(data) do
-       data |> List.flatten() |> MapSet.new() |> MapSet.to_list()
+        data |> List.flatten() |> MapSet.new() |> MapSet.to_list()
       end
+
       defp data_with_label(data) do
         Enum.with_index(data, 1)
       end
@@ -194,7 +196,14 @@ defmodule Matplotex.Figure.Areal do
         {min, max} = lim = Enum.min_max(data)
         step = (max - min) / (length(data) - 1)
         step = round(step)
-        {min..max |> Enum.into([], fn d -> d * step end), lim}
+        IO.inspect({lim, step}, label: "The limit and step")
+
+        {1..length(data)
+         |> Enum.into([], fn d ->
+           (d * step + min)
+           |> round()
+           |> round_to_best()
+         end), lim}
       end
 
       defp min_max([{_pos, _label} | _] = ticks) do
@@ -205,6 +214,18 @@ defmodule Matplotex.Figure.Areal do
 
       defp min_max(ticks) do
         Enum.min_max(ticks)
+      end
+
+      def round_to_best(value) when value > 10 do
+        factor = value |> :math.log10() |> floor()
+        base = 10 |> :math.pow(factor) |> round()
+        IO.inspect({factor, base}, label: "The factor and base")
+        value |> div(base) |> Kernel.*(base)
+      end
+
+      # TODO: get best strategy for ticks less than 1
+      def round_to_best(value) do
+        value
       end
     end
   end
@@ -251,6 +272,7 @@ defmodule Matplotex.Figure.Areal do
     |> Nx.to_flat_list()
     |> then(fn [x_trans, y_trans, _] -> {x_trans, y_trans} end)
   end
+
   def do_transform(%Dataset{x: x, y: y} = dataset, xlim, ylim, width, height, transition) do
     transformed =
       x
@@ -261,7 +283,4 @@ defmodule Matplotex.Figure.Areal do
 
     %Dataset{dataset | transformed: transformed}
   end
-
-
-
 end

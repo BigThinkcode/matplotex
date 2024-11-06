@@ -203,7 +203,7 @@ defmodule Matplotex.Figure.Cast do
         } = figure
       )
       when is_list(x_ticks) do
-        #TODO: Only if it has to confine
+    # TODO: Only if it has to confine
     x_ticks = confine_ticks(x_ticks, xlim)
     x_data = confine_data(x_data, xlim)
     dataset = confine_data(dataset, xlim, :x)
@@ -472,6 +472,8 @@ defmodule Matplotex.Figure.Cast do
   end
 
   defp confine_ticks(ticks, {min, max} = lim) do
+    IO.inspect(ticks, label: "The tiks")
+
     ticks
     |> append_lim(lim)
     |> Enum.filter(fn tick ->
@@ -479,11 +481,11 @@ defmodule Matplotex.Figure.Cast do
     end)
   end
 
-  defp confine_data([%Dataset{}|_] = dataset, lim, axis) do
+  defp confine_data([%Dataset{} | _] = dataset, lim, axis) do
     Enum.map(dataset, fn datas ->
-      confined =  confine_data(Map.get(datas, axis), lim)
+      confined = confine_data(Map.get(datas, axis), lim)
       Map.put(datas, axis, confined)
-      end)
+    end)
   end
 
   defp confine_data([{_l, _v} | _] = data, {min, max}) do
@@ -497,8 +499,7 @@ defmodule Matplotex.Figure.Cast do
     end)
   end
 
-  defp append_lim([first|[second|_]]=ticks, {min, max}) do
-
+  defp append_lim([first | [second | _]] = ticks, {min, max}) do
     with_min =
       if Enum.min(ticks) > min + (second - first) do
         [min] ++ ticks

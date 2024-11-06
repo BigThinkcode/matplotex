@@ -192,20 +192,40 @@ defmodule Matplotex.Helpers do
     |> Matplotex.show()
     |> copy()
   end
+
   def multiline_plot() do
     x = [1, 2, 3, 4, 5]
-    y1 = [1, 4, 9, 16, 25]     # Dataset 1
-    y2 = [1, 3, 6, 10, 15]     # Dataset 2
-    y3 = [2, 5, 7, 12, 17]     # Dataset 3
+    # Dataset 1
+    y1 = [1, 4, 9, 16, 25]
+    # Dataset 2
+    y2 = [1, 3, 6, 10, 15]
+    # Dataset 3
+    y3 = [2, 5, 7, 12, 17]
 
-      x
-      |> Matplotex.plot(y1, color: "blue", linestyle: "_", marker: "o", label: "Dataset 1")
-      |> Matplotex.plot(x,y2, color: "red", linestyle: "--", marker: "^", label: "Dataset 2")
-      |> Matplotex.plot(x,y3, color: "green", linestyle: "-.", marker: "s", label: "Dataset 3")
-      |> Matplotex.set_title("Title")
-      |> Matplotex.set_xlabel("X-Axis")
-      |> Matplotex.set_ylabel("Y-Axis")
-      |> Matplotex.show()
-      |>copy()
+    x
+    |> Matplotex.plot(y1, color: "blue", linestyle: "_", marker: "o", label: "Dataset 1")
+    |> Matplotex.plot(x, y2, color: "red", linestyle: "--", marker: "^", label: "Dataset 2")
+    |> Matplotex.plot(x, y3, color: "green", linestyle: "-.", marker: "s", label: "Dataset 3")
+    |> Matplotex.set_title("Title")
+    |> Matplotex.set_xlabel("X-Axis")
+    |> Matplotex.set_ylabel("Y-Axis")
+    |> Matplotex.show()
+    |> copy()
+  end
+
+  def multi_bar() do
+    categories = ["apple", "banana", "fig"]
+    values1 = [22, 33, 28]
+    values2 = [53, 63, 59]
+    width = 0.35
+
+    Matplotex.bar(-width, values1, width, label: "Dataset1", color: "blue")
+    |> Matplotex.bar(width, values2, width, label: "Dataset2", color: "red")
+    |> Matplotex.set_xticks(categories)
+    |> Matplotex.set_title("Sample bar graph")
+    |> Matplotex.set_xlabel("X-axis")
+    |> Matplotex.set_ylabel("Y-Axis")
+    |> Matplotex.show()
+    |> copy()
   end
 end
