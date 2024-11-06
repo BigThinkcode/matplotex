@@ -3,7 +3,7 @@ defmodule Matplotex.Figure.Lead do
   alias Matplotex.Figure.Coords
   alias Matplotex.Figure.RcParams
   alias Matplotex.Figure
-  @pt_to_inch 1 / 72
+  @pt_to_inch 1 / 112
   @padding 10 / 96
   @tick_line_offset 5 / 96
 

@@ -46,9 +46,9 @@ defmodule Matplotex.Figure.Areal.BarChart do
        ) do
 
     px = width * padding
-    width = width - px
+    width = width - px * 2
     py = height * padding
-    height = height - py
+    height = height - py * 2
 
     bar_elements =
       data
@@ -65,15 +65,23 @@ defmodule Matplotex.Figure.Areal.BarChart do
   end
 
   @impl Areal
-  def plotify(value, {minl, maxl}, axis_size, transition, data, :x) do
-    offset = axis_size / length(data) / 2
-    s = (axis_size - offset) / (maxl - minl)
-    value * s + transition - minl * s + offset
+  def plotify(value, {minl, maxl}, axis_size, transition, _data, :x) do
+
+    s = (axis_size) / (maxl - minl)
+    value * s + transition - minl * s
   end
 
   def plotify(value, {minl, maxl}, axis_size, transition, _data, :y) do
     s = axis_size / (maxl - minl)
     value * s + transition - minl * s
+  end
+  def generate_ticks([{_l, _v} | _] = data) do
+    {data, min_max(data)}
+  end
+  def generate_ticks(data) do
+    max = Enum.max(data)
+    step = max|>round_to_best()|>div(5)|>round_to_best()
+    {list_of_ticks(data, step), {0, max}}
   end
 
 
@@ -86,16 +94,44 @@ defmodule Matplotex.Figure.Areal.BarChart do
          width: width,
          pos: pos_factor
   } = dataset, bly) do
+
     capture(
       to_capture,
       captured ++
-        [%Rect{type: "figure.bar", x: x + pos_factor, y: y, width: width, height: y-bly, color: color}], dataset, bly
+        [%Rect{type: "figure.bar", x: bar_position(x, pos_factor), y: y, width: width, height: y-bly, color: color}], dataset, bly
     )
   end
 
   defp capture([], captured, _dataset, _bly), do: captured
   defp hypox(y) do
     1..length(y) |> Enum.into([])
+  end
+
+  defp bar_position(x, pos_factor) when pos_factor < 0 do
+    x + pos_factor
+  end
+  defp bar_position(x, _pos_factor), do: x
+
+  defp round_to_best(value) when value > 10 do
+    factor = value |> :math.log10() |> floor()
+
+    base = 10 |> :math.pow(factor) |> round()
+    value |> div(base) |> Kernel.*(base)
+  end
+
+  # TODO: get best strategy for ticks less than 1
+  defp round_to_best(value) do
+    value
+  end
+
+  defp list_of_ticks(data, step) do
+
+    1..length(data)
+     |> Enum.into([], fn d ->
+       (d * step )
+
+     end)
+
   end
 
 end

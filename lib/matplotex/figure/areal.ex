@@ -96,22 +96,20 @@ defmodule Matplotex.Figure.Areal do
         %{axes | legend: legend}
       end
 
-      def generate_xticks(%__MODULE__{data: {x, _y}, tick: tick, limit: limit} = axes) do
-        IO.inspect(x, label: "Thex for ticks")
+      def generate_xticks(%module{data: {x, _y}, tick: tick, limit: limit} = axes) do
 
         {xticks, xlim} =
-          generate_ticks(x)
+          module.generate_ticks(x)
 
         tick = Map.put(tick, :x, xticks)
         limit = update_limit(limit, :x, xlim)
         %__MODULE__{axes | tick: tick, limit: limit}
       end
 
-      def generate_yticks(%__MODULE__{data: {_x, y}, tick: tick, limit: limit} = axes) do
-        IO.inspect(y, label: "The y for ticks")
+      def generate_yticks(%module{data: {_x, y}, tick: tick, limit: limit} = axes) do
 
         {yticks, ylim} =
-          generate_ticks(y)
+          module.generate_ticks(y)
 
         tick = Map.put(tick, :y, yticks)
         limit = update_limit(limit, :y, ylim)
@@ -188,45 +186,17 @@ defmodule Matplotex.Figure.Areal do
         Enum.all?(data, &is_number/1)
       end
 
-      defp generate_ticks([{_l, _v} | _] = data) do
-        {data, min_max(data)}
-      end
-
-      defp generate_ticks(data) do
-        {min, max} = lim = Enum.min_max(data)
-        step = (max - min) / (length(data) - 1)
-        step = round(step)
-        IO.inspect({lim, step}, label: "The limit and step")
-
-        {1..length(data)
-         |> Enum.into([], fn d ->
-           (d * step + min)
-           |> round()
-           |> round_to_best()
-         end), lim}
-      end
-
-      defp min_max([{_pos, _label} | _] = ticks) do
+      def min_max([{_pos, _label} | _] = ticks) do
         ticks
         |> Enum.min_max_by(fn {pos, _label} -> pos end)
         |> then(fn {{pos_min, _label_min}, {pos_max, _label_max}} -> {pos_min, pos_max} end)
       end
 
-      defp min_max(ticks) do
+      def min_max(ticks) do
         Enum.min_max(ticks)
       end
 
-      def round_to_best(value) when value > 10 do
-        factor = value |> :math.log10() |> floor()
-        base = 10 |> :math.pow(factor) |> round()
-        IO.inspect({factor, base}, label: "The factor and base")
-        value |> div(base) |> Kernel.*(base)
-      end
 
-      # TODO: get best strategy for ticks less than 1
-      def round_to_best(value) do
-        value
-      end
     end
   end
 

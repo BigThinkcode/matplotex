@@ -72,6 +72,15 @@ defmodule Matplotex.LinePlot do
     s = axis_size / (maxl - minl)
     value * s + transition - minl * s
   end
+  def generate_ticks([{_l, _v} | _] = data) do
+    {data, min_max(data)}
+  end
+
+  def generate_ticks(data) do
+    {min, max} = lim = Enum.min_max(data)
+    step = (max - min) / (length(data) - 1)
+    {min..max |> Enum.into([], fn d -> d * round(step) end), lim}
+  end
 
 
 
@@ -97,6 +106,7 @@ defmodule Matplotex.LinePlot do
   defp capture([{x, y}], captured, %Dataset{color: color, marker: marker}) do
     captured ++ [Marker.generate_marker(marker, x, y, color,@marker_size)]
   end
+
 
 
 

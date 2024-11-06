@@ -3,7 +3,7 @@ defmodule Matplotex.Figure.Dataset do
   @default_marker "o"
   @default_linestyle "_"
   @default_width 0.2
-  @default_marker_size 3
+  @default_marker_size 10
 
   defstruct [
     :label,

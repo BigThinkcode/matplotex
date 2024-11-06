@@ -217,15 +217,37 @@ defmodule Matplotex.Helpers do
     categories = ["apple", "banana", "fig"]
     values1 = [22, 33, 28]
     values2 = [53, 63, 59]
-    width = 0.35
+    width = 0.5
 
-    Matplotex.bar(-width, values1, width, label: "Dataset1", color: "blue")
-    |> Matplotex.bar(width, values2, width, label: "Dataset2", color: "red")
+    Matplotex.bar(width, values1, width, label: "Dataset1", color: "blue")
+    |> Matplotex.bar(-width, values2, width, label: "Dataset2", color: "red")
     |> Matplotex.set_xticks(categories)
     |> Matplotex.set_title("Sample bar graph")
     |> Matplotex.set_xlabel("X-axis")
     |> Matplotex.set_ylabel("Y-Axis")
+    |> Matplotex.hide_v_grid()
     |> Matplotex.show()
     |> copy()
   end
+
+  def multiline_scatter() do
+    x = [1, 2, 3, 4, 5]
+    # Dataset 1
+    y1 = [1, 4, 9, 16, 25]
+    # Dataset 2
+    y2 = [1, 3, 6, 10, 15]
+    # Dataset 3
+    y3 = [2, 5, 7, 12, 17]
+
+    x
+    |> Matplotex.scatter(y1, color: "blue", linestyle: "_", marker: "o", label: "Dataset 1")
+    |> Matplotex.scatter(x, y2, color: "red", linestyle: "--", marker: "^", label: "Dataset 2")
+    |> Matplotex.scatter(x, y3, color: "green", linestyle: "-.", marker: "s", label: "Dataset 3")
+    |> Matplotex.set_title("Title")
+    |> Matplotex.set_xlabel("X-Axis")
+    |> Matplotex.set_ylabel("Y-Axis")
+    |> Matplotex.show()
+    |> copy()
+  end
+
 end

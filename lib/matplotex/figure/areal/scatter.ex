@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Areal.Scatter do
+  alias Matplotex.Figure.Marker
   alias Matplotex.Figure.Dataset
   alias Matplotex.Element.Circle
   alias Matplotex.Figure.Areal
@@ -27,8 +28,6 @@ defmodule Matplotex.Figure.Areal.Scatter do
     xydata= flatten_for_data(datasets)
     %Figure{figure | axes: %{axes | data: xydata, dataset: datasets}}
   end
-
-
   @impl Areal
   def materialize(figure) do
     __MODULE__.materialized(figure)
@@ -36,43 +35,67 @@ defmodule Matplotex.Figure.Areal.Scatter do
   end
 
   defp materialize_elements(
-         %Figure{
-           axes:
-             %{
-               data: {x, y},
-               limit: %{x: xlim, y: ylim},
-               size: {width, height},
-               coords: %Coords{bottom_left: {blx, bly}},
-               element: elements
-             } = axes,
-           rc_params: %RcParams{x_padding: x_padding, y_padding: y_padding}
-         } = figure
-       ) do
-    px = width * x_padding
-    py = height * y_padding
-    width = width - px * 2
-    height = height - py * 2
+    %Figure{
+      axes:
+        %{
+          dataset: data,
+          limit: %{x: xlim, y: ylim},
+          size: {width, height},
+          coords: %Coords{bottom_left: {blx, bly}},
+          element: elements
+        } = axes,
+      rc_params: %RcParams{x_padding: x_padding, y_padding: y_padding}
+    } = figure
+  ) do
+px = width * x_padding
+py = height * y_padding
+width = width - px * 2
+height = height - py * 2
 
-    scatter_elements =
-      x
-      |> Enum.zip(y)
-      |> Enum.map(fn {x, y} ->
-        transformation(x, y, xlim, ylim, width, height, {blx + px, bly + py})
-      end)
-      |> capture([])
+line_elements =
+ data
+ |> Enum.map(fn dataset ->
+   dataset
+   |> do_transform(xlim, ylim, width, height, {blx + px, bly + py})
+   |> capture()
+ end)
+ |>List.flatten()
 
-    elements = elements ++ scatter_elements
-    %Figure{figure | axes: %{axes | element: elements}}
+elements = elements ++ line_elements
+%Figure{figure | axes: %{axes | element: elements}}
+end
+
+  defp capture(%Dataset{transformed: transformed} = dataset) do
+    capture(transformed, [], dataset)
   end
 
-  defp capture([{cx, cy} | to_capture], captured) do
-    capture(to_capture, captured ++ [%Circle{type: "scatter.marker", cx: cx, cy: cy, r: @r}])
+  defp capture([{x, y}| to_capture], captured, %Dataset{
+         color: color,
+         marker: marker,
+         marker_size: marker_size
+  } = dataset) do
+    capture(
+      to_capture,
+      captured ++
+        [
+           Marker.generate_marker(marker, x, y, color,marker_size)
+        ], dataset
+    )
   end
-
-  defp capture(_, captured), do: captured
+  defp capture(_, captured, _), do: captured
   @impl Areal
   def plotify(value, {minl, maxl}, axis_size, transition, _, _) do
     s = axis_size / (maxl - minl)
     value * s + transition - minl * s
+  end
+
+  def generate_ticks([{_l, _v} | _] = data) do
+    {data, min_max(data)}
+  end
+
+  def generate_ticks(data) do
+    {min, max} = lim = Enum.min_max(data)
+    step = (max - min) / (length(data) - 1)
+    {min..max |> Enum.into([], fn d -> d * round(step) end), lim}
   end
 end

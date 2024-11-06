@@ -2,6 +2,7 @@ defmodule Matplotex do
   @moduledoc """
   Module to generate a graph.
   """
+  alias Matplotex.Figure.Areal.Scatter
   alias Matplotex.LinePlot
   alias Matplotex.Figure.Sketch
   alias Matplotex.Figure
@@ -20,7 +21,15 @@ defmodule Matplotex do
   end
 
   def scatter(x, y) do
-    Matplotex.Figure.Areal.Scatter.create(x, y)
+    scatter(x, y, [])
+  end
+
+  def scatter(x, y, opts) do
+    Scatter.create(%Figure{axes: %Scatter{}}, {x, y}, opts)
+  end
+
+  def scatter(%Figure{} = figure, x, y, opts) do
+    Scatter.create(figure, {x, y}, opts)
   end
 
   def pie_chart(params) do

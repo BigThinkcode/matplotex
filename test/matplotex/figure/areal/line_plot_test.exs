@@ -67,7 +67,7 @@ defmodule Matplotex.Figure.Areal.LinePlotTest do
       y = [22, 24, 30, 42, 60]
       figure = Matplotex.plot(x, y)
       plot = LinePlot.generate_yticks(figure.axes)
-      IO.inspect(plot.tick)
+      assert plot.tick.y|>List.first() < List.first(y)
     end
   end
 end
