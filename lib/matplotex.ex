@@ -2,15 +2,34 @@ defmodule Matplotex do
   @moduledoc """
   Module to generate a graph.
   """
+  alias Matplotex.Figure.Areal.Scatter
+  alias Matplotex.LinePlot
   alias Matplotex.Figure.Sketch
   alias Matplotex.Figure
+  alias Matplotex.Figure.Areal.BarChart
 
-  def bar(x, y) do
-    Matplotex.Figure.Areal.BarChart.create(x, y)
+  def bar(pos, values, width) do
+    bar(pos, values, width, [])
+  end
+
+  def bar(pos, values, width, opts) do
+    BarChart.create(%Figure{axes: %BarChart{}}, {pos, values, width}, opts)
+  end
+
+  def bar(%Figure{} = figure, pos, values, width, opts) do
+    BarChart.create(figure, {pos, values, width}, opts)
   end
 
   def scatter(x, y) do
-    Matplotex.Figure.Areal.Scatter.create(x, y)
+    scatter(x, y, [])
+  end
+
+  def scatter(x, y, opts) do
+    Scatter.create(%Figure{axes: %Scatter{}}, {x, y}, opts)
+  end
+
+  def scatter(%Figure{} = figure, x, y, opts) do
+    Scatter.create(figure, {x, y}, opts)
   end
 
   def pie_chart(params) do
@@ -29,7 +48,15 @@ defmodule Matplotex do
 
   @spec plot(list(), list()) :: Figure.t()
   def plot(x, y) do
-    Matplotex.LinePlot.create(x, y)
+    plot(x, y, [])
+  end
+
+  def plot(x, y, opts) do
+    Matplotex.LinePlot.create(%Figure{axes: %LinePlot{}}, {x, y}, opts)
+  end
+
+  def plot(%Figure{} = figure, x, y, opts) do
+    Matplotex.LinePlot.create(figure, {x, y}, opts)
   end
 
   @doc """

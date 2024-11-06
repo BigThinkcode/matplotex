@@ -20,6 +20,7 @@ defmodule Matplotex.Element.Line do
     :y1,
     :x2,
     :y2,
+    linestyle: "_",
     stroke: "black",
     fill: "rgba(0,0,0,0)",
     stroke_width: "3",
@@ -40,7 +41,9 @@ defmodule Matplotex.Element.Line do
     stroke="#{line.stroke}"
     stroke-width="#{line.stroke_width}"
     shape-rendering="#{line.shape_rendering}"
-    stroke-linecap="#{line.stroke_linecap}"/>
+    stroke-linecap="#{line.stroke_linecap}"
+    stroke-dasharray="#{stroke_dasharray(line)}"
+    />
 
     )
   end
@@ -52,5 +55,13 @@ defmodule Matplotex.Element.Line do
   @impl Element
   def flipy(%__MODULE__{y1: y1, y2: y2} = line, height) do
     %__MODULE__{line | y1: height - y1, y2: height - y2}
+  end
+
+  defp stroke_dasharray(%{linestyle: "_"}), do: nil
+  defp stroke_dasharray(%{linestyle: "--"}) do
+    "10, 5"
+  end
+  defp stroke_dasharray(%{linestyle: "-."}) do
+    "10, 2, 3, 2, 10"
   end
 end

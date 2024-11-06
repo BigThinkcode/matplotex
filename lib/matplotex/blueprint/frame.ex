@@ -1,6 +1,6 @@
 defmodule Matplotex.Blueprint.Frame do
   alias Matplotex.Figure.Legend
-  @default_margin 0.1
+  @default_margin 0.05
   @show_by_default true
   @valid_by_default true
   defmacro frame(opts \\ []) do
@@ -14,6 +14,7 @@ defmodule Matplotex.Blueprint.Frame do
     tick = Keyword.get(opts, :tick)
     limit = Keyword.get(opts, :limit)
     title = Keyword.get(opts, :title)
+    #TODO: some mechanism to pass default values
 
     types =
       quote do
@@ -71,9 +72,8 @@ defmodule Matplotex.Blueprint.Frame do
         defstruct unquote([
                     :id,
                     :content,
-                    :data,
                     # TODO: change dataset to data, should deprecate this field
-                    :dataset,
+
                     :label,
                     :scale,
                     :grid,
@@ -82,6 +82,8 @@ defmodule Matplotex.Blueprint.Frame do
                     :center,
                     :type,
                     :grid_coordinates,
+                    :data,
+                    dataset: [],
                     title: title,
                     tick: tick,
                     limit: limit,

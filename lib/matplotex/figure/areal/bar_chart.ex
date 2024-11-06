@@ -1,19 +1,28 @@
 defmodule Matplotex.Figure.Areal.BarChart do
+  alias Matplotex.Figure.Dataset
   alias Matplotex.Element.Rect
   alias Matplotex.Figure.RcParams
-
   alias Matplotex.Figure.Coords
   alias Matplotex.Figure
-
-  @upadding 0.05
-
   alias Matplotex.Figure.Areal
   use Areal
+
+  frame(
+    legend: %Legend{},
+    coords: %Coords{},
+    dimension: %Dimension{},
+    tick: %TwoD{},
+    limit: %TwoD{},
+    title: %Text{}
+  )
   @impl Areal
-  def create(x, y) do
-    x = determine_numeric_value(x)
-    y = determine_numeric_value(y)
-    %Figure{axes: struct(__MODULE__, %{data: {x, y}})}
+  def create(%Figure{axes: %__MODULE__{dataset: data} = axes} = figure, {pos, values, width},opts) do
+
+    x = hypox(values)
+    dataset = Dataset.cast(%Dataset{x: x, y: values, pos: pos, width: width}, opts)
+    datasets = data ++ [dataset]
+    xydata= flatten_for_data(datasets)
+    %Figure{figure | axes: %{axes | data: xydata, dataset: datasets}}
   end
 
   @impl Areal
@@ -26,7 +35,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
          %Figure{
            axes:
              %{
-               data: {x, y},
+               dataset: data,
                limit: %{x: xlim, y: ylim},
                size: {width, height},
                coords: %Coords{bottom_left: {blx, bly}},
@@ -36,20 +45,19 @@ defmodule Matplotex.Figure.Areal.BarChart do
          } = figure
        ) do
 
-    offset = width/length(x) / 2
     px = width * padding
-    width = width - px * 2 - offset
-
-    unit_space = width / length(x)
-    bar_width = unit_space - unit_space * @upadding
+    width = width - px * 2
+    py = height * padding
+    height = height - py * 2
 
     bar_elements =
-      x
-      |> Enum.zip(y)
-      |> Enum.map(fn {x, y} ->
-        transformation(x, y, xlim, ylim, width, height, {blx + px, bly})
+      data
+      |>Enum.map(fn dataset ->
+        dataset
+        |>do_transform(xlim, ylim, width, height, {blx + px, bly + py})
+        |>capture(bly)
       end)
-      |> capture(bar_width, bly, [])
+      |>List.flatten()
 
     elements_with_bar = elements ++ bar_elements
 
@@ -57,29 +65,73 @@ defmodule Matplotex.Figure.Areal.BarChart do
   end
 
   @impl Areal
-  def plotify(value, {minl, maxl}, axis_size, transition, data, :x) do
-    offset = axis_size / length(data) / 2
-    s = (axis_size - offset) / (maxl - minl)
-    value * s + transition - minl * s + offset
+  def plotify(value, {minl, maxl}, axis_size, transition, _data, :x) do
+
+    s = (axis_size) / (maxl - minl)
+    value * s + transition - minl * s
   end
 
   def plotify(value, {minl, maxl}, axis_size, transition, _data, :y) do
     s = axis_size / (maxl - minl)
     value * s + transition - minl * s
   end
+  def generate_ticks([{_l, _v} | _] = data) do
+    {data, min_max(data)}
+  end
+  def generate_ticks(data) do
+    max = Enum.max(data)
+    step = max|>round_to_best()|>div(5)|>round_to_best()
+    {list_of_ticks(data, step), {0, max}}
+  end
 
-  defp capture([{x, y} | to_capture], bar_width, bly, captured) do
-    bar =
-      %Rect{type: "figure.bar", x: x, y: y, width: bar_width, height: y - bly}
 
-    # IO.inspect({x * 96, y * 96})
+  defp capture(%Dataset{transformed: transformed} = dataset, bly) do
+    capture(transformed, [], dataset, bly)
+  end
+
+  defp capture([{x, y} | to_capture], captured, %Dataset{
+         color: color,
+         width: width,
+         pos: pos_factor
+  } = dataset, bly) do
+
     capture(
       to_capture,
-      bar_width,
-      bly,
-      captured ++ [bar]
+      captured ++
+        [%Rect{type: "figure.bar", x: bar_position(x, pos_factor), y: y, width: width, height: y-bly, color: color}], dataset, bly
     )
   end
 
-  defp capture(_, _, _, captured), do: captured
+  defp capture([], captured, _dataset, _bly), do: captured
+  defp hypox(y) do
+    1..length(y) |> Enum.into([])
+  end
+
+  defp bar_position(x, pos_factor) when pos_factor < 0 do
+    x + pos_factor
+  end
+  defp bar_position(x, _pos_factor), do: x
+
+  defp round_to_best(value) when value > 10 do
+    factor = value |> :math.log10() |> floor()
+
+    base = 10 |> :math.pow(factor) |> round()
+    value |> div(base) |> Kernel.*(base)
+  end
+
+  # TODO: get best strategy for ticks less than 1
+  defp round_to_best(value) do
+    value
+  end
+
+  defp list_of_ticks(data, step) do
+
+    1..length(data)
+     |> Enum.into([], fn d ->
+       (d * step )
+
+     end)
+
+  end
+
 end

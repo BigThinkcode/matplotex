@@ -5,8 +5,6 @@ defmodule Matplotex.Element.Rect do
   @default_stroke "rgba(0,0,0,0)"
   use Element
 
-
-
   @type t :: %__MODULE__{
           x: number(),
           y: number(),
@@ -49,6 +47,6 @@ defmodule Matplotex.Element.Rect do
   def get_height(%{height: height}), do: to_pixel(height)
   @impl Element
   def flipy(%__MODULE__{y: y} = rect, height) do
-    %__MODULE__{rect| y: height - y}
+    %__MODULE__{rect | y: height - y}
   end
 end

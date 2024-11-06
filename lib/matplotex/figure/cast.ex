@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Cast do
+  alias Matplotex.Figure.Dataset
   alias Matplotex.Element.Tick
   alias Matplotex.Figure.RcParams
   alias Matplotex.Element.Label
@@ -193,6 +194,7 @@ defmodule Matplotex.Figure.Cast do
               limit: %{x: {_min, _max} = xlim},
               size: {width, _height},
               data: {x_data, y_data},
+              dataset: dataset,
               element: elements,
               show_x_ticks: true,
               coords: %Coords{bottom_left: {blx, bly}, x_ticks: {_xtx, xty}} = coords
@@ -201,8 +203,10 @@ defmodule Matplotex.Figure.Cast do
         } = figure
       )
       when is_list(x_ticks) do
+    # TODO: Only if it has to confine
     x_ticks = confine_ticks(x_ticks, xlim)
     x_data = confine_data(x_data, xlim)
+    dataset = confine_data(dataset, xlim, :x)
 
     {xtick_elements, vgridxs} =
       Enum.map(x_ticks, fn tick ->
@@ -247,6 +251,7 @@ defmodule Matplotex.Figure.Cast do
       | axes: %{
           axes
           | data: {x_data, y_data},
+            dataset: dataset,
             element: elements,
             coords: %{coords | vgrids: vgrids}
         }
@@ -271,6 +276,7 @@ defmodule Matplotex.Figure.Cast do
               coords: %Coords{bottom_left: {blx, bly}, y_ticks: {ytx, _yty}} = coords,
               limit: %{y: {_min, _max} = ylim},
               data: {x_data, y_data},
+              dataset: dataset,
               show_y_ticks: true
             } = axes,
           rc_params: %RcParams{y_tick_font: tick_font, y_padding: padding}
@@ -278,6 +284,7 @@ defmodule Matplotex.Figure.Cast do
       ) do
     y_ticks = confine_ticks(y_ticks, ylim)
     y_data = confine_data(y_data, ylim)
+    dataset = confine_data(dataset, ylim, :y)
 
     {ytick_elements, hgridys} =
       Enum.map(y_ticks, fn tick ->
@@ -322,6 +329,7 @@ defmodule Matplotex.Figure.Cast do
       | axes: %{
           axes
           | data: {x_data, y_data},
+            dataset: dataset,
             element: elements,
             coords: %{coords | hgrids: hgrids}
         }
@@ -439,10 +447,9 @@ defmodule Matplotex.Figure.Cast do
   defp set_xlim_from_ticks(%Figure{axes: %module{tick: %{x: xtick}} = axes} = figure) do
     {xmin, xmax} = min_max(xtick)
 
-    xscale = xmax / (length(xtick) - 1)
+    xscale = xmax|>round()|>div((length(xtick) - 1))
 
     xlim = {round(xmin - xscale), round(xmax + xscale)}
-
     axes = module.set_limit(axes, {:x, xlim})
 
     %Figure{figure | axes: axes}
@@ -450,7 +457,7 @@ defmodule Matplotex.Figure.Cast do
 
   defp set_ylim_from_ticks(%Figure{axes: %module{tick: %{y: ytick}} = axes} = figure) do
     {ymin, ymax} = min_max(ytick)
-    yscale = ymax / (length(ytick) - 1)
+    yscale = ymax|>round()|>div((length(ytick) - 1))
     ylim = {round(ymin - yscale), round(ymax + yscale)}
     axes = module.set_limit(axes, {:y, ylim})
     %Figure{figure | axes: axes}
@@ -464,10 +471,18 @@ defmodule Matplotex.Figure.Cast do
   end
 
   defp confine_ticks(ticks, {min, max} = lim) do
+
     ticks
     |> append_lim(lim)
     |> Enum.filter(fn tick ->
       tick >= min && tick <= max
+    end)
+  end
+
+  defp confine_data([%Dataset{} | _] = dataset, lim, axis) do
+    Enum.map(dataset, fn datas ->
+      confined = confine_data(Map.get(datas, axis), lim)
+      Map.put(datas, axis, confined)
     end)
   end
 
@@ -482,15 +497,15 @@ defmodule Matplotex.Figure.Cast do
     end)
   end
 
-  defp append_lim(ticks, {min, max}) do
+  defp append_lim([first | [second | _]] = ticks, {min, max}) do
     with_min =
-      if Enum.min(ticks) > min do
+      if Enum.min(ticks) > min + (second - first) do
         [min] ++ ticks
       else
         ticks
       end
 
-    if Enum.max(with_min) < max do
+    if Enum.max(with_min) < max - (second - first) do
       with_min ++ [max]
     else
       with_min

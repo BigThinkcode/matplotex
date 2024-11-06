@@ -3,7 +3,7 @@ defmodule Matplotex.Figure.RcParams do
   @default_figsize {8, 6}
   @default_dpi 96
   @line_width 2
-  @line_style "-"
+  @line_style "_"
   @grid_color "#ddd"
   @grid_linestyle "--"
 

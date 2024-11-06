@@ -119,5 +119,4 @@ defmodule Matplotex.FrameHelpers do
       title_font_size: title_font_size
     )
   end
-
 end

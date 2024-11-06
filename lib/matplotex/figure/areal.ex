@@ -1,37 +1,34 @@
 defmodule Matplotex.Figure.Areal do
+  alias Matplotex.Figure.Dataset
   alias Matplotex.Figure.TwoD
-  @callback create(list(), list()) :: struct()
+  @callback create(struct(), any(), keyword()) :: struct()
   @callback materialize(struct()) :: struct()
   @callback plotify(number(), tuple(), number(), number(), list(), atom()) :: number()
   defmacro __using__(_) do
     quote do
       @behaviour Matplotex.Figure.Areal
-      import Matplotex.Figure.Areal, only: [transformation: 7]
+      alias Matplotex.Figure.TwoD
+      alias Matplotex.Figure.Dimension
+      alias Matplotex.Figure.Coords
+      alias Matplotex.Figure.Text
+      alias Matplotex.Figure.Legend
+
+      import Matplotex.Figure.Areal, only: [transformation: 7, do_transform: 6]
+      import Matplotex.Blueprint.Frame
       @before_compile unquote(__MODULE__)
     end
   end
 
   defmacro __before_compile__(_env) do
     quote do
-      alias Matplotex.Figure.TwoD
-      alias Matplotex.Figure.Dimension
       alias Matplotex.Figure.Cast
-      alias Matplotex.Figure.Coords
+
       alias Matplotex.Figure.Lead
-      alias Matplotex.Figure.Text
       alias Matplotex.Figure.Font
       alias Matplotex.Figure
-      alias Matplotex.Figure.Legend
-      import Matplotex.Blueprint.Frame
+      alias Matplotex.Figure.Dataset
 
-      frame(
-        legend: %Legend{},
-        coords: %Coords{},
-        dimension: %Dimension{},
-        tick: %TwoD{},
-        limit: %TwoD{},
-        title: %Text{}
-      )
+      alias Matplotex.Figure.Text
 
       def add_label(%__MODULE__{label: nil} = axes, {key, label}, opts) when is_binary(label) do
         label =
@@ -95,24 +92,26 @@ defmodule Matplotex.Figure.Areal do
       end
 
       def add_legend(%__MODULE__{legend: legend} = axes, params) do
-        legend = Map.merge(legend, params)
+        legend = struct(legend, params)
         %{axes | legend: legend}
       end
 
-      def generate_xticks(%__MODULE__{data: {x, _y}, tick: tick, limit: limit} = axes) do
+      def generate_xticks(%module{data: {x, _y}, tick: tick, limit: limit} = axes) do
+
         {xticks, xlim} =
-          generate_ticks(x)
+          module.generate_ticks(x)
 
         tick = Map.put(tick, :x, xticks)
         limit = update_limit(limit, :x, xlim)
         %__MODULE__{axes | tick: tick, limit: limit}
       end
 
-      def generate_yticks(%__MODULE__{data: {_x, y}, tick: tick, limit: limit} = axes) do
-        {xticks, ylim} =
-          generate_ticks(y)
+      def generate_yticks(%module{data: {_x, y}, tick: tick, limit: limit} = axes) do
 
-        tick = Map.put(tick, :y, xticks)
+        {yticks, ylim} =
+          module.generate_ticks(y)
+
+        tick = Map.put(tick, :y, yticks)
         limit = update_limit(limit, :y, ylim)
         %__MODULE__{axes | tick: tick, limit: limit}
       end
@@ -166,6 +165,19 @@ defmodule Matplotex.Figure.Areal do
         end
       end
 
+      def flatten_for_data(datasets) do
+        datasets
+        |> Enum.map(fn %{x: x, y: y} -> {x, y} end)
+        |> Enum.unzip()
+        |> then(fn {xs, ys} ->
+          {unify_data(xs), unify_data(ys)}
+        end)
+      end
+
+      def unify_data(data) do
+        data |> List.flatten() |> MapSet.new() |> MapSet.to_list()
+      end
+
       defp data_with_label(data) do
         Enum.with_index(data, 1)
       end
@@ -174,25 +186,17 @@ defmodule Matplotex.Figure.Areal do
         Enum.all?(data, &is_number/1)
       end
 
-      defp generate_ticks([{_l, _v} | _] = data) do
-        {data, min_max(data)}
-      end
-
-      defp generate_ticks(data) do
-        {min, max} = lim = Enum.min_max(data)
-        step = (max - min) / (length(data) - 1)
-        {min..max |> Enum.into([], fn d -> d * step end), lim}
-      end
-
-      defp min_max([{_pos, _label} | _] = ticks) do
+      def min_max([{_pos, _label} | _] = ticks) do
         ticks
         |> Enum.min_max_by(fn {pos, _label} -> pos end)
         |> then(fn {{pos_min, _label_min}, {pos_max, _label_max}} -> {pos_min, pos_max} end)
       end
 
-      defp min_max(ticks) do
+      def min_max(ticks) do
         Enum.min_max(ticks)
       end
+
+
     end
   end
 
@@ -237,5 +241,16 @@ defmodule Matplotex.Figure.Areal do
     |> Nx.dot(point_matrix)
     |> Nx.to_flat_list()
     |> then(fn [x_trans, y_trans, _] -> {x_trans, y_trans} end)
+  end
+
+  def do_transform(%Dataset{x: x, y: y} = dataset, xlim, ylim, width, height, transition) do
+    transformed =
+      x
+      |> Enum.zip(y)
+      |> Enum.map(fn {x, y} ->
+        transformation(x, y, xlim, ylim, width, height, transition)
+      end)
+
+    %Dataset{dataset | transformed: transformed}
   end
 end

@@ -4,7 +4,16 @@ defmodule Matplotex.Element.Circle do
 
   @default_stroke_width 0
   @default_stroke "rgba(0,0,0,0)"
-  defstruct [:type, :cx, :cy, :r, :fill, stroke: @default_stroke, stroke_width: @default_stroke_width]
+  defstruct [
+    :type,
+    :cx,
+    :cy,
+    :r,
+    :fill,
+    stroke: @default_stroke,
+    stroke_width: @default_stroke_width
+  ]
+
   @impl Element
   def assemble(circle) do
     ~s(
@@ -25,6 +34,6 @@ defmodule Matplotex.Element.Circle do
 
   @impl Element
   def flipy(%__MODULE__{cy: y} = circle, height) do
-    %__MODULE__{circle| cy: height - y}
+    %__MODULE__{circle | cy: height - y}
   end
 end

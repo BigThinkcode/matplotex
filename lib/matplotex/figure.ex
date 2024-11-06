@@ -54,7 +54,7 @@ defmodule Matplotex.Figure do
 
   def update_figure(figure, params) do
     if valid_params?(params) do
-      Map.merge(figure, params)
+      struct(figure, params)
     else
       raise Matplotex.InputError, message: "Invalid keys"
     end
@@ -89,7 +89,7 @@ defmodule Matplotex.Figure do
   end
 
   defp update_rc_params(%__MODULE__{rc_params: rc_params} = figure, params) do
-    rc_params = Map.merge(rc_params, params)
+    rc_params = struct(rc_params, params)
     %{figure | rc_params: rc_params}
   end
 
