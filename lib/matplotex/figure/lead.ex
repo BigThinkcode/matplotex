@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Lead do
+  alias Matplotex.Figure.TwoD
   alias Matplotex.Figure.Dimension
   alias Matplotex.Figure.Coords
   alias Matplotex.Figure.RcParams
@@ -76,22 +77,6 @@ defmodule Matplotex.Figure.Lead do
     }
   end
 
-  def radial_focus(
-        %Figure{
-          figsize: {width, height},
-          margin: margin,
-          rc_params: %RcParams{title_font_size: title_font_size},
-          axes: axes
-        } = figure
-      ) do
-    lx = width * margin
-    by = height * margin
-    rx = width - width * margin
-    ty = height - height * margin
-    axes_width = width - lx * 2
-    axes_height = height - by * 2
-    title_offset = label_offset(title_font_size)
-  end
 
   defp set_xlabel_coords(%Figure{} = figure), do: figure
 
@@ -217,6 +202,28 @@ defmodule Matplotex.Figure.Lead do
     }
   end
 
+  def focus_to_origin(
+        %Figure{
+          figsize: {width, height},
+          margin: margin,
+          rc_params: %RcParams{title_font_size: title_font_size},
+          axes: axes
+        } = figure
+      ) do
+    lx = width * margin
+    by = height * margin
+    rx = width - width * margin
+    ty = height - height * margin
+    title_coords = {lx, ty}
+    title_offset = label_offset(title_font_size)
+    ty = ty - title_offset
+    xc = (rx + lx ) /2
+    yc = (ty + by) /2
+   coords = %Coords{title: title_coords, bottom_left: {lx, by}, top_left: {lx, ty}, bottom_right: {rx, by}, top_right: {rx, ty}}
+   %Figure{figure | axes: %{axes | center: %TwoD{x: xc, y: yc}, coords: coords}}
+  end
+
+
   # TODO: Sort out how the user gets the control on font of the all texts
 
   # defp calculate_corners(
@@ -275,6 +282,7 @@ defmodule Matplotex.Figure.Lead do
   defp label_offset(font_size) do
     font_size * @pt_to_inch + @padding
   end
+
 
   # defp peel_label_offsets(
   #        {%Figure{
