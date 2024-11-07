@@ -76,6 +76,23 @@ defmodule Matplotex.Figure.Lead do
     }
   end
 
+  def radial_focus(
+        %Figure{
+          figsize: {width, height},
+          margin: margin,
+          rc_params: %RcParams{title_font_size: title_font_size},
+          axes: axes
+        } = figure
+      ) do
+    lx = width * margin
+    by = height * margin
+    rx = width - width * margin
+    ty = height - height * margin
+    axes_width = width - lx * 2
+    axes_height = height - by * 2
+    title_offset = label_offset(title_font_size)
+  end
+
   defp set_xlabel_coords(%Figure{} = figure), do: figure
 
   defp set_ylabel_coords(%Figure{axes: %{tick: %{x: nil}, show_x_ticks: true}} = figure) do

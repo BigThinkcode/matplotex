@@ -19,13 +19,13 @@ defmodule Matplotex.LinePlot do
   )
 
   @marker_size 5
-
-  def create(%Figure{axes: %__MODULE__{dataset: data} = axes} = figure, {x,y}, opts \\ []) do
+  @impl Areal
+  def create(%Figure{axes: %__MODULE__{dataset: data} = axes} = figure, {x, y}, opts \\ []) do
     x = determine_numeric_value(x)
     y = determine_numeric_value(y)
     dataset = Dataset.cast(%Dataset{x: x, y: y}, opts)
     datasets = data ++ [dataset]
-    xydata= flatten_for_data(datasets)
+    xydata = flatten_for_data(datasets)
     %Figure{figure | axes: %{axes | data: xydata, dataset: datasets}}
   end
 
@@ -61,7 +61,7 @@ defmodule Matplotex.LinePlot do
         |> do_transform(xlim, ylim, width, height, {blx + px, bly + py})
         |> capture()
       end)
-      |>List.flatten()
+      |> List.flatten()
 
     elements = elements ++ line_elements
     %Figure{figure | axes: %{axes | element: elements}}
@@ -72,6 +72,7 @@ defmodule Matplotex.LinePlot do
     s = axis_size / (maxl - minl)
     value * s + transition - minl * s
   end
+
   def generate_ticks([{_l, _v} | _] = data) do
     {data, min_max(data)}
   end
@@ -82,34 +83,40 @@ defmodule Matplotex.LinePlot do
     {min..max |> Enum.into([], fn d -> d * round(step) end), lim}
   end
 
-
-
   defp capture(%Dataset{transformed: transformed} = dataset) do
     capture(transformed, [], dataset)
   end
 
-  defp capture([{x1, y1} | [{x2, y2} | _] = to_capture], captured, %Dataset{
-         color: color,
-         marker: marker,
-         linestyle: linestyle
-  } = dataset) do
+  defp capture(
+         [{x1, y1} | [{x2, y2} | _] = to_capture],
+         captured,
+         %Dataset{
+           color: color,
+           marker: marker,
+           linestyle: linestyle
+         } = dataset
+       ) do
     capture(
       to_capture,
       captured ++
         [
-          %Line{type: "plot.line", x1: x1, y1: y1, x2: x2, y2: y2, stroke: color, fill: color, linestyle: linestyle},
-           Marker.generate_marker(marker, x1, y1, color,@marker_size)
-        ], dataset
+          %Line{
+            type: "plot.line",
+            x1: x1,
+            y1: y1,
+            x2: x2,
+            y2: y2,
+            stroke: color,
+            fill: color,
+            linestyle: linestyle
+          },
+          Marker.generate_marker(marker, x1, y1, color, @marker_size)
+        ],
+      dataset
     )
   end
 
   defp capture([{x, y}], captured, %Dataset{color: color, marker: marker}) do
-    captured ++ [Marker.generate_marker(marker, x, y, color,@marker_size)]
+    captured ++ [Marker.generate_marker(marker, x, y, color, @marker_size)]
   end
-
-
-
-
-
-
 end
