@@ -219,8 +219,9 @@ defmodule Matplotex.Figure.Lead do
     ty = ty - title_offset
     xc = (rx + lx ) /2
     yc = (ty + by) /2
+    radius = xc - ty
    coords = %Coords{title: title_coords, bottom_left: {lx, by}, top_left: {lx, ty}, bottom_right: {rx, by}, top_right: {rx, ty}}
-   %Figure{figure | axes: %{axes | center: %TwoD{x: xc, y: yc}, coords: coords}}
+   %Figure{figure | axes: %{axes | radius: radius, center: %TwoD{x: xc, y: yc}, coords: coords}}
   end
 
 
