@@ -10,8 +10,8 @@ defmodule Matplotex.Figure.Text do
 
   def create_text(label, opts) do
     {font_params, _opts} = Keyword.split(opts, Font.font_keys())
-    font_params = Enum.into(font_params, %{})
     font = struct(Font, font_params)
+
     Text.new(label, font)
   end
 end

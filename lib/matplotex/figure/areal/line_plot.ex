@@ -14,8 +14,7 @@ defmodule Matplotex.LinePlot do
     coords: %Coords{},
     dimension: %Dimension{},
     tick: %TwoD{},
-    limit: %TwoD{},
-    title: %Text{}
+    limit: %TwoD{}
   )
 
   @marker_size 5
