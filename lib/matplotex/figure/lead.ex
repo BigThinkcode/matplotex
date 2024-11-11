@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Lead do
+  alias Matplotex.Figure.TwoD
   alias Matplotex.Figure.Dimension
   alias Matplotex.Figure.Coords
   alias Matplotex.Figure.RcParams
@@ -198,6 +199,63 @@ defmodule Matplotex.Figure.Lead do
             title: %{title | height: title_offset}
         }
     }
+  end
+
+  def focus_to_origin(
+        %Figure{
+          figsize: {width, height},
+          margin: margin,
+          rc_params: %RcParams{title_font_size: title_font_size},
+          axes: axes
+        } = figure
+      ) do
+    leftx = width * margin
+    bottomy = height * margin
+    rightx = width - width * margin
+    topy = height - height * margin
+    title_coords = {leftx, topy}
+    title_offset = label_offset(title_font_size)
+    topy = topy - title_offset
+    inner_size = {width, height} = {width - 2 * leftx, height - 2 * bottomy - title_offset}
+
+    {{centerx, centery}, radius} =
+      center_and_radius(width, height, {leftx, rightx, bottomy, topy})
+
+    coords = %Coords{
+      title: title_coords,
+      bottom_left: {leftx, bottomy},
+      top_left: {leftx, topy},
+      bottom_right: {rightx, bottomy},
+      top_right: {rightx, topy}
+    }
+
+    %Figure{
+      figure
+      | axes: %{
+          axes
+          | radius: radius,
+            center: %TwoD{x: centerx, y: centery},
+            coords: coords,
+            size: inner_size,
+            legend_pos: {2 * leftx + 2 * radius, topy}
+        }
+    }
+  end
+
+  defp center_and_radius(width, height, {leftx, _rightx, bottomy, _topy}) when height < width do
+    radius = height / 2
+
+    centerx = leftx + radius
+    centery = bottomy + radius
+    {{centerx, centery}, radius}
+  end
+
+  defp center_and_radius(width, _height, {leftx, _rightx, _bottomy, topy}) do
+    radius = width / 2
+
+    centerx = leftx + radius
+    centery = topy - radius
+    {{centerx, centery}, radius}
   end
 
   # TODO: Sort out how the user gets the control on font of the all texts

@@ -1,7 +1,7 @@
 defmodule Matplotex.Figure.Areal.Scatter do
   alias Matplotex.Figure.Marker
   alias Matplotex.Figure.Dataset
-  alias Matplotex.Element.Circle
+
   alias Matplotex.Figure.Areal
   alias Matplotex.Figure.RcParams
 
@@ -9,7 +9,6 @@ defmodule Matplotex.Figure.Areal.Scatter do
   alias Matplotex.Figure
 
   use Areal
-  @r 5
 
   frame(
     legend: %Legend{},
@@ -20,14 +19,16 @@ defmodule Matplotex.Figure.Areal.Scatter do
     title: %Text{}
   )
 
-  def create(%Figure{axes: %__MODULE__{dataset: data} = axes} = figure, {x,y}, opts \\ []) do
+  @impl Areal
+  def create(%Figure{axes: %__MODULE__{dataset: data} = axes} = figure, {x, y}, opts \\ []) do
     x = determine_numeric_value(x)
     y = determine_numeric_value(y)
     dataset = Dataset.cast(%Dataset{x: x, y: y}, opts)
     datasets = data ++ [dataset]
-    xydata= flatten_for_data(datasets)
+    xydata = flatten_for_data(datasets)
     %Figure{figure | axes: %{axes | data: xydata, dataset: datasets}}
   end
+
   @impl Areal
   def materialize(figure) do
     __MODULE__.materialized(figure)
@@ -35,53 +36,59 @@ defmodule Matplotex.Figure.Areal.Scatter do
   end
 
   defp materialize_elements(
-    %Figure{
-      axes:
-        %{
-          dataset: data,
-          limit: %{x: xlim, y: ylim},
-          size: {width, height},
-          coords: %Coords{bottom_left: {blx, bly}},
-          element: elements
-        } = axes,
-      rc_params: %RcParams{x_padding: x_padding, y_padding: y_padding}
-    } = figure
-  ) do
-px = width * x_padding
-py = height * y_padding
-width = width - px * 2
-height = height - py * 2
+         %Figure{
+           axes:
+             %{
+               dataset: data,
+               limit: %{x: xlim, y: ylim},
+               size: {width, height},
+               coords: %Coords{bottom_left: {blx, bly}},
+               element: elements
+             } = axes,
+           rc_params: %RcParams{x_padding: x_padding, y_padding: y_padding}
+         } = figure
+       ) do
+    px = width * x_padding
+    py = height * y_padding
+    width = width - px * 2
+    height = height - py * 2
 
-line_elements =
- data
- |> Enum.map(fn dataset ->
-   dataset
-   |> do_transform(xlim, ylim, width, height, {blx + px, bly + py})
-   |> capture()
- end)
- |>List.flatten()
+    line_elements =
+      data
+      |> Enum.map(fn dataset ->
+        dataset
+        |> do_transform(xlim, ylim, width, height, {blx + px, bly + py})
+        |> capture()
+      end)
+      |> List.flatten()
 
-elements = elements ++ line_elements
-%Figure{figure | axes: %{axes | element: elements}}
-end
+    elements = elements ++ line_elements
+    %Figure{figure | axes: %{axes | element: elements}}
+  end
 
   defp capture(%Dataset{transformed: transformed} = dataset) do
     capture(transformed, [], dataset)
   end
 
-  defp capture([{x, y}| to_capture], captured, %Dataset{
-         color: color,
-         marker: marker,
-         marker_size: marker_size
-  } = dataset) do
+  defp capture(
+         [{x, y} | to_capture],
+         captured,
+         %Dataset{
+           color: color,
+           marker: marker,
+           marker_size: marker_size
+         } = dataset
+       ) do
     capture(
       to_capture,
       captured ++
         [
-           Marker.generate_marker(marker, x, y, color,marker_size)
-        ], dataset
+          Marker.generate_marker(marker, x, y, color, marker_size)
+        ],
+      dataset
     )
   end
+
   defp capture(_, captured, _), do: captured
   @impl Areal
   def plotify(value, {minl, maxl}, axis_size, transition, _, _) do

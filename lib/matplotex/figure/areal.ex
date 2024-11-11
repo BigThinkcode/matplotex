@@ -33,14 +33,14 @@ defmodule Matplotex.Figure.Areal do
       def add_label(%__MODULE__{label: nil} = axes, {key, label}, opts) when is_binary(label) do
         label =
           Map.new()
-          |> Map.put(key, create_text(label, opts))
+          |> Map.put(key, Text.create_text(label, opts))
 
         update_label(axes, label)
       end
 
       def add_label(%__MODULE__{label: ax_label} = axes, {key, label}, opts)
           when is_binary(label) do
-        label = Map.put(ax_label, key, create_text(label, opts))
+        label = Map.put(ax_label, key, Text.create_text(label, opts))
         update_label(axes, label)
       end
 
@@ -49,7 +49,7 @@ defmodule Matplotex.Figure.Areal do
       end
 
       def add_title(axes, title, opts) when is_binary(title) do
-        title = create_text(title, opts)
+        title = Text.create_text(title, opts)
         %{axes | title: title, show_title: true}
       end
 
@@ -150,12 +150,7 @@ defmodule Matplotex.Figure.Areal do
         %{axes | limit: limit}
       end
 
-      defp create_text(label, opts) do
-        {font_params, _opts} = Keyword.split(opts, Font.font_keys())
-        font_params = Enum.into(font_params, %{})
-        font = struct(Font, font_params)
-        Text.new(label, font)
-      end
+
 
       def determine_numeric_value(data) when is_list(data) do
         if number_based?(data) do

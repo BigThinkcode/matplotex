@@ -1,7 +1,7 @@
 defmodule Matplotex.Figure do
   alias Matplotex.Figure.RcParams
   @row_column_default 1
-  @margin_default 0.1
+  @margin_default 0.05
   @figsize {10, 6}
   defstruct [
     :id,
