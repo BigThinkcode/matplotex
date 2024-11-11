@@ -77,7 +77,6 @@ defmodule Matplotex.Figure.Lead do
     }
   end
 
-
   defp set_xlabel_coords(%Figure{} = figure), do: figure
 
   defp set_ylabel_coords(%Figure{axes: %{tick: %{x: nil}, show_x_ticks: true}} = figure) do
@@ -210,20 +209,54 @@ defmodule Matplotex.Figure.Lead do
           axes: axes
         } = figure
       ) do
-    lx = width * margin
-    by = height * margin
-    rx = width - width * margin
-    ty = height - height * margin
-    title_coords = {lx, ty}
+    leftx = width * margin
+    bottomy = height * margin
+    rightx = width - width * margin
+    topy = height - height * margin
+    title_coords = {leftx, topy}
     title_offset = label_offset(title_font_size)
-    ty = ty - title_offset
-    xc = (rx + lx ) /2
-    yc = (ty + by) /2
-    radius = xc - ty
-   coords = %Coords{title: title_coords, bottom_left: {lx, by}, top_left: {lx, ty}, bottom_right: {rx, by}, top_right: {rx, ty}}
-   %Figure{figure | axes: %{axes | radius: radius, center: %TwoD{x: xc, y: yc}, coords: coords}}
+    topy = topy - title_offset
+    inner_size = {width, height} = {width - 2 * leftx, height - 2 * bottomy - title_offset}
+
+    {{centerx, centery}, radius} =
+      center_and_radius(width, height, {leftx, rightx, bottomy, topy})
+
+    coords = %Coords{
+      title: title_coords,
+      bottom_left: {leftx, bottomy},
+      top_left: {leftx, topy},
+      bottom_right: {rightx, bottomy},
+      top_right: {rightx, topy}
+    }
+
+    %Figure{
+      figure
+      | axes: %{
+          axes
+          | radius: radius,
+            center: %TwoD{x: centerx, y: centery},
+            coords: coords,
+            size: inner_size,
+            legend_pos: {2 * leftx + 2 * radius, topy}
+        }
+    }
   end
 
+  defp center_and_radius(width, height, {leftx, _rightx, bottomy, _topy}) when height < width do
+    radius = height / 2
+
+    centerx = leftx + radius
+    centery = bottomy + radius
+    {{centerx, centery}, radius}
+  end
+
+  defp center_and_radius(width, _height, {leftx, _rightx, _bottomy, topy}) do
+    radius = width / 2
+
+    centerx = leftx + radius
+    centery = topy - radius
+    {{centerx, centery}, radius}
+  end
 
   # TODO: Sort out how the user gets the control on font of the all texts
 
@@ -283,7 +316,6 @@ defmodule Matplotex.Figure.Lead do
   defp label_offset(font_size) do
     font_size * @pt_to_inch + @padding
   end
-
 
   # defp peel_label_offsets(
   #        {%Figure{

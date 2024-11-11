@@ -2,19 +2,18 @@ defmodule Matplotex.Element.Slice do
   alias Matplotex.Element
   use Element
 
-  defstruct [:x1, :y1, :x2, :y2, :cx, :cy, :data, :radius, :color, :label, :legend]
-#TODO: change the fucntion name assemble to to_svg
+  defstruct [:type, :x1, :y1, :x2, :y2, :cx, :cy, :data, :radius, :color, :label, :legend]
+  # TODO: change the fucntion name assemble to to_svg
 
   @impl Element
   def assemble(slice) do
-      """
-      <path d="M #{get_x1(slice)} #{get_y1(slice)}
-       A #{get_radius(slice)} #{get_radius(slice)} 0 0 1 #{get_x2(slice)} #{get_y2(slice)}
-       L #{get_cx(slice)} #{get_cy(slice)}
-       Z" fill="#{slice.color}" />
-      """
+    """
+    <path d="M #{get_x1(slice)} #{get_y1(slice)}
+     A #{get_radius(slice)} #{get_radius(slice)} 0 0 1 #{get_x2(slice)} #{get_y2(slice)}
+     L #{get_cx(slice)} #{get_cy(slice)}
+     Z" fill="#{slice.color}" />
+    """
   end
-
 
   def get_x1(%{x1: x1}), do: to_pixel(x1)
   def get_x2(%{x2: x2}), do: to_pixel(x2)
@@ -24,8 +23,7 @@ defmodule Matplotex.Element.Slice do
   def get_cy(%{cy: cy}), do: to_pixel(cy)
   def get_radius(%{radius: radius}), do: to_pixel(radius)
   @impl Element
-  def flipy(%__MODULE__{y1: y1, y2: y2} = slice, height) do
-    %__MODULE__{slice | y1: height - y1, y2: height - y2}
+  def flipy(slice, _height) do
+    slice
   end
-
 end

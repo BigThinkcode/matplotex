@@ -122,41 +122,41 @@ defmodule Matplotex.Helpers do
     |> copy()
   end
 
-  def bar() do
-    values = [2, 1, 3, 7, 3, 5, 4]
-    categories = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+  # def bar() do
+  #   values = [2, 1, 3, 7, 3, 5, 4]
+  #   categories = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
-    frame_width = 8
-    frame_height = 6
-    size = {frame_width, frame_height}
-    margin = 0.05
-    font_size = 0
-    title_font_size = 0
-    yticks = [0, 1, 2, 3, 4, 5, 6, 7]
+  #   frame_width = 8
+  #   frame_height = 6
+  #   size = {frame_width, frame_height}
+  #   margin = 0.05
+  #   font_size = 0
+  #   title_font_size = 0
+  #   yticks = [0, 1, 2, 3, 4, 5, 6, 7]
 
-    categories
-    |> Matplotex.bar(values)
-    |> Matplotex.figure(%{figsize: size, margin: margin})
-    |> Matplotex.set_title("Sample barchart")
-    |> Matplotex.set_xticks(categories)
-    |> Matplotex.set_yticks(yticks)
-    |> Matplotex.set_xlabel("Category")
-    |> Matplotex.set_ylabel("Values")
-    |> Matplotex.set_xlim({1, 7})
-    |> Matplotex.set_ylim({0, 7})
-    |> Matplotex.hide_v_grid()
-    |> Matplotex.set_rc_params(
-      x_tick_font_size: font_size,
-      y_tick_font_size: font_size,
-      title_font_size: title_font_size,
-      x_label_font_size: font_size,
-      y_label_font_size: font_size,
-      title_font_size: title_font_size,
-      y_padding: 0
-    )
-    |> Matplotex.show()
-    |> copy()
-  end
+  #   categories
+  #   |> Matplotex.bar(values)
+  #   |> Matplotex.figure(%{figsize: size, margin: margin})
+  #   |> Matplotex.set_title("Sample barchart")
+  #   |> Matplotex.set_xticks(categories)
+  #   |> Matplotex.set_yticks(yticks)
+  #   |> Matplotex.set_xlabel("Category")
+  #   |> Matplotex.set_ylabel("Values")
+  #   |> Matplotex.set_xlim({1, 7})
+  #   |> Matplotex.set_ylim({0, 7})
+  #   |> Matplotex.hide_v_grid()
+  #   |> Matplotex.set_rc_params(
+  #     x_tick_font_size: font_size,
+  #     y_tick_font_size: font_size,
+  #     title_font_size: title_font_size,
+  #     x_label_font_size: font_size,
+  #     y_label_font_size: font_size,
+  #     title_font_size: title_font_size,
+  #     y_padding: 0
+  #   )
+  #   |> Matplotex.show()
+  #   |> copy()
+  # end
 
   def scatter() do
     x = [1, 2, 3, 4, 6, 6, 7]
@@ -250,4 +250,19 @@ defmodule Matplotex.Helpers do
     |> copy()
   end
 
+  def pie() do
+    # Percentages for each slice
+    sizes = [25, 35, 20, 20]
+    # Labels for each slice
+    labels = ["Category A", "Category B", "Category C", "Category D"]
+    # Colors for the slices
+    colors = ["lightblue", "lightgreen", "orange", "pink"]
+
+    sizes
+    |> Matplotex.pie(colors: colors, labels: labels)
+    |> Matplotex.set_title("Sample pie chart")
+    |> Matplotex.figure(%{figsize: {8, 4}, margin: 0.05})
+    |> Matplotex.show()
+    |> copy()
+  end
 end

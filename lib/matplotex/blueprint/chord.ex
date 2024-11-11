@@ -8,26 +8,29 @@ defmodule Matplotex.Blueprint.Chord do
   defp build_chord(opts) do
     chord =
       quote do
-        defstruct unquote([
-                    figsize: nil,
-                    data: nil,
-                    dataset: nil,
-                    stroke_width: nil,
-                    title: nil,
-                    center: nil,
-                    lead: nil,
-                    coords: nil,
-                    radius: nil,
-                    labels: [],
-                    values: [],
-                    tick_angles: [],
-                    tick_labels: [],
-                    color_pallete: [],
-                    legend: @false_by_default,
-                    label: @true_by_default,
-                    show_title: @true_by_default,
-                    element: []
-        ]|> Keyword.merge(opts)
+        defstruct unquote(
+                    [
+                      size: nil,
+                      data: nil,
+                      dataset: nil,
+                      stroke_width: nil,
+                      title: nil,
+                      center: nil,
+                      lead: nil,
+                      coords: nil,
+                      radius: nil,
+                      labels: [],
+                      values: [],
+                      tick_angles: [],
+                      tick_labels: [],
+                      color_pallete: [],
+                      legend: @false_by_default,
+                      label: @true_by_default,
+                      show_title: @true_by_default,
+                      element: [],
+                      legend_pos: nil
+                    ]
+                    |> Keyword.merge(opts)
                   )
       end
 

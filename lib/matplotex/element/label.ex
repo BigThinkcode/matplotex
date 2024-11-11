@@ -7,7 +7,7 @@ defmodule Matplotex.Element.Label do
   @default_dominant_baseline "hanging"
   @default_font_size "16pt"
   @default_font_weight "normal"
-
+  @default_text_anchor "middle"
   @type word() :: String.t()
   @type t() :: %__MODULE__{
           type: String.t(),
@@ -33,7 +33,8 @@ defmodule Matplotex.Element.Label do
     fill: @default_fill,
     font_family: @default_font_family,
     font_style: @default_font_style,
-    dominant_baseline: @default_dominant_baseline
+    dominant_baseline: @default_dominant_baseline,
+    text_anchor: @default_text_anchor
   ]
 
   @impl true
@@ -48,8 +49,8 @@ defmodule Matplotex.Element.Label do
          font-family="#{label.font_family}"
          font-style="#{label.font_style}"
          transform="#{rotate(label)}"
-         dominant-baseline="middle"
-         text-anchor="middle"
+         dominant-baseline="#{label.dominant_baseline}"
+         text-anchor="#{label.text_anchor}"
          >
          #{label.text}
         </text>
