@@ -18,7 +18,7 @@ defmodule Matplotex.Figure.Radial do
       alias Matplotex.Figure.Cast
 
       def add_title(axes, title, opts) when is_binary(title) do
-        title = Text.create_text(title, opts)
+        # title = Text.create_text(title, opts)
         %{axes | title: title, show_title: true}
       end
 

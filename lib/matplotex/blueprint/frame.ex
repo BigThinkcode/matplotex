@@ -8,13 +8,6 @@ defmodule Matplotex.Blueprint.Frame do
   end
 
   defp build_struct(opts) do
-    legend = Keyword.get(opts, :legend)
-    coords = Keyword.get(opts, :coords)
-    dimension = Keyword.get(opts, :dimension)
-    tick = Keyword.get(opts, :tick)
-    limit = Keyword.get(opts, :limit)
-    title = Keyword.get(opts, :title)
-    #TODO: some mechanism to pass default values
 
     types =
       quote do
@@ -70,26 +63,24 @@ defmodule Matplotex.Blueprint.Frame do
     build_struct =
       quote do
         defstruct unquote([
-                    :id,
-                    :content,
-                    # TODO: change dataset to data, should deprecate this field
-
-                    :label,
-                    :scale,
-                    :grid,
-                    :size,
-                    :axis,
-                    :center,
-                    :type,
-                    :grid_coordinates,
-                    :data,
+                    id: "chart-matplotex",
+                    content: nil, #Deprecated
+                    label: nil,
+                    scale: nil,
+                    grid: nil,
+                    size: nil,
+                    axis: nil,
+                    center: nil,
+                    type: nil,
+                    grid_coordinates: nil,
+                    data: nil,
                     dataset: [],
-                    title: title,
-                    tick: tick,
-                    limit: limit,
-                    coords: coords,
-                    legend: legend,
-                    dimension: dimension,
+                    title: nil,
+                    tick: nil,
+                    limit: nil,
+                    coords: nil,
+                    legend: nil,
+                    dimension: nil,
                     errors: [],
                     element: [],
                     show_title: false,
@@ -102,7 +93,8 @@ defmodule Matplotex.Blueprint.Frame do
                     show_x_ticks: @show_by_default,
                     show_y_ticks: @show_by_default,
                     show_ticks: @show_by_default
-                  ])
+        ] |> Keyword.merge(opts)
+                  )
       end
 
     quote do

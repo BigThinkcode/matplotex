@@ -72,7 +72,7 @@ defmodule Matplotex.Figure.Cast do
           axes:
             %{
               coords: %Coords{title: title_coord} = coords,
-              title: %{text: text},
+              title: title,
               element: elements
             } = axes,
           rc_params: %RcParams{title_font: title_font}
@@ -85,7 +85,7 @@ defmodule Matplotex.Figure.Cast do
         type: "figure.title",
         x: ttx,
         y: tty,
-        text: text
+        text: title
       }
       |> merge_structs(title_font)
 

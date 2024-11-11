@@ -12,8 +12,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
     coords: %Coords{},
     dimension: %Dimension{},
     tick: %TwoD{},
-    limit: %TwoD{},
-    title: %Text{}
+    limit: %TwoD{}
   )
   @impl Areal
   def create(%Figure{axes: %__MODULE__{dataset: data} = axes} = figure, {pos, values, width},opts) do

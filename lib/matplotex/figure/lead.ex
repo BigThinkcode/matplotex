@@ -168,8 +168,7 @@ defmodule Matplotex.Figure.Lead do
            rc_params: rc_params,
            axes:
              %{
-               coords: %Coords{x_label: {xlx, _}, y_label: {_ylx, yly}, title: {_, ytt}} = coords,
-               title: title
+               coords: %Coords{x_label: {xlx, _}, y_label: {_ylx, yly}, title: {_, ytt}} = coords
              } =
                axes
          } = figure
@@ -195,8 +194,7 @@ defmodule Matplotex.Figure.Lead do
                 bottom_right: bottom_right,
                 top_left: top_left
             },
-            size: {width, height},
-            title: %{title | height: title_offset}
+            size: {width, height}
         }
     }
   end

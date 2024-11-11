@@ -15,8 +15,7 @@ defmodule Matplotex.Figure.Areal.Scatter do
     coords: %Coords{},
     dimension: %Dimension{},
     tick: %TwoD{},
-    limit: %TwoD{},
-    title: %Text{}
+    limit: %TwoD{}
   )
 
   @impl Areal
