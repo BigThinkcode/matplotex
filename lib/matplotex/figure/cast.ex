@@ -186,7 +186,7 @@ defmodule Matplotex.Figure.Cast do
     element = element ++ [y_label]
     %Figure{figure | axes: %{axes | element: element}}
   end
-  def cast_y_label(figure), do: figure
+  def cast_ylabel(figure), do: figure
 
 
   def cast_xticks(
