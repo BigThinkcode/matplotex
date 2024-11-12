@@ -111,15 +111,15 @@ defmodule Matplotex.Figure.Areal.BarChart do
   end
   defp bar_position(x, _pos_factor), do: x
 
-  defp round_to_best(value) when value > 10 do
+  def round_to_best(value) when value > 10 do
     factor = value |> :math.log10() |> floor()
 
     base = 10 |> :math.pow(factor) |> round()
-    value |> div(base) |> Kernel.*(base)
+    value|>round()|> div(base) |> Kernel.*(base)
   end
 
   # TODO: get best strategy for ticks less than 1
-  defp round_to_best(value) do
+  def round_to_best(value) do
     value
   end
 
