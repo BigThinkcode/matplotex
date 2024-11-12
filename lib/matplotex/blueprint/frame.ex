@@ -8,7 +8,6 @@ defmodule Matplotex.Blueprint.Frame do
   end
 
   defp build_struct(opts) do
-
     types =
       quote do
         @type dataset1_d() :: list() | nil
@@ -62,38 +61,41 @@ defmodule Matplotex.Blueprint.Frame do
 
     build_struct =
       quote do
-        defstruct unquote([
-                    id: "chart-matplotex",
-                    content: nil, #Deprecated
-                    label: nil,
-                    scale: nil,
-                    grid: nil,
-                    size: nil,
-                    axis: nil,
-                    center: nil,
-                    type: nil,
-                    grid_coordinates: nil,
-                    data: nil,
-                    dataset: [],
-                    title: nil,
-                    tick: nil,
-                    limit: nil,
-                    coords: nil,
-                    legend: nil,
-                    dimension: nil,
-                    errors: [],
-                    element: [],
-                    show_title: false,
-                    valid: @valid_by_default,
-                    margin: @default_margin,
-                    show_x_axis: @show_by_default,
-                    show_y_axis: @show_by_default,
-                    show_v_grid: @show_by_default,
-                    show_h_grid: @show_by_default,
-                    show_x_ticks: @show_by_default,
-                    show_y_ticks: @show_by_default,
-                    show_ticks: @show_by_default
-        ] |> Keyword.merge(opts)
+        defstruct unquote(
+                    [
+                      id: "chart-matplotex",
+                      # Deprecated
+                      content: nil,
+                      label: nil,
+                      scale: nil,
+                      grid: nil,
+                      size: nil,
+                      axis: nil,
+                      center: nil,
+                      type: nil,
+                      grid_coordinates: nil,
+                      data: nil,
+                      dataset: [],
+                      title: nil,
+                      tick: nil,
+                      limit: nil,
+                      coords: nil,
+                      legend: nil,
+                      dimension: nil,
+                      errors: [],
+                      element: [],
+                      show_title: false,
+                      valid: @valid_by_default,
+                      margin: @default_margin,
+                      show_x_axis: @show_by_default,
+                      show_y_axis: @show_by_default,
+                      show_v_grid: @show_by_default,
+                      show_h_grid: @show_by_default,
+                      show_x_ticks: @show_by_default,
+                      show_y_ticks: @show_by_default,
+                      show_ticks: @show_by_default
+                    ]
+                    |> Keyword.merge(opts)
                   )
       end
 

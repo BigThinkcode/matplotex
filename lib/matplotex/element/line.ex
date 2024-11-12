@@ -58,9 +58,11 @@ defmodule Matplotex.Element.Line do
   end
 
   defp stroke_dasharray(%{linestyle: "_"}), do: nil
+
   defp stroke_dasharray(%{linestyle: "--"}) do
     "10, 5"
   end
+
   defp stroke_dasharray(%{linestyle: "-."}) do
     "10, 2, 3, 2, 10"
   end

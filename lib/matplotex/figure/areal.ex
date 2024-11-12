@@ -34,7 +34,8 @@ defmodule Matplotex.Figure.Areal do
         label =
           Map.new()
           |> Map.put(key, label)
-          # Text.create_text(label, opts))
+
+        # Text.create_text(label, opts))
 
         update_label(axes, label)
       end
@@ -99,7 +100,6 @@ defmodule Matplotex.Figure.Areal do
       end
 
       def generate_xticks(%module{data: {x, _y}, tick: tick, limit: limit} = axes) do
-
         {xticks, xlim} =
           module.generate_ticks(x)
 
@@ -109,7 +109,6 @@ defmodule Matplotex.Figure.Areal do
       end
 
       def generate_yticks(%module{data: {_x, y}, tick: tick, limit: limit} = axes) do
-
         {yticks, ylim} =
           module.generate_ticks(y)
 
@@ -152,8 +151,6 @@ defmodule Matplotex.Figure.Areal do
         %{axes | limit: limit}
       end
 
-
-
       def determine_numeric_value(data) when is_list(data) do
         if number_based?(data) do
           data
@@ -192,8 +189,6 @@ defmodule Matplotex.Figure.Areal do
       def min_max(ticks) do
         Enum.min_max(ticks)
       end
-
-
     end
   end
 

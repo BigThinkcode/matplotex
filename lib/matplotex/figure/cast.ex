@@ -145,7 +145,7 @@ defmodule Matplotex.Figure.Cast do
           axes: %{label: %{x: x_label}, coords: coords, element: element} = axes,
           rc_params: %RcParams{x_label_font: label_font}
         } = figure
-      ) do
+      ) when not is_nil(x_label) do
     xlabel_coords = Map.get(coords, :x_label)
     {x, y} = calculate_center(coords, xlabel_coords, :x)
 
@@ -161,6 +161,7 @@ defmodule Matplotex.Figure.Cast do
     element = element ++ [x_label]
     %Figure{figure | axes: %{axes | element: element}}
   end
+
   def cast_xlabel(figure), do: figure
 
   def cast_ylabel(
@@ -168,7 +169,7 @@ defmodule Matplotex.Figure.Cast do
           axes: %{label: %{y: y_label}, coords: coords, element: element} = axes,
           rc_params: %RcParams{y_label_font: label_font}
         } = figure
-      ) do
+      ) when not is_nil(y_label) do
     ylabel_coords = Map.get(coords, :y_label)
 
     {x, y} = calculate_center(coords, ylabel_coords, :y)
@@ -186,8 +187,8 @@ defmodule Matplotex.Figure.Cast do
     element = element ++ [y_label]
     %Figure{figure | axes: %{axes | element: element}}
   end
-  def cast_ylabel(figure), do: figure
 
+  def cast_ylabel(figure), do: figure
 
   def cast_xticks(
         %Figure{
@@ -450,7 +451,7 @@ defmodule Matplotex.Figure.Cast do
   defp set_xlim_from_ticks(%Figure{axes: %module{tick: %{x: xtick}} = axes} = figure) do
     {xmin, xmax} = min_max(xtick)
 
-    xscale = xmax|>round()|>div((length(xtick) - 1))
+    xscale = xmax |> round() |> div(length(xtick) - 1)
 
     xlim = {round(xmin - xscale), round(xmax + xscale)}
     axes = module.set_limit(axes, {:x, xlim})
@@ -460,7 +461,7 @@ defmodule Matplotex.Figure.Cast do
 
   defp set_ylim_from_ticks(%Figure{axes: %module{tick: %{y: ytick}} = axes} = figure) do
     {ymin, ymax} = min_max(ytick)
-    yscale = ymax|>round()|>div((length(ytick) - 1))
+    yscale = ymax |> round() |> div(length(ytick) - 1)
     ylim = {round(ymin - yscale), round(ymax + yscale)}
     axes = module.set_limit(axes, {:y, ylim})
     %Figure{figure | axes: axes}
@@ -474,7 +475,6 @@ defmodule Matplotex.Figure.Cast do
   end
 
   defp confine_ticks(ticks, {min, max} = lim) do
-
     ticks
     |> append_lim(lim)
     |> Enum.filter(fn tick ->
