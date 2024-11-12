@@ -308,7 +308,9 @@ defmodule Matplotex.Figure.Cast do
             type: @ytick_type,
             y: tick_position,
             x: ytx,
-            text: label
+            text: label,
+            text_anchor: "start",
+            dominant_baseline: "middle"
           }
           |> merge_structs(tick_font)
 
