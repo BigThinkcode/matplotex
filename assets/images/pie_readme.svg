@@ -1,0 +1,159 @@
+<svg width="336.0"
+  height="240.0"
+  version="1.1"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  style="top: 0px;
+      left: 0px;
+      position: absolute;">
+  <g>
+    <text tag="figure.title"
+      fill="black"
+      x="168.00000000000003"
+      y="12.0"
+      font-size="18"
+      font-weight="normal"
+      font-family="Arial, Verdana, sans-serif"
+      font-style="normal"
+      transform=""
+      dominant-baseline="hanging"
+      text-anchor="middle"
+    >
+      Pie chart
+    </text>
+    <path
+      d="M 114.04 33.519999999999996
+ A 97.24000000000001 97.24000000000001 0 0 1 211.28000000000003 130.76
+ L 114.04 130.76
+ Z"
+      fill="lightblue" />
+    <path
+      d="M 211.28000000000003 130.76
+ A 97.24000000000001 97.24000000000001 0 0 1 56.88376206707993 209.42881253301988
+ L 114.04 130.76
+ Z"
+      fill="lightgreen" />
+    <path
+      d="M 56.88376206707993 209.42881253301988
+ A 97.24000000000001 97.24000000000001 0 0 1 21.559264355459263 100.71118746698014
+ L 114.04 130.76
+ Z"
+      fill="orange" />
+    <path
+      d="M 21.559264355459263 100.71118746698014
+ A 97.24000000000001 97.24000000000001 0 0 1 114.03999999999999 33.519999999999996
+ L 114.04 130.76
+ Z"
+      fill="pink" />
+
+    <rect
+      type="pie.legend"
+      stroke="rgba(0,0,0,0)"
+      fill="lightblue"
+      x="228.08"
+      y="57.82999999999999"
+      width="24.310000000000002"
+      height="24.310000000000002"
+      stroke-width="1"
+      filter="">
+    </rect>
+    <text tag="legend.label"
+      fill="black"
+      x="272.39000000000004"
+      y="63.907499999999985"
+      font-size="12pt"
+      font-weight="normal"
+      font-family="Arial, Verdana, sans-serif"
+      font-style="normal"
+      transform=""
+      dominant-baseline="hanging"
+      text-anchor="start"
+    >
+      A-25
+    </text>
+
+
+    <rect
+      type="pie.legend"
+      stroke="rgba(0,0,0,0)"
+      fill="lightgreen"
+      x="228.08"
+      y="82.13999999999999"
+      width="24.310000000000002"
+      height="24.310000000000002"
+      stroke-width="1"
+      filter="">
+    </rect>
+    <text tag="legend.label"
+      fill="black"
+      x="272.39000000000004"
+      y="88.21749999999997"
+      font-size="12pt"
+      font-weight="normal"
+      font-family="Arial, Verdana, sans-serif"
+      font-style="normal"
+      transform=""
+      dominant-baseline="hanging"
+      text-anchor="start"
+    >
+      B-35
+    </text>
+
+
+    <rect
+      type="pie.legend"
+      stroke="rgba(0,0,0,0)"
+      fill="orange"
+      x="228.08"
+      y="106.44999999999999"
+      width="24.310000000000002"
+      height="24.310000000000002"
+      stroke-width="1"
+      filter="">
+    </rect>
+    <text tag="legend.label"
+      fill="black"
+      x="272.39000000000004"
+      y="112.52749999999997"
+      font-size="12pt"
+      font-weight="normal"
+      font-family="Arial, Verdana, sans-serif"
+      font-style="normal"
+      transform=""
+      dominant-baseline="hanging"
+      text-anchor="start"
+    >
+      C-20
+    </text>
+
+
+    <rect
+      type="pie.legend"
+      stroke="rgba(0,0,0,0)"
+      fill="pink"
+      x="228.08"
+      y="130.76"
+      width="24.310000000000002"
+      height="24.310000000000002"
+      stroke-width="1"
+      filter="">
+    </rect>
+    <text tag="legend.label"
+      fill="black"
+      x="272.39000000000004"
+      y="136.83749999999998"
+      font-size="12pt"
+      font-weight="normal"
+      font-family="Arial, Verdana, sans-serif"
+      font-style="normal"
+      transform=""
+      dominant-baseline="hanging"
+      text-anchor="start"
+    >
+      D-20
+    </text>
+
+
+  </g>
+</svg>
+      
