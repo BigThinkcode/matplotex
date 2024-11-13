@@ -1,11 +1,12 @@
 # <img src="assets/images/matplotex_logo.png" height="50" /> Matplotex
 
 Matplotex is a lightweight, efficient library for Elixir projects that enables server-side SVG generation for data visualization, designed to integrate seamlessly with Phoenix LiveView.
-
-<img src="assets/images/line_plot_readme.svg"/>
-<img src="assets/images/scatter_plot_readme.svg"/>
-<img src="assets/images/bar_readme.svg"/>
-<img src="assets/images/pie_readme.svg" style="margin-bottom: 45px;"/>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+<img src="assets/images/line_plot_readme.svg" width="45%"/>
+<img src="assets/images/scatter_plot_readme.svg"width="45%"/>
+<img src="assets/images/bar_readme.svg"width="45%"/>
+<img src="assets/images/pie_readme.svg" width="50%" style="margin-bottom: 45px;"/>
+</div>
 
 ### Installation
 
