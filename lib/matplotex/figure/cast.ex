@@ -145,7 +145,8 @@ defmodule Matplotex.Figure.Cast do
           axes: %{label: %{x: x_label}, coords: coords, element: element} = axes,
           rc_params: %RcParams{x_label_font: label_font}
         } = figure
-      ) when not is_nil(x_label) do
+      )
+      when not is_nil(x_label) do
     xlabel_coords = Map.get(coords, :x_label)
     {x, y} = calculate_center(coords, xlabel_coords, :x)
 
@@ -169,7 +170,8 @@ defmodule Matplotex.Figure.Cast do
           axes: %{label: %{y: y_label}, coords: coords, element: element} = axes,
           rc_params: %RcParams{y_label_font: label_font}
         } = figure
-      ) when not is_nil(y_label) do
+      )
+      when not is_nil(y_label) do
     ylabel_coords = Map.get(coords, :y_label)
 
     {x, y} = calculate_center(coords, ylabel_coords, :y)
@@ -309,7 +311,7 @@ defmodule Matplotex.Figure.Cast do
             y: tick_position,
             x: ytx,
             text: label,
-            text_anchor: "start",
+            text_anchor: "end",
             dominant_baseline: "middle"
           }
           |> merge_structs(tick_font)

@@ -6,6 +6,7 @@ defmodule Matplotex.Figure.Marker do
   def generate_marker(nil, _, _, _, _), do: nil
 
   def generate_marker("o", x, y, fill, marker_size),
+    # TODO: type shoudl be dynamic plot.marker or scatter.marker
     do: %Circle{type: "plot.marker", cx: x, cy: y, fill: fill, r: marker_size}
 
   def generate_marker("^", x, y, fill, marker_size),

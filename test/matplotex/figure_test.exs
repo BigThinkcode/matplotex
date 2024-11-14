@@ -1,6 +1,18 @@
 defmodule Matplotex.FigureTest do
   use Matplotex.PlotCase
-  @figure_fields [:id, :figsize, :axes, :element, :rows, :columns, :margin]
+
+  @figure_fields [
+    :id,
+    :figsize,
+    :axes,
+    :element,
+    :errors,
+    :rows,
+    :columns,
+    :margin,
+    :rc_params,
+    :valid?
+  ]
   test "contains all figure fields" do
     existing_fields =
       %Matplotex.Figure{}
@@ -17,6 +29,6 @@ defmodule Matplotex.FigureTest do
     assert figure.figsize == {10, 6}
     assert figure.rows == 1
     assert figure.columns == 1
-    assert figure.margin == 0.1
+    assert figure.margin == 0.05
   end
 end

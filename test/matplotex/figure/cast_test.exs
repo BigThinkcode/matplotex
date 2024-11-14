@@ -46,7 +46,7 @@ defmodule Matplotex.Figure.CastTest do
 
   describe "cast_xticks/1" do
     test "add element for tick in axes", %{figure: figure} do
-      assert %Figure{axes: %{element: elements, tick: %{x: x_ticks, y: y_ticks}}} =
+      assert %Figure{axes: %{element: elements, tick: %{x: x_ticks, y: _y_ticks}}} =
                figure
                |> Lead.set_spines()
                |> Cast.cast_xticks()
@@ -71,7 +71,7 @@ defmodule Matplotex.Figure.CastTest do
       y = [1, 3, 7, 4, 2, 5, 6]
       figure = Matplotex.plot(x, y)
 
-      %Figure{axes: %{data: {x, _y}, tick: %{x: x_ticks}, element: elements}} =
+      %Figure{axes: %{data: {_x, _y}, tick: %{x: x_ticks}, element: elements}} =
         figure
         |> Lead.set_spines()
         |> Cast.cast_xticks()

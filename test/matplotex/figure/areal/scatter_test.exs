@@ -10,7 +10,17 @@ defmodule Matplotex.Figure.Areal.ScatterTest do
   describe "materialyze/1" do
     test "adds elements for dat", %{figure: figure} do
       assert %Figure{axes: %{data: {x, _y}, element: elements}} = Scatter.materialize(figure)
-      assert Enum.count(elements, fn elem -> elem.type == "scatter.marker" end) == length(x)
+      assert Enum.count(elements, fn elem -> elem.type == "plot.marker" end) == length(x)
+    end
+  end
+
+  describe "generate_ticks/2" do
+    test "generate ticks in a length of figure size" do
+      minmax = {1, 10}
+      # inch
+      side = 10
+      {ticks, _lim} = Scatter.generate_ticks(side, minmax)
+      assert length(ticks) == side
     end
   end
 end

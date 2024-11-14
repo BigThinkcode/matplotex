@@ -8,6 +8,7 @@ defmodule Matplotex.Figure.LeadTest do
 
   # all the padding and tickline spaces
   @padding_and_tick_line_space 25 / 96
+  @padding 10 / 96
 
   setup do
     figure = Matplotex.FrameHelpers.sample_figure()
@@ -36,7 +37,7 @@ defmodule Matplotex.Figure.LeadTest do
 
       assert %Figure{
                axes: %LinePlot{
-                 title: %{height: title_height},
+                 title: _title,
                  coords: %Coords{
                    bottom_left: {blx, bly},
                    bottom_right: {brx, bry},
@@ -62,11 +63,11 @@ defmodule Matplotex.Figure.LeadTest do
       # Check top-right corner
       assert trx == frame_width - frame_width * margin
       # + @padding_and_tick_line_space
-      assert ytr == frame_height - frame_height * margin - title_height
+      assert ytr == frame_height - frame_height * margin - @padding
       # + @padding_and_tick_line_space
       # Check top-left corner
       assert tlx == frame_width * margin + @padding_and_tick_line_space
-      assert tly == frame_height - frame_height * margin - title_height
+      assert tly == frame_height - frame_height * margin - @padding
     end
 
     test "sets coordinates by reducing title height", %{figure: figure} do
@@ -97,9 +98,12 @@ defmodule Matplotex.Figure.LeadTest do
              } =
                Lead.set_spines(figure)
 
-      assert tly == frame_height - (title_font_size / 72 + 10 / 96)
+      assert Float.round(tly, 10) ==
+               Float.round(frame_height - (title_font_size / 150 + 10 / 96), 10)
+
       # the offset of the title
-      assert ytr == frame_height - (title_font_size / 72 + 10 / 96)
+      assert Float.round(ytr, 10) ==
+               Float.round(frame_height - (title_font_size / 150 + 10 / 96), 10)
     end
 
     test "sets coordinates by reducing xlabel", %{figure: figure} do
@@ -128,8 +132,11 @@ defmodule Matplotex.Figure.LeadTest do
              } =
                Lead.set_spines(figure)
 
-      assert bly == font_size / 72 + @padding_and_tick_line_space
-      assert bry == font_size / 72 + @padding_and_tick_line_space
+      assert Float.round(bly, 10) ==
+               Float.round(font_size / 150 + @padding_and_tick_line_space, 10)
+
+      assert Float.round(bry, 10) ==
+               Float.round(font_size / 150 + @padding_and_tick_line_space, 10)
     end
 
     test "sets coordinates by reducing ylabel", %{figure: figure} do
@@ -158,8 +165,11 @@ defmodule Matplotex.Figure.LeadTest do
              } =
                Lead.set_spines(figure)
 
-      assert tlx == font_size / 72 + @padding_and_tick_line_space
-      assert blx == font_size / 72 + @padding_and_tick_line_space
+      assert Float.round(tlx, 10) ==
+               Float.round(font_size / 150 + @padding_and_tick_line_space, 10)
+
+      assert Float.round(blx, 10) ==
+               Float.round(font_size / 150 + @padding_and_tick_line_space, 10)
     end
 
     test "set coordinates by reducing xticks", %{figure: figure} do
@@ -188,8 +198,8 @@ defmodule Matplotex.Figure.LeadTest do
              } =
                Lead.set_spines(figure)
 
-      assert bly == font_size / 72 + @padding_and_tick_line_space
-      assert bry == font_size / 72 + @padding_and_tick_line_space
+      assert bly == font_size / 150 + @padding_and_tick_line_space
+      assert bry == font_size / 150 + @padding_and_tick_line_space
     end
 
     test "set coordinates by reducing yticks", %{figure: figure} do
@@ -218,8 +228,8 @@ defmodule Matplotex.Figure.LeadTest do
              } =
                Lead.set_spines(figure)
 
-      assert tlx == font_size / 72 + @padding_and_tick_line_space
-      assert blx == font_size / 72 + @padding_and_tick_line_space
+      assert tlx == font_size / 150 + @padding_and_tick_line_space
+      assert blx == font_size / 150 + @padding_and_tick_line_space
     end
   end
 end

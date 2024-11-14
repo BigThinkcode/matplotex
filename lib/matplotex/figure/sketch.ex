@@ -2,6 +2,15 @@ defmodule Matplotex.Figure.Sketch do
   alias Matplotex.Figure
   @dpi 96
 
+  def call({stream, %Figure{figsize: {width, height}}}) do
+    stream
+    |> Stream.map(fn %module{} = elem ->
+      elem = module.flipy(elem, height)
+      module.assemble(elem)
+    end)
+    |> wrap_with_tag(width * @dpi, height * @dpi)
+  end
+
   def call(%Figure{axes: %{element: elements}, figsize: {width, height}}) do
     elements
     |> flipy(height)

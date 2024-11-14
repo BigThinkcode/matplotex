@@ -72,6 +72,16 @@ defmodule Matplotex.Figure.Areal do
         update_tick(axes, tick)
       end
 
+      def add_ticks(%__MODULE__{tick: tick, size: size} = axes, {key, {_min, _max} = lim}) do
+        {ticks, lim} = __MODULE__.generate_ticks(size, lim)
+
+        tick = Map.put(tick, key, ticks)
+
+        axes
+        |> set_limit(lim)
+        |> update_tick(tick)
+      end
+
       def hide_v_grid(axes) do
         %{axes | show_v_grid: false}
       end
@@ -130,13 +140,13 @@ defmodule Matplotex.Figure.Areal do
       def materialized(figure) do
         figure
         |> Lead.set_spines()
-        |> Cast.cast_spines()
         |> Cast.cast_label()
         |> Cast.cast_title()
         |> Cast.cast_xticks()
         |> Cast.cast_yticks()
         |> Cast.cast_hgrids()
         |> Cast.cast_vgrids()
+        |> Cast.cast_spines()
       end
 
       defp update_tick(axes, tick) do

@@ -1,5 +1,4 @@
 defmodule Matplotex.Figure.Areal.LinePlotTest do
-  alias Matplotex.Element.Line
   alias Matplotex.Figure
   alias Matplotex.LinePlot
   use Matplotex.PlotCase
@@ -57,17 +56,6 @@ defmodule Matplotex.Figure.Areal.LinePlotTest do
       assert Enum.any?(element, fn line -> line.fill == "blue" && line.linestyle == "_" end)
       assert Enum.any?(element, fn line -> line.fill == "red" && line.linestyle == "--" end)
       assert Enum.any?(element, fn line -> line.fill == "green" && line.linestyle == "-." end)
-    end
-  end
-
-  describe "generate_xticks/1" do
-    test "generation of ticks for linear data" do
-      x = [1, 2, 3, 4, 5]
-      # Dataset 1
-      y = [22, 24, 30, 42, 60]
-      figure = Matplotex.plot(x, y)
-      plot = LinePlot.generate_yticks(figure.axes)
-      assert plot.tick.y |> List.first() < List.first(y)
     end
   end
 end

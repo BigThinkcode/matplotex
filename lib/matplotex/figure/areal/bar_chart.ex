@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Areal.BarChart do
+  import Matplotex.Figure.Numer
   alias Matplotex.Figure.Dataset
   alias Matplotex.Element.Rect
   alias Matplotex.Figure.RcParams
@@ -88,6 +89,11 @@ defmodule Matplotex.Figure.Areal.BarChart do
     {list_of_ticks(data, step), {0, max}}
   end
 
+  def generate_ticks(side, {min, max} = lim) do
+    step = (max - min) / (side * 2)
+    {min..max |> Enum.into([], fn d -> d * round_to_best(step) end), lim}
+  end
+
   defp capture(%Dataset{transformed: transformed} = dataset, bly) do
     capture(transformed, [], dataset, bly)
   end
@@ -131,18 +137,6 @@ defmodule Matplotex.Figure.Areal.BarChart do
   end
 
   defp bar_position(x, _pos_factor), do: x
-
-  def round_to_best(value) when value > 10 do
-    factor = value |> :math.log10() |> floor()
-
-    base = 10 |> :math.pow(factor) |> round()
-    value |> round() |> div(base) |> Kernel.*(base)
-  end
-
-  # TODO: get best strategy for ticks less than 1
-  def round_to_best(value) do
-    value
-  end
 
   defp list_of_ticks(data, step) do
     1..length(data)
