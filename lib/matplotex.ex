@@ -2,6 +2,7 @@ defmodule Matplotex do
   @moduledoc """
   Module to generate a graph.
   """
+  alias Matplotex.InputError
   alias Matplotex.Figure.Radial.Pie
   alias Matplotex.Figure.Areal.Scatter
   alias Matplotex.LinePlot
@@ -19,6 +20,10 @@ defmodule Matplotex do
 
   def bar(%Figure{} = figure, pos, values, width, opts) do
     BarChart.create(figure, {pos, values, width}, opts)
+  end
+
+  def scatter(stream, opts) when is_struct(stream, Stream) do
+    Scatter.create(stream, opts)
   end
 
   def scatter(x, y) do
@@ -48,8 +53,12 @@ defmodule Matplotex do
   """
 
   @spec plot(list(), list()) :: Figure.t()
-  def plot(x, y) do
+  def plot(x, y) when is_list(x) and is_list(y) do
     plot(x, y, [])
+  end
+
+  def plot(_x, _y) do
+    raise InputError, "Invalid x and y values for plot, x and y should be in list"
   end
 
   def plot(x, y, opts) do
@@ -115,8 +124,12 @@ defmodule Matplotex do
 
   """
   @spec set_xticks(Figure.t(), list()) :: Figure.t()
-  def set_xticks(figure, ticks) do
+  def set_xticks(figure, ticks) when is_list(ticks) do
     Figure.add_ticks(figure, {:x, ticks})
+  end
+
+  def set_xticks(figure, {_min, _max} = lim) do
+    Figure.add_ticks(figure, {:x, lim})
   end
 
   # TODO: Set x and y ticks with value and label for string inputs
@@ -130,8 +143,12 @@ defmodule Matplotex do
   """
 
   @spec set_yticks(Figure.t(), list()) :: Figure.t()
-  def set_yticks(figure, ticks) do
+  def set_yticks(figure, ticks) when is_list(ticks) do
     Figure.add_ticks(figure, {:y, ticks})
+  end
+
+  def set_yticks(figure, {_min, _max} = lim) do
+    Figure.add_ticks(figure, {:y, lim})
   end
 
   @doc """
@@ -229,6 +246,11 @@ defmodule Matplotex do
   """
   def set_rc_params(figure, rc_params) do
     Figure.set_rc_params(figure, rc_params)
+  end
+
+  def show({stream, figure}) do
+    Scatter.materialize(stream, figure)
+    |> Sketch.call()
   end
 
   def show(figure) do

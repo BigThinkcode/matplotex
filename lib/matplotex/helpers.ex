@@ -56,8 +56,8 @@ defmodule Matplotex.Helpers do
     x = [1, 2, 3, 4, 6, 6, 7]
     y = [1, 3, 4, 4, 5, 6, 7]
 
-    frame_width = 8
-    frame_height = 6
+    frame_width = 3
+    frame_height = 3
     size = {frame_width, frame_height}
     margin = 0.05
     font_size = "16pt"
@@ -162,8 +162,8 @@ defmodule Matplotex.Helpers do
     x = [1, 2, 3, 4, 6, 6, 7]
     y = [1, 3, 4, 4, 5, 6, 7]
 
-    frame_width = 8
-    frame_height = 6
+    frame_width = 3
+    frame_height = 3
     size = {frame_width, frame_height}
     margin = 0.05
     font_size = "16pt"
@@ -217,12 +217,13 @@ defmodule Matplotex.Helpers do
     categories = ["apple", "banana", "fig"]
     values1 = [22, 33, 28]
     values2 = [53, 63, 59]
-    width = 0.5
+    width = 0.22
 
-    Matplotex.bar(width, values1, width, label: "Dataset1", color: "blue")
-    |> Matplotex.bar(-width, values2, width, label: "Dataset2", color: "red")
+    Matplotex.bar(width, values1, width, label: "Dataset1", color: "#255199")
+    |> Matplotex.bar(-width, values2, width, label: "Dataset2", color: "orange")
     |> Matplotex.set_xticks(categories)
-    |> Matplotex.set_title("Sample bar graph")
+    |> Matplotex.figure(%{figsize: {3, 3}, margin: 0.05})
+    |> Matplotex.set_title("Bar chart")
     |> Matplotex.set_xlabel("X-axis")
     |> Matplotex.set_ylabel("Y-Axis")
     |> Matplotex.hide_v_grid()
@@ -233,16 +234,17 @@ defmodule Matplotex.Helpers do
   def multiline_scatter() do
     x = [1, 2, 3, 4, 5]
     # Dataset 1
-    y1 = [1, 4, 9, 16, 25]
+    y1 = [20, 5, 12, 16, 25]
     # Dataset 2
-    y2 = [1, 3, 6, 10, 15]
+    y2 = [10, 1, 6, 10, 15]
     # Dataset 3
-    y3 = [2, 5, 7, 12, 17]
+    y3 = [17, 5, 8, 12, 17]
 
     x
     |> Matplotex.scatter(y1, color: "blue", linestyle: "_", marker: "o", label: "Dataset 1")
     |> Matplotex.scatter(x, y2, color: "red", linestyle: "--", marker: "^", label: "Dataset 2")
     |> Matplotex.scatter(x, y3, color: "green", linestyle: "-.", marker: "s", label: "Dataset 3")
+    |> Matplotex.figure(%{figsize: {3, 3}, margin: 0.05})
     |> Matplotex.set_title("Title")
     |> Matplotex.set_xlabel("X-Axis")
     |> Matplotex.set_ylabel("Y-Axis")
@@ -254,14 +256,14 @@ defmodule Matplotex.Helpers do
     # Percentages for each slice
     sizes = [25, 35, 20, 20]
     # Labels for each slice
-    labels = ["Category A", "Category B", "Category C", "Category D"]
+    labels = ["A", "B", "C", "D"]
     # Colors for the slices
     colors = ["lightblue", "lightgreen", "orange", "pink"]
 
     sizes
     |> Matplotex.pie(colors: colors, labels: labels)
-    |> Matplotex.set_title("Sample pie chart")
-    |> Matplotex.figure(%{figsize: {8, 4}, margin: 0.05})
+    |> Matplotex.set_title("Pie chart")
+    |> Matplotex.figure(%{figsize: {3.5, 2.5}, margin: 0.05})
     |> Matplotex.show()
     |> copy()
   end

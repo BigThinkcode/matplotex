@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Areal.Scatter do
+  import Matplotex.Figure.Numer
   alias Matplotex.Figure.Marker
   alias Matplotex.Figure.Dataset
 
@@ -15,7 +16,8 @@ defmodule Matplotex.Figure.Areal.Scatter do
     coords: %Coords{},
     dimension: %Dimension{},
     tick: %TwoD{},
-    limit: %TwoD{}
+    limit: %TwoD{},
+    label: %TwoD{}
   )
 
   @impl Areal
@@ -65,6 +67,29 @@ defmodule Matplotex.Figure.Areal.Scatter do
     %Figure{figure | axes: %{axes | element: elements}}
   end
 
+  def materialize(xystream, figure) do
+    __MODULE__.materialized(figure)
+    |> material_stream(xystream)
+  end
+
+  def material_stream(
+        %Figure{
+          axes: %__MODULE__{
+            limit: %TwoD{x: xlim, y: ylim},
+            element: element,
+            coords: %Coords{bottom_left: {blx, bly}},
+            size: {width, height}
+          }
+        } = figure,
+        xystream
+      ) do
+    {Stream.map(xystream, fn {x, y} ->
+       {matx, maty} = transformation(x, y, xlim, ylim, width, height, {blx, bly})
+       Marker.generate_marker("o", matx, maty, "blue", 5)
+     end)
+     |> Stream.concat(element), figure}
+  end
+
   defp capture(%Dataset{transformed: transformed} = dataset) do
     capture(transformed, [], dataset)
   end
@@ -101,7 +126,12 @@ defmodule Matplotex.Figure.Areal.Scatter do
 
   def generate_ticks(data) do
     {min, max} = lim = Enum.min_max(data)
-    step = (max - min) / (length(data) - 1)
+    step = (max - min) / 5
     {min..max |> Enum.into([], fn d -> d * round(step) end), lim}
+  end
+
+  def generate_ticks(side, {min, max} = lim) do
+    step = (max - min) / (side * 2)
+    {min..max |> Enum.into([], fn d -> d * round_to_best(step) end), lim}
   end
 end

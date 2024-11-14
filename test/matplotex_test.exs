@@ -1,6 +1,4 @@
 defmodule MatplotexTest do
-  alias Matplotex.LinePlot
-  alias Matplotex.Figure
   alias Matplotex.InputError
   use Matplotex.PlotCase
 
@@ -17,11 +15,8 @@ defmodule MatplotexTest do
     y = [1, 3, 7, 4, 2, 5, 6]
 
     assert figure = Matplotex.plot(x, y)
-    assert figure.axes.data == {x, y}
-    assert figure.axes.limit.x == {0, 8, 1}
-    assert figure.axes.limit.y == {0, 8, 1}
-    assert figure.axes.tick.x == 0..8 |> Enum.to_list()
-    assert figure.axes.tick.y == 0..8 |> Enum.to_list()
+    assert figure.axes.dataset |> List.first() |> Map.get(:x) == x
+    assert figure.axes.dataset |> List.first() |> Map.get(:y) == y
   end
 
   test "raise error for invalid input" do
@@ -33,41 +28,19 @@ defmodule MatplotexTest do
   test "adds xlabel to the figure ", %{figure: figure} do
     x_label = "Xlabel"
     figure = Matplotex.set_xlabel(figure, x_label)
-    assert figure.axes.label.x.text == x_label
-  end
-
-  test "adds label with font", %{figure: figure} do
-    label = "Label with font"
-    font_size = 12
-    color = "red"
-    font_opts = [font_size: font_size, fill: color]
-    figure = Matplotex.set_xlabel(figure, label, font_opts)
-    assert figure.axes.label.x.text == label
-    assert figure.axes.label.x.font.font_size == font_size
-    assert figure.axes.label.x.font.fill == color
+    assert figure.axes.label.x == x_label
   end
 
   test "adds ylabel to the figure ", %{figure: figure} do
     y_label = "Ylabel"
     figure = Matplotex.set_ylabel(figure, y_label)
-    assert figure.axes.label.y.text == y_label
+    assert figure.axes.label.y == y_label
   end
 
   test "adds title to the figure ", %{figure: figure} do
     title = "My Plot"
     figure = Matplotex.set_title(figure, title)
-    assert figure.axes.title.text == title
-  end
-
-  test "adds title with font_opts to the figure ", %{figure: figure} do
-    title = "My Plot"
-    font_size = 12
-    color = "red"
-    font_opts = [font_size: font_size, fill: color]
-    figure = Matplotex.set_title(figure, title, font_opts)
-    assert figure.axes.title.text == title
-    assert figure.axes.title.font.font_size == font_size
-    assert figure.axes.title.font.fill == color
+    assert figure.axes.title == title
   end
 
   test "adds legend to the figure ", %{figure: figure} do

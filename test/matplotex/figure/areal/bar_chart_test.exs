@@ -10,12 +10,12 @@ defmodule Matplotex.Figure.Areal.BarChartTest do
 
   describe "materialyze/1" do
     test "adds figure with rectangles for bars", %{
-      figure: %Figure{axes: %{data: {x, _y}}} = figure
+      figure: %Figure{axes: %{data: {_x, y}}} = figure
     } do
       assert %Figure{axes: %{element: elements}} = BarChart.materialize(figure)
 
       assert assert Enum.filter(elements, fn x -> x.type == "figure.bar" end) |> length() ==
-                      length(x)
+                      length(y)
     end
   end
 end
