@@ -23,8 +23,8 @@ defmodule Matplotex.Element.Line do
     linestyle: "_",
     stroke: "black",
     fill: "rgba(0,0,0,0)",
-    stroke_width: "3",
-    shape_rendering: "crispEdges",
+    stroke_width: "2",
+    shape_rendering: "geometricPrecision",
     stroke_linecap: "square"
   ]
 
@@ -58,9 +58,11 @@ defmodule Matplotex.Element.Line do
   end
 
   defp stroke_dasharray(%{linestyle: "_"}), do: nil
+
   defp stroke_dasharray(%{linestyle: "--"}) do
     "10, 5"
   end
+
   defp stroke_dasharray(%{linestyle: "-."}) do
     "10, 2, 3, 2, 10"
   end

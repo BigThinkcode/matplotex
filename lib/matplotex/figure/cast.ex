@@ -21,7 +21,8 @@ defmodule Matplotex.Figure.Cast do
                 bottom_right: {brx, bry},
                 top_left: {tlx, tly},
                 top_right: {trx, yrt}
-              }
+              },
+              element: elements
             } = axes
         } = figure
       ) do
@@ -58,9 +59,7 @@ defmodule Matplotex.Figure.Cast do
       type: "spine.bottom"
     }
 
-    element = [left, right, top, bottom]
-    axes = %{axes | element: element}
-    %Figure{figure | axes: axes}
+    %Figure{figure | axes: %{axes | element: elements ++ [left, right, top, bottom]}}
   end
 
   def cast_spines(_figure) do
@@ -447,7 +446,7 @@ defmodule Matplotex.Figure.Cast do
   defp set_xlim_from_ticks(%Figure{axes: %module{tick: %{x: xtick}} = axes} = figure) do
     {xmin, xmax} = min_max(xtick)
 
-    xscale = xmax|>round()|>div((length(xtick) - 1))
+    xscale = xmax |> round() |> div(length(xtick) - 1)
 
     xlim = {round(xmin - xscale), round(xmax + xscale)}
     axes = module.set_limit(axes, {:x, xlim})
@@ -457,7 +456,7 @@ defmodule Matplotex.Figure.Cast do
 
   defp set_ylim_from_ticks(%Figure{axes: %module{tick: %{y: ytick}} = axes} = figure) do
     {ymin, ymax} = min_max(ytick)
-    yscale = ymax|>round()|>div((length(ytick) - 1))
+    yscale = ymax |> round() |> div(length(ytick) - 1)
     ylim = {round(ymin - yscale), round(ymax + yscale)}
     axes = module.set_limit(axes, {:y, ylim})
     %Figure{figure | axes: axes}
@@ -471,7 +470,6 @@ defmodule Matplotex.Figure.Cast do
   end
 
   defp confine_ticks(ticks, {min, max} = lim) do
-
     ticks
     |> append_lim(lim)
     |> Enum.filter(fn tick ->

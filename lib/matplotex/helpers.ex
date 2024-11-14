@@ -7,7 +7,11 @@ defmodule Matplotex.Helpers do
         inspect(term, limit: :infinity, pretty: true)
       end
 
-    port = Port.open({:spawn, "pbcopy"}, [])
+    port =
+      if :os.type() == {:unix, :linux},
+        do: Port.open({:spawn, "xclip -selection clipboard"}, [:binary]),
+        else: Port.open({:spawn, "pbcopy"}, [])
+
     true = Port.command(port, text)
     true = Port.close(port)
 

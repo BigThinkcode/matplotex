@@ -18,8 +18,6 @@ defmodule Matplotex.Figure.Dataset do
     marker_size: @default_marker_size
   ]
 
-
-
   def cast(dataset, values) do
     struct(dataset, values)
   end
