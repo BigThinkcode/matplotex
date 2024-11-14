@@ -23,8 +23,8 @@ defmodule Matplotex.Element.Line do
     linestyle: "_",
     stroke: "black",
     fill: "rgba(0,0,0,0)",
-    stroke_width: "3",
-    shape_rendering: "crispEdges",
+    stroke_width: "2",
+    shape_rendering: "geometricPrecision",
     stroke_linecap: "square"
   ]
 

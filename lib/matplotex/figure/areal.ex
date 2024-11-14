@@ -140,13 +140,13 @@ defmodule Matplotex.Figure.Areal do
       def materialized(figure) do
         figure
         |> Lead.set_spines()
-        |> Cast.cast_label()
-        |> Cast.cast_title()
         |> Cast.cast_xticks()
         |> Cast.cast_yticks()
         |> Cast.cast_hgrids()
         |> Cast.cast_vgrids()
         |> Cast.cast_spines()
+        |> Cast.cast_label()
+        |> Cast.cast_title()
       end
 
       defp update_tick(axes, tick) do
