@@ -21,7 +21,8 @@ defmodule Matplotex.Figure.Cast do
                 bottom_right: {brx, bry},
                 top_left: {tlx, tly},
                 top_right: {trx, yrt}
-              }
+              },
+              element: elements
             } = axes
         } = figure
       ) do
@@ -58,9 +59,7 @@ defmodule Matplotex.Figure.Cast do
       type: "spine.bottom"
     }
 
-    element = [left, right, top, bottom]
-    axes = %{axes | element: element}
-    %Figure{figure | axes: axes}
+    %Figure{figure | axes: %{axes | element: elements ++ [left, right, top, bottom]}}
   end
 
   def cast_spines(_figure) do
