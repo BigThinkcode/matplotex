@@ -24,3 +24,5 @@ matplotex-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+/.github
