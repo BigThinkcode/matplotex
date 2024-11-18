@@ -271,4 +271,88 @@ defmodule Matplotex.Helpers do
     |> Matplotex.show()
     |> copy()
   end
+
+  def scatter_from_csv() do
+
+    stream = "test/energy.csv"
+    |>Path.expand()
+    |>File.stream!()
+    |>CSV.decode!()
+    |>Stream.drop(1)
+    |>Stream.map(fn [_head | tail] ->
+      energy=  [Enum.at(tail, 1), Enum.at(tail, 2)]
+
+
+       energy
+       |> Enum.filter( fn x -> x != "" end)
+       |> Enum.filter( fn x -> x != nil end)
+       |>Enum.map(fn x ->
+        if flotable?(x) do
+          String.to_float(x)
+        else
+          String.to_integer(x)
+        end
+      end)
+      |>List.to_tuple()
+    end)
+    |>Stream.filter(fn x -> x != {} end)
+
+    {{xmin, _}, {xmax, _}} = Enum.min_max_by(stream, &elem(&1, 0))
+    {{_xmin, ymin}, {_xmax, ymax}} = Enum.min_max_by(stream, &elem(&1,1))
+   figure =  [1,2,3,4]
+    |> Matplotex.scatter([1,2,3,4,5])
+    |> Matplotex.figure(%{figsize: {10, 10}, margin: 0.05})
+    |> Matplotex.set_title("Energy production and consumption")
+    |> Matplotex.set_xlabel("Energy produced")
+    |> Matplotex.set_ylabel("Energy consumed")
+    |> Matplotex.Figure.Lead.set_spines()
+    |> Matplotex.set_xticks({xmin, xmax})
+    |> Matplotex.set_yticks({ymin, ymax})
+
+   Matplotex.show({stream, figure})
+   |> copy()
+
+
+  end
+
+  def scatter_v1_from_csv() do
+
+    stream = "test/energy.csv"
+    |>Path.expand()
+    |>File.stream!()
+    |>CSV.decode!()
+    |>Stream.drop(1)
+    |>Stream.map(fn [_head | tail] ->
+      energy=  [Enum.at(tail, 1), Enum.at(tail, 2)]
+
+
+       energy
+       |> Enum.filter( fn x -> x != "" end)
+       |> Enum.filter( fn x -> x != nil end)
+       |>Enum.map(fn x ->
+        if flotable?(x) do
+          String.to_float(x)
+        else
+          String.to_integer(x)
+        end
+      end)
+      |>List.to_tuple()
+    end)
+    |>Stream.filter(fn x -> x != {} end)
+
+    # {{xmin, _}, {xmax, _}} = Enum.min_max_by(stream, &elem(&1, 0))
+    # {{_xmin, ymin}, {_xmax, ymax}} = Enum.min_max_by(stream, &elem(&1,1))
+   {xmin, xmax} = {1030.103692, 499991.2004}
+  {ymin, ymax} =  {584.3490935, 449922.6678}
+  {stream, figure} = Matplotex.scatter(stream, {10, 10}, title: "Energy production and consumption",
+  xlabel: "Energy produced", ylabel: "Energy consumed",
+  xlim: {xmin, xmax}, ylim: {ymin, ymax})
+   Matplotex.show({stream, figure})
+   |> copy()
+
+
+  end
+  defp flotable?(s) do
+    String.contains?(s, ".")
+  end
 end

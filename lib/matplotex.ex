@@ -22,8 +22,8 @@ defmodule Matplotex do
     BarChart.create(figure, {pos, values, width}, opts)
   end
 
-  def scatter(stream, opts) when is_struct(stream, Stream) do
-    Scatter.create(stream, opts)
+  def scatter(stream,size, opts) when is_struct(stream, Stream) do
+    Scatter.create(stream,size, opts)
   end
 
   def scatter(x, y) do
@@ -249,7 +249,7 @@ defmodule Matplotex do
   end
 
   def show({stream, figure}) do
-    Scatter.materialize(stream, figure)
+    Scatter.materialize({stream, figure})
     |> Sketch.call()
   end
 

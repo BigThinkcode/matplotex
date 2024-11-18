@@ -210,8 +210,8 @@ defmodule Matplotex.Figure.Cast do
       when is_list(x_ticks) do
     # TODO: Only if it has to confine
     x_ticks = confine_ticks(x_ticks, xlim)
-    x_data = confine_data(x_data, xlim)
-    dataset = confine_data(dataset, xlim, :x)
+    # x_data = confine_data(x_data, xlim)
+    # dataset = confine_data(dataset, xlim, :x)
 
     {xtick_elements, vgridxs} =
       Enum.map(x_ticks, fn tick ->
@@ -288,8 +288,8 @@ defmodule Matplotex.Figure.Cast do
         } = figure
       ) do
     y_ticks = confine_ticks(y_ticks, ylim)
-    y_data = confine_data(y_data, ylim)
-    dataset = confine_data(dataset, ylim, :y)
+    # y_data = confine_data(y_data, ylim)
+    # dataset = confine_data(dataset, ylim, :y)
 
     {ytick_elements, hgridys} =
       Enum.map(y_ticks, fn tick ->
