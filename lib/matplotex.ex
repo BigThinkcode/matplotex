@@ -5,7 +5,7 @@ defmodule Matplotex do
   alias Matplotex.InputError
   alias Matplotex.Figure.Radial.Pie
   alias Matplotex.Figure.Areal.Scatter
-  alias Matplotex.LinePlot
+  alias Matplotex.Figure.Areal.LinePlot
   alias Matplotex.Figure.Sketch
   alias Matplotex.Figure
   alias Matplotex.Figure.Areal.BarChart
@@ -62,11 +62,11 @@ defmodule Matplotex do
   end
 
   def plot(x, y, opts) do
-    Matplotex.LinePlot.create(%Figure{axes: %LinePlot{}}, {x, y}, opts)
+    LinePlot.create(%Figure{axes: %LinePlot{}}, {x, y}, opts)
   end
 
   def plot(%Figure{} = figure, x, y, opts) do
-    Matplotex.LinePlot.create(figure, {x, y}, opts)
+    LinePlot.create(figure, {x, y}, opts)
   end
 
   @doc """
