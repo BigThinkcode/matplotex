@@ -1,4 +1,4 @@
-defmodule Matplotex.LinePlot do
+defmodule Matplotex.Figure.Areal.LinePlot do
   alias Matplotex.Figure.Marker
   alias Matplotex.Figure.Dataset
   alias Matplotex.Figure.Areal

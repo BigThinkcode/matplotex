@@ -1,6 +1,6 @@
 defmodule Matplotex.Figure.Areal.LinePlotTest do
   alias Matplotex.Figure
-  alias Matplotex.LinePlot
+  alias Matplotex.Figure.Areal.LinePlot
   use Matplotex.PlotCase
 
   setup do

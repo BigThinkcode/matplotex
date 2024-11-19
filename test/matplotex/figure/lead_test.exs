@@ -2,7 +2,7 @@ defmodule Matplotex.Figure.LeadTest do
   alias Matplotex.Figure.Coords
   alias Matplotex.Figure.LinePlot
   alias Matplotex.Figure
-  alias Matplotex.LinePlot
+  alias Matplotex.Figure.Areal.LinePlot
   use Matplotex.PlotCase
   alias Matplotex.Figure.Lead
 
