@@ -60,8 +60,8 @@ defmodule Matplotex.Helpers do
     x = [1, 2, 3, 4, 6, 6, 7]
     y = [1, 3, 4, 4, 5, 6, 7]
 
-    frame_width = 3
-    frame_height = 3
+    frame_width = 10
+    frame_height = 10
     size = {frame_width, frame_height}
     margin = 0.05
     font_size = "16pt"
@@ -76,8 +76,8 @@ defmodule Matplotex.Helpers do
     |> Matplotex.set_ylabel("Y Axis")
     |> Matplotex.set_xticks(ticks)
     |> Matplotex.set_yticks(ticks)
-    |> Matplotex.set_xlim({4, 7})
-    |> Matplotex.set_ylim({4, 7})
+    |> Matplotex.set_xlim({1, 7})
+    |> Matplotex.set_ylim({1, 7})
     # TODO: Setting limits are not taking the proper xy values
     |> Matplotex.set_rc_params(
       x_tick_font_size: font_size,
@@ -166,8 +166,8 @@ defmodule Matplotex.Helpers do
     x = [1, 2, 3, 4, 6, 6, 7]
     y = [1, 3, 4, 4, 5, 6, 7]
 
-    frame_width = 3
-    frame_height = 3
+    frame_width = 10
+    frame_height = 10
     size = {frame_width, frame_height}
     margin = 0.05
     font_size = "16pt"
@@ -226,7 +226,7 @@ defmodule Matplotex.Helpers do
     Matplotex.bar(width, values1, width, label: "Dataset1", color: "#255199")
     |> Matplotex.bar(-width, values2, width, label: "Dataset2", color: "orange")
     |> Matplotex.set_xticks(categories)
-    |> Matplotex.figure(%{figsize: {3, 3}, margin: 0.05})
+    |> Matplotex.figure(%{figsize: {10, 10}, margin: 0.05})
     |> Matplotex.set_title("Bar chart")
     |> Matplotex.set_xlabel("X-axis")
     |> Matplotex.set_ylabel("Y-Axis")
@@ -245,10 +245,10 @@ defmodule Matplotex.Helpers do
     y3 = [17, 5, 8, 12, 17]
 
     x
-    |> Matplotex.scatter(y1, color: "blue", linestyle: "_", marker: "o", label: "Dataset 1")
-    |> Matplotex.scatter(x, y2, color: "red", linestyle: "--", marker: "^", label: "Dataset 2")
-    |> Matplotex.scatter(x, y3, color: "green", linestyle: "-.", marker: "s", label: "Dataset 3")
-    |> Matplotex.figure(%{figsize: {3, 3}, margin: 0.05})
+    |> Matplotex.scatter(y1, color: "blue", marker: "o", label: "Dataset 1")
+    |> Matplotex.scatter(x, y2, color: "red", marker: "^", label: "Dataset 2")
+    |> Matplotex.scatter(x, y3, color: "green", marker: "s", label: "Dataset 3")
+    |> Matplotex.figure(%{figsize: {10, 10}, margin: 0.05})
     |> Matplotex.set_title("Title")
     |> Matplotex.set_xlabel("X-Axis")
     |> Matplotex.set_ylabel("Y-Axis")
