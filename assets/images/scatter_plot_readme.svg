@@ -1,4 +1,6 @@
-<svg width="288" height="288" version="1.1"
+<svg width="960"
+    height="384"
+    version="1.1"
     xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     style="top: 0px;
@@ -6,267 +8,2758 @@
       position: absolute;">
     <g>
 
-        <text tag="figure.x_label" fill="black" x="176.98" y="263.6" font-size="16"
-            font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal"
-            transform="" dominant-baseline="hanging" text-anchor="middle">
-            X value
-        </text>
-        <text tag="figure.y_label" fill="black" x="14.400000000000002" y="142.02" font-size="16"
-            font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal"
-            transform="rotate(-90, 14.400000000000002, 132.02)" dominant-baseline="hanging"
-            text-anchor="middle">
-            Y value
-        </text>
-        <text tag="figure.title" fill="black" x="176.98" y="14.399999999999991" font-size="18"
-            font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal"
-            transform="" dominant-baseline="hanging" text-anchor="middle">
-            Scatter Plot
-        </text>
+
+        <line
+            type="figure.x_tick"
+            x1="168.92657996621108"
+            y1="324.44000000000005"
+            x2="168.92657996621108"
+            y2="329.44"
+            fill="rgba(0,0,0,0)"
+            stroke="black"
+            stroke-width="1"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
 
 
-        <line type="figure.x_tick" x1="90.02199999999999" y1="228.11999999999998"
-            x2="90.02199999999999" y2="233.12" fill="rgba(0,0,0,0)" stroke="black" stroke-width="2"
-            shape-rendering="crispEdges" stroke-linecap="square" stroke-dasharray="" />
-
-
-        <text tag="figure.x_tick" fill="black" x="90.02199999999999" y="243.36" font-size="16"
-            font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal"
-            transform="" dominant-baseline="hanging" text-anchor="middle">
-            1
-        </text>
-
-
-        <line type="figure.x_tick" x1="133.50099999999998" y1="228.11999999999998"
-            x2="133.50099999999998" y2="233.12" fill="rgba(0,0,0,0)" stroke="black" stroke-width="2"
-            shape-rendering="crispEdges" stroke-linecap="square" stroke-dasharray="" />
-
-
-        <text tag="figure.x_tick" fill="black" x="133.50099999999998" y="243.36" font-size="16"
-            font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal"
-            transform="" dominant-baseline="hanging" text-anchor="middle">
-            2
+        <text tag="figure.x_tick"
+            fill="black"
+            x="168.92657996621108"
+            y="337.12"
+            font-size="14"
+            font-weight="normal"
+            font-family="Arial, Verdana, sans-serif"
+            font-style="normal"
+            transform=""
+            dominant-baseline="hanging"
+            text-anchor="middle"
+        >
+            0.01
         </text>
 
 
-        <line type="figure.x_tick" x1="176.98000000000002" y1="228.11999999999998"
-            x2="176.98000000000002" y2="233.12" fill="rgba(0,0,0,0)" stroke="black" stroke-width="2"
-            shape-rendering="crispEdges" stroke-linecap="square" stroke-dasharray="" />
+        <line
+            type="figure.x_tick"
+            x1="306.8745908278299"
+            y1="324.44000000000005"
+            x2="306.8745908278299"
+            y2="329.44"
+            fill="rgba(0,0,0,0)"
+            stroke="black"
+            stroke-width="1"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
 
 
-        <text tag="figure.x_tick" fill="black" x="176.98000000000002" y="243.36" font-size="16"
-            font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal"
-            transform="" dominant-baseline="hanging" text-anchor="middle">
-            3
+        <text tag="figure.x_tick"
+            fill="black"
+            x="306.8745908278299"
+            y="337.12"
+            font-size="14"
+            font-weight="normal"
+            font-family="Arial, Verdana, sans-serif"
+            font-style="normal"
+            transform=""
+            dominant-baseline="hanging"
+            text-anchor="middle"
+        >
+            0.18
         </text>
 
 
-        <line type="figure.x_tick" x1="220.459" y1="228.11999999999998" x2="220.459" y2="233.12"
-            fill="rgba(0,0,0,0)" stroke="black" stroke-width="2" shape-rendering="crispEdges"
-            stroke-linecap="square" stroke-dasharray="" />
+        <line
+            type="figure.x_tick"
+            x1="444.8226016894487"
+            y1="324.44000000000005"
+            x2="444.8226016894487"
+            y2="329.44"
+            fill="rgba(0,0,0,0)"
+            stroke="black"
+            stroke-width="1"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
 
 
-        <text tag="figure.x_tick" fill="black" x="220.459" y="243.36" font-size="16"
-            font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal"
-            transform="" dominant-baseline="hanging" text-anchor="middle">
-            4
+        <text tag="figure.x_tick"
+            fill="black"
+            x="444.8226016894487"
+            y="337.12"
+            font-size="14"
+            font-weight="normal"
+            font-family="Arial, Verdana, sans-serif"
+            font-style="normal"
+            transform=""
+            dominant-baseline="hanging"
+            text-anchor="middle"
+        >
+            0.35
         </text>
 
 
-        <line type="figure.x_tick" x1="263.938" y1="228.11999999999998" x2="263.938" y2="233.12"
-            fill="rgba(0,0,0,0)" stroke="black" stroke-width="2" shape-rendering="crispEdges"
-            stroke-linecap="square" stroke-dasharray="" />
+        <line
+            type="figure.x_tick"
+            x1="582.7706125510674"
+            y1="324.44000000000005"
+            x2="582.7706125510674"
+            y2="329.44"
+            fill="rgba(0,0,0,0)"
+            stroke="black"
+            stroke-width="1"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
 
 
-        <text tag="figure.x_tick" fill="black" x="263.938" y="243.36" font-size="16"
-            font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal"
-            transform="" dominant-baseline="hanging" text-anchor="middle">
-            5
+        <text tag="figure.x_tick"
+            fill="black"
+            x="582.7706125510674"
+            y="337.12"
+            font-size="14"
+            font-weight="normal"
+            font-family="Arial, Verdana, sans-serif"
+            font-style="normal"
+            transform=""
+            dominant-baseline="hanging"
+            text-anchor="middle"
+        >
+            0.52
         </text>
 
 
-        <line type="figure.y_tick" x1="80.36000000000001" y1="189.68" x2="75.36" y2="189.68"
-            fill="rgba(0,0,0,0)" stroke="black" stroke-width="2" shape-rendering="crispEdges"
-            stroke-linecap="square" stroke-dasharray="" />
+        <line
+            type="figure.x_tick"
+            x1="720.7186234126862"
+            y1="324.44000000000005"
+            x2="720.7186234126862"
+            y2="329.44"
+            fill="rgba(0,0,0,0)"
+            stroke="black"
+            stroke-width="1"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
 
 
-        <text tag="figure.y_tick" fill="black" x="64.64" y="189.68" font-size="16"
-            font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal"
-            transform="" dominant-baseline="middle" text-anchor="end">
-            5
+        <text tag="figure.x_tick"
+            fill="black"
+            x="720.7186234126862"
+            y="337.12"
+            font-size="14"
+            font-weight="normal"
+            font-family="Arial, Verdana, sans-serif"
+            font-style="normal"
+            transform=""
+            dominant-baseline="hanging"
+            text-anchor="middle"
+        >
+            0.69
         </text>
 
 
-        <line type="figure.y_tick" x1="80.36000000000001" y1="153.6425" x2="75.36" y2="153.6425"
-            fill="rgba(0,0,0,0)" stroke="black" stroke-width="2" shape-rendering="crispEdges"
-            stroke-linecap="square" stroke-dasharray="" />
+        <line
+            type="figure.x_tick"
+            x1="858.6666342743049"
+            y1="324.44000000000005"
+            x2="858.6666342743049"
+            y2="329.44"
+            fill="rgba(0,0,0,0)"
+            stroke="black"
+            stroke-width="1"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
 
 
-        <text tag="figure.y_tick" fill="black" x="64.64" y="153.6425" font-size="16"
-            font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal"
-            transform="" dominant-baseline="middle" text-anchor="end">
-            10
+        <text tag="figure.x_tick"
+            fill="black"
+            x="858.6666342743049"
+            y="337.12"
+            font-size="14"
+            font-weight="normal"
+            font-family="Arial, Verdana, sans-serif"
+            font-style="normal"
+            transform=""
+            dominant-baseline="hanging"
+            text-anchor="middle"
+        >
+            0.86
         </text>
 
 
-        <line type="figure.y_tick" x1="80.36000000000001" y1="117.605" x2="75.36" y2="117.605"
-            fill="rgba(0,0,0,0)" stroke="black" stroke-width="2" shape-rendering="crispEdges"
-            stroke-linecap="square" stroke-dasharray="" />
+        <line
+            type="figure.y_tick"
+            x1="126.75999999999999"
+            y1="259.1872865870348"
+            x2="121.75999999999999"
+            y2="259.1872865870348"
+            fill="rgba(0,0,0,0)"
+            stroke="black"
+            stroke-width="1"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
 
 
-        <text tag="figure.y_tick" fill="black" x="64.64" y="117.605" font-size="16"
-            font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal"
-            transform="" dominant-baseline="middle" text-anchor="end">
-            15
+        <text tag="figure.y_tick"
+            fill="black"
+            x="105.68"
+            y="259.1872865870348"
+            font-size="14"
+            font-weight="normal"
+            font-family="Arial, Verdana, sans-serif"
+            font-style="normal"
+            transform=""
+            dominant-baseline="middle"
+            text-anchor="end"
+        >
+            46.23
         </text>
 
 
-        <line type="figure.y_tick" x1="80.36000000000001" y1="81.5675" x2="75.36" y2="81.5675"
-            fill="rgba(0,0,0,0)" stroke="black" stroke-width="2" shape-rendering="crispEdges"
-            stroke-linecap="square" stroke-dasharray="" />
+        <line
+            type="figure.y_tick"
+            x1="126.75999999999999"
+            y1="208.11257758343336"
+            x2="121.75999999999999"
+            y2="208.11257758343336"
+            fill="rgba(0,0,0,0)"
+            stroke="black"
+            stroke-width="1"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
 
 
-        <text tag="figure.y_tick" fill="black" x="64.64" y="81.5675" font-size="16"
-            font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal"
-            transform="" dominant-baseline="middle" text-anchor="end">
-            20
+        <text tag="figure.y_tick"
+            fill="black"
+            x="105.68"
+            y="208.11257758343336"
+            font-size="14"
+            font-weight="normal"
+            font-family="Arial, Verdana, sans-serif"
+            font-style="normal"
+            transform=""
+            dominant-baseline="middle"
+            text-anchor="end"
+        >
+            72.23
         </text>
 
 
-        <line type="figure.y_tick" x1="80.36000000000001" y1="45.53000000000003" x2="75.36"
-            y2="45.53000000000003" fill="rgba(0,0,0,0)" stroke="black" stroke-width="2"
-            shape-rendering="crispEdges" stroke-linecap="square" stroke-dasharray="" />
+        <line
+            type="figure.y_tick"
+            x1="126.75999999999999"
+            y1="157.03786857983192"
+            x2="121.75999999999999"
+            y2="157.03786857983192"
+            fill="rgba(0,0,0,0)"
+            stroke="black"
+            stroke-width="1"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
 
 
-        <text tag="figure.y_tick" fill="black" x="64.64" y="45.53000000000003" font-size="16"
-            font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal"
-            transform="" dominant-baseline="middle" text-anchor="end">
-            25
+        <text tag="figure.y_tick"
+            fill="black"
+            x="105.68"
+            y="157.03786857983192"
+            font-size="14"
+            font-weight="normal"
+            font-family="Arial, Verdana, sans-serif"
+            font-style="normal"
+            transform=""
+            dominant-baseline="middle"
+            text-anchor="end"
+        >
+            98.23
         </text>
 
 
-        <line type="figure.h_grid" x1="80.36000000000001" y1="189.68" x2="273.6" y2="189.68"
-            fill="rgba(0,0,0,0)" stroke="#ddd" stroke-width="1" shape-rendering="crispEdges"
-            stroke-linecap="square" stroke-dasharray="" />
+        <line
+            type="figure.y_tick"
+            x1="126.75999999999999"
+            y1="105.96315957623045"
+            x2="121.75999999999999"
+            y2="105.96315957623045"
+            fill="rgba(0,0,0,0)"
+            stroke="black"
+            stroke-width="1"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
 
 
-        <line type="figure.h_grid" x1="80.36000000000001" y1="153.6425" x2="273.6" y2="153.6425"
-            fill="rgba(0,0,0,0)" stroke="#ddd" stroke-width="1" shape-rendering="crispEdges"
-            stroke-linecap="square" stroke-dasharray="" />
+        <text tag="figure.y_tick"
+            fill="black"
+            x="105.68"
+            y="105.96315957623045"
+            font-size="14"
+            font-weight="normal"
+            font-family="Arial, Verdana, sans-serif"
+            font-style="normal"
+            transform=""
+            dominant-baseline="middle"
+            text-anchor="end"
+        >
+            124.23
+        </text>
 
 
-        <line type="figure.h_grid" x1="80.36000000000001" y1="117.605" x2="273.6" y2="117.605"
-            fill="rgba(0,0,0,0)" stroke="#ddd" stroke-width="1" shape-rendering="crispEdges"
-            stroke-linecap="square" stroke-dasharray="" />
+        <line
+            type="figure.h_grid"
+            x1="126.75999999999999"
+            y1="259.1872865870348"
+            x2="912.0"
+            y2="259.1872865870348"
+            fill="rgba(0,0,0,0)"
+            stroke="#ddd"
+            stroke-width="0.5"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
 
 
-        <line type="figure.h_grid" x1="80.36000000000001" y1="81.5675" x2="273.6" y2="81.5675"
-            fill="rgba(0,0,0,0)" stroke="#ddd" stroke-width="1" shape-rendering="crispEdges"
-            stroke-linecap="square" stroke-dasharray="" />
+        <line
+            type="figure.h_grid"
+            x1="126.75999999999999"
+            y1="208.11257758343336"
+            x2="912.0"
+            y2="208.11257758343336"
+            fill="rgba(0,0,0,0)"
+            stroke="#ddd"
+            stroke-width="0.5"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
 
 
-        <line type="figure.h_grid" x1="80.36000000000001" y1="45.53000000000003" x2="273.6"
-            y2="45.53000000000003" fill="rgba(0,0,0,0)" stroke="#ddd" stroke-width="1"
-            shape-rendering="crispEdges" stroke-linecap="square" stroke-dasharray="" />
+        <line
+            type="figure.h_grid"
+            x1="126.75999999999999"
+            y1="157.03786857983192"
+            x2="912.0"
+            y2="157.03786857983192"
+            fill="rgba(0,0,0,0)"
+            stroke="#ddd"
+            stroke-width="0.5"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
 
 
-        <line type="figure.v_grid" x1="90.02199999999999" y1="228.11999999999998"
-            x2="90.02199999999999" y2="35.91999999999999" fill="rgba(0,0,0,0)" stroke="#ddd"
-            stroke-width="1" shape-rendering="crispEdges" stroke-linecap="square"
-            stroke-dasharray="" />
+        <line
+            type="figure.h_grid"
+            x1="126.75999999999999"
+            y1="105.96315957623045"
+            x2="912.0"
+            y2="105.96315957623045"
+            fill="rgba(0,0,0,0)"
+            stroke="#ddd"
+            stroke-width="0.5"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
 
 
-        <line type="figure.v_grid" x1="133.50099999999998" y1="228.11999999999998"
-            x2="133.50099999999998" y2="35.91999999999999" fill="rgba(0,0,0,0)" stroke="#ddd"
-            stroke-width="1" shape-rendering="crispEdges" stroke-linecap="square"
-            stroke-dasharray="" />
+        <line
+            type="figure.v_grid"
+            x1="168.92657996621108"
+            y1="324.44000000000005"
+            x2="168.92657996621108"
+            y2="40.72000000000001"
+            fill="rgba(0,0,0,0)"
+            stroke="#ddd"
+            stroke-width="0.5"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
 
 
-        <line type="figure.v_grid" x1="176.98000000000002" y1="228.11999999999998"
-            x2="176.98000000000002" y2="35.91999999999999" fill="rgba(0,0,0,0)" stroke="#ddd"
-            stroke-width="1" shape-rendering="crispEdges" stroke-linecap="square"
-            stroke-dasharray="" />
+        <line
+            type="figure.v_grid"
+            x1="306.8745908278299"
+            y1="324.44000000000005"
+            x2="306.8745908278299"
+            y2="40.72000000000001"
+            fill="rgba(0,0,0,0)"
+            stroke="#ddd"
+            stroke-width="0.5"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
 
 
-        <line type="figure.v_grid" x1="220.459" y1="228.11999999999998" x2="220.459"
-            y2="35.91999999999999" fill="rgba(0,0,0,0)" stroke="#ddd" stroke-width="1"
-            shape-rendering="crispEdges" stroke-linecap="square" stroke-dasharray="" />
+        <line
+            type="figure.v_grid"
+            x1="444.8226016894487"
+            y1="324.44000000000005"
+            x2="444.8226016894487"
+            y2="40.72000000000001"
+            fill="rgba(0,0,0,0)"
+            stroke="#ddd"
+            stroke-width="0.5"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
 
 
-        <line type="figure.v_grid" x1="263.938" y1="228.11999999999998" x2="263.938"
-            y2="35.91999999999999" fill="rgba(0,0,0,0)" stroke="#ddd" stroke-width="1"
-            shape-rendering="crispEdges" stroke-linecap="square" stroke-dasharray="" />
+        <line
+            type="figure.v_grid"
+            x1="582.7706125510674"
+            y1="324.44000000000005"
+            x2="582.7706125510674"
+            y2="40.72000000000001"
+            fill="rgba(0,0,0,0)"
+            stroke="#ddd"
+            stroke-width="0.5"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
 
 
-        <circle type="plot.marker" cx="90.022px" cy="81.5675px" r="3.5" fill="blue"
-            stroke="rgba(0,0,0,0)" stroke_width="0">
+        <line
+            type="figure.v_grid"
+            x1="720.7186234126862"
+            y1="324.44000000000005"
+            x2="720.7186234126862"
+            y2="40.72000000000001"
+            fill="rgba(0,0,0,0)"
+            stroke="#ddd"
+            stroke-width="0.5"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
+
+
+        <line
+            type="figure.v_grid"
+            x1="858.6666342743049"
+            y1="324.44000000000005"
+            x2="858.6666342743049"
+            y2="40.72000000000001"
+            fill="rgba(0,0,0,0)"
+            stroke="#ddd"
+            stroke-width="0.5"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
+
+
+        <line
+            type="spine.left"
+            x1="126.75999999999999"
+            y1="324.44000000000005"
+            x2="126.75999999999999"
+            y2="40.72000000000001"
+            fill="rgba(0,0,0,0)"
+            stroke="black"
+            stroke-width="1"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
+
+
+        <line
+            type="spine.right"
+            x1="912.0"
+            y1="324.44000000000005"
+            x2="912.0"
+            y2="40.72000000000001"
+            fill="rgba(0,0,0,0)"
+            stroke="black"
+            stroke-width="1"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
+
+
+        <line
+            type="spine.top"
+            x1="126.75999999999999"
+            y1="40.72000000000001"
+            x2="912.0"
+            y2="40.72000000000001"
+            fill="rgba(0,0,0,0)"
+            stroke="black"
+            stroke-width="1"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
+
+
+        <line
+            type="spine.bottom"
+            x1="126.75999999999999"
+            y1="324.44000000000005"
+            x2="912.0"
+            y2="324.44000000000005"
+            fill="rgba(0,0,0,0)"
+            stroke="black"
+            stroke-width="1"
+            shape-rendering="geometricPrecision"
+            stroke-linecap="square"
+            stroke-dasharray=""
+        />
+
+        <text tag="figure.x_label"
+            fill="black"
+            x="519.38"
+            y="354.79999999999995"
+            font-size="14"
+            font-weight="normal"
+            font-family="Arial, Verdana, sans-serif"
+            font-style="normal"
+            transform=""
+            dominant-baseline="hanging"
+            text-anchor="middle"
+        >
+            Photon density
+        </text>
+        <text tag="figure.y_label"
+            fill="black"
+            x="48.0"
+            y="182.58000000000004"
+            font-size="14"
+            font-weight="normal"
+            font-family="Arial, Verdana, sans-serif"
+            font-style="normal"
+            transform="rotate(-90, 48.0, 182.58000000000004)"
+            dominant-baseline="hanging"
+            text-anchor="middle"
+        >
+            Photon energy
+        </text>
+        <text tag="figure.title"
+            fill="black"
+            x="519.38"
+            y="19.200000000000017"
+            font-size="18"
+            font-weight="normal"
+            font-family="Arial, Verdana, sans-serif"
+            font-style="normal"
+            transform=""
+            dominant-baseline="hanging"
+            text-anchor="middle"
+        >
+            Photon density and photon energy
+        </text>
+
+        <circle
+            type="plot.marker"
+            cx="192.61475380125938px"
+            cy="310.254px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
         </circle>
 
-        <circle type="plot.marker" cx="133.50099999999998px" cy="189.68px" r="3.5" fill="blue"
-            stroke="rgba(0,0,0,0)" stroke_width="0">
+        <circle
+            type="plot.marker"
+            cx="196.6308023345108px"
+            cy="308.10821848739494px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
         </circle>
 
-        <circle type="plot.marker" cx="176.98000000000002px" cy="139.2275px" r="3.5" fill="blue"
-            stroke="rgba(0,0,0,0)" stroke_width="0">
+        <circle
+            type="plot.marker"
+            cx="196.08809307326072px"
+            cy="306.26897719087634px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
         </circle>
 
-        <circle type="plot.marker" cx="220.459px" cy="110.3975px" r="3.5" fill="blue"
-            stroke="rgba(0,0,0,0)" stroke_width="0">
+        <circle
+            type="plot.marker"
+            cx="199.23580678851178px"
+            cy="304.42973589435775px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
         </circle>
 
-        <circle type="plot.marker" cx="263.938px" cy="45.52999999999999px" r="3.5" fill="blue"
-            stroke="rgba(0,0,0,0)" stroke_width="0">
+        <circle
+            type="plot.marker"
+            cx="200.64685086776234px"
+            cy="302.59049459783915px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
         </circle>
 
-        <polygon points="85.022,153.6425 95.022,153.6425 90.022,148.6425 " fill="red" />
+        <circle
+            type="plot.marker"
+            cx="203.90310643526348px"
+            cy="300.75125330132056px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
 
-        <polygon
-            points="128.501,218.51000000000002 138.50099999999998,218.51000000000002 133.50099999999998,213.51 "
-            fill="red" />
+        <circle
+            type="plot.marker"
+            cx="207.05082015051448px"
+            cy="298.9120120048019px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
 
-        <polygon
-            points="171.98000000000002,182.47250000000003 181.98000000000002,182.47250000000003 176.98000000000002,177.47250000000003 "
-            fill="red" />
+        <circle
+            type="plot.marker"
+            cx="209.11311534326532px"
+            cy="297.0727707082833px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
 
-        <polygon points="215.459,153.6425 225.459,153.6425 220.459,148.6425 " fill="red" />
+        <circle
+            type="plot.marker"
+            cx="210.52415942251568px"
+            cy="295.2335294117647px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
 
-        <polygon points="258.938,117.605 268.938,117.605 263.938,112.60500000000002 " fill="red" />
+        <circle
+            type="plot.marker"
+            cx="213.78041499001688px"
+            cy="293.3942881152461px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
 
-        <rect type="plot.marker" stroke="rgba(0,0,0,0)" fill="green" x="90.022"
-            y="103.18999999999998" width="5.0" height="5.0" stroke-width="1" filter="">
-        </rect>
-        <rect type="plot.marker" stroke="rgba(0,0,0,0)" fill="green" x="133.50099999999998"
-            y="189.68" width="5.0" height="5.0" stroke-width="1" filter="">
-        </rect>
-        <rect type="plot.marker" stroke="rgba(0,0,0,0)" fill="green" x="176.98000000000002"
-            y="168.0575" width="5.0" height="5.0" stroke-width="1" filter="">
-        </rect>
-        <rect type="plot.marker" stroke="rgba(0,0,0,0)" fill="green" x="220.459" y="139.2275"
-            width="5.0" height="5.0" stroke-width="1" filter="">
-        </rect>
-        <rect type="plot.marker" stroke="rgba(0,0,0,0)" fill="green" x="263.938"
-            y="103.18999999999998" width="5.0" height="5.0" stroke-width="1" filter="">
-        </rect>
+        <circle
+            type="plot.marker"
+            cx="217.7964635232683px"
+            cy="291.55504681872753px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
 
+        <circle
+            type="plot.marker"
+            cx="223.00647243127014px"
+            cy="289.71580552220894px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
 
-        <line type="spine.left" x1="80.36000000000001" y1="228.11999999999998"
-            x2="80.36000000000001" y2="35.91999999999999" fill="rgba(0,0,0,0)" stroke="black"
-            stroke-width="2" shape-rendering="crispEdges" stroke-linecap="square"
-            stroke-dasharray="" />
+        <circle
+            type="plot.marker"
+            cx="228.064522746122px"
+            cy="288.02983433373345px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
 
+        <circle
+            type="plot.marker"
+            cx="233.82447703885742px"
+            cy="286.3438631452581px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
 
-        <line type="spine.right" x1="273.6" y1="228.11999999999998" x2="273.6"
-            y2="35.91999999999999" fill="rgba(0,0,0,0)" stroke="black" stroke-width="2"
-            shape-rendering="crispEdges" stroke-linecap="square" stroke-dasharray="" />
+        <circle
+            type="plot.marker"
+            cx="238.74504100752577px"
+            cy="284.9644321728692px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
 
+        <circle
+            type="plot.marker"
+            cx="245.69171955152814px"
+            cy="283.43173109243696px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
 
-        <line type="spine.top" x1="80.36000000000001" y1="35.91999999999999" x2="273.6"
-            y2="35.91999999999999" fill="rgba(0,0,0,0)" stroke="black" stroke-width="2"
-            shape-rendering="crispEdges" stroke-linecap="square" stroke-dasharray="" />
+        <circle
+            type="plot.marker"
+            cx="249.25189230532942px"
+            cy="281.8990300120048px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
 
+        <circle
+            type="plot.marker"
+            cx="255.76440344033165px"
+            cy="280.36632893157264px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
 
-        <line type="spine.bottom" x1="80.36000000000001" y1="228.11999999999998" x2="273.6"
-            y2="228.11999999999998" fill="rgba(0,0,0,0)" stroke="black" stroke-width="2"
-            shape-rendering="crispEdges" stroke-linecap="square" stroke-dasharray="" />
+        <circle
+            type="plot.marker"
+            cx="264.5780018430347px"
+            cy="278.68035774309726px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="266.64029703578547px"
+            cy="276.84111644657867px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="277.38594040853945px"
+            cy="275.15514525810323px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="284.22407710029165px"
+            cy="273.77571428571434px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="291.00794286591906px"
+            cy="272.5495534213686px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="300.46917432038083px"
+            cy="271.476662665066px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="306.9093242205496px"
+            cy="270.55704201680675px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="314.5072538780524px"
+            cy="269.63742136854745px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="323.3353245277222px"
+            cy="268.71780072028815px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="330.06491936722455px"
+            cy="267.79818007202886px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="337.7352102595605px"
+            cy="267.185099639856px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="346.7803646137306px"
+            cy="266.26547899159664px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="354.66773921056665px"
+            cy="265.34585834333734px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="363.71289356473653px"
+            cy="264.42623769507804px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="373.44547964982326px"
+            cy="263.65988715486196px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="384.7338322838272px"
+            cy="262.74026650660267px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="396.1307267700814px"
+            cy="261.87173589435776px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="403.72865642758404px"
+            cy="261.2075654261705px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="411.5436697895868px"
+            cy="260.7477551020408px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="419.7928505605896px"
+            cy="259.8281344537815px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="428.8018242973426px"
+            cy="259.2150540216087px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="440.9802201197973px"
+            cy="258.54066554621846px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="451.921238826601px"
+            cy="257.6823529411765px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="460.82167071110405px"
+            cy="256.60946218487396px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="471.29595945323297px"
+            cy="255.84311164465788px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="481.6617063431115px"
+            cy="255.23003121248502px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="490.99630563661447px"
+            cy="254.9234909963986px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="499.7773414836428px"
+            cy="254.15714045618256px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="512.2705086776219px"
+            cy="253.39078991596642px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="521.1709405621257px"
+            cy="253.08424969987993px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="530.3969980033788px"
+            cy="252.16462905162064px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="542.8793110121333px"
+            cy="251.55154861944777px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="553.733496237137px"
+            cy="251.24500840336134px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="564.4574312394407px"
+            cy="250.50931188475397px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="575.2681997235441px"
+            cy="249.8349234093638px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="587.7070959913988px"
+            cy="249.09922689075634px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="601.0577438181535px"
+            cy="248.48614645858345px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="613.5943277530328px"
+            cy="247.87306602641064px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="625.2625768699124px"
+            cy="246.72354021608643px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="634.1087378282907px"
+            cy="245.88055462184872px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="642.5207313776682px"
+            cy="245.42074429771912px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="651.8553306711718px"
+            cy="244.80766386554617px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="662.4924321916752px"
+            cy="244.50112364945986px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="672.9124500076789px"
+            cy="243.73477310924372px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="685.069137459683px"
+            cy="242.96842256902767px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="694.8379041621864px"
+            cy="242.66188235294123px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="702.6529175241897px"
+            cy="242.35534213685477px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="711.3362657041921px"
+            cy="242.04880192076837px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="721.430657963446px"
+            cy="241.18027130852346px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="732.8999136845333px"
+            cy="240.20956062424972px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="741.2395459990785px"
+            cy="239.1366698679472px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="751.8223765934565px"
+            cy="238.37031932773118px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="764.3589605283361px"
+            cy="237.75723889555826px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="776.1140431270157px"
+            cy="237.08285042016803px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="787.3155622792196px"
+            cy="236.224537815126px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="798.7938631546604px"
+            cy="235.76472749099645px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="808.8068490247265px"
+            cy="235.12099303721496px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="819.9866598064813px"
+            cy="234.38529651860742px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="828.8509110735678px"
+            cy="233.36349579831935px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="834.8568935647363px"
+            cy="232.85259543817529px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="843.5402417447392px"
+            cy="232.54605522208882px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="851.0839004761169px"
+            cy="231.1666242496999px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="855.6969291967431px"
+            cy="229.29672893157272px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="861.1240218092455px"
+            cy="227.4881416566627px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="862.8606914452457px"
+            cy="226.10871068427377px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="872.738px"
+            cy="223.503118847539px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="869.5034528029485px"
+            cy="221.81714765906366px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="860.9069381047448px"
+            cy="220.59098679471796px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="854.8828653048679px"
+            cy="219.2881908763506px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="849.0396955920739px"
+            cy="217.83212484994004px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="839.252838580863px"
+            cy="217.2190444177671px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="830.9493868837349px"
+            cy="216.29942376950788px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="822.4831224082312px"
+            cy="215.58416326530622px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="813.7129407464281px"
+            cy="214.76672268907572px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="806.5274701274765px"
+            cy="213.6938319327731px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="797.5908576255563px"
+            cy="212.97857142857148px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="790.4270953770542px"
+            cy="211.70132052821123px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="780.1518000307171px"
+            cy="211.08824009603842px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="772.6624122254639px"
+            cy="210.32188955582237px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="766.8011522039624px"
+            cy="209.70880912364953px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="756.0555088312087px"
+            cy="209.1263827130852px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="746.9379932422049px"
+            cy="208.0228379351742px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="738.7973543234519px"
+            cy="207.4097575030013px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="726.0979576101979px"
+            cy="206.79667707082834px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="716.7633583166948px"
+            cy="205.877056422569px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="709.8166797726916px"
+            cy="205.26397599039623px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="699.8308293656888px"
+            cy="204.44653541416562px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="689.7581454768845px"
+            cy="204.0991231692678px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="681.3787144831819px"
+            cy="203.42473469387755px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="672.9848112425123px"
+            cy="202.50511404561834px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="666.9064675165105px"
+            cy="201.58549339735896px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="659.2361766241737px"
+            cy="200.87023289315738px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="649.7387645522961px"
+            cy="200.35933253301317px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="638.0162445092918px"
+            cy="199.74625210084037px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="626.5867874673626px"
+            cy="199.01055558223294px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="616.8505833205343px"
+            cy="198.36682112845142px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="608.8727571801562px"
+            cy="197.90701080432186px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="601.3833693749039px"
+            cy="197.14066026410563px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="592.4286665642755px"
+            cy="196.45094477791125px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="583.256880049147px"
+            cy="196.06776950780326px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="573.2167587160191px"
+            cy="195.4546890756302px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="561.9826770081396px"
+            cy="194.84160864345756px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="554.1676636461375px"
+            cy="193.921987995198px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="544.7245225003835px"
+            cy="193.46217767106853px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="535.1185685762549px"
+            cy="192.84909723889572px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="526.380949470127px"
+            cy="192.389286914766px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="518.2764911687912px"
+            cy="191.4696662665066px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="509.2313368146214px"
+            cy="190.5500456182473px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="500.6022595607433px"
+            cy="190.09023529411766px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="490.8334928582398px"
+            cy="189.47715486194477px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="483.1812922746122px"
+            cy="189.0173445378152px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="473.4125255721083px"
+            cy="188.4042641056424px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="463.752300721855px"
+            cy="187.63791356542626px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="454.0378049454765px"
+            cy="186.8715630252102px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="445.4087276915985px"
+            cy="186.41175270108056px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="438.24496544309613px"
+            cy="185.49213205282118px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="430.4299520810933px"
+            cy="185.18559183673477px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="421.7466039010904px"
+            cy="184.214881152461px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="412.84617201658716px"
+            cy="183.57625570228095px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="402.9037383504839px"
+            cy="182.7639241296518px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="393.887528490247px"
+            cy="181.66037935174083px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="384.77001290124383px"
+            cy="180.74075870348153px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="377.678611887575px"
+            cy="179.82113805522206px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="370.94901704807234px"
+            cy="178.90151740696285px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="361.61441775456933px"
+            cy="177.98189675870344px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="353.5823206880664px"
+            cy="177.0622761104441px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="343.5964702810626px"
+            cy="176.14265546218502px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="335.34728951005985px"
+            cy="175.22303481392566px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="325.6870646598063px"
+            cy="174.7632244897961px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="316.4067362924283px"
+            cy="173.53706362545014px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="307.8500202733837px"
+            cy="172.4641728691476px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="298.22597604054664px"
+            cy="171.54455222088848px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="291.9305486100443px"
+            cy="170.62493157262924px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="284.6944251267086px"
+            cy="169.70531092436988px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="275.48645799416363px"
+            cy="168.63242016806717px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="266.96592259253583px"
+            cy="167.55952941176463px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="259.4403541698663px"
+            cy="166.63990876350533px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="252.42131439103065px"
+            cy="165.72028811524612px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="244.08530013822752px"
+            cy="164.49412725090048px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="236.03149470127482px"
+            cy="163.11469627851147px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="228.10793948702195px"
+            cy="161.88853541416586px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="219.5982582706189px"
+            cy="160.5091044417768px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="212.62263523268325px"
+            cy="159.28294357743096px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="204.18531525111354px"
+            cy="158.05678271308543px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="194.6770489940101px"
+            cy="156.6773517406963px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="186.53641007525732px"
+            cy="155.4511908763507px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="179.26410597450467px"
+            cy="153.9184897959185px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="173.51138780525272px"
+            cy="152.0792484993999px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="169.27825556750116px"
+            cy="149.93346698679474px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="168.62700445400088px"
+            cy="148.09422569027606px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="168.62700445400097px"
+            cy="146.25498439375747px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="168.627004454001px"
+            cy="144.41574309723904px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="168.62700445400094px"
+            cy="142.57650180072045px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="166.89033481800033px"
+            cy="140.73726050420186px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="167.75866963600072px"
+            cy="138.8980192076831px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="168.4099207495011px"
+            cy="137.0587779111645px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="169.4953392720011px"
+            cy="135.219536614646px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="169.92950668100136px"
+            cy="133.38029531812722px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="169.92950668100139px"
+            cy="131.54105402160872px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="169.92950668100147px"
+            cy="129.7018127250902px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="169.9295066810015px"
+            cy="127.86257142857161px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="169.92950668100144px"
+            cy="126.02333013205293px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="168.62700445400105px"
+            cy="124.18408883553434px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="168.62700445400108px"
+            cy="122.34484753901566px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="168.62700445400094px"
+            cy="120.50560624249698px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="168.62700445400088px"
+            cy="118.6663649459783px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="168.62700445400097px"
+            cy="116.82712364945971px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="170.79784149900175px"
+            cy="114.98788235294128px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="169.71242297650133px"
+            cy="113.14864105642252px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="169.71242297650153px"
+            cy="111.30939975990393px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="169.49533927200116px"
+            cy="109.47015846338559px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="169.92950668100147px"
+            cy="107.63091716686674px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="169.92950668100156px"
+            cy="105.79167587034806px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="168.62700445400105px"
+            cy="103.95243457382955px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="168.62700445400114px"
+            cy="102.11319327731087px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="168.62700445400083px"
+            cy="100.27395198079228px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="168.627004454001px"
+            cy="98.43471068427368px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="169.4953392720013px"
+            cy="96.595469387755px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="169.92950668100144px"
+            cy="94.75622809123666px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="169.92950668100133px"
+            cy="92.91698679471807px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="169.92950668100139px"
+            cy="91.0777454981993px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="169.92950668100153px"
+            cy="89.23850420168063px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="169.9295066810015px"
+            cy="87.39926290516203px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="169.92950668100136px"
+            cy="85.56002160864344px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="167.75866963600063px"
+            cy="83.72078031212493px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="167.3245022270006px"
+            cy="81.88153901560642px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="167.32450222700047px"
+            cy="80.04229771908783px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="168.08429519275083px"
+            cy="78.20305642256932px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="168.6270044540011px"
+            cy="76.36381512605038px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="168.62700445400088px"
+            cy="74.52457382953179px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="168.62700445400114px"
+            cy="72.6853325330132px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="168.62700445400105px"
+            cy="70.84609123649469px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="167.32450222700044px"
+            cy="69.00684993997609px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="166.02200000000008px"
+            cy="67.1676086434575px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="166.02200000000022px"
+            cy="65.3283673469389px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="166.89033481800033px"
+            cy="63.489126050420396px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="167.32450222700055px"
+            cy="61.649884753901546px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="167.21596037475044px"
+            cy="59.81064345738295px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="167.3245022270004px"
+            cy="57.97140216086427px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="166.022px"
+            cy="56.13216086434602px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
+
+        <circle
+            type="plot.marker"
+            cx="167.3245022270004px"
+            cy="54.90599999999998px"
+            r="3.5"
+            fill="#FBD1A2" stroke="rgba(0,0,0,0)"
+            stroke_width="0"
+        >
+        </circle>
 
     </g>
 </svg>

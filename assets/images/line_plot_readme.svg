@@ -1,4 +1,6 @@
-<svg width="288" height="288" version="1.1"
+<svg width="960"
+  height="384"
+  version="1.1"
   xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   style="top: 0px;
@@ -7,209 +9,547 @@
   <g>
 
 
-    <text tag="figure.x_label" fill="black" x="166.74" y="263.6" font-size="16" font-weight="normal"
-      font-family="Arial, Verdana, sans-serif" font-style="normal" transform=""
-      dominant-baseline="hanging" text-anchor="middle">
-      X value
-    </text>
-    <text tag="figure.y_label" fill="black" x="14.400000000000002" y="132.02" font-size="16"
-      font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal"
-      transform="rotate(-90, 14.400000000000002, 132.02)" dominant-baseline="hanging"
-      text-anchor="middle">
-      Y value
-    </text>
-    <text tag="figure.title" fill="black" x="166.74" y="14.399999999999991" font-size="18"
-      font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal" transform=""
-      dominant-baseline="hanging" text-anchor="middle"> Line Plot
-    </text>
+    <line
+      type="figure.x_tick"
+      x1="277.664"
+      y1="324.44000000000005"
+      x2="277.664"
+      y2="329.44"
+      fill="rgba(0,0,0,0)"
+      stroke="black"
+      stroke-width="1"
+      shape-rendering="geometricPrecision"
+      stroke-linecap="square"
+      stroke-dasharray=""
+    />
 
 
-    <line type="figure.x_tick" x1="70.56600000000002" y1="228.11999999999998" x2="70.56600000000002"
-      y2="233.12" fill="rgba(0,0,0,0)" stroke="black" stroke-width="2" shape-rendering="crispEdges"
-      stroke-linecap="square" stroke-dasharray="" />
-
-
-    <text tag="figure.x_tick" fill="black" x="70.56600000000002" y="243.36" font-size="16"
-      font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal" transform=""
-      dominant-baseline="hanging" text-anchor="middle">
-      4
-    </text>
-
-
-    <line type="figure.x_tick" x1="134.68199999999996" y1="228.11999999999998"
-      x2="134.68199999999996" y2="233.12" fill="rgba(0,0,0,0)" stroke="black" stroke-width="2"
-      shape-rendering="crispEdges" stroke-linecap="square" stroke-dasharray="" />
-
-
-    <text tag="figure.x_tick" fill="black" x="134.68199999999996" y="243.36" font-size="16"
-      font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal" transform=""
-      dominant-baseline="hanging" text-anchor="middle">
-      5
+    <text tag="figure.x_tick"
+      fill="black"
+      x="277.664"
+      y="337.12"
+      font-size="14"
+      font-weight="normal"
+      font-family="Arial, Verdana, sans-serif"
+      font-style="normal"
+      transform=""
+      dominant-baseline="hanging"
+      text-anchor="middle"
+    >
+      2008
     </text>
 
 
-    <line type="figure.x_tick" x1="198.798" y1="228.11999999999998" x2="198.798" y2="233.12"
-      fill="rgba(0,0,0,0)" stroke="black" stroke-width="2" shape-rendering="crispEdges"
-      stroke-linecap="square" stroke-dasharray="" />
+    <line
+      type="figure.x_tick"
+      x1="436.248"
+      y1="324.44000000000005"
+      x2="436.248"
+      y2="329.44"
+      fill="rgba(0,0,0,0)"
+      stroke="black"
+      stroke-width="1"
+      shape-rendering="geometricPrecision"
+      stroke-linecap="square"
+      stroke-dasharray=""
+    />
 
 
-    <text tag="figure.x_tick" fill="black" x="198.798" y="243.36" font-size="16"
-      font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal" transform=""
-      dominant-baseline="hanging" text-anchor="middle">
-      6
+    <text tag="figure.x_tick"
+      fill="black"
+      x="436.248"
+      y="337.12"
+      font-size="14"
+      font-weight="normal"
+      font-family="Arial, Verdana, sans-serif"
+      font-style="normal"
+      transform=""
+      dominant-baseline="hanging"
+      text-anchor="middle"
+    >
+      2009
     </text>
 
 
-    <line type="figure.x_tick" x1="262.914" y1="228.11999999999998" x2="262.914" y2="233.12"
-      fill="rgba(0,0,0,0)" stroke="black" stroke-width="2" shape-rendering="crispEdges"
-      stroke-linecap="square" stroke-dasharray="" />
+    <line
+      type="figure.x_tick"
+      x1="594.832"
+      y1="324.44000000000005"
+      x2="594.832"
+      y2="329.44"
+      fill="rgba(0,0,0,0)"
+      stroke="black"
+      stroke-width="1"
+      shape-rendering="geometricPrecision"
+      stroke-linecap="square"
+      stroke-dasharray=""
+    />
 
 
-    <text tag="figure.x_tick" fill="black" x="262.914" y="243.36" font-size="16"
-      font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal" transform=""
-      dominant-baseline="hanging" text-anchor="middle">
-      7
+    <text tag="figure.x_tick"
+      fill="black"
+      x="594.832"
+      y="337.12"
+      font-size="14"
+      font-weight="normal"
+      font-family="Arial, Verdana, sans-serif"
+      font-style="normal"
+      transform=""
+      dominant-baseline="hanging"
+      text-anchor="middle"
+    >
+      2010
     </text>
 
 
-    <line type="figure.y_tick" x1="59.88" y1="218.51000000000002" x2="54.879999999999995"
-      y2="218.51000000000002" fill="rgba(0,0,0,0)" stroke="black" stroke-width="2"
-      shape-rendering="crispEdges" stroke-linecap="square" stroke-dasharray="" />
+    <line
+      type="figure.x_tick"
+      x1="753.4159999999999"
+      y1="324.44000000000005"
+      x2="753.4159999999999"
+      y2="329.44"
+      fill="rgba(0,0,0,0)"
+      stroke="black"
+      stroke-width="1"
+      shape-rendering="geometricPrecision"
+      stroke-linecap="square"
+      stroke-dasharray=""
+    />
 
 
-    <text tag="figure.y_tick" fill="black" x="44.64" y="218.51000000000002" font-size="16"
-      font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal" transform=""
-      dominant-baseline="middle" text-anchor="end">
-      4
+    <text tag="figure.x_tick"
+      fill="black"
+      x="753.4159999999999"
+      y="337.12"
+      font-size="14"
+      font-weight="normal"
+      font-family="Arial, Verdana, sans-serif"
+      font-style="normal"
+      transform=""
+      dominant-baseline="hanging"
+      text-anchor="middle"
+    >
+      2011
     </text>
 
 
-    <line type="figure.y_tick" x1="59.88" y1="160.85000000000002" x2="54.879999999999995"
-      y2="160.85000000000002" fill="rgba(0,0,0,0)" stroke="black" stroke-width="2"
-      shape-rendering="crispEdges" stroke-linecap="square" stroke-dasharray="" />
+    <line
+      type="figure.y_tick"
+      x1="119.08000000000001"
+      y1="259.8831347468239"
+      x2="114.08000000000001"
+      y2="259.8831347468239"
+      fill="rgba(0,0,0,0)"
+      stroke="black"
+      stroke-width="1"
+      shape-rendering="geometricPrecision"
+      stroke-linecap="square"
+      stroke-dasharray=""
+    />
 
 
-    <text tag="figure.y_tick" fill="black" x="44.64" y="160.85000000000002" font-size="16"
-      font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal" transform=""
-      dominant-baseline="middle" text-anchor="end">
-      5
+    <text tag="figure.y_tick"
+      fill="black"
+      x="105.68"
+      y="259.8831347468239"
+      font-size="14"
+      font-weight="normal"
+      font-family="Arial, Verdana, sans-serif"
+      font-style="normal"
+      transform=""
+      dominant-baseline="middle"
+      text-anchor="end"
+    >
+      17.31
     </text>
 
 
-    <line type="figure.y_tick" x1="59.88" y1="103.19000000000003" x2="54.879999999999995"
-      y2="103.19000000000003" fill="rgba(0,0,0,0)" stroke="black" stroke-width="2"
-      shape-rendering="crispEdges" stroke-linecap="square" stroke-dasharray="" />
+    <line
+      type="figure.y_tick"
+      x1="119.08000000000001"
+      y1="209.47466477504838"
+      x2="114.08000000000001"
+      y2="209.47466477504838"
+      fill="rgba(0,0,0,0)"
+      stroke="black"
+      stroke-width="1"
+      shape-rendering="geometricPrecision"
+      stroke-linecap="square"
+      stroke-dasharray=""
+    />
 
 
-    <text tag="figure.y_tick" fill="black" x="44.64" y="103.19000000000003" font-size="16"
-      font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal" transform=""
-      dominant-baseline="middle" text-anchor="end">
-      6
+    <text tag="figure.y_tick"
+      fill="black"
+      x="105.68"
+      y="209.47466477504838"
+      font-size="14"
+      font-weight="normal"
+      font-family="Arial, Verdana, sans-serif"
+      font-style="normal"
+      transform=""
+      dominant-baseline="middle"
+      text-anchor="end"
+    >
+      17.6
     </text>
 
 
-    <line type="figure.y_tick" x1="59.88" y1="45.53000000000003" x2="54.879999999999995"
-      y2="45.53000000000003" fill="rgba(0,0,0,0)" stroke="black" stroke-width="2"
-      shape-rendering="crispEdges" stroke-linecap="square" stroke-dasharray="" />
+    <line
+      type="figure.y_tick"
+      x1="119.08000000000001"
+      y1="159.06619480327288"
+      x2="114.08000000000001"
+      y2="159.06619480327288"
+      fill="rgba(0,0,0,0)"
+      stroke="black"
+      stroke-width="1"
+      shape-rendering="geometricPrecision"
+      stroke-linecap="square"
+      stroke-dasharray=""
+    />
 
 
-    <text tag="figure.y_tick" fill="black" x="44.64" y="45.53000000000003" font-size="16"
-      font-weight="normal" font-family="Arial, Verdana, sans-serif" font-style="normal" transform=""
-      dominant-baseline="middle" text-anchor="end">
-      7
+    <text tag="figure.y_tick"
+      fill="black"
+      x="105.68"
+      y="159.06619480327288"
+      font-size="14"
+      font-weight="normal"
+      font-family="Arial, Verdana, sans-serif"
+      font-style="normal"
+      transform=""
+      dominant-baseline="middle"
+      text-anchor="end"
+    >
+      17.89
     </text>
 
 
-    <line type="figure.h_grid" x1="59.88" y1="218.51000000000002" x2="273.6" y2="218.51000000000002"
-      fill="rgba(0,0,0,0)" stroke="#ddd" stroke-width="1" shape-rendering="crispEdges"
-      stroke-linecap="square" stroke-dasharray="" />
+    <line
+      type="figure.y_tick"
+      x1="119.08000000000001"
+      y1="108.65772483149806"
+      x2="114.08000000000001"
+      y2="108.65772483149806"
+      fill="rgba(0,0,0,0)"
+      stroke="black"
+      stroke-width="1"
+      shape-rendering="geometricPrecision"
+      stroke-linecap="square"
+      stroke-dasharray=""
+    />
 
 
-    <line type="figure.h_grid" x1="59.88" y1="160.85000000000002" x2="273.6" y2="160.85000000000002"
-      fill="rgba(0,0,0,0)" stroke="#ddd" stroke-width="1" shape-rendering="crispEdges"
-      stroke-linecap="square" stroke-dasharray="" />
+    <text tag="figure.y_tick"
+      fill="black"
+      x="105.68"
+      y="108.65772483149806"
+      font-size="14"
+      font-weight="normal"
+      font-family="Arial, Verdana, sans-serif"
+      font-style="normal"
+      transform=""
+      dominant-baseline="middle"
+      text-anchor="end"
+    >
+      18.18
+    </text>
 
 
-    <line type="figure.h_grid" x1="59.88" y1="103.19000000000003" x2="273.6" y2="103.19000000000003"
-      fill="rgba(0,0,0,0)" stroke="#ddd" stroke-width="1" shape-rendering="crispEdges"
-      stroke-linecap="square" stroke-dasharray="" />
+    <line
+      type="figure.y_tick"
+      x1="119.08000000000001"
+      y1="58.24925485972324"
+      x2="114.08000000000001"
+      y2="58.24925485972324"
+      fill="rgba(0,0,0,0)"
+      stroke="black"
+      stroke-width="1"
+      shape-rendering="geometricPrecision"
+      stroke-linecap="square"
+      stroke-dasharray=""
+    />
 
 
-    <line type="figure.h_grid" x1="59.88" y1="45.53000000000003" x2="273.6" y2="45.53000000000003"
-      fill="rgba(0,0,0,0)" stroke="#ddd" stroke-width="1" shape-rendering="crispEdges"
-      stroke-linecap="square" stroke-dasharray="" />
+    <text tag="figure.y_tick"
+      fill="black"
+      x="105.68"
+      y="58.24925485972324"
+      font-size="14"
+      font-weight="normal"
+      font-family="Arial, Verdana, sans-serif"
+      font-style="normal"
+      transform=""
+      dominant-baseline="middle"
+      text-anchor="end"
+    >
+      18.47
+    </text>
 
 
-    <line type="figure.v_grid" x1="70.56600000000002" y1="228.11999999999998" x2="70.56600000000002"
-      y2="35.91999999999999" fill="rgba(0,0,0,0)" stroke="#ddd" stroke-width="1"
-      shape-rendering="crispEdges" stroke-linecap="square" stroke-dasharray="" />
+    <line
+      type="figure.h_grid"
+      x1="119.08000000000001"
+      y1="259.8831347468239"
+      x2="912.0"
+      y2="259.8831347468239"
+      fill="rgba(0,0,0,0)"
+      stroke="#ddd"
+      stroke-width="0.5"
+      shape-rendering="geometricPrecision"
+      stroke-linecap="square"
+      stroke-dasharray=""
+    />
 
 
-    <line type="figure.v_grid" x1="134.68199999999996" y1="228.11999999999998"
-      x2="134.68199999999996" y2="35.91999999999999" fill="rgba(0,0,0,0)" stroke="#ddd"
-      stroke-width="1" shape-rendering="crispEdges" stroke-linecap="square" stroke-dasharray="" />
+    <line
+      type="figure.h_grid"
+      x1="119.08000000000001"
+      y1="209.47466477504838"
+      x2="912.0"
+      y2="209.47466477504838"
+      fill="rgba(0,0,0,0)"
+      stroke="#ddd"
+      stroke-width="0.5"
+      shape-rendering="geometricPrecision"
+      stroke-linecap="square"
+      stroke-dasharray=""
+    />
 
 
-    <line type="figure.v_grid" x1="198.798" y1="228.11999999999998" x2="198.798"
-      y2="35.91999999999999" fill="rgba(0,0,0,0)" stroke="#ddd" stroke-width="1"
-      shape-rendering="crispEdges" stroke-linecap="square" stroke-dasharray="" />
+    <line
+      type="figure.h_grid"
+      x1="119.08000000000001"
+      y1="159.06619480327288"
+      x2="912.0"
+      y2="159.06619480327288"
+      fill="rgba(0,0,0,0)"
+      stroke="#ddd"
+      stroke-width="0.5"
+      shape-rendering="geometricPrecision"
+      stroke-linecap="square"
+      stroke-dasharray=""
+    />
 
 
-    <line type="figure.v_grid" x1="262.914" y1="228.11999999999998" x2="262.914"
-      y2="35.91999999999999" fill="rgba(0,0,0,0)" stroke="#ddd" stroke-width="1"
-      shape-rendering="crispEdges" stroke-linecap="square" stroke-dasharray="" />
+    <line
+      type="figure.h_grid"
+      x1="119.08000000000001"
+      y1="108.65772483149806"
+      x2="912.0"
+      y2="108.65772483149806"
+      fill="rgba(0,0,0,0)"
+      stroke="#ddd"
+      stroke-width="0.5"
+      shape-rendering="geometricPrecision"
+      stroke-linecap="square"
+      stroke-dasharray=""
+    />
 
 
-    <line type="plot.line" x1="70.56600000000002" y1="218.51000000000002" x2="198.79800000000006"
-      y2="218.51000000000002" fill="blue" stroke="blue" stroke-width="2"
-      shape-rendering="crispEdges" stroke-linecap="square" stroke-dasharray="" />
+    <line
+      type="figure.h_grid"
+      x1="119.08000000000001"
+      y1="58.24925485972324"
+      x2="912.0"
+      y2="58.24925485972324"
+      fill="rgba(0,0,0,0)"
+      stroke="#ddd"
+      stroke-width="0.5"
+      shape-rendering="geometricPrecision"
+      stroke-linecap="square"
+      stroke-dasharray=""
+    />
 
 
-    <circle type="plot.marker" cx="70.56600000000002px" cy="218.51000000000002px" r="3.5"
-      fill="blue" stroke="rgba(0,0,0,0)" stroke_width="0">
+    <line
+      type="spine.left"
+      x1="119.08000000000001"
+      y1="324.44000000000005"
+      x2="119.08000000000001"
+      y2="40.72000000000001"
+      fill="rgba(0,0,0,0)"
+      stroke="black"
+      stroke-width="1"
+      shape-rendering="geometricPrecision"
+      stroke-linecap="square"
+      stroke-dasharray=""
+    />
+
+
+    <line
+      type="spine.right"
+      x1="912.0"
+      y1="324.44000000000005"
+      x2="912.0"
+      y2="40.72000000000001"
+      fill="rgba(0,0,0,0)"
+      stroke="black"
+      stroke-width="1"
+      shape-rendering="geometricPrecision"
+      stroke-linecap="square"
+      stroke-dasharray=""
+    />
+
+
+    <line
+      type="spine.top"
+      x1="119.08000000000001"
+      y1="40.72000000000001"
+      x2="912.0"
+      y2="40.72000000000001"
+      fill="rgba(0,0,0,0)"
+      stroke="black"
+      stroke-width="1"
+      shape-rendering="geometricPrecision"
+      stroke-linecap="square"
+      stroke-dasharray=""
+    />
+
+
+    <line
+      type="spine.bottom"
+      x1="119.08000000000001"
+      y1="324.44000000000005"
+      x2="912.0"
+      y2="324.44000000000005"
+      fill="rgba(0,0,0,0)"
+      stroke="black"
+      stroke-width="1"
+      shape-rendering="geometricPrecision"
+      stroke-linecap="square"
+      stroke-dasharray=""
+    />
+
+    <text tag="figure.x_label"
+      fill="black"
+      x="515.54"
+      y="354.79999999999995"
+      font-size="14"
+      font-weight="normal"
+      font-family="Arial, Verdana, sans-serif"
+      font-style="normal"
+      transform=""
+      dominant-baseline="hanging"
+      text-anchor="middle"
+    >
+      Years
+    </text>
+    <text tag="figure.y_label"
+      fill="black"
+      x="48.0"
+      y="182.58000000000004"
+      font-size="14"
+      font-weight="normal"
+      font-family="Arial, Verdana, sans-serif"
+      font-style="normal"
+      transform="rotate(-90, 48.0, 182.58000000000004)"
+      dominant-baseline="hanging"
+      text-anchor="middle"
+    >
+      Emission
+    </text>
+    <text tag="figure.title"
+      fill="black"
+      x="515.54"
+      y="19.200000000000017"
+      font-size="18"
+      font-weight="normal"
+      font-family="Arial, Verdana, sans-serif"
+      font-style="normal"
+      transform=""
+      dominant-baseline="hanging"
+      text-anchor="middle"
+    >
+      United states's Emission (2008 - 2011)
+    </text>
+
+    <line
+      type="plot.line"
+      x1="277.664"
+      y1="54.906000000000404"
+      x2="436.248"
+      y2="280.3282713182143"
+      fill="#295F98"
+      stroke="#295F98"
+      stroke-width="1.5"
+      shape-rendering="geometricPrecision"
+      stroke-linecap="square"
+      stroke-dasharray=""
+    />
+
+
+    <circle
+      type="plot.marker"
+      cx="277.664px"
+      cy="54.906000000000404px"
+      r="3.5"
+      fill="#295F98" stroke="rgba(0,0,0,0)"
+      stroke_width="0"
+    >
     </circle>
 
-    <line type="plot.line" x1="198.79800000000006" y1="218.51000000000002" x2="198.79800000000006"
-      y2="160.85" fill="blue" stroke="blue" stroke-width="2" shape-rendering="crispEdges"
-      stroke-linecap="square" stroke-dasharray="" />
+    <line
+      type="plot.line"
+      x1="436.248"
+      y1="280.3282713182143"
+      x2="594.832"
+      y2="229.50035420602694"
+      fill="#295F98"
+      stroke="#295F98"
+      stroke-width="1.5"
+      shape-rendering="geometricPrecision"
+      stroke-linecap="square"
+      stroke-dasharray=""
+    />
 
 
-    <circle type="plot.marker" cx="198.79800000000006px" cy="218.51000000000002px" r="3.5"
-      fill="blue" stroke="rgba(0,0,0,0)" stroke_width="0">
+    <circle
+      type="plot.marker"
+      cx="436.248px"
+      cy="280.3282713182143px"
+      r="3.5"
+      fill="#295F98" stroke="rgba(0,0,0,0)"
+      stroke_width="0"
+    >
     </circle>
 
-    <line type="plot.line" x1="198.79800000000006" y1="160.85" x2="262.914" y2="103.19" fill="blue"
-      stroke="blue" stroke-width="2" shape-rendering="crispEdges" stroke-linecap="square"
-      stroke-dasharray="" />
+    <line
+      type="plot.line"
+      x1="594.832"
+      y1="229.50035420602694"
+      x2="753.4159999999999"
+      y2="310.254"
+      fill="#295F98"
+      stroke="#295F98"
+      stroke-width="1.5"
+      shape-rendering="geometricPrecision"
+      stroke-linecap="square"
+      stroke-dasharray=""
+    />
 
 
-    <circle type="plot.marker" cx="198.79800000000006px" cy="160.85px" r="3.5" fill="blue"
-      stroke="rgba(0,0,0,0)" stroke_width="0">
+    <circle
+      type="plot.marker"
+      cx="594.832px"
+      cy="229.50035420602694px"
+      r="3.5"
+      fill="#295F98" stroke="rgba(0,0,0,0)"
+      stroke_width="0"
+    >
     </circle>
 
-    <circle type="plot.marker" cx="262.914px" cy="103.19px" r="3.5" fill="blue"
-      stroke="rgba(0,0,0,0)" stroke_width="0">
+    <circle
+      type="plot.marker"
+      cx="753.4159999999999px"
+      cy="310.254px"
+      r="3.5"
+      fill="#295F98" stroke="rgba(0,0,0,0)"
+      stroke_width="0"
+    >
     </circle>
-
-    <line type="spine.left" x1="59.88" y1="228.11999999999998" x2="59.88" y2="35.91999999999999"
-      fill="rgba(0,0,0,0)" stroke="black" stroke-width="2" shape-rendering="crispEdges"
-      stroke-linecap="square" stroke-dasharray="" />
-
-
-    <line type="spine.right" x1="273.6" y1="228.11999999999998" x2="273.6" y2="35.91999999999999"
-      fill="rgba(0,0,0,0)" stroke="black" stroke-width="2" shape-rendering="crispEdges"
-      stroke-linecap="square" stroke-dasharray="" />
-
-
-    <line type="spine.top" x1="59.88" y1="35.91999999999999" x2="273.6" y2="35.91999999999999"
-      fill="rgba(0,0,0,0)" stroke="black" stroke-width="2" shape-rendering="crispEdges"
-      stroke-linecap="square" stroke-dasharray="" />
-
-
-    <line type="spine.bottom" x1="59.88" y1="228.11999999999998" x2="273.6" y2="228.11999999999998"
-      fill="rgba(0,0,0,0)" stroke="black" stroke-width="2" shape-rendering="crispEdges"
-      stroke-linecap="square" stroke-dasharray="" />
-
 
   </g>
 </svg>
+      
