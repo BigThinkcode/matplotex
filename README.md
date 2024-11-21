@@ -1,13 +1,13 @@
 # <img src="assets/images/matplotex_logo.png" height="50" /> Matplotex
 
-`matplotex` is a lightweight and efficient library for Elixir projects that facilitates server-side SVG generation for data visualization. Designed to integrate seamlessly with Phoenix LiveView, it serves as a powerful tool for creating dynamic visualizations in web applications. Below are the key benefits and extended use cases of `matplotex`:
+<font color="darkblue"> **Matplotex**</font> is a lightweight and efficient library for Elixir projects that facilitates server-side SVG generation for data visualization. Designed to integrate seamlessly with Phoenix LiveView, it serves as a powerful tool for creating dynamic visualizations in web applications. Below are the key benefits and extended use cases of <font color="darkblue"> **Matplotex**</font>:
 
-- **Server-side SVG Generation:** `matplotex` enables the creation of larger, complex plots on the server, ensuring smooth performance on client-side devices with limited memory.
-- **Efficient Concurrent Processing :** Leveraging Elixir’s concurrency capabilities, `matplotex` can handle multiple requests simultaneously, making it ideal for high-performance applications.
-- **Cross-Project Compatibility :** While optimized for Elixir, `matplotex` can also be used by non-Elixir projects through its API integration with the Phoenix framework, broadening its potential use cases.
+- **Server-side SVG Generation:** <font color="darkblue"> **Matplotex**</font> enables the creation of larger, complex plots on the server, ensuring smooth performance on client-side devices with limited memory.
+- **Efficient Concurrent Processing :** Leveraging Elixir’s concurrency capabilities, <font color="darkblue"> **Matplotex**</font> can handle multiple requests simultaneously, making it ideal for high-performance applications.
+- **Cross-Project Compatibility :** While optimized for Elixir, <font color="darkblue"> **Matplotex**</font> can also be used by non-Elixir projects through its API integration with the Phoenix framework, broadening its potential use cases.
 
 
-The sample plots generated using `matplotex` are shown below.
+The sample plots generated using <font color="darkblue"> **Matplotex**</font> are shown below.
 
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
 <img src="assets/images/line_plot_readme.svg" width="45%"/>
@@ -18,7 +18,7 @@ The sample plots generated using `matplotex` are shown below.
 
 ## Installation
 
-The package can be installed by adding `matplotex` to your list of dependencies in `mix.exs`.
+The package can be installed by adding <font color="darkblue"> **Matplotex**</font> to your list of dependencies in `mix.exs`.
 
 ```elixir
 def deps do
@@ -61,17 +61,17 @@ x
 
 ```
 ## Roadmap: What's Coming Next
-We are actively working on the following improvements and additions for the `matplotex` library:
+We are actively working on the following improvements and additions for the <font color="darkblue"> **Matplotex**</font> library:
 
 #### Upcoming Features for Matplotex:
 - **Compatibility with Elixir Phoenix LiveView :** Seamless integration with Phoenix LiveView for real-time data visualization in web applications.
-- **GUI Integration :** Adding graphical user interface (GUI) capabilities to `matplotex`, providing an intuitive and user-friendly experience for generating plots.
+- **GUI Integration :** Adding graphical user interface (GUI) capabilities to <font color="darkblue"> **Matplotex**</font>, providing an intuitive and user-friendly experience for generating plots.
 - **Support for the Nerves Framework :** Enabling real-time data visualization for embedded systems, such as sensor readings, using the Nerves framework.
 
-Additionally, we are focused on expanding the library with a variety of new chart types to enhance its functionality and versatility. The upcoming `matplotex` version will also include the official Hex package, featuring all the basic chart types!!!
+Additionally, we are focused on expanding the library with a variety of new chart types to enhance its functionality and versatility. The upcoming <font color="darkblue"> **Matplotex**</font> version will also include the official Hex package, featuring all the basic chart types!!!
 
 ## Contribution
-We welcome all contributions to improve the `matplotex` project! Here are some key ways you can contribute:
+We welcome all contributions to improve the <font color="darkblue"> **Matplotex**</font> project! Here are some key ways you can contribute:
 
 - **Propose Features :** Suggest new functionalities or improvements, including new plot additions.
 - **Report Bugs :** Identify and report issues in the library
