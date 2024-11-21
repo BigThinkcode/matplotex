@@ -12,6 +12,7 @@ The sample plots generated using <font color="darkblue"> **Matplotex**</font> ar
 
 <img src="assets/images/bar_readme.svg"/>
 <img src="assets/images/pie_readme.svg"/>
+<img src="assets/images/line_plot_readme.svg"/>
 
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
 <img src="assets/images/line_plot_readme.svg" width="45%"/>
