@@ -1,5 +1,5 @@
-<svg width="336.0"
-  height="240.0"
+<svg width="960"
+  height="384"
   version="1.1"
   xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -9,8 +9,8 @@
   <g>
     <text tag="figure.title"
       fill="black"
-      x="168.00000000000003"
-      y="12.0"
+      x="480.0"
+      y="19.200000000000017"
       font-size="18"
       font-weight="normal"
       font-family="Arial, Verdana, sans-serif"
@@ -19,48 +19,48 @@
       dominant-baseline="hanging"
       text-anchor="middle"
     >
-      Pie chart
+      Asia's Emission Distribution (2008–2011)
     </text>
     <path
-      d="M 114.04 33.519999999999996
- A 97.24000000000001 97.24000000000001 0 0 1 211.28000000000003 130.76
- L 114.04 130.76
+      d="M 210.04000000000002 40.72000000000001
+ A 162.04000000000002 162.04000000000002 0 0 1 372.08000000000004 202.76000000000002
+ L 210.04000000000002 202.76000000000002
  Z"
-      fill="lightblue" />
+      fill="#AED6F1" />
     <path
-      d="M 211.28000000000003 130.76
- A 97.24000000000001 97.24000000000001 0 0 1 56.88376206707993 209.42881253301988
- L 114.04 130.76
+      d="M 372.08000000000004 202.76000000000002
+ A 162.04000000000002 162.04000000000002 0 0 1 220.21457578452996 364.4802510745171
+ L 210.04000000000002 202.76000000000002
  Z"
-      fill="lightgreen" />
+      fill="#A3E4D7" />
     <path
-      d="M 56.88376206707993 209.42881253301988
- A 97.24000000000001 97.24000000000001 0 0 1 21.559264355459263 100.71118746698014
- L 114.04 130.76
+      d="M 220.21457578452996 364.4802510745171
+ A 162.04000000000002 162.04000000000002 0 0 1 48.319748925482884 212.93457578453
+ L 210.04000000000002 202.76000000000002
  Z"
-      fill="orange" />
+      fill="#EDBB99" />
     <path
-      d="M 21.559264355459263 100.71118746698014
- A 97.24000000000001 97.24000000000001 0 0 1 114.03999999999999 33.519999999999996
- L 114.04 130.76
+      d="M 48.319748925482884 212.93457578453
+ A 162.04000000000002 162.04000000000002 0 0 1 210.03999999999996 40.72000000000001
+ L 210.04000000000002 202.76000000000002
  Z"
-      fill="pink" />
+      fill="#D7BDE2" />
 
     <rect
       type="pie.legend"
       stroke="rgba(0,0,0,0)"
-      fill="lightblue"
-      x="228.08"
-      y="57.82999999999999"
-      width="24.310000000000002"
-      height="24.310000000000002"
+      fill="#AED6F1"
+      x="420.08000000000004"
+      y="81.23"
+      width="40.510000000000005"
+      height="40.510000000000005"
       stroke-width="1"
       filter="">
     </rect>
     <text tag="legend.label"
       fill="black"
-      x="272.39000000000004"
-      y="63.907499999999985"
+      x="480.59"
+      y="91.3575"
       font-size="12pt"
       font-weight="normal"
       font-family="Arial, Verdana, sans-serif"
@@ -69,25 +69,25 @@
       dominant-baseline="hanging"
       text-anchor="start"
     >
-      A-25
+      2008-25%
     </text>
 
 
     <rect
       type="pie.legend"
       stroke="rgba(0,0,0,0)"
-      fill="lightgreen"
-      x="228.08"
-      y="82.13999999999999"
-      width="24.310000000000002"
-      height="24.310000000000002"
+      fill="#A3E4D7"
+      x="420.08000000000004"
+      y="121.74"
+      width="40.510000000000005"
+      height="40.510000000000005"
       stroke-width="1"
       filter="">
     </rect>
     <text tag="legend.label"
       fill="black"
-      x="272.39000000000004"
-      y="88.21749999999997"
+      x="480.59"
+      y="131.8675"
       font-size="12pt"
       font-weight="normal"
       font-family="Arial, Verdana, sans-serif"
@@ -96,25 +96,25 @@
       dominant-baseline="hanging"
       text-anchor="start"
     >
-      B-35
+      2009-24%
     </text>
 
 
     <rect
       type="pie.legend"
       stroke="rgba(0,0,0,0)"
-      fill="orange"
-      x="228.08"
-      y="106.44999999999999"
-      width="24.310000000000002"
-      height="24.310000000000002"
+      fill="#EDBB99"
+      x="420.08000000000004"
+      y="162.25"
+      width="40.510000000000005"
+      height="40.510000000000005"
       stroke-width="1"
       filter="">
     </rect>
     <text tag="legend.label"
       fill="black"
-      x="272.39000000000004"
-      y="112.52749999999997"
+      x="480.59"
+      y="172.3775"
       font-size="12pt"
       font-weight="normal"
       font-family="Arial, Verdana, sans-serif"
@@ -123,25 +123,25 @@
       dominant-baseline="hanging"
       text-anchor="start"
     >
-      C-20
+      2010-25%
     </text>
 
 
     <rect
       type="pie.legend"
       stroke="rgba(0,0,0,0)"
-      fill="pink"
-      x="228.08"
-      y="130.76"
-      width="24.310000000000002"
-      height="24.310000000000002"
+      fill="#D7BDE2"
+      x="420.08000000000004"
+      y="202.76"
+      width="40.510000000000005"
+      height="40.510000000000005"
       stroke-width="1"
       filter="">
     </rect>
     <text tag="legend.label"
       fill="black"
-      x="272.39000000000004"
-      y="136.83749999999998"
+      x="480.59"
+      y="212.8875"
       font-size="12pt"
       font-weight="normal"
       font-family="Arial, Verdana, sans-serif"
@@ -150,7 +150,7 @@
       dominant-baseline="hanging"
       text-anchor="start"
     >
-      D-20
+      2011-26%
     </text>
 
 
