@@ -9,6 +9,10 @@
 
 The sample plots generated using <font color="darkblue"> **Matplotex**</font> are shown below.
 
+
+<img src="assets/images/bar_readme.svg"/>
+
+
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
 <img src="assets/images/line_plot_readme.svg" width="45%"/>
 <img src="assets/images/scatter_plot_readme.svg"width="45%"/>
