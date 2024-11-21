@@ -1,6 +1,14 @@
 # <img src="assets/images/matplotex_logo.png" height="50" /> Matplotex
 
-Matplotex is a lightweight, efficient library for Elixir projects that enables server-side SVG generation for data visualization, designed to integrate seamlessly with Phoenix LiveView.
+`matplotex` is a lightweight and efficient library for Elixir projects that facilitates server-side SVG generation for data visualization. Designed to integrate seamlessly with Phoenix LiveView, it serves as a powerful tool for creating dynamic visualizations in web applications. Below are the key benefits and extended use cases of Matplotex:
+
+- **Server-side SVG Generation:** Matplotex enables the creation of larger, complex plots on the server, ensuring smooth performance on client-side devices with limited memory.
+- **Efficient Concurrent Processing :** Leveraging Elixir’s concurrency capabilities, Matplotex can handle multiple requests simultaneously, making it ideal for high-performance applications.
+- **Cross-Project Compatibility :** While optimized for Elixir, Matplotex can also be used by non-Elixir projects through its API integration with the Phoenix framework, broadening its potential use cases.
+
+
+The sample plots generated using `matplotex` are shown below.
+
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
 <img src="assets/images/line_plot_readme.svg" width="45%"/>
 <img src="assets/images/scatter_plot_readme.svg"width="45%"/>
@@ -8,7 +16,7 @@ Matplotex is a lightweight, efficient library for Elixir projects that enables s
 <img src="assets/images/pie_readme.svg" width="50%" style="margin-bottom: 45px;"/>
 </div>
 
-### Installation
+## Installation
 
 The package can be installed by adding `matplotex` to your list of dependencies in `mix.exs`.
 
@@ -19,7 +27,7 @@ def deps do
 ]
 ```
 
-### Sample SVG generation
+## Sample SVG generation
 
 ```elixir
 x = [1, 3, 7, 4, 2, 5, 6]
@@ -52,16 +60,43 @@ x
 |> Matplotex.show()
 
 ```
+## Roadmap: What's Coming Next
+We are actively working on the following improvements and additions for the `matplotex` library:
 
-### Contributing
-We welcome contributions to the `matplotex` project! If you would like to improve the library, fix bugs, or add new features, please follow these steps:
-1. Fork the repository.
-2. Create a new branch (git checkout -b feature-name).
-3. Make your changes.
-4.  Add your changes to the branch  (git add \<changed files\>).
-5. Commit your changes (git commit -m 'Add new feature').
-6. Push to the branch (git push origin feature-name).
+- Compatability with Elixir Phoenix Liveview
+- Integration of GUI capabilities into matplotex
+- Support for the Nerves framework to enable real-time visualization of data, such as sensor readings
+
+Additionally, we are focused on expanding the library by adding a variety of new chart types to enhance its functionality.
+
+## Contribution
+We welcome all contributions to improve the `matplotex` project! Here are some key ways you can contribute:
+
+- **Propose Features :** Suggest new functionalities or improvements, including new plot additions.
+- **Report Bugs :** Identify and report issues in the library
+- **Review Pull Requests :** Review open contributions and share constructive feedback
+- **Fix Bugs :**  Help resolve reported issues to improve the library
+
+#### Steps to Contribute 
+1.  Fork the repository.
+2.  Create a new branch. 
+```elixir 
+    git checkout -b feature-name
+``` 
+3.  Make your changes.
+4.  Add your changes to the branch.  
+```elixir 
+    git add <changed files>
+```
+5.  Commit your changes. 
+```elixir 
+    git commit -m 'Add new feature' 
+```
+6.  Push to the branch. 
+```elixir 
+    git push origin feature-name 
+```
 7. Open a Pull Request.
 
-**Happy Contributing !!!**
+<font color="darkblue">  **Happy Contributing  !!!**</font>
 
