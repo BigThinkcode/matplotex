@@ -1,10 +1,10 @@
 # <img src="assets/images/matplotex_logo.png" height="50" /> Matplotex
 
-`matplotex` is a lightweight and efficient library for Elixir projects that facilitates server-side SVG generation for data visualization. Designed to integrate seamlessly with Phoenix LiveView, it serves as a powerful tool for creating dynamic visualizations in web applications. Below are the key benefits and extended use cases of Matplotex:
+`matplotex` is a lightweight and efficient library for Elixir projects that facilitates server-side SVG generation for data visualization. Designed to integrate seamlessly with Phoenix LiveView, it serves as a powerful tool for creating dynamic visualizations in web applications. Below are the key benefits and extended use cases of `matplotex`:
 
-- **Server-side SVG Generation:** Matplotex enables the creation of larger, complex plots on the server, ensuring smooth performance on client-side devices with limited memory.
-- **Efficient Concurrent Processing :** Leveraging Elixir’s concurrency capabilities, Matplotex can handle multiple requests simultaneously, making it ideal for high-performance applications.
-- **Cross-Project Compatibility :** While optimized for Elixir, Matplotex can also be used by non-Elixir projects through its API integration with the Phoenix framework, broadening its potential use cases.
+- **Server-side SVG Generation:** `matplotex` enables the creation of larger, complex plots on the server, ensuring smooth performance on client-side devices with limited memory.
+- **Efficient Concurrent Processing :** Leveraging Elixir’s concurrency capabilities, `matplotex` can handle multiple requests simultaneously, making it ideal for high-performance applications.
+- **Cross-Project Compatibility :** While optimized for Elixir, `matplotex` can also be used by non-Elixir projects through its API integration with the Phoenix framework, broadening its potential use cases.
 
 
 The sample plots generated using `matplotex` are shown below.
@@ -63,11 +63,12 @@ x
 ## Roadmap: What's Coming Next
 We are actively working on the following improvements and additions for the `matplotex` library:
 
-- Compatability with Elixir Phoenix Liveview
-- Integration of GUI capabilities into matplotex
-- Support for the Nerves framework to enable real-time visualization of data, such as sensor readings
+#### Upcoming Features for Matplotex:
+- **Compatibility with Elixir Phoenix LiveView :** Seamless integration with Phoenix LiveView for real-time data visualization in web applications.
+- **GUI Integration :** Adding graphical user interface (GUI) capabilities to `matplotex`, providing an intuitive and user-friendly experience for generating plots.
+- **Support for the Nerves Framework :** Enabling real-time data visualization for embedded systems, such as sensor readings, using the Nerves framework.
 
-Additionally, we are focused on expanding the library by adding a variety of new chart types to enhance its functionality.
+Additionally, we are focused on expanding the library with a variety of new chart types to enhance its functionality and versatility. The upcoming `matplotex` version will also include the official Hex package, featuring all the basic chart types!!!
 
 ## Contribution
 We welcome all contributions to improve the `matplotex` project! Here are some key ways you can contribute:
