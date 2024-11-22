@@ -271,4 +271,25 @@ defmodule Matplotex.Helpers do
     |> Matplotex.show()
     |> copy()
   end
+
+
+def photon_scatter() do
+  {density, energy}  = "samples/photon.csv"
+    |>Path.expand()
+    |>File.stream!()
+    |>CSV.decode!()
+    |>Stream.drop(1)
+    |>Stream.map(fn [density, energy, _continent, _emission, _, _] ->
+          {String.to_float(density),  String.to_float(energy)}
+        end)
+    |>Enum.unzip()
+
+    Matplotex.scatter(density, energy, color: "#FBD1A2", marker: "o", label: "Photo energy")
+    |> Matplotex.figure(%{figsize: {10, 4}, margin: 0.05})
+    |> Matplotex.set_title("Photon density and photon energy")
+    |> Matplotex.set_xlabel("Photon density")
+    |> Matplotex.set_ylabel("Photon energy")
+    |> Matplotex.show()
+    |> copy()
+end
 end
