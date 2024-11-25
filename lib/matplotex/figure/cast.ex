@@ -66,6 +66,28 @@ defmodule Matplotex.Figure.Cast do
     raise ArgumentError, message: "Figure does't contain enough data to proceed"
   end
 
+  def cast_border(
+        %Figure{
+          axes: %{border: {lx, by, rx, ty}, element: element} = axes,
+          rc_params: %RcParams{line_width: line_width}
+        } = figure
+      ) do
+    left = %Line{x1: lx, y1: by, x2: lx, y2: ty, type: "border.left", stroke_width: line_width}
+    right = %Line{x1: rx, y1: by, x2: rx, y2: ty, type: "border.right", stroke_width: line_width}
+    top = %Line{x1: lx, x2: rx, y1: ty, y2: ty, type: "border.top", stroke_width: line_width}
+
+    bottom = %Line{
+      x1: lx,
+      x2: rx,
+      y1: by,
+      y2: by,
+      type: "border.bottom",
+      stroke_width: line_width
+    }
+
+    %Figure{figure | axes: %{axes | element: element ++ [left, right, top, bottom]}}
+  end
+
   def cast_title(
         %Figure{
           axes:

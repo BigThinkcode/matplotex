@@ -40,6 +40,15 @@ defmodule Matplotex.Figure.Lead do
     |> set_border_coords()
   end
 
+  def set_border(%Figure{margin: margin, axes: axes, figsize: {fig_width, fig_height}} = figure) do
+    margin = margin / 2
+    lx = fig_width * margin
+    by = fig_height * margin
+    rx = fig_width - fig_width * margin
+    ty = fig_height - fig_height * margin
+    %Figure{figure | axes: %{axes | border: {lx, by, rx, ty}}}
+  end
+
   defp set_xlabel_coords(%Figure{axes: %{tick: %{y: nil}, show_y_ticks: true}} = figure) do
     figure
     |> generate_yticks()

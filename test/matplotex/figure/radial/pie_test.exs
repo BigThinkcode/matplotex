@@ -20,6 +20,20 @@ defmodule Matplotex.Figure.Radial.PieTest do
   end
 
   describe "materialize/1" do
+    test "materialized figure contains elements for border" do
+      # Percentages for each slice
+      sizes = [25, 35, 20, 20]
+      # Labels for each slice
+      labels = ["Category A", "Category B", "Category C", "Category D"]
+      # Colors for the slices
+      colors = ["lightblue", "lightgreen", "orange", "pink"]
+      figure = Pie.create(%Figure{axes: %Pie{}}, sizes, labels: labels, colors: colors)
+      assert %Figure{axes: %{element: element}} = Pie.materialize(figure)
+
+      assert Enum.filter(element, fn elem -> String.contains?(elem.type, "border") end)
+             |> length() == 4
+    end
+
     test "materialized figure contains elements for slices" do
       # Percentages for each slice
       sizes = [25, 35, 20, 20]
