@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Areal.LinePlot do
+  alias Matplotex.Figure.Areal.Ticker
   alias Matplotex.Figure.Marker
   alias Matplotex.Figure.Dataset
   alias Matplotex.Figure.Areal
@@ -6,7 +7,6 @@ defmodule Matplotex.Figure.Areal.LinePlot do
   alias Matplotex.Element.Line
   alias Matplotex.Figure.Coords
   alias Matplotex.Figure
-  import Matplotex.Figure.Numer
 
   use Matplotex.Figure.Areal
 
@@ -78,15 +78,14 @@ defmodule Matplotex.Figure.Areal.LinePlot do
     {data, min_max(data)}
   end
 
-  def generate_ticks(data) do
-    {min, max} = lim = Enum.min_max(data)
-    step = (max - min) / (length(data) - 1)
-    {min..max |> Enum.into([], fn d -> d * round(step) end), lim}
+  def generate_ticks(data) when is_list(data) do
+    lim = Enum.min_max(data)
+
+    {Ticker.generate_ticks(lim), lim}
   end
 
-  def generate_ticks(side, {min, max} = lim) do
-    step = (max - min) / (side * 2)
-    {min..max |> Enum.into([], fn d -> d * round_to_best(step) end), lim}
+  def generate_ticks({_min, _max} = lim) do
+    {Ticker.generate_ticks(lim), lim}
   end
 
   defp capture(%Dataset{transformed: transformed} = dataset) do

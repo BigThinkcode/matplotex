@@ -15,12 +15,13 @@ defmodule Matplotex.Figure.Areal.ScatterTest do
   end
 
   describe "generate_ticks/2" do
-    test "generate ticks in a length of figure size" do
+    test "5 ticks will generate by default" do
       minmax = {1, 10}
       # inch
-      side = 10
-      {ticks, _lim} = Scatter.generate_ticks(side, minmax)
-      assert length(ticks) == side
+
+      {ticks, _lim} = Scatter.generate_ticks(minmax)
+      # 5 ticks added with minimum value
+      assert length(ticks) == 6
     end
   end
 end

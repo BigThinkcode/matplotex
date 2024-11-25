@@ -73,7 +73,7 @@ defmodule Matplotex.Figure.Areal do
       end
 
       def add_ticks(%__MODULE__{tick: tick, size: size} = axes, {key, {_min, _max} = lim}) do
-        {ticks, lim} = __MODULE__.generate_ticks(size, lim)
+        {ticks, lim} = __MODULE__.generate_ticks(lim)
 
         tick = Map.put(tick, key, ticks)
 

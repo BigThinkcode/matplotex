@@ -89,7 +89,7 @@ defmodule Matplotex.Figure do
   end
 
   defp update_rc_params(%__MODULE__{rc_params: rc_params} = figure, params) do
-    rc_params = struct(rc_params, params)
+    rc_params = rc_params |> struct(params) |> RcParams.update_with_font(params)
     %{figure | rc_params: rc_params}
   end
 

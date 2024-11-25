@@ -16,4 +16,16 @@ defmodule Matplotex.Figure.Font do
   def font_keys() do
     Map.keys(%__MODULE__{}) -- [:__struct__]
   end
+
+  def create(font_size) when is_number(font_size) do
+    %__MODULE__{font_size: font_size}
+  end
+
+  def create(params) do
+    struct(__MODULE__, params)
+  end
+
+  def update(font, params) do
+    struct(font, params)
+  end
 end
