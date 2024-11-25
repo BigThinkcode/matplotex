@@ -305,7 +305,7 @@ values = [18.48923375,
     |> Matplotex.pie(colors: colors, labels: categories)
     |> Matplotex.set_title("Asias Emission distribution(2008-2011)")
     |> Matplotex.set_rc_params(%{line_width: 1})
-    |> Matplotex.figure(%{figsize: {10, 4}, margin: 0.05})
+    |> Matplotex.figure(%{figsize: {10, 4}, margin: 0.15})
     |> Matplotex.show()
     |> copy()
   end
