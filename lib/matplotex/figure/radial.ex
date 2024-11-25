@@ -18,13 +18,14 @@ defmodule Matplotex.Figure.Radial do
       alias Matplotex.Figure.Cast
 
       def add_title(axes, title, opts) when is_binary(title) do
-        # title = Text.create_text(title, opts)
         %{axes | title: title, show_title: true}
       end
 
       def materialized(figure) do
         figure
         |> Lead.focus_to_origin()
+        |> Lead.set_border()
+        |> Cast.cast_border()
         |> Cast.cast_title()
       end
     end

@@ -129,23 +129,49 @@ defmodule Matplotex.Figure.RcParams do
     |> update_font(params, :title_font)
   end
 
-  defp update_font(%__MODULE__{x_label_font: x_label_font} = rc_params, %{x_label_font_size: x_label_font_size}, :x_label_font) do
-    %__MODULE__{rc_params | x_label_font: Font.update(x_label_font, %{font_size: x_label_font_size})}
+  defp update_font(
+         %__MODULE__{x_label_font: x_label_font} = rc_params,
+         %{x_label_font_size: x_label_font_size},
+         :x_label_font
+       ) do
+    %__MODULE__{
+      rc_params
+      | x_label_font: Font.update(x_label_font, %{font_size: x_label_font_size})
+    }
   end
 
-  defp update_font(%__MODULE__{y_label_font: y_label_font} = rc_params, %{y_label_font_size: y_label_font_size}, :y_label_font) do
-    %__MODULE__{rc_params | y_label_font: Font.update(y_label_font,%{font_size: y_label_font_size})}
+  defp update_font(
+         %__MODULE__{y_label_font: y_label_font} = rc_params,
+         %{y_label_font_size: y_label_font_size},
+         :y_label_font
+       ) do
+    %__MODULE__{
+      rc_params
+      | y_label_font: Font.update(y_label_font, %{font_size: y_label_font_size})
+    }
   end
 
-  defp update_font(%__MODULE__{x_tick_font: x_tick_font} = rc_params, %{x_tick_font_size: x_tick_font_size}, :x_tick_font) do
+  defp update_font(
+         %__MODULE__{x_tick_font: x_tick_font} = rc_params,
+         %{x_tick_font_size: x_tick_font_size},
+         :x_tick_font
+       ) do
     %__MODULE__{rc_params | x_tick_font: Font.update(x_tick_font, %{font_size: x_tick_font_size})}
   end
 
-  defp update_font(%__MODULE__{y_tick_font: y_tick_font} = rc_params, %{y_tick_font_size: y_tick_font_size}, :y_tick_font) do
+  defp update_font(
+         %__MODULE__{y_tick_font: y_tick_font} = rc_params,
+         %{y_tick_font_size: y_tick_font_size},
+         :y_tick_font
+       ) do
     %__MODULE__{rc_params | y_tick_font: Font.update(y_tick_font, %{font_size: y_tick_font_size})}
   end
 
-  defp update_font(%__MODULE__{title_font: title_font} = rc_params, %{title_font_size: title_font_size}, :title_font) do
+  defp update_font(
+         %__MODULE__{title_font: title_font} = rc_params,
+         %{title_font_size: title_font_size},
+         :title_font
+       ) do
     %__MODULE__{rc_params | title_font: Font.update(title_font, %{font_size: title_font_size})}
   end
 

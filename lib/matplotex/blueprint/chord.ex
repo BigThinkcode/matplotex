@@ -28,7 +28,8 @@ defmodule Matplotex.Blueprint.Chord do
                       label: @true_by_default,
                       show_title: @true_by_default,
                       element: [],
-                      legend_pos: nil
+                      legend_pos: nil,
+                      border: nil
                     ]
                     |> Keyword.merge(opts)
                   )

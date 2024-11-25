@@ -101,7 +101,8 @@ defmodule Matplotex.Figure.Radial.Pie do
          radius,
          total_size
        ) do
-    angle_for_size = size / total_size * @full_circle + start_angle
+    percentage = size / total_size
+    angle_for_size = percentage * @full_circle + start_angle
     {x2, y2} = sector_by_angle(center, angle_for_size, radius)
 
     slice = %Slice{
@@ -112,6 +113,7 @@ defmodule Matplotex.Figure.Radial.Pie do
       y2: y2,
       radius: radius,
       data: size,
+      percentage: percentage,
       color: color,
       cx: cx,
       cy: cy
@@ -127,7 +129,7 @@ defmodule Matplotex.Figure.Radial.Pie do
         color: color,
         width: legend_unit_width,
         height: legend_unit_height,
-        label: "#{label}-#{size}"
+        label: "#{label}-#{Float.ceil(percentage * 100, 2)}%"
       }
       |> RadLegend.with_label()
 
