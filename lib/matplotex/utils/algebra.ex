@@ -34,11 +34,11 @@ defmodule Matplotex.Utils.Algebra do
     |> then(fn [x_trans, y_trans, _] -> {x_trans, y_trans} end)
   end
 
-  def rotation({x, y}, theeta) do
+  def rotation({x, y}, theta) do
     Nx.tensor(
       [
-        [:math.cos(theeta), -:math.sin(theeta)],
-        [:math.sin(theeta), :math.sin(theeta)]
+        [:math.cos(theta), -:math.sin(theta)],
+        [:math.sin(theta), :math.sin(theta)]
       ],
       type: {:f, @tensor_data_type_bits}
     )
@@ -48,4 +48,23 @@ defmodule Matplotex.Utils.Algebra do
   end
 
   def svgfy(y, height), do: height - y
+
+  def transform_given_point(ox, oy, theta, px, py) do
+    Nx.tensor(
+      [
+        [:math.cos(theta), -:math.sin(theta), ox],
+        [:math.sin(theta), :math.cos(theta), oy],
+        [0, 0, 1]
+      ],
+      type: {:f, @tensor_data_type_bits}
+    )
+    |> Nx.dot(Nx.tensor([px, py, 1], type: {:f, @tensor_data_type_bits}))
+    |> Nx.to_flat_list()
+    |> List.to_tuple()
+    |> then(fn {x, y, _} -> {x, y} end)
+  end
+
+  def flip_y_coordinate(x, y) do
+    {x, -y}
+  end
 end
