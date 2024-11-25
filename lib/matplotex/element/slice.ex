@@ -2,7 +2,7 @@ defmodule Matplotex.Element.Slice do
   alias Matplotex.Element
   use Element
 
-  defstruct [:type, :x1, :y1, :x2, :y2, :cx, :cy, :data, :radius, :color, :label, :legend]
+  defstruct [:type, :x1, :y1, :x2, :y2, :cx, :cy, :data,:percentage, :radius, :color, :label, :legend]
   # TODO: change the fucntion name assemble to to_svg
 
   @impl Element
