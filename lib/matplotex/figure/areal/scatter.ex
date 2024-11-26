@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Areal.Scatter do
+  alias Matplotex.Figure.Region
   alias Matplotex.Figure.Areal.Ticker
   alias Matplotex.Figure.Marker
   alias Matplotex.Figure.Dataset
@@ -17,7 +18,12 @@ defmodule Matplotex.Figure.Areal.Scatter do
     dimension: %Dimension{},
     tick: %TwoD{},
     limit: %TwoD{},
-    label: %TwoD{}
+    label: %TwoD{},
+    region_x: %Region{},
+    region_y: %Region{},
+    region_title: %Region{},
+    region_legend: %Region{},
+    region_content: %Region{}
   )
 
   @impl Areal

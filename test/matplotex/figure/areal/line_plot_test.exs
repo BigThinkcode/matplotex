@@ -58,4 +58,14 @@ defmodule Matplotex.Figure.Areal.LinePlotTest do
       assert Enum.any?(element, fn line -> line.fill == "green" && line.linestyle == "-." end)
     end
   end
+
+  describe "create/2" do
+    test "created with all regions", %{figure: figure} do
+      assert Map.has_key?(figure.axes, :region_x)
+      assert Map.has_key?(figure.axes, :region_y)
+      assert Map.has_key?(figure.axes, :region_title)
+      assert Map.has_key?(figure.axes, :region_legend)
+      assert Map.has_key?(figure.axes, :region_content)
+    end
+  end
 end
