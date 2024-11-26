@@ -1,5 +1,5 @@
 defmodule Matplotex.Figure.LeadTest do
-  alias Matplotex.Figure.Region
+  alias Matplotex.Figure.Areal.Region
   alias Matplotex.Figure.Coords
   alias Matplotex.Figure.LinePlot
   alias Matplotex.Figure
@@ -13,7 +13,22 @@ defmodule Matplotex.Figure.LeadTest do
 
   setup do
     figure = Matplotex.FrameHelpers.sample_figure()
-    {:ok, %{figure: figure}}
+
+    frame_width = 8
+    frame_height = 6
+    size = {frame_width, frame_height}
+    margin = 0.1
+    x = [1, 3, 7, 4, 2, 5, 6]
+    y = [1, 3, 7, 4, 2, 5, 6]
+    ticks = [1, 2, 3, 4, 5, 6, 7]
+    figure2 =
+      x
+      |> Matplotex.plot(y)
+      |> Matplotex.figure(%{figsize: size, margin: margin})
+      |> Matplotex.set_title("The Plot Title")
+      |> Matplotex.set_xticks(ticks)
+    |> Matplotex.set_yticks(ticks)
+    {:ok, %{figure: figure, figure2: figure2}}
   end
 
   describe "set_spines/1" do
@@ -235,7 +250,7 @@ defmodule Matplotex.Figure.LeadTest do
   end
 
   describe "set_regions/1" do
-    test "sets retion_x", %{figure: figure} do
+    test "sets region_xy", %{figure2: figure} do
       assert %Figure{
                axes: %{
                  region_x: %Region{x: rxx, y: rxy, width: rxwidth, height: rxheight},
@@ -243,9 +258,21 @@ defmodule Matplotex.Figure.LeadTest do
                }
              } = Lead.set_regions(figure)
 
-            assert Enum.all?([rxx, rxwidth, rxheight,ryy, rywidth, ryheight], & &1 > 0)
-            assert Enum.all?([rxy, ryx], & &1==0)
+      assert Enum.all?([rxx, rxwidth,rxheight, ryy, rywidth, ryheight], &(&1 > 0))
+      assert Enum.all?([rxy, ryx], &(&1 ==0))
 
-        end
+    end
+    test "set region title updates the values for titles space", %{figure2: figure} do
+      assert %Figure{
+               axes: %{
+                 region_title: %Region{x: rtx, y: rty, width: rtwidth, height: rtheight}
+               }
+             } = Lead.set_regions(figure)
+
+             assert Enum.all?([rtx, rty, rtwidth, rtheight], & &1> 0)
+
+
+
+    end
   end
 end

@@ -1,6 +1,7 @@
 defmodule Matplotex.Figure.Lead do
+  alias Matplotex.Figure.Areal.XyRegion.Coords, as: XyCoords
   alias Matplotex.Figure.Font
-  alias Matplotex.Figure.Region
+  alias Matplotex.Figure.Areal.Region
   alias Matplotex.Figure.TwoD
   alias Matplotex.Figure.Dimension
   alias Matplotex.Figure.Coords
@@ -21,12 +22,13 @@ defmodule Matplotex.Figure.Lead do
   end
 
   def set_regions(%Figure{} = figure) do
+
     figure
     |> set_region_xy()
-
-    # |>set_region_title()
+    |> set_region_title()
     # |>set_region_legend()
     # |>set_region_content()
+    # |> set_border()
   end
 
   def set_border(%Figure{margin: margin, axes: axes, figsize: {fig_width, fig_height}} = figure) do
@@ -63,14 +65,14 @@ defmodule Matplotex.Figure.Lead do
     y_tick = Enum.max_by(y_ticks, &tick_length(&1))
     space_for_yticks = length_required_for_text(y_tick_font, y_tick)
 
-    space_required_for_region_y =
+    x_region_x = space_required_for_region_y =
       [space_for_ylabel, y_tick, space_for_yticks, label_padding, tick_line_length] |> Enum.sum()
 
     space_for_x_label = height_required_for_text(x_label_font, x_label)
     x_tick = Enum.max_by(x_ticks, &tick_length/1)
     space_for_x_tick = height_required_for_text(x_tick_font, x_tick)
 
-    space_required_for_region_x =
+    y_region_y = space_required_for_region_x =
       [space_for_x_label, x_tick, space_for_x_tick, label_padding, tick_line_length] |> Enum.sum()
 
     %Figure{
@@ -79,20 +81,44 @@ defmodule Matplotex.Figure.Lead do
           axes
           | region_x: %Region{
               region_x
-              | x: space_required_for_region_y,
+              | x: x_region_x ,
                 y: 0,
                 height: space_required_for_region_x,
-                width: f_width - space_required_for_region_y
+                width: f_width - space_required_for_region_y,
+                coords: %XyCoords{label: {x_region_x, 0}, ticks: {x_region_x, space_for_x_label}}
             },
             region_y: %Region{
               region_y
               | x: 0,
-                y: space_required_for_region_x,
+                y: y_region_y,
                 width: space_required_for_region_y,
-                height: f_height - space_required_for_region_x
+                height: f_height - space_required_for_region_x,
+                coords: %XyCoords{label: {0, y_region_y}, ticks: {space_for_x_label, y_region_y}}
             }
         }
     }
+  end
+  defp set_region_xy(figure), do: figure
+
+  defp set_region_title(%Figure{figsize: {_f_width, f_height}, axes: %{title: title, region_x: %Region{width: region_x_width}, region_y: %Region{width: region_y_width, height: region_y_height} = region_y, region_title: region_title} = axes, rc_params: %RcParams{title_font: title_font}} = figure) do
+    space_for_title = height_required_for_text(title_font, title)
+
+    %Figure{
+      figure
+      | axes: %{
+          axes
+          | region_title: %Region{
+              region_title
+              | x: region_y_width,
+                y: f_height - space_for_title,
+                width: region_x_width,
+                height: space_for_title,
+          },
+          region_y: %Region{
+            region_y |
+            height: region_y_height - space_for_title
+          }
+          }}
   end
 
   defp set_xlabel_coords(%Figure{axes: %{tick: %{y: nil}, show_y_ticks: true}} = figure) do
