@@ -1,3 +1,3 @@
 defmodule Matplotex.Figure.Region do
-  defstruct [:x, :y, :width, :height, :name, :transition]
+  defstruct [:x, :y, :width, :height, :name, :theta]
 end
