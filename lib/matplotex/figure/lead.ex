@@ -60,14 +60,14 @@ defmodule Matplotex.Figure.Lead do
        ) do
     # region_x = %Region{x: total space required for ylabel plus yticks plus ytickline plus ypadding y: 0}
     space_for_ylabel = height_required_for_text(y_label_font, y_label)
-    y_tick = Enum.max_by(y_ticks, &String.length/1)
+    y_tick = Enum.max_by(y_ticks, &tick_length(&1))
     space_for_yticks = length_required_for_text(y_tick_font, y_tick)
 
     space_required_for_region_y =
       [space_for_ylabel, y_tick, space_for_yticks, label_padding, tick_line_length] |> Enum.sum()
 
     space_for_x_label = height_required_for_text(x_label_font, x_label)
-    x_tick = Enum.max_by(x_ticks, &String.length/1)
+    x_tick = Enum.max_by(x_ticks, &tick_length/1)
     space_for_x_tick = height_required_for_text(x_tick_font, x_tick)
 
     space_required_for_region_x =
@@ -384,7 +384,7 @@ defmodule Matplotex.Figure.Lead do
          text
        ) do
     text_height = font_size * pt_to_inch_ratio
-    text_length = String.length(text) * pt_to_inch_ratio
+    text_length = tick_length(text) * pt_to_inch_ratio
     rotation = deg_to_rad(rotation)
     height_for_rotation = :math.sin(rotation) * text_length
     text_height + height_for_rotation + flate
@@ -399,7 +399,7 @@ defmodule Matplotex.Figure.Lead do
          },
          text
        ),
-       do: String.length(text) * font_size * pt_to_inch_ratio + flate
+       do: tick_length(text) * font_size * pt_to_inch_ratio + flate
 
   defp length_required_for_text(
          %Font{
@@ -410,7 +410,7 @@ defmodule Matplotex.Figure.Lead do
          },
          text
        ) do
-    text_length = String.length(text) * pt_to_inch_ratio
+    text_length = tick_length(text) * font_size * pt_to_inch_ratio
     rotation = deg_to_rad(rotation)
     leng_for_rotation = :math.cos(rotation) * text_length
     leng_for_rotation + flate

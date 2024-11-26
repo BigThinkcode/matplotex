@@ -236,7 +236,16 @@ defmodule Matplotex.Figure.LeadTest do
 
   describe "set_regions/1" do
     test "sets retion_x", %{figure: figure} do
-      assert %Figure{axes: %{region_x: %Region{x: x, y: y}}} = Lead.set_regions(figure)
-    end
+      assert %Figure{
+               axes: %{
+                 region_x: %Region{x: rxx, y: rxy, width: rxwidth, height: rxheight},
+                 region_y: %Region{x: ryx, y: ryy, width: rywidth, height: ryheight}
+               }
+             } = Lead.set_regions(figure)
+
+            assert Enum.all?([rxx, rxwidth, rxheight,ryy, rywidth, ryheight], & &1 > 0)
+            assert Enum.all?([rxy, ryx], & &1==0)
+
+        end
   end
 end
