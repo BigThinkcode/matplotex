@@ -294,13 +294,11 @@ defmodule Matplotex.Helpers do
   end
 
   def emission_pie() do
-    categories = ["2008","2009","2010","2011"]
-values = [18.48923375,
-17.1923791,
-17.48479218,
-17.02021634]
+    categories = ["2008", "2009", "2010", "2011"]
+    values = [18.48923375, 17.1923791, 17.48479218, 17.02021634]
 
- colors = ["#76b5c5","#DEDEDE","#FBD1A2","#6195B4"]
+    colors = ["#76b5c5", "#DEDEDE", "#FBD1A2", "#6195B4"]
+
     values
     |> Matplotex.pie(colors: colors, labels: categories)
     |> Matplotex.set_title("Asias Emission distribution(2008-2011)")

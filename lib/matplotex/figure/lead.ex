@@ -1,4 +1,6 @@
 defmodule Matplotex.Figure.Lead do
+  alias Matplotex.Figure.Font
+  alias Matplotex.Figure.Region
   alias Matplotex.Figure.TwoD
   alias Matplotex.Figure.Dimension
   alias Matplotex.Figure.Coords
@@ -8,28 +10,6 @@ defmodule Matplotex.Figure.Lead do
   @padding 10 / 96
   @tick_line_offset 5 / 96
 
-  # def set_spines(%Figure{} = figure) do
-  #   # {{width, height}, {bottom_left, top_left, bottom_right, top_right}} =
-  #   {%Figure{axes: axes}, {width, height}} =
-  #     figure
-  #     |> peel_margin()
-  #     |> peel_label_offsets()
-  #     |> peel_title_offset()
-  #     |> peel_tick_offsets()
-  #     |> calculate_corners()
-  #     |> peel_margin()
-
-  #   axes = %{
-  #     axes
-  #     | size: %{width: width * @dpi, height: height * @dpi}
-  #   }
-
-  #   %Figure{figure | axes: axes}
-  # end
-
-  # def set_spines(_) do
-  #   raise ArgumentError, message: "Invalid figure to proceed"
-  # end
   def set_spines(%Figure{} = figure) do
     figure
     |> set_xlabel_coords()
@@ -40,6 +20,15 @@ defmodule Matplotex.Figure.Lead do
     |> set_border_coords()
   end
 
+  def set_regions(%Figure{} = figure) do
+    figure
+    |> set_region_xy()
+
+    # |>set_region_title()
+    # |>set_region_legend()
+    # |>set_region_content()
+  end
+
   def set_border(%Figure{margin: margin, axes: axes, figsize: {fig_width, fig_height}} = figure) do
     margin = margin / 2
     lx = fig_width * margin
@@ -47,6 +36,63 @@ defmodule Matplotex.Figure.Lead do
     rx = fig_width - fig_width * margin
     ty = fig_height - fig_height * margin
     %Figure{figure | axes: %{axes | border: {lx, by, rx, ty}}}
+  end
+
+  defp set_region_xy(
+         %Figure{
+           figsize: {f_width, f_height},
+           axes:
+             %{
+               region_x: region_x,
+               region_y: region_y,
+               label: %TwoD{y: y_label, x: x_label},
+               tick: %TwoD{y: y_ticks, x: x_ticks}
+             } = axes,
+           rc_params: %RcParams{
+             x_label_font: x_label_font,
+             x_tick_font: x_tick_font,
+             y_label_font: y_label_font,
+             y_tick_font: y_tick_font,
+             label_padding: label_padding,
+             tick_line_length: tick_line_length
+           }
+         } = figure
+       ) do
+    # region_x = %Region{x: total space required for ylabel plus yticks plus ytickline plus ypadding y: 0}
+    space_for_ylabel = height_required_for_text(y_label_font, y_label)
+    y_tick = Enum.max_by(y_ticks, &String.length/1)
+    space_for_yticks = length_required_for_text(y_tick_font, y_tick)
+
+    space_required_for_region_y =
+      [space_for_ylabel, y_tick, space_for_yticks, label_padding, tick_line_length] |> Enum.sum()
+
+    space_for_x_label = height_required_for_text(x_label_font, x_label)
+    x_tick = Enum.max_by(x_ticks, &String.length/1)
+    space_for_x_tick = height_required_for_text(x_tick_font, x_tick)
+
+    space_required_for_region_x =
+      [space_for_x_label, x_tick, space_for_x_tick, label_padding, tick_line_length] |> Enum.sum()
+
+    %Figure{
+      figure
+      | axes: %{
+          axes
+          | region_x: %Region{
+              region_x
+              | x: space_required_for_region_y,
+                y: 0,
+                height: space_required_for_region_x,
+                width: f_width - space_required_for_region_y
+            },
+            region_y: %Region{
+              region_y
+              | x: 0,
+                y: space_required_for_region_x,
+                width: space_required_for_region_y,
+                height: f_height - space_required_for_region_x
+            }
+        }
+    }
   end
 
   defp set_xlabel_coords(%Figure{axes: %{tick: %{y: nil}, show_y_ticks: true}} = figure) do
@@ -273,58 +319,6 @@ defmodule Matplotex.Figure.Lead do
 
   # TODO: Sort out how the user gets the control on font of the all texts
 
-  # defp calculate_corners(
-  #        {%Figure{axes: %{coords: coords} = axes, figsize: {f_width, f_height}, margin: margin} =
-  #           figure, {width, height}}
-  #      ) do
-  #   by = f_height - height
-  #   ty = f_height - f_height * margin
-  #   lx = f_width - width
-  #   rx = f_width - f_width * margin
-
-  #   {%Figure{
-  #      figure
-  #      | axes: %{
-  #          axes
-  #          | coords: %{
-  #              coords
-  #              | bottom_left: {lx * @dpi, by * @dpi},
-  #                top_left: {lx * @dpi, ty * @dpi},
-  #                bottom_right: {rx * @dpi, by * @dpi},
-  #                top_right: {rx * @dpi, ty * @dpi}
-  #            }
-  #        }
-  #    }, {width, height}}
-  # end
-
-  # defp peel_margin(
-  #        %Figure{figsize: {width, height}, axes: %{coords: coords} = axes, margin: margin} =
-  #          figure
-  #      ) do
-  #   label_coords = {width * margin, height * margin}
-
-  #   {%Figure{
-  #      figure
-  #      | axes: %{
-  #          axes
-  #          | coords: %{
-  #              coords
-  #              | title: {width * margin, height - height * margin},
-  #                y_label: label_coords,
-  #                x_label: label_coords
-  #            }
-  #        }
-  #    }, {width - width * margin, height - height * margin}}
-  # end
-
-  # # defp peel_margin({width, height, corners}, margin, {f_width, f_height}) do
-  # #   {{width - f_width * margin, height - f_height * margin}, corners}
-  # # end
-  # defp peel_margin(
-  #        {%Figure{figsize: {f_width, f_height}, margin: margin} = figure, {width, height}}
-  #      ) do
-  #   {figure, {width - f_width * margin, height - f_height * margin}}
-  # end
   defp label_offset(nil, _font_size), do: 0
   defp label_offset("", _font_size), do: 0
 
@@ -336,45 +330,6 @@ defmodule Matplotex.Figure.Lead do
     font_size * @pt_to_inch + @padding
   end
 
-  # defp peel_label_offsets(
-  #        {%Figure{
-  #           axes: %{coords: %Coords{x_label: {xlx, xly}, y_label: {ylx, yly}} = coords, label: %{}} = axes,
-  #           rc_params: rc_params
-  #         } = figure, {width, height}}
-  #      ) do
-  #   x_label_font_size = RcParams.get_rc(rc_params, :get_x_label_font_size)
-  #   y_label_font_size = RcParams.get_rc(rc_params, :get_y_label_font_size)
-
-  #   x_label_offset = x_label_font_size * @pt_to_inch + @padding
-  #   y_label_offset = y_label_font_size * @pt_to_inch + @padding
-
-  #   {%Figure{
-  #      figure
-  #      | axes: %{
-  #          axes
-  #          | coords: %{
-  #              coords
-  #              | x_ticks: {xlx + y_label_offset, xly - x_label_offset},
-  #                y_ticks: {ylx + y_label_offset, yly - x_label_offset}
-  #            }
-  #        }
-  #    }, {width - x_label_offset, height - y_label_offset}}
-  # end
-
-  # defp peel_title_offset(
-  #        {%Figure{
-  #           rc_params: rc_params,
-  #           axes: %{title: title, coords: %Coords{title: {tx, ty}} = coords} = axes
-  #         } = figure, {width, height}}
-  #      ) do
-  #   title_font_size = RcParams.get_rc(rc_params, :get_title_font_size)
-
-  #   title_offset = title_font_size * @pt_to_inch + @padding
-  #   top_left = {tx, ty - title_offset}
-
-  #   {%Figure{figure | axes: %{axes | title: %{title | height: title_offset * @dpi}, coords: %Coords{coords | top_left: {tlx, tly}}}}, {width, height - title_offset}}
-  # end
-
   defp ytick_offset(y_ticks, font_size) do
     tick_size = y_ticks |> Enum.max_by(fn tick -> tick_length(tick) end) |> tick_length()
     font_size * @pt_to_inch * tick_size + @tick_line_offset + @padding
@@ -383,29 +338,6 @@ defmodule Matplotex.Figure.Lead do
   defp xtick_offset(xticks, font_size) do
     label_offset(xticks, font_size) + @tick_line_offset
   end
-
-  # defp peel_tick_offsets(
-  #        {%Figure{
-  #           rc_params: rc_params,
-  #           axes: %{tick: %{y: y_ticks}, coords: %Coords{x_ticks: {xtx, _}} = coords} = axes,
-  #           margin: margin,
-  #           figsize: {_width, figheight}
-  #         } = figure, {width, height}}
-  #      ) do
-  #   tick_size = y_ticks |> Enum.max_by(fn tick -> tick_length(tick) end) |> tick_length()
-  #   y_tick_font_size = RcParams.get_rc(rc_params, :get_y_tick_font_size)
-  #   x_tick_font_size = RcParams.get_rc(rc_params, :get_x_tick_font_size)
-  #   y_tick_offset = y_tick_font_size * @pt_to_inch * tick_size
-  #   x_tick_offset = x_tick_font_size * @pt_to_inch
-
-  #   {%Figure{
-  #      figure
-  #      | axes: %{
-  #          axes
-  #          | coords: %Coords{coords | title: {(xtx + x_tick_offset) * @dpi, figheight * margin * @dpi}}
-  #        }
-  #    }, {width - y_tick_offset, height - x_tick_offset}}
-  # end
 
   defp tick_length(tick) when is_integer(tick) do
     tick |> Integer.to_string() |> String.length()
@@ -430,4 +362,59 @@ defmodule Matplotex.Figure.Lead do
   defp generate_xticks(%Figure{axes: %module{} = axes} = figure) do
     %Figure{figure | axes: module.generate_xticks(axes)}
   end
+
+  defp height_required_for_text(
+         %Font{
+           font_size: font_size,
+           pt_to_inch_ratio: pt_to_inch_ratio,
+           flate: flate,
+           rotation: 0
+         },
+         _text
+       ),
+       do: font_size * pt_to_inch_ratio + flate
+
+  defp height_required_for_text(
+         %Font{
+           font_size: font_size,
+           pt_to_inch_ratio: pt_to_inch_ratio,
+           rotation: rotation,
+           flate: flate
+         },
+         text
+       ) do
+    text_height = font_size * pt_to_inch_ratio
+    text_length = String.length(text) * pt_to_inch_ratio
+    rotation = deg_to_rad(rotation)
+    height_for_rotation = :math.sin(rotation) * text_length
+    text_height + height_for_rotation + flate
+  end
+
+  defp length_required_for_text(
+         %Font{
+           font_size: font_size,
+           pt_to_inch_ratio: pt_to_inch_ratio,
+           flate: flate,
+           rotation: 0
+         },
+         text
+       ),
+       do: String.length(text) * font_size * pt_to_inch_ratio + flate
+
+  defp length_required_for_text(
+         %Font{
+           font_size: font_size,
+           pt_to_inch_ratio: pt_to_inch_ratio,
+           flate: flate,
+           rotation: rotation
+         },
+         text
+       ) do
+    text_length = String.length(text) * pt_to_inch_ratio
+    rotation = deg_to_rad(rotation)
+    leng_for_rotation = :math.cos(rotation) * text_length
+    leng_for_rotation + flate
+  end
+
+  defp deg_to_rad(deg), do: deg * :math.pi() / 180
 end

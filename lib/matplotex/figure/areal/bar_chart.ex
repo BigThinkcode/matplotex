@@ -8,6 +8,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
   alias Matplotex.Figure
   alias Matplotex.Figure.Areal
   use Areal
+
   frame(
     legend: %Legend{},
     coords: %Coords{},

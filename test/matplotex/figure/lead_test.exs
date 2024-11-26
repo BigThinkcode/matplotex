@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.LeadTest do
+  alias Matplotex.Figure.Region
   alias Matplotex.Figure.Coords
   alias Matplotex.Figure.LinePlot
   alias Matplotex.Figure
@@ -230,6 +231,12 @@ defmodule Matplotex.Figure.LeadTest do
 
       assert tlx == font_size / 150 + @padding_and_tick_line_space
       assert blx == font_size / 150 + @padding_and_tick_line_space
+    end
+  end
+
+  describe "set_regions/1" do
+    test "sets retion_x", %{figure: figure} do
+      assert %Figure{axes: %{region_x: %Region{x: x, y: y}}} = Lead.set_regions(figure)
     end
   end
 end
