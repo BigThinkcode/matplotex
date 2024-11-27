@@ -217,9 +217,17 @@ defmodule Matplotex do
       iex> Matplotex.figure(figure, figsize: {10,6}, margin: 0.1)
       %Matplotex.Figure{}
   """
-
+  @deprecated
   def figure(figure, params) do
     Figure.update_figure(figure, params)
+  end
+
+  def set_figure_size(figure, size) do
+    Figure.set_figure_size(figure, size)
+  end
+
+  def set_margin(figure, margin) do
+    Figure.set_margin(figure, margin)
   end
 
   def hide_v_grid(figure) do

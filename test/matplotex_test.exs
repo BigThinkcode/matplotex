@@ -1,6 +1,7 @@
 defmodule MatplotexTest do
   alias Matplotex.InputError
   use Matplotex.PlotCase
+  alias Matplotex.Figure
 
   setup do
     x = [1, 3, 7, 4, 2, 5, 6]
@@ -118,5 +119,30 @@ defmodule MatplotexTest do
       )
 
     assert Matplotex.show(figure_mater) |> is_binary()
+  end
+
+  describe "set_figure_size" do
+    test "updates the frame size based on margin also", %{figure: figure} do
+      fwidth = 10
+      fheight = 8
+
+      assert %Figure{margin: margin, axes: %{size: {width, height}}} =
+               Matplotex.set_figure_size(figure, {fwidth, fheight})
+
+      assert width == fwidth - fwidth * margin * 2
+      assert height == fheight - fheight * margin * 2
+    end
+  end
+
+  describe "set_margin" do
+    test "updates the frame size according to margin", %{figure: figure} do
+      margin = 0.01
+
+      assert %Figure{figsize: {fwidth, fheight}, axes: %{size: {width, height}}} =
+               Matplotex.set_margin(figure, margin)
+
+      assert width == fwidth - fwidth * margin * 2
+      assert height == fheight - fheight * margin * 2
+    end
   end
 end

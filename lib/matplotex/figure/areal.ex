@@ -203,6 +203,10 @@ defmodule Matplotex.Figure.Areal do
       def show_legend(%__MODULE__{} = axes) do
         %__MODULE__{axes | show_legend: true}
       end
+
+      def set_frame_size(%__MODULE__{} = axes, frame_size) do
+        %__MODULE__{axes | size: frame_size}
+      end
     end
   end
 

@@ -23,12 +23,11 @@ defmodule Matplotex.Figure.Lead do
 
   def set_regions(%Figure{} = figure) do
     figure
+    |> set_frame_size()
     |> set_region_xy()
     |> set_region_title()
     |> set_region_legend()
     |> set_region_content()
-
-    # |> set_border()
   end
 
   def set_border(%Figure{margin: margin, axes: axes, figsize: {fig_width, fig_height}} = figure) do
@@ -40,15 +39,20 @@ defmodule Matplotex.Figure.Lead do
     %Figure{figure | axes: %{axes | border: {lx, by, rx, ty}}}
   end
 
+  defp set_frame_size(%Figure{margin: margin, figsize: {fwidth, fheight}, axes: axes} = figure) do
+    frame_size = {fwidth - fwidth * 2 * margin, fheight - fheight * 2 * margin}
+    %Figure{figure | axes: %{axes | size: frame_size}}
+  end
+
   defp set_region_xy(
          %Figure{
-           figsize: {f_width, f_height},
            axes:
              %{
                region_x: region_x,
                region_y: region_y,
                label: %TwoD{y: y_label, x: x_label},
-               tick: %TwoD{y: y_ticks, x: x_ticks}
+               tick: %TwoD{y: y_ticks, x: x_ticks},
+               size: {f_width, f_height}
              } = axes,
            rc_params: %RcParams{
              x_label_font: x_label_font,
@@ -105,13 +109,13 @@ defmodule Matplotex.Figure.Lead do
 
   defp set_region_title(
          %Figure{
-           figsize: {_f_width, f_height},
            axes:
              %{
                title: title,
                region_x: %Region{width: region_x_width},
                region_y: %Region{width: region_y_width, height: region_y_height} = region_y,
-               region_title: region_title
+               region_title: region_title,
+               size: {_f_width, f_height}
              } = axes,
            rc_params: %RcParams{title_font: title_font}
          } = figure
@@ -139,13 +143,13 @@ defmodule Matplotex.Figure.Lead do
 
   defp set_region_legend(
          %Figure{
-           figsize: {f_width, f_heigt},
            axes:
              %{
                show_legend: true,
                region_x: %Region{x: x_region_x, width: region_x_width} = region_x,
                region_title: %Region{height: region_title_height} = region_title,
-               region_legend: region_legend
+               region_legend: region_legend,
+               size: {f_width, f_height}
              } = axes,
            rc_params: %RcParams{legend_width: legend_width}
          } = figure
@@ -153,7 +157,7 @@ defmodule Matplotex.Figure.Lead do
     region_legend_width = f_width * legend_width
     region_x_width_after_legend = region_x_width - region_legend_width
     legend_region_x = x_region_x + region_x_width_after_legend
-    legend_region_y = f_heigt - region_title_height
+    legend_region_y = f_height - region_title_height
 
     %Figure{
       figure

@@ -285,15 +285,15 @@ defmodule Matplotex.Figure.LeadTest do
 
       assert Enum.all?([rlx, rly, rlwidth, rlheight], &(&1 > 0))
     end
-    test "setting content takes the same width of x region and y region", %{figure2: figure} do
 
+    test "setting content takes the same width of x region and y region", %{figure2: figure} do
       assert %Figure{
-        axes: %{
-          region_x: %Region{x: rxx, width: rxwidth},
-          region_y: %Region{y: ryy, height: ryheight},
-          region_content: %Region{x: rcx, y: rcy, width: rcwidth, height: rcheight}
-        }
-      } = Lead.set_regions(figure)
+               axes: %{
+                 region_x: %Region{x: rxx, width: rxwidth},
+                 region_y: %Region{y: ryy, height: ryheight},
+                 region_content: %Region{x: rcx, y: rcy, width: rcwidth, height: rcheight}
+               }
+             } = Lead.set_regions(figure)
 
       assert rxx == rcx
       assert ryy == rcy
