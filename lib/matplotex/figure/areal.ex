@@ -199,6 +199,10 @@ defmodule Matplotex.Figure.Areal do
       def min_max(ticks) do
         Enum.min_max(ticks)
       end
+
+      def show_legend(%__MODULE__{} = axes) do
+        %__MODULE__{axes | show_legend: true}
+      end
     end
   end
 

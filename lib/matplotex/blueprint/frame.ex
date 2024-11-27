@@ -85,6 +85,7 @@ defmodule Matplotex.Blueprint.Frame do
                       errors: [],
                       element: [],
                       show_title: false,
+                      show_legend: false,
                       valid: @valid_by_default,
                       margin: @default_margin,
                       show_x_axis: @show_by_default,

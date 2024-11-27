@@ -21,13 +21,15 @@ defmodule Matplotex.Figure.LeadTest do
     x = [1, 3, 7, 4, 2, 5, 6]
     y = [1, 3, 7, 4, 2, 5, 6]
     ticks = [1, 2, 3, 4, 5, 6, 7]
+
     figure2 =
       x
       |> Matplotex.plot(y)
       |> Matplotex.figure(%{figsize: size, margin: margin})
       |> Matplotex.set_title("The Plot Title")
       |> Matplotex.set_xticks(ticks)
-    |> Matplotex.set_yticks(ticks)
+      |> Matplotex.set_yticks(ticks)
+
     {:ok, %{figure: figure, figure2: figure2}}
   end
 
@@ -258,10 +260,10 @@ defmodule Matplotex.Figure.LeadTest do
                }
              } = Lead.set_regions(figure)
 
-      assert Enum.all?([rxx, rxwidth,rxheight, ryy, rywidth, ryheight], &(&1 > 0))
-      assert Enum.all?([rxy, ryx], &(&1 ==0))
-
+      assert Enum.all?([rxx, rxwidth, rxheight, ryy, rywidth, ryheight], &(&1 > 0))
+      assert Enum.all?([rxy, ryx], &(&1 == 0))
     end
+
     test "set region title updates the values for titles space", %{figure2: figure} do
       assert %Figure{
                axes: %{
@@ -269,10 +271,34 @@ defmodule Matplotex.Figure.LeadTest do
                }
              } = Lead.set_regions(figure)
 
-             assert Enum.all?([rtx, rty, rtwidth, rtheight], & &1> 0)
+      assert Enum.all?([rtx, rty, rtwidth, rtheight], &(&1 > 0))
+    end
 
+    test "setting region legend", %{figure2: figure} do
+      figure = Matplotex.show_legend(figure)
 
+      assert %Figure{
+               axes: %{
+                 region_legend: %Region{x: rlx, y: rly, width: rlwidth, height: rlheight}
+               }
+             } = Lead.set_regions(figure)
 
+      assert Enum.all?([rlx, rly, rlwidth, rlheight], &(&1 > 0))
+    end
+    test "setting content takes the same width of x region and y region", %{figure2: figure} do
+
+      assert %Figure{
+        axes: %{
+          region_x: %Region{x: rxx, width: rxwidth},
+          region_y: %Region{y: ryy, height: ryheight},
+          region_content: %Region{x: rcx, y: rcy, width: rcwidth, height: rcheight}
+        }
+      } = Lead.set_regions(figure)
+
+      assert rxx == rcx
+      assert ryy == rcy
+      assert rcwidth == rxwidth
+      assert ryheight == rcheight
     end
   end
 end

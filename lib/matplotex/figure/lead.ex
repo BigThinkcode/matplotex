@@ -22,12 +22,12 @@ defmodule Matplotex.Figure.Lead do
   end
 
   def set_regions(%Figure{} = figure) do
-
     figure
     |> set_region_xy()
     |> set_region_title()
-    # |>set_region_legend()
-    # |>set_region_content()
+    |> set_region_legend()
+    |> set_region_content()
+
     # |> set_border()
   end
 
@@ -65,14 +65,16 @@ defmodule Matplotex.Figure.Lead do
     y_tick = Enum.max_by(y_ticks, &tick_length(&1))
     space_for_yticks = length_required_for_text(y_tick_font, y_tick)
 
-    x_region_x = space_required_for_region_y =
+    x_region_x =
+      space_required_for_region_y =
       [space_for_ylabel, y_tick, space_for_yticks, label_padding, tick_line_length] |> Enum.sum()
 
     space_for_x_label = height_required_for_text(x_label_font, x_label)
     x_tick = Enum.max_by(x_ticks, &tick_length/1)
     space_for_x_tick = height_required_for_text(x_tick_font, x_tick)
 
-    y_region_y = space_required_for_region_x =
+    y_region_y =
+      space_required_for_region_x =
       [space_for_x_label, x_tick, space_for_x_tick, label_padding, tick_line_length] |> Enum.sum()
 
     %Figure{
@@ -81,7 +83,7 @@ defmodule Matplotex.Figure.Lead do
           axes
           | region_x: %Region{
               region_x
-              | x: x_region_x ,
+              | x: x_region_x,
                 y: 0,
                 height: space_required_for_region_x,
                 width: f_width - space_required_for_region_y,
@@ -98,9 +100,22 @@ defmodule Matplotex.Figure.Lead do
         }
     }
   end
+
   defp set_region_xy(figure), do: figure
 
-  defp set_region_title(%Figure{figsize: {_f_width, f_height}, axes: %{title: title, region_x: %Region{width: region_x_width}, region_y: %Region{width: region_y_width, height: region_y_height} = region_y, region_title: region_title} = axes, rc_params: %RcParams{title_font: title_font}} = figure) do
+  defp set_region_title(
+         %Figure{
+           figsize: {_f_width, f_height},
+           axes:
+             %{
+               title: title,
+               region_x: %Region{width: region_x_width},
+               region_y: %Region{width: region_y_width, height: region_y_height} = region_y,
+               region_title: region_title
+             } = axes,
+           rc_params: %RcParams{title_font: title_font}
+         } = figure
+       ) do
     space_for_title = height_required_for_text(title_font, title)
 
     %Figure{
@@ -112,14 +127,85 @@ defmodule Matplotex.Figure.Lead do
               | x: region_y_width,
                 y: f_height - space_for_title,
                 width: region_x_width,
-                height: space_for_title,
-          },
-          region_y: %Region{
-            region_y |
-            height: region_y_height - space_for_title
-          }
-          }}
+                height: space_for_title
+            },
+            region_y: %Region{
+              region_y
+              | height: region_y_height - space_for_title
+            }
+        }
+    }
   end
+
+  defp set_region_legend(
+         %Figure{
+           figsize: {f_width, f_heigt},
+           axes:
+             %{
+               show_legend: true,
+               region_x: %Region{x: x_region_x, width: region_x_width} = region_x,
+               region_title: %Region{height: region_title_height} = region_title,
+               region_legend: region_legend
+             } = axes,
+           rc_params: %RcParams{legend_width: legend_width}
+         } = figure
+       ) do
+    region_legend_width = f_width * legend_width
+    region_x_width_after_legend = region_x_width - region_legend_width
+    legend_region_x = x_region_x + region_x_width_after_legend
+    legend_region_y = f_heigt - region_title_height
+
+    %Figure{
+      figure
+      | axes: %{
+          axes
+          | region_x: %Region{
+              region_x
+              | width: region_x_width_after_legend
+            },
+            region_title: %Region{
+              region_title
+              | width: region_x_width_after_legend
+            },
+            region_legend: %Region{
+              region_legend
+              | x: legend_region_x,
+                y: legend_region_y,
+                width: region_legend_width,
+                height: legend_region_y
+            }
+        }
+    }
+  end
+
+  defp set_region_legend(figure), do: figure
+
+  defp set_region_content(
+         %Figure{
+           axes:
+             %{
+               region_x: %Region{x: x_region_x, width: region_x_width},
+               region_y: %Region{y: y_region_y, height: region_y_height},
+               region_content: region_content
+             } = axes
+         } = figure
+       ) do
+    %Figure{
+      figure
+      | axes: %{
+          axes
+          | region_content: %Region{
+              region_content
+              | x: x_region_x,
+                y: y_region_y,
+                width: region_x_width,
+                height: region_y_height
+            }
+        }
+    }
+  end
+
+  defp set_region_content(figure), do: figure
 
   defp set_xlabel_coords(%Figure{axes: %{tick: %{y: nil}, show_y_ticks: true}} = figure) do
     figure

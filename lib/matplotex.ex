@@ -19,7 +19,9 @@ defmodule Matplotex do
   end
 
   def bar(%Figure{} = figure, pos, values, width, opts) do
-    BarChart.create(figure, {pos, values, width}, opts)
+    figure
+    |> show_legend()
+    |> BarChart.create({pos, values, width}, opts)
   end
 
   def scatter(stream, opts) when is_struct(stream, Stream) do
@@ -35,7 +37,9 @@ defmodule Matplotex do
   end
 
   def scatter(%Figure{} = figure, x, y, opts) do
-    Scatter.create(figure, {x, y}, opts)
+    figure
+    |> show_legend()
+    |> Scatter.create({x, y}, opts)
   end
 
   def pie(sizes, opts \\ []) do
@@ -66,7 +70,9 @@ defmodule Matplotex do
   end
 
   def plot(%Figure{} = figure, x, y, opts) do
-    LinePlot.create(figure, {x, y}, opts)
+    figure
+    |> show_legend()
+    |> LinePlot.create({x, y}, opts)
   end
 
   @doc """
@@ -218,6 +224,10 @@ defmodule Matplotex do
 
   def hide_v_grid(figure) do
     Figure.hide_v_grid(figure)
+  end
+
+  def show_legend(figure) do
+    Figure.show_legend(figure)
   end
 
   @doc """
