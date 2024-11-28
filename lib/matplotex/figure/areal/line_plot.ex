@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Areal.LinePlot do
+  alias Matplotex.Utils.Algebra
   alias Matplotex.Figure.Areal.Region
   alias Matplotex.Figure.Areal.Ticker
   alias Matplotex.Figure.Marker
@@ -82,6 +83,27 @@ defmodule Matplotex.Figure.Areal.LinePlot do
   def plotify(value, {minl, maxl}, axis_size, transition, _, _) do
     s = axis_size / (maxl - minl)
     value * s + transition - minl * s
+  end
+
+  def tick_homogeneous_transformation(value, {x_min, x_max}, axis_size, transition, :x) do
+    sx = axis_size/ (x_max - x_min)
+    sy = 0 # no need y scale
+    x = value
+    y = 0 # Ignoring y here
+    tx = transition
+    ty = 0
+    theta = 0 # not applying rotation
+    Algebra.transform_given_point(x, y, sx, sy, tx, ty, theta)
+  end
+  def tick_homogeneous_transformation(value, {y_min, y_max}, axis_size, transition, :y) do
+    sx = 0
+    sy = axis_size/ (y_max - y_min)
+    x = 0
+    y = value
+    tx = 0
+    ty = transition
+    theta = 0 # not applying rotation
+    Algebra.transform_given_point(x, y, sx, sy, tx, ty, theta)
   end
 
   def generate_ticks([{_l, _v} | _] = data) do

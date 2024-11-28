@@ -49,16 +49,16 @@ defmodule Matplotex.Utils.Algebra do
 
   def svgfy(y, height), do: height - y
 
-  def transform_given_point(ox, oy, theta, px, py) do
+  def transform_given_point(x, y,sx, sy,tx, ty, theta) do
     Nx.tensor(
       [
-        [:math.cos(theta), -:math.sin(theta), ox],
-        [:math.sin(theta), :math.cos(theta), oy],
+        [sx * :math.cos(theta), sy * -:math.sin(theta), tx],
+        [sx * :math.sin(theta), sy * :math.cos(theta), ty],
         [0, 0, 1]
       ],
       type: {:f, @tensor_data_type_bits}
     )
-    |> Nx.dot(Nx.tensor([px, py, 1], type: {:f, @tensor_data_type_bits}))
+    |> Nx.dot(Nx.tensor([x, y, 1], type: {:f, @tensor_data_type_bits}))
     |> Nx.to_flat_list()
     |> List.to_tuple()
     |> then(fn {x, y, _} -> {x, y} end)

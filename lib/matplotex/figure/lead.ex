@@ -52,7 +52,8 @@ defmodule Matplotex.Figure.Lead do
                region_y: region_y,
                label: %TwoD{y: y_label, x: x_label},
                tick: %TwoD{y: y_ticks, x: x_ticks},
-               size: {f_width, f_height}
+               size: {f_width, f_height},
+               coords: %Coords{} = coords
              } = axes,
            rc_params: %RcParams{
              x_label_font: x_label_font,
@@ -91,7 +92,7 @@ defmodule Matplotex.Figure.Lead do
                 y: 0,
                 height: space_required_for_region_x,
                 width: f_width - space_required_for_region_y,
-                coords: %XyCoords{label: {x_region_x, 0}, ticks: {x_region_x, space_for_x_label}}
+                coords: %XyCoords{label: {0, 0}, ticks: {0, space_for_x_label}}
             },
             region_y: %Region{
               region_y
@@ -99,7 +100,7 @@ defmodule Matplotex.Figure.Lead do
                 y: y_region_y,
                 width: space_required_for_region_y,
                 height: f_height - space_required_for_region_x,
-                coords: %XyCoords{label: {0, y_region_y}, ticks: {space_for_x_label, y_region_y}}
+                coords: %XyCoords{label: {0, 0}, ticks: {space_for_ylabel, 0}}
             }
         }
     }
@@ -117,7 +118,7 @@ defmodule Matplotex.Figure.Lead do
                region_title: region_title,
                size: {_f_width, f_height}
              } = axes,
-           rc_params: %RcParams{title_font: title_font}
+           rc_params: %RcParams{title_font: title_font, label_padding: title_padding}
          } = figure
        ) do
     space_for_title = height_required_for_text(title_font, title)
@@ -131,7 +132,7 @@ defmodule Matplotex.Figure.Lead do
               | x: region_y_width,
                 y: f_height - space_for_title,
                 width: region_x_width,
-                height: space_for_title
+                height: space_for_title + title_padding
             },
             region_y: %Region{
               region_y
