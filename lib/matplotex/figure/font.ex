@@ -5,13 +5,19 @@ defmodule Matplotex.Figure.Font do
   @default_font_size 16
   @default_font_weight "normal"
   @font_unit "pt"
+  @pt_to_inch_ratio 1 / 72
+  @text_rotation 0
+  @flate 0
 
   defstruct font_size: @default_font_size,
             font_style: @default_font_style,
             font_family: @default_font_family,
             font_weight: @default_font_weight,
             fill: @default_font_color,
-            unit_of_measurement: @font_unit
+            unit_of_measurement: @font_unit,
+            pt_to_inch_ratio: @pt_to_inch_ratio,
+            rotation: @text_rotation,
+            flate: @flate
 
   def font_keys() do
     Map.keys(%__MODULE__{}) -- [:__struct__]

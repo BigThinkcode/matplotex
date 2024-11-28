@@ -1,5 +1,5 @@
 defmodule Matplotex.Figure.Areal.LinePlot do
-  alias Matplotex.Figure.Region
+  alias Matplotex.Figure.Areal.Region
   alias Matplotex.Figure.Areal.Ticker
   alias Matplotex.Figure.Marker
   alias Matplotex.Figure.Dataset
@@ -27,7 +27,11 @@ defmodule Matplotex.Figure.Areal.LinePlot do
 
   @marker_size 3.5
   @impl Areal
-  def create(%Figure{axes: %__MODULE__{dataset: data} = axes} = figure, {x, y}, opts \\ []) do
+  def create(
+        %Figure{axes: %__MODULE__{dataset: data} = axes} = figure,
+        {x, y},
+        opts \\ []
+      ) do
     x = determine_numeric_value(x)
     y = determine_numeric_value(y)
     dataset = Dataset.cast(%Dataset{x: x, y: y}, opts)

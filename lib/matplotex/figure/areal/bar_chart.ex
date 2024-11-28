@@ -1,6 +1,6 @@
 defmodule Matplotex.Figure.Areal.BarChart do
   import Matplotex.Figure.Numer
-  alias Matplotex.Figure.Region
+  alias Matplotex.Figure.Areal.Region
   alias Matplotex.Figure.Dataset
   alias Matplotex.Element.Rect
   alias Matplotex.Figure.RcParams
@@ -8,6 +8,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
   alias Matplotex.Figure
   alias Matplotex.Figure.Areal
   use Areal
+
   frame(
     legend: %Legend{},
     coords: %Coords{},

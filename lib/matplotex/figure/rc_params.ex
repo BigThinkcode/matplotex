@@ -13,9 +13,12 @@ defmodule Matplotex.Figure.RcParams do
   @grid_linewidth 1
   @grid_line_alpha 0.5
   @font_uom "pt"
-  @tick_line_length 5
+  @tick_line_length 5 / 96
   @font %Font{}
   @chart_padding 0.05
+  @label_padding 5 / 96
+  @default_legend_width_percentage 0.2
+  @default_legend_items_orientation :horizontal
   defstruct x_tick_font: @font,
             y_tick_font: @font,
             x_label_font: @font,
@@ -40,7 +43,10 @@ defmodule Matplotex.Figure.RcParams do
             font_uom: @font_uom,
             tick_line_length: @tick_line_length,
             x_padding: @chart_padding,
-            y_padding: @chart_padding
+            y_padding: @chart_padding,
+            label_padding: @label_padding,
+            legend_width: @default_legend_width_percentage,
+            legend_items_orientation: @default_legend_items_orientation
 
   def get_rc(%__MODULE__{} = rc_param, get_func) do
     apply(__MODULE__, get_func, [rc_param])
