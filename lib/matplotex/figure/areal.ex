@@ -149,6 +149,18 @@ defmodule Matplotex.Figure.Areal do
         |> Cast.cast_title()
       end
 
+      def materialized_by_region(figure) do
+        figure
+        |> Lead.set_regions()
+        |> Cast.cast_xticks_by_region()
+        |> Cast.cast_yticks_by_region()
+        |> Cast.cast_hgrids_by_region()
+        |> Cast.cast_vgrids_by_region()
+        |> Cast.cast_spines_by_region()
+        |> Cast.cast_label_by_region()
+        |> Cast.cast_title_by_region()
+      end
+
       defp update_tick(axes, tick) do
         %{axes | tick: tick}
       end

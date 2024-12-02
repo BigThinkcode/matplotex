@@ -9,5 +9,4 @@ defmodule Matplotex.Figure.Areal.Region do
   def get_tick_coords(%__MODULE__{x: x, y: y, coords: %Coords{ticks: {tick_x, tick_y}}}) do
     {x + tick_x, y + tick_y}
   end
-
 end

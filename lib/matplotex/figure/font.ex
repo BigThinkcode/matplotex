@@ -31,7 +31,17 @@ defmodule Matplotex.Figure.Font do
     struct(__MODULE__, params)
   end
 
-  def update(font, params) do
-    struct(font, params)
+  def update(font, params, element) do
+    update_font(font, params, element)
+  end
+  defp update_font(font, params, element) do
+    font
+    |> Map.from_struct()
+    |> Map.keys()
+    |> Enum.reduce(font, fn key, acc ->
+      existing_value = Map.get(font, key)
+      value = Map.get(params, :"#{element}_#{key}", existing_value)
+      Map.put(acc, key, value)
+    end)
   end
 end

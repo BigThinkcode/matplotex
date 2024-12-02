@@ -13,7 +13,7 @@ defmodule Matplotex.Figure.Sketch do
 
   def call(%Figure{axes: %{element: elements}, figsize: {width, height}}) do
     elements
-    |> flipy(height)
+    # |> flipy(height)
     |> build_elements()
     |> wrap_with_tag(width * @dpi, height * @dpi)
   end

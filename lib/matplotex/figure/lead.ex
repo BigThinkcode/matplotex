@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Lead do
+  alias Matplotex.Utils.Algebra
   alias Matplotex.Figure.Areal.XyRegion.Coords, as: XyCoords
   alias Matplotex.Figure.Font
   alias Matplotex.Figure.Areal.Region
@@ -33,15 +34,19 @@ defmodule Matplotex.Figure.Lead do
   def set_border(%Figure{margin: margin, axes: axes, figsize: {fig_width, fig_height}} = figure) do
     margin = margin / 2
     lx = fig_width * margin
-    by = fig_height * margin
+    by =  fig_height * margin
     rx = fig_width - fig_width * margin
-    ty = fig_height - fig_height * margin
+    ty =  fig_height - fig_height * margin
     %Figure{figure | axes: %{axes | border: {lx, by, rx, ty}}}
   end
 
   defp set_frame_size(%Figure{margin: margin, figsize: {fwidth, fheight}, axes: axes} = figure) do
     frame_size = {fwidth - fwidth * 2 * margin, fheight - fheight * 2 * margin}
-    %Figure{figure | axes: %{axes | size: frame_size}}
+    lx = fwidth * margin
+    ty =  -fheight * margin
+    rx = fwidth - fwidth * margin
+    by = fheight * margin - fheight
+    %Figure{figure | axes: %{axes | size: frame_size, border: {lx, by, rx, ty}}}
   end
 
   defp set_region_xy(
@@ -53,7 +58,7 @@ defmodule Matplotex.Figure.Lead do
                label: %TwoD{y: y_label, x: x_label},
                tick: %TwoD{y: y_ticks, x: x_ticks},
                size: {f_width, f_height},
-               coords: %Coords{} = coords
+               border: {lx, by, _, _}
              } = axes,
            rc_params: %RcParams{
              x_label_font: x_label_font,
@@ -70,18 +75,18 @@ defmodule Matplotex.Figure.Lead do
     y_tick = Enum.max_by(y_ticks, &tick_length(&1))
     space_for_yticks = length_required_for_text(y_tick_font, y_tick)
 
-    x_region_x =
+
       space_required_for_region_y =
-      [space_for_ylabel, y_tick, space_for_yticks, label_padding, tick_line_length] |> Enum.sum()
+      [space_for_ylabel, space_for_yticks, label_padding, tick_line_length] |> Enum.sum()
 
     space_for_x_label = height_required_for_text(x_label_font, x_label)
     x_tick = Enum.max_by(x_ticks, &tick_length/1)
     space_for_x_tick = height_required_for_text(x_tick_font, x_tick)
 
-    y_region_y =
       space_required_for_region_x =
-      [space_for_x_label, x_tick, space_for_x_tick, label_padding, tick_line_length] |> Enum.sum()
-
+      [space_for_x_label, space_for_x_tick, label_padding, tick_line_length] |> Enum.sum()
+     {x_region_x, y_region_x} = Algebra.transform_given_point(space_required_for_region_y, 0, lx, by, 0)
+     {x_region_y, y_region_y} = Algebra.transform_given_point(0,space_required_for_region_x, lx,by,0 )
     %Figure{
       figure
       | axes: %{
@@ -89,14 +94,14 @@ defmodule Matplotex.Figure.Lead do
           | region_x: %Region{
               region_x
               | x: x_region_x,
-                y: 0,
+                y: y_region_x,
                 height: space_required_for_region_x,
                 width: f_width - space_required_for_region_y,
                 coords: %XyCoords{label: {0, 0}, ticks: {0, space_for_x_label}}
             },
             region_y: %Region{
               region_y
-              | x: 0,
+              | x: x_region_y,
                 y: y_region_y,
                 width: space_required_for_region_y,
                 height: f_height - space_required_for_region_x,
@@ -116,23 +121,26 @@ defmodule Matplotex.Figure.Lead do
                region_x: %Region{width: region_x_width},
                region_y: %Region{width: region_y_width, height: region_y_height} = region_y,
                region_title: region_title,
-               size: {_f_width, f_height}
+               size: {_f_width, f_height},
+               border: {lx, by, _, _}
              } = axes,
-           rc_params: %RcParams{title_font: title_font, label_padding: title_padding}
+           rc_params: %RcParams{title_font: title_font}
          } = figure
        ) do
+    IO.inspect(region_y_height, label: "Region y height before peeling title space")
     space_for_title = height_required_for_text(title_font, title)
-
+    IO.inspect(space_for_title, label: "Space for title: " )
+    {x_region_title, y_region_title} = Algebra.transform_given_point(region_y_width, space_for_title, lx, by, 0)
     %Figure{
       figure
       | axes: %{
           axes
           | region_title: %Region{
               region_title
-              | x: region_y_width,
-                y: f_height - space_for_title,
+              | x: x_region_title,
+                y: y_region_title,
                 width: region_x_width,
-                height: space_for_title + title_padding
+                height: space_for_title
             },
             region_y: %Region{
               region_y
@@ -195,6 +203,7 @@ defmodule Matplotex.Figure.Lead do
              } = axes
          } = figure
        ) do
+        IO.inspect(region_y_height, label: "Region y height for content")
     %Figure{
       figure
       | axes: %{
@@ -488,8 +497,10 @@ defmodule Matplotex.Figure.Lead do
            rotation: 0
          },
          _text
-       ),
-       do: font_size * pt_to_inch_ratio + flate
+       ) do
+        to_number(font_size) * pt_to_inch_ratio + flate
+       end
+
 
   defp height_required_for_text(
          %Font{
@@ -500,7 +511,7 @@ defmodule Matplotex.Figure.Lead do
          },
          text
        ) do
-    text_height = font_size * pt_to_inch_ratio
+    text_height = to_number(font_size) * pt_to_inch_ratio
     text_length = tick_length(text) * pt_to_inch_ratio
     rotation = deg_to_rad(rotation)
     height_for_rotation = :math.sin(rotation) * text_length
@@ -516,7 +527,7 @@ defmodule Matplotex.Figure.Lead do
          },
          text
        ),
-       do: tick_length(text) * font_size * pt_to_inch_ratio + flate
+       do: tick_length(text) * to_number(font_size) * pt_to_inch_ratio + flate
 
   defp length_required_for_text(
          %Font{
@@ -527,11 +538,20 @@ defmodule Matplotex.Figure.Lead do
          },
          text
        ) do
-    text_length = tick_length(text) * font_size * pt_to_inch_ratio
+    text_length = tick_length(text) * to_number(font_size) * pt_to_inch_ratio
     rotation = deg_to_rad(rotation)
     leng_for_rotation = :math.cos(rotation) * text_length
     leng_for_rotation + flate
   end
 
   defp deg_to_rad(deg), do: deg * :math.pi() / 180
+  defp to_number(font_size) when is_number(font_size), do: font_size
+  defp to_number(font_size) when is_binary(font_size) do
+    font_size = String.trim(font_size, "pt")
+    if String.contains?(font_size, ".") do
+      String.to_float(font_size)
+    else
+      String.to_integer(font_size)
+    end
+  end
 end

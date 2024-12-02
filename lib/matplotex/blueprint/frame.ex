@@ -94,7 +94,8 @@ defmodule Matplotex.Blueprint.Frame do
                       show_h_grid: @show_by_default,
                       show_x_ticks: @show_by_default,
                       show_y_ticks: @show_by_default,
-                      show_ticks: @show_by_default
+                      show_ticks: @show_by_default,
+                      border: nil
                     ]
                     |> Keyword.merge(opts)
                   )

@@ -44,7 +44,7 @@ defmodule Matplotex.Figure.Areal.LinePlot do
   @impl Areal
   def materialize(figure) do
     figure
-    |> __MODULE__.materialized()
+    |> __MODULE__.materialized_by_region()
     |> materialize_lines()
   end
 
@@ -54,8 +54,7 @@ defmodule Matplotex.Figure.Areal.LinePlot do
              %{
                dataset: data,
                limit: %{x: xlim, y: ylim},
-               size: {width, height},
-               coords: %Coords{bottom_left: {blx, bly}},
+               region_content: %Region{x: blx, y: bly, width: width, height: height},
                element: elements
              } = axes,
            rc_params: %RcParams{x_padding: x_padding, y_padding: y_padding}
@@ -86,23 +85,28 @@ defmodule Matplotex.Figure.Areal.LinePlot do
   end
 
   def tick_homogeneous_transformation(value, {x_min, x_max}, axis_size, transition, :x) do
-    sx = axis_size/ (x_max - x_min)
-    sy = 0 # no need y scale
+    sx = axis_size / (x_max - x_min)
+    # no need y scale
+    sy = 0
     x = value
-    y = 0 # Ignoring y here
+    # Ignoring y here
+    y = 0
     tx = transition
     ty = 0
-    theta = 0 # not applying rotation
+    # not applying rotation
+    theta = 0
     Algebra.transform_given_point(x, y, sx, sy, tx, ty, theta)
   end
+
   def tick_homogeneous_transformation(value, {y_min, y_max}, axis_size, transition, :y) do
     sx = 0
-    sy = axis_size/ (y_max - y_min)
+    sy = axis_size / (y_max - y_min)
     x = 0
     y = value
     tx = 0
     ty = transition
-    theta = 0 # not applying rotation
+    # not applying rotation
+    theta = 0
     Algebra.transform_given_point(x, y, sx, sy, tx, ty, theta)
   end
 

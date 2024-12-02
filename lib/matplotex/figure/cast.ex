@@ -1,5 +1,5 @@
 defmodule Matplotex.Figure.Cast do
-  alias Matplotex.Figure.TwoD
+  alias Matplotex.Utils.Algebra
   alias Matplotex.Figure.Areal.XyRegion.Coords, as: XyCoords
   alias Matplotex.Figure.Areal.Region
   alias Matplotex.Figure.Dataset
@@ -68,6 +68,7 @@ defmodule Matplotex.Figure.Cast do
   def cast_spines(_figure) do
     raise ArgumentError, message: "Figure does't contain enough data to proceed"
   end
+
   def cast_spines_by_region(
         %Figure{
           axes:
@@ -77,16 +78,19 @@ defmodule Matplotex.Figure.Cast do
                 y: content_y,
                 width: content_width,
                 height: content_height
-               },
+              },
+              border: {lx, ly, _, _},
               element: elements
             } = axes
         } = figure
       ) do
 
-        left_x = content_x
-        bottom_y = content_y
-        right_x = content_x + content_width
-        top_y = content_y + content_height
+    #  Convert to the svg plane
+    IO.inspect({content_x, content_width, content_y, content_height}, label: "The content dims")
+    {left_x, bottom_y} = Algebra.transform_given_point(content_x, content_y,lx, ly, 0 ) |>Algebra.flip_y_coordinate()
+    {right_x, top_y} = Algebra.transform_given_point(content_x + content_width, content_y + content_height, lx, ly, 0)|>Algebra.flip_y_coordinate()
+    IO.inspect({left_x, bottom_y, right_x, top_y}, label: "The spines coords")
+
     # Four Line struct representing each corners
 
     left = %Line{
@@ -125,7 +129,6 @@ defmodule Matplotex.Figure.Cast do
   end
 
   def cast_spines_by_region(figure), do: figure
-
 
   def cast_border(
         %Figure{
@@ -197,7 +200,7 @@ defmodule Matplotex.Figure.Cast do
       %Label{
         type: "figure.title",
         x: title_x,
-        y: title_y+title_padding,
+        y: title_y + title_padding,
         text: title
       }
       |> Label.cast_label(title_font)
@@ -215,10 +218,9 @@ defmodule Matplotex.Figure.Cast do
 
   def cast_label_by_region(figure) do
     figure
-    |>cast_xlabel_by_region()
-    |>cast_ylabel_by_region()
+    |> cast_xlabel_by_region()
+    |> cast_ylabel_by_region()
   end
-
 
   def cast_xlabel(
         %Figure{
@@ -244,51 +246,50 @@ defmodule Matplotex.Figure.Cast do
   end
 
   def cast_xlabel(figure), do: figure
+
   def cast_xlabel_by_region(
-    %Figure{
-      axes: %{label: %{x: x_label}, region_x: region_x, element: element} = axes,
-      rc_params: %RcParams{x_label_font: x_label_font}
-    } = figure
-  )
-  when not is_nil(x_label) do
-{_, x_label_y} = Region.get_label_coords(region_x)
-{x_label_x, _} = calculate_center(region_x, :x)
+        %Figure{
+          axes: %{label: %{x: x_label}, region_x: region_x, element: element} = axes,
+          rc_params: %RcParams{x_label_font: x_label_font}
+        } = figure
+      )
+      when not is_nil(x_label) do
+    {_, x_label_y} = Region.get_label_coords(region_x)
+    {x_label_x, _} = calculate_center(region_x, :x)
 
-x_label =
-  %Label{
-    type: "figure.x_label",
-    x: x_label_x,
-    y: x_label_y,
-    text: x_label
-  }
-  |>Label.cast_label(x_label_font)
+    x_label =
+      %Label{
+        type: "figure.x_label",
+        x: x_label_x,
+        y: x_label_y,
+        text: x_label
+      }
+      |> Label.cast_label(x_label_font)
 
-element = element ++ [x_label]
-%Figure{figure | axes: %{axes | element: element}}
-end
-
-
+    element = element ++ [x_label]
+    %Figure{figure | axes: %{axes | element: element}}
+  end
 
   def cast_ylabel(
         %Figure{
-          axes: %{label: %{y: y_label}, region_y: region_y, element: element} = axes,
-          rc_params: %RcParams{y_label_font: y_label_font}
+          axes: %{label: %{y: y_label}, coords: coords, element: element} = axes,
+          rc_params: %RcParams{y_label_font: label_font}
         } = figure
       )
       when not is_nil(y_label) do
-    {y_label_x, _} = Region.get_label_coords(region_y)
+    ylabel_coords = Map.get(coords, :y_label)
 
-    {_, y_label_y} = calculate_center(region_y, :y)
+    {x, y} = calculate_center(coords, ylabel_coords, :y)
 
     y_label =
       %Label{
         type: "figure.y_label",
-        x: y_label_x,
-        y: y_label_y,
+        x: x,
+        y: y,
         text: y_label,
         rotate: rotate_label(:y)
       }
-      |> Label.cast_label(y_label_font)
+      |> merge_structs(label_font)
 
     element = element ++ [y_label]
     %Figure{figure | axes: %{axes | element: element}}
@@ -400,77 +401,82 @@ end
   end
 
   def cast_xticks(%Figure{} = figure), do: figure
+
   def cast_xticks_by_region(
-    %Figure{
-      axes:
-        %module{
-          tick: %{x: x_ticks},
-          limit: %{x: {_min, _max} = xlim},
-          region_content: %Region{x: x_region_content, y: y_region_content, width: width_region_content} = region_content,
-          region_x: region_x,
-          data: {x_data, y_data},
-          dataset: dataset,
-          element: elements,
-          show_x_ticks: true,
-          coords: coords
-        } = axes,
-      rc_params: %RcParams{x_tick_font: x_tick_font, x_padding: x_padding, tick_line_length: tick_line_length}
-    } = figure
-  )
-  when is_list(x_ticks) do
-x_ticks = confine_ticks(x_ticks, xlim)
-x_data = confine_data(x_data, xlim)
-dataset = confine_data(dataset, xlim, :x)
-
-{_, x_tick_y} = Region.get_tick_coords(region_x)
-
-{xtick_elements, vgridxs} =
-  Enum.map(x_ticks, fn tick ->
-    {tick_position, label} =
-      transform_tick(
-        module,
-        tick,
-        xlim,
-        width_region_content - width_region_content * x_padding * 2,
-        x_region_content + width_region_content * x_padding,
-        :x
+        %Figure{
+          axes:
+            %module{
+              tick: %{x: x_ticks},
+              limit: %{x: {_min, _max} = xlim},
+              region_content: %Region{x: x_region_content, width: width_region_content},
+              region_x: %Region{coords: coords_region_x} = region_x,
+              data: {x_data, y_data},
+              dataset: dataset,
+              element: elements,
+              show_x_ticks: true
+            } = axes,
+          rc_params: %RcParams{
+            x_tick_font: x_tick_font,
+            x_padding: x_padding,
+            tick_line_length: tick_line_length
+          }
+        } = figure
       )
+      when is_list(x_ticks) do
+    x_ticks = confine_ticks(x_ticks, xlim)
+    x_data = confine_data(x_data, xlim)
+    dataset = confine_data(dataset, xlim, :x)
 
-    label =
-      %Label{
-        type: @xtick_type,
-        x: tick_position,
-        y: x_tick_y,
-        text: label
-      }
-      |> Label.cast_label(x_tick_font)
+    {_, x_tick_y} = Region.get_tick_coords(region_x)
 
-    line = %Line{
-      type: @xtick_type,
-      x1: tick_position,
-      y1: x_tick_y,
-      x2: tick_position,
-      y2: x_tick_y - tick_line_length
+    {xtick_elements, vgridxs} =
+      Enum.map(x_ticks, fn tick ->
+        {tick_position, label} =
+          transform_tick(
+            module,
+            tick,
+            xlim,
+            width_region_content - width_region_content * x_padding * 2,
+            x_region_content + width_region_content * x_padding,
+            :x
+          )
+       x_tick_x = elem(tick_position, 0)
+        label =
+          %Label{
+            type: @xtick_type,
+            x: x_tick_x,
+            y: x_tick_y,
+            text: label
+          }
+          |> Label.cast_label(x_tick_font)
+
+        line = %Line{
+          type: @xtick_type,
+          x1: x_tick_x,
+          y1: x_tick_y,
+          x2: x_tick_x,
+          y2: x_tick_y - tick_line_length
+        }
+
+        {%Tick{type: @xtick_type, tick_line: line, label: label}, x_tick_x}
+      end)
+      |> Enum.unzip()
+
+    elements = elements ++ xtick_elements
+    vgrids = Enum.map(vgridxs, fn g -> {g, x_tick_y} end)
+
+    %Figure{
+      figure
+      | axes: %{
+          axes
+          | data: {x_data, y_data},
+            dataset: dataset,
+            element: elements,
+            region_x: %Region{region_x | coords: %XyCoords{coords_region_x | grids: vgrids}}
+        }
     }
+  end
 
-    {%Tick{type: @xtick_type, tick_line: line, label: label}, tick_position}
-  end)
-  |> Enum.unzip()
-
-elements = elements ++ xtick_elements
-vgrids = Enum.map(vgridxs, fn g -> {g, x_tick_y} end)
-
-%Figure{
-  figure
-  | axes: %{
-      axes
-      | data: {x_data, y_data},
-        dataset: dataset,
-        element: elements,
-        coords: %{coords | vgrids: vgrids}
-    }
-}
-end
   @spec cast_yticks(Matplotex.Figure.t()) :: Matplotex.Figure.t()
   def cast_yticks(
         %Figure{
@@ -551,76 +557,83 @@ end
   end
 
   def cast_ytick(%Figure{} = figure), do: figure
+
   def cast_yticks_by_region(
+        %Figure{
+          axes:
+            %module{
+              tick: %{y: y_ticks},
+              region_content:
+                %Region{x: x_region_content, y: y_region_content, height: height_region_content},
+              region_y: %Region{coords: coords_region_y} = region_y,
+              element: elements,
+              limit: %{y: {_min, _max} = ylim},
+              data: {x_data, y_data},
+              dataset: dataset,
+              show_y_ticks: true
+            } = axes,
+          rc_params: %RcParams{
+            y_tick_font: y_tick_font,
+            y_padding: y_padding,
+            tick_line_length: tick_line_length
+          }
+        } = figure
+      ) do
+    y_ticks = confine_ticks(y_ticks, ylim)
+    y_data = confine_data(y_data, ylim)
+    dataset = confine_data(dataset, ylim, :y)
+    {y_tick_x, _} = Region.get_tick_coords(region_y)
+
+    {ytick_elements, hgridys} =
+      Enum.map(y_ticks, fn tick ->
+        {tick_position, label} =
+          transform_tick(
+            module,
+            tick,
+            ylim,
+            height_region_content - height_region_content * y_padding * 2,
+            y_region_content + height_region_content * y_padding,
+            :y
+          )
+        y_tick_y = elem(tick_position, 1)
+        label =
+          %Label{
+            type: @ytick_type,
+            y: y_tick_y,
+            x: y_tick_x,
+            text: label,
+            text_anchor: "end",
+            dominant_baseline: "middle"
+          }
+          |> Label.cast_label(y_tick_font)
+
+        line = %Line{
+          type: @ytick_type,
+          y1: y_tick_y,
+          x1: x_region_content,
+          x2: x_region_content - tick_line_length,
+          y2: y_tick_y
+        }
+
+        {%Tick{type: @ytick_type, tick_line: line, label: label}, y_tick_y}
+      end)
+      |> Enum.unzip()
+
+    elements = elements ++ ytick_elements
+    hgrids = Enum.map(hgridys, fn g -> {x_region_content, g} end)
+
     %Figure{
-      axes:
-        %module{
-          tick: %{y: y_ticks},
-          region_content: %Region{x: x_region_content, y: y_region_content, height: height_region_content} = region_content,
-          region_y:  region_y,
-          element: elements,
-          coords: coords,
-          limit: %{y: {_min, _max} = ylim},
-          data: {x_data, y_data},
-          dataset: dataset,
-          show_y_ticks: true
-        } = axes,
-      rc_params: %RcParams{y_tick_font: y_tick_font, y_padding: y_padding, tick_line_length: tick_line_length}
-    } = figure
-  ) do
-y_ticks = confine_ticks(y_ticks, ylim)
-y_data = confine_data(y_data, ylim)
-dataset = confine_data(dataset, ylim, :y)
-{y_tick_x, _} = Region.get_tick_coords(region_y)
-{ytick_elements, hgridys} =
-  Enum.map(y_ticks, fn tick ->
-    {tick_position, label} =
-      transform_tick(
-        module,
-        tick,
-        ylim,
-        height_region_content - height_region_content * y_padding * 2,
-        y_region_content + height_region_content * y_padding,
-        :y
-      )
-
-    label =
-      %Label{
-        type: @ytick_type,
-        y: tick_position,
-        x: y_tick_x,
-        text: label,
-        text_anchor: "end",
-        dominant_baseline: "middle"
-      }
-      |>Label.cast_label(y_tick_font)
-
-    line = %Line{
-      type: @ytick_type,
-      y1: tick_position,
-      x1: x_region_content,
-      x2: x_region_content - tick_line_length,
-      y2: tick_position
+      figure
+      | axes: %{
+          axes
+          | data: {x_data, y_data},
+            dataset: dataset,
+            element: elements,
+            region_y: %Region{region_y | coords: %XyCoords{coords_region_y | grids: hgrids}}
+        }
     }
+  end
 
-    {%Tick{type: @ytick_type, tick_line: line, label: label}, tick_position}
-  end)
-  |> Enum.unzip()
-
-elements = elements ++ ytick_elements
-hgrids = Enum.map(hgridys, fn g -> {x_region_content, g} end)
-
-%Figure{
-  figure
-  | axes: %{
-      axes
-      | data: {x_data, y_data},
-        dataset: dataset,
-        element: elements,
-        coords: %{coords | hgrids: hgrids}
-    }
-}
-end
   def cast_hgrids(%Figure{axes: %{coords: %{hgrids: nil}}} = figure), do: figure
   def cast_hgrids(%Figure{axes: %{show_h_grid: false}} = figure), do: figure
 
@@ -639,6 +652,35 @@ end
         %Line{
           x1: x,
           x2: rightx,
+          y1: y,
+          y2: y,
+          type: "figure.h_grid",
+          stroke: @stroke_grid,
+          stroke_width: @stroke_width_grid
+        }
+      end)
+
+    elements = elements ++ hgrid_elements
+
+    %Figure{figure | axes: %{axes | element: elements}}
+  end
+
+  def cast_hgrids_by_region(
+        %Figure{
+          axes:
+            %{
+              show_h_grid: true,
+              region_y: %Region{coords: %XyCoords{grids: hgrids}},
+              region_content: %Region{x: x_region_content, width: width_region_content},
+              element: elements
+            } = axes
+        } = figure
+      ) do
+    hgrid_elements =
+      Enum.map(hgrids, fn {_x, y} ->
+        %Line{
+          x1: x_region_content,
+          x2: x_region_content + width_region_content,
           y1: y,
           y2: y,
           type: "figure.h_grid",
@@ -683,6 +725,35 @@ end
     %Figure{figure | axes: %{axes | element: elements}}
   end
 
+  def cast_vgrids_by_region(
+        %Figure{
+          axes:
+            %{
+              show_v_grid: true,
+              region_x: %Region{coords: %XyCoords{grids: vgrids}},
+              region_content: %Region{y: y_region_content, height: height_region_content},
+              element: elements
+            } = axes
+        } = figure
+      ) do
+    vgrid_elements =
+      Enum.map(vgrids, fn {x, _y} ->
+        %Line{
+          x1: x,
+          x2: x,
+          y1: y_region_content,
+          y2: y_region_content + height_region_content,
+          type: "figure.v_grid",
+          stroke: @stroke_grid,
+          stroke_width: @stroke_width_grid
+        }
+      end)
+
+    elements = elements ++ vgrid_elements
+
+    %Figure{figure | axes: %{axes | element: elements}}
+  end
+
   # def cast_region_x(
   #   %Figure{axes: %{ label: %TwoD{x: x_label},tick: %TwoD{x: x_ticks},
   #   region_x: %Region{x: x_region_x, y: x_region_y, width: width, height: height,
@@ -705,8 +776,9 @@ end
   defp transform_tick(module, {label, value}, lim, axis_size, transition, axis) do
     {module.tick_homogeneous_transformation(value, lim, axis_size, transition, axis), label}
   end
+
   defp transform_tick(module, value, lim, axis_size, transition, axis) do
-    {module.tick_homogeneous_transformation(value, lim, axis_size, transition,axis), value}
+    {module.tick_homogeneous_transformation(value, lim, axis_size, transition, axis), value}
   end
 
   defp min_max([{_pos, _label} | _] = ticks) do
@@ -732,7 +804,7 @@ end
   end
 
   defp calculate_center(%Region{x: x, y: y, height: height}, :y) do
-    {x, calculate_distance({x, y}, {x , y + height}) / 2 + y}
+    {x, calculate_distance({x, y}, {x, y + height}) / 2 + y}
   end
 
   defp merge_structs(%module{} = st, sst) do

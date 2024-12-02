@@ -60,8 +60,8 @@ defmodule Matplotex.Helpers do
     x = [1, 2, 3, 4, 6, 6, 7]
     y = [1, 3, 4, 4, 5, 6, 7]
 
-    frame_width = 3
-    frame_height = 3
+    frame_width = 10
+    frame_height = 10
     size = {frame_width, frame_height}
     margin = 0.05
     font_size = "16pt"
