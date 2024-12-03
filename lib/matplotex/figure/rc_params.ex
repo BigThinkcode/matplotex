@@ -140,12 +140,12 @@ defmodule Matplotex.Figure.RcParams do
          params,
          element
        ) do
-      element_font_keys = font_associated_keys(element)
-      element_params = Map.take(params,element_font_keys)
+    element_font_keys = font_associated_keys(element)
+    element_params = Map.take(params, element_font_keys)
 
-      font = Map.get(rc_params, :"#{element}_font")
-      updated_font = Font.update(font, element_params, element)
-      Map.put(rc_params, :"#{element}_font", updated_font)
+    font = Map.get(rc_params, :"#{element}_font")
+    updated_font = Font.update(font, element_params, element)
+    Map.put(rc_params, :"#{element}_font", updated_font)
   end
 
   # defp update_font(

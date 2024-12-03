@@ -63,6 +63,7 @@ defmodule Matplotex.Utils.Algebra do
     |> List.to_tuple()
     |> then(fn {x, y, _} -> {x, y} end)
   end
+
   def transform_given_point(x, y, ox, oy, theta) do
     Nx.tensor(
       [

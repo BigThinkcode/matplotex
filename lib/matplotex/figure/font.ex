@@ -34,6 +34,7 @@ defmodule Matplotex.Figure.Font do
   def update(font, params, element) do
     update_font(font, params, element)
   end
+
   defp update_font(font, params, element) do
     font
     |> Map.from_struct()

@@ -34,16 +34,16 @@ defmodule Matplotex.Figure.Lead do
   def set_border(%Figure{margin: margin, axes: axes, figsize: {fig_width, fig_height}} = figure) do
     margin = margin / 2
     lx = fig_width * margin
-    by =  fig_height * margin
+    by = fig_height * margin
     rx = fig_width - fig_width * margin
-    ty =  fig_height - fig_height * margin
+    ty = fig_height - fig_height * margin
     %Figure{figure | axes: %{axes | border: {lx, by, rx, ty}}}
   end
 
   defp set_frame_size(%Figure{margin: margin, figsize: {fwidth, fheight}, axes: axes} = figure) do
     frame_size = {fwidth - fwidth * 2 * margin, fheight - fheight * 2 * margin}
     lx = fwidth * margin
-    ty =  -fheight * margin
+    ty = -fheight * margin
     rx = fwidth - fwidth * margin
     by = fheight * margin - fheight
     %Figure{figure | axes: %{axes | size: frame_size, border: {lx, by, rx, ty}}}
@@ -58,7 +58,7 @@ defmodule Matplotex.Figure.Lead do
                label: %TwoD{y: y_label, x: x_label},
                tick: %TwoD{y: y_ticks, x: x_ticks},
                size: {f_width, f_height},
-               border: {lx, by, _, _}
+               border: {lx, by, _rx, _ty}
              } = axes,
            rc_params: %RcParams{
              x_label_font: x_label_font,
@@ -75,18 +75,23 @@ defmodule Matplotex.Figure.Lead do
     y_tick = Enum.max_by(y_ticks, &tick_length(&1))
     space_for_yticks = length_required_for_text(y_tick_font, y_tick)
 
-
-      space_required_for_region_y =
+    space_required_for_region_y =
       [space_for_ylabel, space_for_yticks, label_padding, tick_line_length] |> Enum.sum()
 
     space_for_x_label = height_required_for_text(x_label_font, x_label)
     x_tick = Enum.max_by(x_ticks, &tick_length/1)
     space_for_x_tick = height_required_for_text(x_tick_font, x_tick)
 
-      space_required_for_region_x =
+    space_required_for_region_x =
       [space_for_x_label, space_for_x_tick, label_padding, tick_line_length] |> Enum.sum()
-     {x_region_x, y_region_x} = Algebra.transform_given_point(space_required_for_region_y, 0, lx, by, 0)
-     {x_region_y, y_region_y} = Algebra.transform_given_point(0,space_required_for_region_x, lx,by,0 )
+
+    {x_region_x, y_region_x} =
+      Algebra.transform_given_point(space_required_for_region_y, 0, lx, by, 0)
+
+    {x_region_y, y_region_y} =
+      Algebra.transform_given_point(0, space_required_for_region_x, lx, by, 0)
+
+
     %Figure{
       figure
       | axes: %{
@@ -122,15 +127,18 @@ defmodule Matplotex.Figure.Lead do
                region_y: %Region{width: region_y_width, height: region_y_height} = region_y,
                region_title: region_title,
                size: {_f_width, f_height},
-               border: {lx, by, _, _}
+               border: {lx, by, _, ty}
              } = axes,
            rc_params: %RcParams{title_font: title_font}
          } = figure
        ) do
-    IO.inspect(region_y_height, label: "Region y height before peeling title space")
+
     space_for_title = height_required_for_text(title_font, title)
-    IO.inspect(space_for_title, label: "Space for title: " )
-    {x_region_title, y_region_title} = Algebra.transform_given_point(region_y_width, space_for_title, lx, by, 0)
+
+    {x_region_title, y_region_title} =
+      Algebra.transform_given_point(0, -space_for_title, lx, ty, 0)
+
+
     %Figure{
       figure
       | axes: %{
@@ -155,19 +163,18 @@ defmodule Matplotex.Figure.Lead do
            axes:
              %{
                show_legend: true,
-               region_x: %Region{x: x_region_x, width: region_x_width} = region_x,
-               region_title: %Region{height: region_title_height} = region_title,
+               region_x: %Region{ width: region_x_width} = region_x,
+               region_title: %Region{height: region_title_height},
                region_legend: region_legend,
-               size: {f_width, f_height}
+               size: {f_width, _f_height},
+               border: {_lx, by, rx, ty}
              } = axes,
            rc_params: %RcParams{legend_width: legend_width}
          } = figure
        ) do
     region_legend_width = f_width * legend_width
     region_x_width_after_legend = region_x_width - region_legend_width
-    legend_region_x = x_region_x + region_x_width_after_legend
-    legend_region_y = f_height - region_title_height
-
+    {x_region_legend, y_region_legend} = Algebra.transform_given_point(-region_legend_width, -region_title_height, rx, ty, 0)
     %Figure{
       figure
       | axes: %{
@@ -176,16 +183,12 @@ defmodule Matplotex.Figure.Lead do
               region_x
               | width: region_x_width_after_legend
             },
-            region_title: %Region{
-              region_title
-              | width: region_x_width_after_legend
-            },
             region_legend: %Region{
               region_legend
-              | x: legend_region_x,
-                y: legend_region_y,
+              | x: x_region_legend,
+                y: y_region_legend,
                 width: region_legend_width,
-                height: legend_region_y
+                height: y_region_legend - by
             }
         }
     }
@@ -203,7 +206,7 @@ defmodule Matplotex.Figure.Lead do
              } = axes
          } = figure
        ) do
-        IO.inspect(region_y_height, label: "Region y height for content")
+
     %Figure{
       figure
       | axes: %{
@@ -498,9 +501,8 @@ defmodule Matplotex.Figure.Lead do
          },
          _text
        ) do
-        to_number(font_size) * pt_to_inch_ratio + flate
-       end
-
+    to_number(font_size) * pt_to_inch_ratio + flate
+  end
 
   defp height_required_for_text(
          %Font{
@@ -546,8 +548,10 @@ defmodule Matplotex.Figure.Lead do
 
   defp deg_to_rad(deg), do: deg * :math.pi() / 180
   defp to_number(font_size) when is_number(font_size), do: font_size
+
   defp to_number(font_size) when is_binary(font_size) do
     font_size = String.trim(font_size, "pt")
+
     if String.contains?(font_size, ".") do
       String.to_float(font_size)
     else

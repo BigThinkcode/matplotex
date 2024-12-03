@@ -79,18 +79,16 @@ defmodule Matplotex.Figure.Cast do
                 width: content_width,
                 height: content_height
               },
-              border: {lx, ly, _, _},
               element: elements
             } = axes
         } = figure
       ) do
-
     #  Convert to the svg plane
-    IO.inspect({content_x, content_width, content_y, content_height}, label: "The content dims")
-    {left_x, bottom_y} = Algebra.transform_given_point(content_x, content_y,lx, ly, 0 ) |>Algebra.flip_y_coordinate()
-    {right_x, top_y} = Algebra.transform_given_point(content_x + content_width, content_y + content_height, lx, ly, 0)|>Algebra.flip_y_coordinate()
-    IO.inspect({left_x, bottom_y, right_x, top_y}, label: "The spines coords")
 
+    {left_x, bottom_y} = Algebra.flip_y_coordinate({content_x, content_y})
+
+     {right_x, top_y} =
+      Algebra.transform_given_point(content_width, content_height, content_x, content_y, 0)|>Algebra.flip_y_coordinate()
     # Four Line struct representing each corners
 
     left = %Line{
@@ -194,8 +192,7 @@ defmodule Matplotex.Figure.Cast do
           rc_params: %RcParams{title_font: title_font, label_padding: title_padding}
         } = figure
       ) do
-    {title_x, title_y} = calculate_center(region, :x)
-
+   {title_x, title_y} = region|>calculate_center(:x)|>Algebra.flip_y_coordinate()
     title =
       %Label{
         type: "figure.title",
@@ -254,8 +251,8 @@ defmodule Matplotex.Figure.Cast do
         } = figure
       )
       when not is_nil(x_label) do
-    {_, x_label_y} = Region.get_label_coords(region_x)
-    {x_label_x, _} = calculate_center(region_x, :x)
+    # {_, x_label_y} = Region.get_label_coords(region_x)
+    {x_label_x, x_label_y} = region_x|>calculate_center(:x)|>Algebra.flip_y_coordinate()
 
     x_label =
       %Label{
@@ -304,10 +301,9 @@ defmodule Matplotex.Figure.Cast do
         } = figure
       )
       when not is_nil(y_label) do
-    {y_label_x, _} = Region.get_label_coords(region_y)
 
-    {_, y_label_y} = calculate_center(region_y, :y)
 
+    {y_label_x, y_label_y} = region_y|>calculate_center(:y)|>Algebra.flip_y_coordinate()
     y_label =
       %Label{
         type: "figure.y_label",
@@ -440,7 +436,9 @@ defmodule Matplotex.Figure.Cast do
             x_region_content + width_region_content * x_padding,
             :x
           )
-       x_tick_x = elem(tick_position, 0)
+
+        x_tick_x = elem(tick_position, 0)
+
         label =
           %Label{
             type: @xtick_type,
@@ -563,8 +561,11 @@ defmodule Matplotex.Figure.Cast do
           axes:
             %module{
               tick: %{y: y_ticks},
-              region_content:
-                %Region{x: x_region_content, y: y_region_content, height: height_region_content},
+              region_content: %Region{
+                x: x_region_content,
+                y: y_region_content,
+                height: height_region_content
+              },
               region_y: %Region{coords: coords_region_y} = region_y,
               element: elements,
               limit: %{y: {_min, _max} = ylim},
@@ -595,7 +596,9 @@ defmodule Matplotex.Figure.Cast do
             y_region_content + height_region_content * y_padding,
             :y
           )
+
         y_tick_y = elem(tick_position, 1)
+
         label =
           %Label{
             type: @ytick_type,

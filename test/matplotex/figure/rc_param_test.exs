@@ -27,10 +27,16 @@ defmodule Matplotex.Figure.RcParamTest do
       font_weight = "Updated weight"
       font_style = "Updated style"
 
-      pt_to_inch_ratio = 1/60
+      pt_to_inch_ratio = 1 / 60
       rc_params = %RcParams{}
 
-      font = %Font{font_size: font_size, font_family: font_family, font_style: font_style, font_weight: font_weight, pt_to_inch_ratio: pt_to_inch_ratio}
+      font = %Font{
+        font_size: font_size,
+        font_family: font_family,
+        font_style: font_style,
+        font_weight: font_weight,
+        pt_to_inch_ratio: pt_to_inch_ratio
+      }
 
       params = %{
         x_label_font_size: font_size,
