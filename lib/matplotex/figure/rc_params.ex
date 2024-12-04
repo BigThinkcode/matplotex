@@ -19,7 +19,7 @@ defmodule Matplotex.Figure.RcParams do
   @label_padding 5 / 96
   @default_legend_width_percentage 0.2
   @default_legend_items_orientation :horizontal
-  defstruct x_tick_font: @font,
+  defstruct x_tick_font: %Font{dominant_baseline: "middle"},
             y_tick_font: @font,
             x_label_font: @font,
             y_label_font: @font,

@@ -8,6 +8,7 @@ defmodule Matplotex.Figure.Font do
   @pt_to_inch_ratio 1 / 72
   @text_rotation 0
   @flate 0
+  @dominant_baseline "middle"
 
   defstruct font_size: @default_font_size,
             font_style: @default_font_style,
@@ -17,6 +18,7 @@ defmodule Matplotex.Figure.Font do
             unit_of_measurement: @font_unit,
             pt_to_inch_ratio: @pt_to_inch_ratio,
             rotation: @text_rotation,
+            dominant_baseline: @dominant_baseline,
             flate: @flate
 
   def font_keys() do

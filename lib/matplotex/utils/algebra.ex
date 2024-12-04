@@ -64,7 +64,7 @@ defmodule Matplotex.Utils.Algebra do
     |> then(fn {x, y, _} -> {x, y} end)
   end
 
-  def transform_given_point(x, y, ox, oy, theta) do
+  def transform_given_point(x, y, ox, oy, theta \\ 0) do
     Nx.tensor(
       [
         [:math.cos(theta), -:math.sin(theta), ox],

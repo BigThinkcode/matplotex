@@ -87,8 +87,10 @@ defmodule Matplotex.Figure.Cast do
 
     {left_x, bottom_y} = Algebra.flip_y_coordinate({content_x, content_y})
 
-     {right_x, top_y} =
-      Algebra.transform_given_point(content_width, content_height, content_x, content_y, 0)|>Algebra.flip_y_coordinate()
+    {right_x, top_y} =
+      Algebra.transform_given_point(content_width, content_height, content_x, content_y, 0)
+      |> Algebra.flip_y_coordinate()
+
     # Four Line struct representing each corners
 
     left = %Line{
@@ -192,7 +194,8 @@ defmodule Matplotex.Figure.Cast do
           rc_params: %RcParams{title_font: title_font, label_padding: title_padding}
         } = figure
       ) do
-   {title_x, title_y} = region|>calculate_center(:x)|>Algebra.flip_y_coordinate()
+    {title_x, title_y} = region |> calculate_center(:x) |> Algebra.flip_y_coordinate()
+
     title =
       %Label{
         type: "figure.title",
@@ -252,7 +255,7 @@ defmodule Matplotex.Figure.Cast do
       )
       when not is_nil(x_label) do
     # {_, x_label_y} = Region.get_label_coords(region_x)
-    {x_label_x, x_label_y} = region_x|>calculate_center(:x)|>Algebra.flip_y_coordinate()
+    {x_label_x, x_label_y} = region_x |> calculate_center(:x) |> Algebra.flip_y_coordinate()
 
     x_label =
       %Label{
@@ -301,9 +304,8 @@ defmodule Matplotex.Figure.Cast do
         } = figure
       )
       when not is_nil(y_label) do
+    {y_label_x, y_label_y} = region_y |> calculate_center(:y) |> Algebra.flip_y_coordinate()
 
-
-    {y_label_x, y_label_y} = region_y|>calculate_center(:y)|>Algebra.flip_y_coordinate()
     y_label =
       %Label{
         type: "figure.y_label",
@@ -401,11 +403,17 @@ defmodule Matplotex.Figure.Cast do
   def cast_xticks_by_region(
         %Figure{
           axes:
-            %module{
+            %{
               tick: %{x: x_ticks},
               limit: %{x: {_min, _max} = xlim},
-              region_content: %Region{x: x_region_content, width: width_region_content},
-              region_x: %Region{coords: coords_region_x} = region_x,
+              region_x:
+                %Region{
+                  x: x_region_x,
+                  y: y_region_x,
+                  height: height_region_x,
+                  width: width_region_x,
+                  coords: %XyCoords{ticks: {_, y_x_tick}} = coords_region_x
+                } = region_x,
               data: {x_data, y_data},
               dataset: dataset,
               element: elements,
@@ -422,46 +430,54 @@ defmodule Matplotex.Figure.Cast do
     x_ticks = confine_ticks(x_ticks, xlim)
     x_data = confine_data(x_data, xlim)
     dataset = confine_data(dataset, xlim, :x)
+    x_padding_value = width_region_x * x_padding
+    shrinked_width_region_x = width_region_x - x_padding_value * 2
+    x_region_x_with_padding = x_region_x + x_padding_value
 
-    {_, x_tick_y} = Region.get_tick_coords(region_x)
+    ticks_width_position =
+      x_ticks
+      |> length()
+      |> content_linespace(shrinked_width_region_x)
+      |> Enum.zip(x_ticks)
 
-    {xtick_elements, vgridxs} =
-      Enum.map(x_ticks, fn tick ->
-        {tick_position, label} =
-          transform_tick(
-            module,
-            tick,
-            xlim,
-            width_region_content - width_region_content * x_padding * 2,
-            x_region_content + width_region_content * x_padding,
-            :x
+    {x_tick_elements, vgrid_coords} =
+      Enum.map(ticks_width_position, fn {tick_position, label} ->
+        {_, y_x_tick_line} =
+          Algebra.transform_given_point(0, height_region_x, x_region_x, y_region_x)
+          |> Algebra.flip_y_coordinate()
+
+        {x_x_tick, y_x_tick} =
+          Algebra.transform_given_point(
+            tick_position,
+            0,
+            x_region_x_with_padding,
+            y_x_tick,
+            0
           )
-
-        x_tick_x = elem(tick_position, 0)
+          |> Algebra.flip_y_coordinate()
 
         label =
           %Label{
             type: @xtick_type,
-            x: x_tick_x,
-            y: x_tick_y,
+            x: x_x_tick,
+            y: y_x_tick,
             text: label
           }
           |> Label.cast_label(x_tick_font)
 
         line = %Line{
           type: @xtick_type,
-          x1: x_tick_x,
-          y1: x_tick_y,
-          x2: x_tick_x,
-          y2: x_tick_y - tick_line_length
+          x1: x_x_tick,
+          y1: y_x_tick_line,
+          x2: x_x_tick,
+          y2: y_x_tick_line + tick_line_length
         }
 
-        {%Tick{type: @xtick_type, tick_line: line, label: label}, x_tick_x}
+        {%Tick{type: @xtick_type, tick_line: line, label: label}, {x_x_tick, y_x_tick_line}}
       end)
       |> Enum.unzip()
 
-    elements = elements ++ xtick_elements
-    vgrids = Enum.map(vgridxs, fn g -> {g, x_tick_y} end)
+    elements = elements ++ x_tick_elements
 
     %Figure{
       figure
@@ -470,9 +486,13 @@ defmodule Matplotex.Figure.Cast do
           | data: {x_data, y_data},
             dataset: dataset,
             element: elements,
-            region_x: %Region{region_x | coords: %XyCoords{coords_region_x | grids: vgrids}}
+            region_x: %Region{region_x | coords: %XyCoords{coords_region_x | grids: vgrid_coords}}
         }
     }
+  end
+
+  defp content_linespace(number_of_ticks_required, axis_size) do
+    Nx.linspace(0, axis_size, n: number_of_ticks_required) |> Nx.to_list()
   end
 
   @spec cast_yticks(Matplotex.Figure.t()) :: Matplotex.Figure.t()
@@ -559,14 +579,10 @@ defmodule Matplotex.Figure.Cast do
   def cast_yticks_by_region(
         %Figure{
           axes:
-            %module{
+            %{
               tick: %{y: y_ticks},
-              region_content: %Region{
-                x: x_region_content,
-                y: y_region_content,
-                height: height_region_content
-              },
-              region_y: %Region{coords: coords_region_y} = region_y,
+              region_y:
+                %Region{x: x_region_y, y: y_region_y, width: width_region_y, height: height_region_y,coords: %XyCoords{ticks: {x_y_tick, _}} = coords_region_y} = region_y,
               element: elements,
               limit: %{y: {_min, _max} = ylim},
               data: {x_data, y_data},
@@ -583,47 +599,52 @@ defmodule Matplotex.Figure.Cast do
     y_ticks = confine_ticks(y_ticks, ylim)
     y_data = confine_data(y_data, ylim)
     dataset = confine_data(dataset, ylim, :y)
-    {y_tick_x, _} = Region.get_tick_coords(region_y)
 
-    {ytick_elements, hgridys} =
-      Enum.map(y_ticks, fn tick ->
-        {tick_position, label} =
-          transform_tick(
-            module,
-            tick,
-            ylim,
-            height_region_content - height_region_content * y_padding * 2,
-            y_region_content + height_region_content * y_padding,
-            :y
+    y_padding_value = height_region_y * y_padding
+    shrinked_height_region_y = height_region_y - y_padding_value * 2
+    y_region_y_with_padding = y_region_y + y_padding_value
+
+    ticks_width_position =
+      y_ticks
+      |> length()
+      |> content_linespace(shrinked_height_region_y)
+      |> Enum.zip(y_ticks)
+
+    {ytick_elements, hgrid_coords} =
+      Enum.map(ticks_width_position, fn {tick_position, label} ->
+        {x_y_tick_line, _} = Algebra.transform_given_point(width_region_y, 0, x_region_y, y_region_y)
+
+        {x_y_tick, y_y_tick} =
+          Algebra.transform_given_point(
+            0,
+            tick_position,
+            x_y_tick,
+            y_region_y_with_padding
           )
-
-        y_tick_y = elem(tick_position, 1)
+          |> Algebra.flip_y_coordinate()
 
         label =
           %Label{
             type: @ytick_type,
-            y: y_tick_y,
-            x: y_tick_x,
-            text: label,
-            text_anchor: "end",
-            dominant_baseline: "middle"
+            y: y_y_tick,
+            x: x_y_tick,
+            text: label
           }
           |> Label.cast_label(y_tick_font)
 
         line = %Line{
           type: @ytick_type,
-          y1: y_tick_y,
-          x1: x_region_content,
-          x2: x_region_content - tick_line_length,
-          y2: y_tick_y
+          y1: y_y_tick,
+          x1: x_y_tick_line,
+          x2: x_y_tick_line - tick_line_length,
+          y2: y_y_tick
         }
 
-        {%Tick{type: @ytick_type, tick_line: line, label: label}, y_tick_y}
+        {%Tick{type: @ytick_type, tick_line: line, label: label}, {x_y_tick_line, y_y_tick}}
       end)
       |> Enum.unzip()
 
     elements = elements ++ ytick_elements
-    hgrids = Enum.map(hgridys, fn g -> {x_region_content, g} end)
 
     %Figure{
       figure
@@ -632,7 +653,7 @@ defmodule Matplotex.Figure.Cast do
           | data: {x_data, y_data},
             dataset: dataset,
             element: elements,
-            region_y: %Region{region_y | coords: %XyCoords{coords_region_y | grids: hgrids}}
+            region_y: %Region{region_y | coords: %XyCoords{coords_region_y | grids: hgrid_coords}}
         }
     }
   end
@@ -680,10 +701,10 @@ defmodule Matplotex.Figure.Cast do
         } = figure
       ) do
     hgrid_elements =
-      Enum.map(hgrids, fn {_x, y} ->
+      Enum.map(hgrids, fn {x, y} ->
         %Line{
-          x1: x_region_content,
-          x2: x_region_content + width_region_content,
+          x1: x,
+          x2: x + width_region_content,
           y1: y,
           y2: y,
           type: "figure.h_grid",
@@ -740,12 +761,12 @@ defmodule Matplotex.Figure.Cast do
         } = figure
       ) do
     vgrid_elements =
-      Enum.map(vgrids, fn {x, _y} ->
+      Enum.map(vgrids, fn {x, y} ->
         %Line{
           x1: x,
           x2: x,
-          y1: y_region_content,
-          y2: y_region_content + height_region_content,
+          y1: y,
+          y2: y - height_region_content,
           type: "figure.v_grid",
           stroke: @stroke_grid,
           stroke_width: @stroke_width_grid
@@ -767,7 +788,6 @@ defmodule Matplotex.Figure.Cast do
   #   x_tick_elements =
 
   # end
-
   defp plotify_tick(module, {label, value}, lim, axis_size, transition, data, axis) do
     {module.plotify(value, lim, axis_size, transition, data, axis), label}
   end

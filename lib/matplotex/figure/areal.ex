@@ -61,13 +61,6 @@ defmodule Matplotex.Figure.Areal do
       end
 
       def add_ticks(%__MODULE__{tick: tick} = axes, {key, ticks}) when is_list(ticks) do
-        ticks =
-          if number_based?(ticks) do
-            ticks
-          else
-            Enum.with_index(ticks, 1)
-          end
-
         tick = Map.put(tick, key, ticks)
         update_tick(axes, tick)
       end
@@ -82,12 +75,12 @@ defmodule Matplotex.Figure.Areal do
         |> update_tick(tick)
       end
 
-      def hide_v_grid(axes) do
-        %{axes | show_v_grid: false}
-      end
-
       def add_ticks(_, _) do
         raise Matplotex.InputError, keys: [:tick], message: "Invalid Input"
+      end
+
+      def hide_v_grid(axes) do
+        %{axes | show_v_grid: false}
       end
 
       def set_limit(%__MODULE__{limit: limit} = axes, {key, {_, _} = lim}) do

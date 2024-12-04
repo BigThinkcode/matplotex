@@ -300,58 +300,59 @@ defmodule Matplotex.Figure.LeadTest do
       assert rcwidth == rxwidth
       assert ryheight == rcheight
     end
-
   end
-    test "all coordinates will be zero if input is zero", %{figure2: figure} do
-      figure = Matplotex.figure(figure, %{figsize: {0, 0}})
-      assert %Figure{
-        axes: %{
-          region_x: %Region{x: rxx, width: rxwidth},
-          region_y: %Region{y: ryy, height: ryheight},
-          region_title: %Region{x: rtx, y: rty, width: rtwidth, height: rtheight},
-          region_content: %Region{x: rcx, y: rcy, width: rcwidth, height: rcheight}
-        }
-      } = Lead.set_regions(figure)
 
-      assert rxx == 0
-      assert ryy == 0
-      assert rtx == 0
-      assert rty == 0
-      assert rtwidth == 0
-      assert rtheight == 0
-      assert rcx == 0
-      assert rcy == 0
-      assert rcwidth == 0
-      assert rcheight == 0
-    end
+  test "all coordinates will be zero if input is zero", %{figure2: figure} do
+    figure = Matplotex.figure(figure, %{figsize: {0, 0}})
 
-    test "height will tally with all vertical components", %{figure: figure} do
-      assert %Figure{
-        figsize: {_width, height},
-        margin: margin,
-        axes: %{
-          region_x: %Region{height: rxheight},
-          region_title: %Region{height: rtheight},
-          region_content: %Region{height: rcheight}
-        }
-      } = Lead.set_regions(figure)
-     margin_two_side = height * margin * 2
-     assert height == margin_two_side + rxheight + rtheight + rcheight
-    end
+    assert %Figure{
+             axes: %{
+               region_x: %Region{x: rxx, width: rxwidth},
+               region_y: %Region{y: ryy, height: ryheight},
+               region_title: %Region{x: rtx, y: rty, width: rtwidth, height: rtheight},
+               region_content: %Region{x: rcx, y: rcy, width: rcwidth, height: rcheight}
+             }
+           } = Lead.set_regions(figure)
 
-    test "width will tally with all horizontal components", %{figure: figure} do
-      assert %Figure{
-        figsize: {width, _height},
-        margin: margin,
-        axes: %{
-          region_y: %Region{width: ry_width},
-          region_content: %Region{width: rcwidth},
-          region_legend: %Region{width: rlwidth}
-        }
-      } = Lead.set_regions(figure)
-      two_side_margin = width * margin * 2
-      assert width == two_side_margin + ry_width + rcwidth + rlwidth
-    end
+    assert rxx == 0
+    assert ryy == 0
+    assert rtx == 0
+    assert rty == 0
+    assert rtwidth == 0
+    assert rtheight == 0
+    assert rcx == 0
+    assert rcy == 0
+    assert rcwidth == 0
+    assert rcheight == 0
+  end
 
+  test "height will tally with all vertical components", %{figure: figure} do
+    assert %Figure{
+             figsize: {_width, height},
+             margin: margin,
+             axes: %{
+               region_x: %Region{height: rxheight},
+               region_title: %Region{height: rtheight},
+               region_content: %Region{height: rcheight}
+             }
+           } = Lead.set_regions(figure)
 
+    margin_two_side = height * margin * 2
+    assert height == margin_two_side + rxheight + rtheight + rcheight
+  end
+
+  test "width will tally with all horizontal components", %{figure: figure} do
+    assert %Figure{
+             figsize: {width, _height},
+             margin: margin,
+             axes: %{
+               region_y: %Region{width: ry_width},
+               region_content: %Region{width: rcwidth},
+               region_legend: %Region{width: rlwidth}
+             }
+           } = Lead.set_regions(figure)
+
+    two_side_margin = width * margin * 2
+    assert width == two_side_margin + ry_width + rcwidth + rlwidth
+  end
 end
