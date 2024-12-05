@@ -695,7 +695,7 @@ defmodule Matplotex.Figure.Cast do
             %{
               show_h_grid: true,
               region_y: %Region{coords: %XyCoords{grids: hgrids}},
-              region_content: %Region{x: x_region_content, width: width_region_content},
+              region_x: %Region{width: width_region_x},
               element: elements
             } = axes
         } = figure
@@ -704,7 +704,7 @@ defmodule Matplotex.Figure.Cast do
       Enum.map(hgrids, fn {x, y} ->
         %Line{
           x1: x,
-          x2: x + width_region_content,
+          x2: x + width_region_x,
           y1: y,
           y2: y,
           type: "figure.h_grid",
@@ -755,7 +755,7 @@ defmodule Matplotex.Figure.Cast do
             %{
               show_v_grid: true,
               region_x: %Region{coords: %XyCoords{grids: vgrids}},
-              region_content: %Region{y: y_region_content, height: height_region_content},
+              region_y: %Region{height: height_region_y},
               element: elements
             } = axes
         } = figure
@@ -766,7 +766,7 @@ defmodule Matplotex.Figure.Cast do
           x1: x,
           x2: x,
           y1: y,
-          y2: y - height_region_content,
+          y2: y - height_region_y,
           type: "figure.v_grid",
           stroke: @stroke_grid,
           stroke_width: @stroke_width_grid
@@ -777,17 +777,6 @@ defmodule Matplotex.Figure.Cast do
 
     %Figure{figure | axes: %{axes | element: elements}}
   end
-
-  # def cast_region_x(
-  #   %Figure{axes: %{ label: %TwoD{x: x_label},tick: %TwoD{x: x_ticks},
-  #   region_x: %Region{x: x_region_x, y: x_region_y, width: width, height: height,
-  #   coords: %XyCoords{label: {x_label_x, x_label_y}, ticks: x_tick_coords}},
-  #   rc_params: %RcParams{x_label_font: x_label_font}} = axes} = figure) do
-
-  #   xlabel_element = %Label{x: x_label_x, y: x_label_y, text: x_label}|>Label.cast_label(x_label_font)
-  #   x_tick_elements =
-
-  # end
   defp plotify_tick(module, {label, value}, lim, axis_size, transition, data, axis) do
     {module.plotify(value, lim, axis_size, transition, data, axis), label}
   end
@@ -796,13 +785,6 @@ defmodule Matplotex.Figure.Cast do
     {module.plotify(value, lim, axis_size, transition, data, axis), value}
   end
 
-  defp transform_tick(module, {label, value}, lim, axis_size, transition, axis) do
-    {module.tick_homogeneous_transformation(value, lim, axis_size, transition, axis), label}
-  end
-
-  defp transform_tick(module, value, lim, axis_size, transition, axis) do
-    {module.tick_homogeneous_transformation(value, lim, axis_size, transition, axis), value}
-  end
 
   defp min_max([{_pos, _label} | _] = ticks) do
     ticks

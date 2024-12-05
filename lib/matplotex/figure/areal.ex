@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Areal do
+  alias Matplotex.Utils.Algebra
   alias Matplotex.Figure.Dataset
   alias Matplotex.Figure.TwoD
   @callback create(struct(), any(), keyword()) :: struct()
@@ -215,9 +216,6 @@ defmodule Matplotex.Figure.Areal do
     end
   end
 
-  @tensor_data_type_bits 64
-
-  alias Nx
 
   def transformation({_label, value}, y, xminmax, yminmax, width, height, transition) do
     transformation(value, y, xminmax, yminmax, width, height, transition)
@@ -242,20 +240,7 @@ defmodule Matplotex.Figure.Areal do
     tx = transition_x - xmin * sx
     ty = transition_y - ymin * sy
 
-    # TODO: work for the datasets which has values in a range way far from zero in both directi
-    point_matrix = Nx.tensor([x, y, 1], type: {:f, @tensor_data_type_bits})
-
-    Nx.tensor(
-      [
-        [sx, 0, tx],
-        [0, sy, ty],
-        [0, 0, 1]
-      ],
-      type: {:f, @tensor_data_type_bits}
-    )
-    |> Nx.dot(point_matrix)
-    |> Nx.to_flat_list()
-    |> then(fn [x_trans, y_trans, _] -> {x_trans, y_trans} end)
+    Algebra.transform_given_point(x, y, sx, sy, tx, ty)
   end
 
   def do_transform(%Dataset{x: x, y: y} = dataset, xlim, ylim, width, height, transition) do
@@ -263,7 +248,9 @@ defmodule Matplotex.Figure.Areal do
       x
       |> Enum.zip(y)
       |> Enum.map(fn {x, y} ->
-        transformation(x, y, xlim, ylim, width, height, transition)
+        x
+        |>transformation(y, xlim, ylim, width, height, transition)
+        |>Algebra.flip_y_coordinate()
       end)
 
     %Dataset{dataset | transformed: transformed}
