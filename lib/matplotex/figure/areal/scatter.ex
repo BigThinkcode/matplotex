@@ -38,7 +38,7 @@ defmodule Matplotex.Figure.Areal.Scatter do
 
   @impl Areal
   def materialize(figure) do
-    __MODULE__.materialized(figure)
+    __MODULE__.materialized_by_region(figure)
     |> materialize_elements()
   end
 
@@ -48,23 +48,33 @@ defmodule Matplotex.Figure.Areal.Scatter do
              %{
                dataset: data,
                limit: %{x: xlim, y: ylim},
-               size: {width, height},
-               coords: %Coords{bottom_left: {blx, bly}},
+               region_content: %Region{
+                 x: x_region_content,
+                 y: y_region_content,
+                 width: width_region_content,
+                 height: height_region_content
+               },
                element: elements
              } = axes,
            rc_params: %RcParams{x_padding: x_padding, y_padding: y_padding}
          } = figure
        ) do
-    px = width * x_padding
-    py = height * y_padding
-    width = width - px * 2
-    height = height - py * 2
+    x_padding_value = width_region_content * x_padding
+    y_padding_value = height_region_content * y_padding
+    shrinked_width_region_content = width_region_content - x_padding_value * 2
+    shrinked_height_region_content = height_region_content - y_padding_value * 2
 
     line_elements =
       data
       |> Enum.map(fn dataset ->
         dataset
-        |> do_transform(xlim, ylim, width, height, {blx + px, bly + py})
+        |> do_transform(
+          xlim,
+          ylim,
+          shrinked_width_region_content,
+          shrinked_height_region_content,
+          {x_region_content + x_padding_value, y_region_content + y_padding_value}
+        )
         |> capture()
       end)
       |> List.flatten()

@@ -582,7 +582,13 @@ defmodule Matplotex.Figure.Cast do
             %{
               tick: %{y: y_ticks},
               region_y:
-                %Region{x: x_region_y, y: y_region_y, width: width_region_y, height: height_region_y,coords: %XyCoords{ticks: {x_y_tick, _}} = coords_region_y} = region_y,
+                %Region{
+                  x: x_region_y,
+                  y: y_region_y,
+                  width: width_region_y,
+                  height: height_region_y,
+                  coords: %XyCoords{ticks: {x_y_tick, _}} = coords_region_y
+                } = region_y,
               element: elements,
               limit: %{y: {_min, _max} = ylim},
               data: {x_data, y_data},
@@ -612,7 +618,8 @@ defmodule Matplotex.Figure.Cast do
 
     {ytick_elements, hgrid_coords} =
       Enum.map(ticks_width_position, fn {tick_position, label} ->
-        {x_y_tick_line, _} = Algebra.transform_given_point(width_region_y, 0, x_region_y, y_region_y)
+        {x_y_tick_line, _} =
+          Algebra.transform_given_point(width_region_y, 0, x_region_y, y_region_y)
 
         {x_y_tick, y_y_tick} =
           Algebra.transform_given_point(
@@ -777,6 +784,7 @@ defmodule Matplotex.Figure.Cast do
 
     %Figure{figure | axes: %{axes | element: elements}}
   end
+
   defp plotify_tick(module, {label, value}, lim, axis_size, transition, data, axis) do
     {module.plotify(value, lim, axis_size, transition, data, axis), label}
   end
@@ -784,7 +792,6 @@ defmodule Matplotex.Figure.Cast do
   defp plotify_tick(module, value, lim, axis_size, transition, data, axis) do
     {module.plotify(value, lim, axis_size, transition, data, axis), value}
   end
-
 
   defp min_max([{_pos, _label} | _] = ticks) do
     ticks

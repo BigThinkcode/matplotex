@@ -49,7 +49,7 @@ defmodule Matplotex.Utils.Algebra do
 
   def svgfy(y, height), do: height - y
 
-  def transform_given_point(x, y, sx, sy, tx, ty, theta\\0) do
+  def transform_given_point(x, y, sx, sy, tx, ty, theta \\ 0) do
     Nx.tensor(
       [
         [sx * :math.cos(theta), sy * -:math.sin(theta), tx],

@@ -54,7 +54,12 @@ defmodule Matplotex.Figure.Areal.LinePlot do
              %{
                dataset: data,
                limit: %{x: xlim, y: ylim},
-               region_content: %Region{x: x_region_content, y: y_region_content, width: width_region_content, height: height_region_content},
+               region_content: %Region{
+                 x: x_region_content,
+                 y: y_region_content,
+                 width: width_region_content,
+                 height: height_region_content
+               },
                element: elements
              } = axes,
            rc_params: %RcParams{x_padding: x_padding, y_padding: y_padding}
@@ -65,12 +70,22 @@ defmodule Matplotex.Figure.Areal.LinePlot do
     y_padding_value = height_region_content * y_padding
     shrinked_width_region_content = width_region_content - x_padding_value * 2
     shrinked_height_region_content = height_region_content - y_padding_value * 2
-    IO.inspect({shrinked_height_region_content, shrinked_height_region_content, y_region_content}, label: "Shrinked size")
+
+    IO.inspect({shrinked_height_region_content, shrinked_height_region_content, y_region_content},
+      label: "Shrinked size"
+    )
+
     line_elements =
       data
       |> Enum.map(fn dataset ->
         dataset
-        |> do_transform(xlim, ylim, shrinked_width_region_content, shrinked_height_region_content, {x_region_content+x_padding_value, y_region_content+y_padding_value})
+        |> do_transform(
+          xlim,
+          ylim,
+          shrinked_width_region_content,
+          shrinked_height_region_content,
+          {x_region_content + x_padding_value, y_region_content + y_padding_value}
+        )
         |> capture()
       end)
       |> List.flatten()

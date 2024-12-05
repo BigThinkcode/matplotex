@@ -216,7 +216,6 @@ defmodule Matplotex.Figure.Areal do
     end
   end
 
-
   def transformation({_label, value}, y, xminmax, yminmax, width, height, transition) do
     transformation(value, y, xminmax, yminmax, width, height, transition)
   end
@@ -249,8 +248,8 @@ defmodule Matplotex.Figure.Areal do
       |> Enum.zip(y)
       |> Enum.map(fn {x, y} ->
         x
-        |>transformation(y, xlim, ylim, width, height, transition)
-        |>Algebra.flip_y_coordinate()
+        |> transformation(y, xlim, ylim, width, height, transition)
+        |> Algebra.flip_y_coordinate()
       end)
 
     %Dataset{dataset | transformed: transformed}
