@@ -95,7 +95,6 @@ defmodule Matplotex.Figure.Areal.LinePlot do
     value * s + transition - minl * s
   end
 
-
   def generate_ticks([{_l, _v} | _] = data) do
     {data, min_max(data)}
   end

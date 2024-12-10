@@ -433,6 +433,7 @@ defmodule Matplotex.Figure.Cast do
     x_padding_value = width_region_x * x_padding
     shrinked_width_region_x = width_region_x - x_padding_value * 2
     x_region_x_with_padding = x_region_x + x_padding_value
+
     ticks_width_position =
       x_ticks
       |> length()

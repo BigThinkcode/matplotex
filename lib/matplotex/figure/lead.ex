@@ -21,6 +21,7 @@ defmodule Matplotex.Figure.Lead do
     |> set_yticks_coords()
     |> set_border_coords()
   end
+
   @spec set_regions(Matplotex.Figure.t()) :: Matplotex.Figure.t()
 
   def set_regions(%Figure{figsize: {width, height}} = figure) when width > 0 and height > 0 do
@@ -55,17 +56,28 @@ defmodule Matplotex.Figure.Lead do
 
   defp ensure_ticks_are_valid(
          %Figure{
-          figsize: {width, height},
+           figsize: {width, height},
            axes:
              %{
                data: {x_data, y_data},
-               tick: %TwoD{x: x_ticks, y: y_ticks} = ticks,limit: %TwoD{x: x_lim, y: y_lim} = limit}= axes} = figure) do
+               tick: %TwoD{x: x_ticks, y: y_ticks} = ticks,
+               limit: %TwoD{x: x_lim, y: y_lim} = limit
+             } = axes
+         } = figure
+       ) do
+    {x_ticks, x_lim} = maybe_generate_ticks(x_ticks, x_lim, x_data, width)
+    {y_ticks, y_lim} = maybe_generate_ticks(y_ticks, y_lim, y_data, height)
 
-                {x_ticks, x_lim} = maybe_generate_ticks(x_ticks, x_lim, x_data, width)
-                {y_ticks, y_lim} = maybe_generate_ticks(y_ticks, y_lim, y_data, height)
+    %Figure{
+      figure
+      | axes: %{
+          axes
+          | tick: %TwoD{ticks | x: x_ticks, y: y_ticks},
+            limit: %TwoD{limit | x: x_lim, y: y_lim}
+        }
+    }
+  end
 
-                %Figure{figure | axes:  %{axes | tick: %TwoD{ticks | x: x_ticks, y: y_ticks},limit: %TwoD{limit | x: x_lim, y: y_lim}}}
-              end
   defp maybe_generate_ticks(ticks, limit, data, number_of_ticks) do
     if is_nil(ticks) || length(ticks) < 3 do
       generate_ticks(limit, data, ceil(number_of_ticks))
@@ -77,19 +89,19 @@ defmodule Matplotex.Figure.Lead do
   defp generate_ticks(nil, data, number_of_ticks) do
     {min, upper_limit} = Enum.min_max(data)
 
-    lower_limit = if min < 0 do
-      min
-    else
-      0
-    end
+    lower_limit =
+      if min < 0 do
+        min
+      else
+        0
+      end
 
     generate_ticks({lower_limit, upper_limit}, data, number_of_ticks)
   end
+
   defp generate_ticks({lower_limit, upper_limit} = lim, _data, number_of_ticks) do
-    {lower_limit|> Nx.linspace(upper_limit, n: number_of_ticks)|> Nx.to_list(), lim}
+    {lower_limit |> Nx.linspace(upper_limit, n: number_of_ticks) |> Nx.to_list(), lim}
   end
-
-
 
   defp set_region_xy(
          %Figure{

@@ -165,8 +165,8 @@ defmodule Matplotex.Helpers do
   def scatter() do
     # x = [10, 20, 3, 4, 6, 6, 7]
     # y = [1, 3, 4, 4, 5, 6, 7]
-   x = [0,10,20]
-   y = [0,10,20]
+    x = [0, 10, 20]
+    y = [0, 10, 20]
     frame_width = 10
     frame_height = 10
     size = {frame_width, frame_height}

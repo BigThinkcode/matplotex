@@ -261,8 +261,7 @@ defmodule Matplotex.Figure.LeadTest do
                }
              } = Lead.set_regions(figure)
 
-      assert Enum.all?([rxx,rxy, rxwidth, rxheight,ryx, ryy, rywidth, ryheight], &(&1 != 0))
-
+      assert Enum.all?([rxx, rxy, rxwidth, rxheight, ryx, ryy, rywidth, ryheight], &(&1 != 0))
     end
 
     test "set region title updates the values for titles space", %{figure2: figure} do
@@ -302,15 +301,22 @@ defmodule Matplotex.Figure.LeadTest do
       assert ryheight == rcheight
     end
 
-    test "generates ticks from dataset if does't exist for show_ticks true", %{figure2: %Figure{axes: %{tick: tick}= axes} = figure} do
-     figure = %Figure{figure | axes: %{axes | tick: %TwoD{tick |x: nil, y: nil}, limit: %TwoD{x: nil, y: nil}}}
+    test "generates ticks from dataset if does't exist for show_ticks true", %{
+      figure2: %Figure{axes: %{tick: tick} = axes} = figure
+    } do
+      figure = %Figure{
+        figure
+        | axes: %{axes | tick: %TwoD{tick | x: nil, y: nil}, limit: %TwoD{x: nil, y: nil}}
+      }
+
       assert %Figure{
-        figsize: {width, height},
-        axes: %{
-          tick: %TwoD{x: xticks, y: yticks},
-          data: {x, y}
-        }
-      } = Lead.set_regions(figure)
+               figsize: {width, height},
+               axes: %{
+                 tick: %TwoD{x: xticks, y: yticks},
+                 data: {x, y}
+               }
+             } = Lead.set_regions(figure)
+
       assert Enum.min(xticks) == 0
       assert Enum.min(yticks) == 0
       assert Enum.max(xticks) == Enum.max(x)
@@ -375,6 +381,4 @@ defmodule Matplotex.Figure.LeadTest do
     two_side_margin = width * margin * 2
     assert width == two_side_margin + ry_width + rcwidth + rlwidth
   end
-
-
 end
