@@ -62,8 +62,17 @@ defmodule Matplotex.Figure.Areal do
       end
 
       def add_ticks(%__MODULE__{tick: tick} = axes, {key, ticks}) when is_list(ticks) do
+
+        {ticks, lim} = if number_based?(ticks) do
+          {ticks, Enum.min_max(ticks)}
+        else
+          {Enum.with_index(ticks) , {0, length(ticks)}}
+        end
         tick = Map.put(tick, key, ticks)
-        update_tick(axes, tick)
+
+        axes
+        |>set_limit({key,lim})
+        |>update_tick(tick)
       end
 
       def add_ticks(%__MODULE__{tick: tick, size: size} = axes, {key, {_min, _max} = lim}) do
@@ -72,7 +81,7 @@ defmodule Matplotex.Figure.Areal do
         tick = Map.put(tick, key, ticks)
 
         axes
-        |> set_limit(lim)
+        |> set_limit({key, lim})
         |> update_tick(tick)
       end
 

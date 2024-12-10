@@ -433,7 +433,6 @@ defmodule Matplotex.Figure.Cast do
     x_padding_value = width_region_x * x_padding
     shrinked_width_region_x = width_region_x - x_padding_value * 2
     x_region_x_with_padding = x_region_x + x_padding_value
-
     ticks_width_position =
       x_ticks
       |> length()
@@ -490,6 +489,8 @@ defmodule Matplotex.Figure.Cast do
         }
     }
   end
+
+  def cast_xticks_by_region(figure), do: figure
 
   defp content_linespace(number_of_ticks_required, axis_size) do
     Nx.linspace(0, axis_size, n: number_of_ticks_required) |> Nx.to_list()
@@ -665,6 +666,8 @@ defmodule Matplotex.Figure.Cast do
     }
   end
 
+  def cast_yticks_by_region(figure), do: figure
+
   def cast_hgrids(%Figure{axes: %{coords: %{hgrids: nil}}} = figure), do: figure
   def cast_hgrids(%Figure{axes: %{show_h_grid: false}} = figure), do: figure
 
@@ -725,6 +728,8 @@ defmodule Matplotex.Figure.Cast do
     %Figure{figure | axes: %{axes | element: elements}}
   end
 
+  def cast_hgrids_by_region(figure), do: figure
+
   def cast_vgrids(%Figure{axes: %{coords: %{vgrids: nil}}} = figure), do: figure
   def cast_vgrids(%Figure{axes: %{show_v_grid: false}} = figure), do: figure
 
@@ -784,6 +789,8 @@ defmodule Matplotex.Figure.Cast do
 
     %Figure{figure | axes: %{axes | element: elements}}
   end
+
+  def cast_vgrids_by_region(figure), do: figure
 
   defp plotify_tick(module, {label, value}, lim, axis_size, transition, data, axis) do
     {module.plotify(value, lim, axis_size, transition, data, axis), label}
@@ -857,9 +864,8 @@ defmodule Matplotex.Figure.Cast do
     end)
   end
 
-  defp confine_ticks(ticks, {min, max} = lim) do
+  defp confine_ticks(ticks, {min, max}) do
     ticks
-    |> append_lim(lim)
     |> Enum.filter(fn tick ->
       tick >= min && tick <= max
     end)
@@ -883,18 +889,18 @@ defmodule Matplotex.Figure.Cast do
     end)
   end
 
-  defp append_lim([first | [second | _]] = ticks, {min, max}) do
-    with_min =
-      if Enum.min(ticks) > min + (second - first) do
-        [min] ++ ticks
-      else
-        ticks
-      end
+  # defp append_lim([first | [second | _]] = ticks, {min, max}) do
+  #   with_min =
+  #     if Enum.min(ticks) > min + (second - first) do
+  #       [min] ++ ticks
+  #     else
+  #       ticks
+  #     end
 
-    if Enum.max(with_min) < max - (second - first) do
-      with_min ++ [max]
-    else
-      with_min
-    end
-  end
+  #   if Enum.max(with_min) < max - (second - first) do
+  #     with_min ++ [max]
+  #   else
+  #     with_min
+  #   end
+  # end
 end

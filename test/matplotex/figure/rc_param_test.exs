@@ -76,6 +76,7 @@ defmodule Matplotex.Figure.RcParamTest do
 
     assert keys |> Enum.sort() ==
              [
+               :y_label_dominant_baseline,
                :y_label_font_size,
                :y_label_font_family,
                :y_label_font_style,

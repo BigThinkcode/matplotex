@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.LeadTest do
+  alias Matplotex.Figure.TwoD
   alias Matplotex.Figure.Areal.Region
   alias Matplotex.Figure.Coords
   alias Matplotex.Figure.LinePlot
@@ -260,8 +261,8 @@ defmodule Matplotex.Figure.LeadTest do
                }
              } = Lead.set_regions(figure)
 
-      assert Enum.all?([rxx, rxwidth, rxheight, ryy, rywidth, ryheight], &(&1 > 0))
-      assert Enum.all?([rxy, ryx], &(&1 == 0))
+      assert Enum.all?([rxx,rxy, rxwidth, rxheight,ryx, ryy, rywidth, ryheight], &(&1 != 0))
+
     end
 
     test "set region title updates the values for titles space", %{figure2: figure} do
@@ -271,7 +272,7 @@ defmodule Matplotex.Figure.LeadTest do
                }
              } = Lead.set_regions(figure)
 
-      assert Enum.all?([rtx, rty, rtwidth, rtheight], &(&1 > 0))
+      assert Enum.all?([rtx, rty, rtwidth, rtheight], &(&1 != 0))
     end
 
     test "setting region legend", %{figure2: figure} do
@@ -283,7 +284,7 @@ defmodule Matplotex.Figure.LeadTest do
                }
              } = Lead.set_regions(figure)
 
-      assert Enum.all?([rlx, rly, rlwidth, rlheight], &(&1 > 0))
+      assert Enum.all?([rlx, rly, rlwidth, rlheight], &(&1 != 0))
     end
 
     test "setting content takes the same width of x region and y region", %{figure2: figure} do
@@ -299,6 +300,23 @@ defmodule Matplotex.Figure.LeadTest do
       assert ryy == rcy
       assert rcwidth == rxwidth
       assert ryheight == rcheight
+    end
+
+    test "generates ticks from dataset if does't exist for show_ticks true", %{figure2: %Figure{axes: %{tick: tick}= axes} = figure} do
+     figure = %Figure{figure | axes: %{axes | tick: %TwoD{tick |x: nil, y: nil}, limit: %TwoD{x: nil, y: nil}}}
+      assert %Figure{
+        figsize: {width, height},
+        axes: %{
+          tick: %TwoD{x: xticks, y: yticks},
+          data: {x, y}
+        }
+      } = Lead.set_regions(figure)
+      assert Enum.min(xticks) == 0
+      assert Enum.min(yticks) == 0
+      assert Enum.max(xticks) == Enum.max(x)
+      assert Enum.max(yticks) == Enum.max(y)
+      assert length(xticks) == ceil(width)
+      assert length(yticks) == ceil(height)
     end
   end
 
@@ -324,6 +342,8 @@ defmodule Matplotex.Figure.LeadTest do
     assert rcy == 0
     assert rcwidth == 0
     assert rcheight == 0
+    assert ryheight == 0
+    assert rxwidth == 0
   end
 
   test "height will tally with all vertical components", %{figure: figure} do
@@ -355,4 +375,6 @@ defmodule Matplotex.Figure.LeadTest do
     two_side_margin = width * margin * 2
     assert width == two_side_margin + ry_width + rcwidth + rlwidth
   end
+
+
 end

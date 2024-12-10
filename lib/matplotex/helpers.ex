@@ -163,16 +163,17 @@ defmodule Matplotex.Helpers do
   # end
 
   def scatter() do
-    x = [1, 2, 3, 4, 6, 6, 7]
-    y = [1, 3, 4, 4, 5, 6, 7]
-
+    # x = [10, 20, 3, 4, 6, 6, 7]
+    # y = [1, 3, 4, 4, 5, 6, 7]
+   x = [0,10,20]
+   y = [0,10,20]
     frame_width = 10
     frame_height = 10
     size = {frame_width, frame_height}
     margin = 0.05
     font_size = "16pt"
     title_font_size = "18pt"
-    ticks = [1, 2, 3, 4, 5, 6, 7]
+    ticks = [0, 10, 20]
 
     x
     |> Matplotex.scatter(y)
@@ -182,8 +183,8 @@ defmodule Matplotex.Helpers do
     |> Matplotex.set_ylabel("Y Axis")
     |> Matplotex.set_xticks(ticks)
     |> Matplotex.set_yticks(ticks)
-    |> Matplotex.set_xlim({1, 7})
-    |> Matplotex.set_ylim({1, 7})
+    |> Matplotex.set_xlim({0, 20})
+    |> Matplotex.set_ylim({0, 20})
     # TODO: Setting limits are not taking the proper xy values
     |> Matplotex.set_rc_params(
       x_tick_font_size: font_size,

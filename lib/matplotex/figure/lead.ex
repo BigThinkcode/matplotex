@@ -12,8 +12,6 @@ defmodule Matplotex.Figure.Lead do
   @padding 10 / 96
   @tick_line_offset 5 / 96
 
-  @theta 0
-
   def set_spines(%Figure{} = figure) do
     figure
     |> set_xlabel_coords()
@@ -23,15 +21,19 @@ defmodule Matplotex.Figure.Lead do
     |> set_yticks_coords()
     |> set_border_coords()
   end
+  @spec set_regions(Matplotex.Figure.t()) :: Matplotex.Figure.t()
 
-  def set_regions(%Figure{} = figure) do
+  def set_regions(%Figure{figsize: {width, height}} = figure) when width > 0 and height > 0 do
     figure
     |> set_frame_size()
+    |> ensure_ticks_are_valid()
     |> set_region_xy()
     |> set_region_title()
     |> set_region_legend()
     |> set_region_content()
   end
+
+  def set_regions(figure), do: figure
 
   def set_border(%Figure{margin: margin, axes: axes, figsize: {fig_width, fig_height}} = figure) do
     margin = margin / 2
@@ -51,6 +53,44 @@ defmodule Matplotex.Figure.Lead do
     %Figure{figure | axes: %{axes | size: frame_size, border: {lx, by, rx, ty}}}
   end
 
+  defp ensure_ticks_are_valid(
+         %Figure{
+          figsize: {width, height},
+           axes:
+             %{
+               data: {x_data, y_data},
+               tick: %TwoD{x: x_ticks, y: y_ticks} = ticks,limit: %TwoD{x: x_lim, y: y_lim} = limit}= axes} = figure) do
+
+                {x_ticks, x_lim} = maybe_generate_ticks(x_ticks, x_lim, x_data, width)
+                {y_ticks, y_lim} = maybe_generate_ticks(y_ticks, y_lim, y_data, height)
+
+                %Figure{figure | axes:  %{axes | tick: %TwoD{ticks | x: x_ticks, y: y_ticks},limit: %TwoD{limit | x: x_lim, y: y_lim}}}
+              end
+  defp maybe_generate_ticks(ticks, limit, data, number_of_ticks) do
+    if is_nil(ticks) || length(ticks) < 3 do
+      generate_ticks(limit, data, ceil(number_of_ticks))
+    else
+      {ticks, limit}
+    end
+  end
+
+  defp generate_ticks(nil, data, number_of_ticks) do
+    {min, upper_limit} = Enum.min_max(data)
+
+    lower_limit = if min < 0 do
+      min
+    else
+      0
+    end
+
+    generate_ticks({lower_limit, upper_limit}, data, number_of_ticks)
+  end
+  defp generate_ticks({lower_limit, upper_limit} = lim, _data, number_of_ticks) do
+    {lower_limit|> Nx.linspace(upper_limit, n: number_of_ticks)|> Nx.to_list(), lim}
+  end
+
+
+
   defp set_region_xy(
          %Figure{
            axes:
@@ -67,12 +107,10 @@ defmodule Matplotex.Figure.Lead do
              x_tick_font: x_tick_font,
              y_label_font: y_label_font,
              y_tick_font: y_tick_font,
-             label_padding: label_padding,
              tick_line_length: tick_line_length
            }
          } = figure
        ) do
-    # region_x = %Region{x: total space required for ylabel plus yticks plus ytickline plus ypadding y: 0}
     space_for_ylabel = height_required_for_text(y_label_font, y_label)
     y_tick = Enum.max_by(y_ticks, &tick_length(&1))
     space_for_yticks = length_required_for_text(y_tick_font, y_tick)

@@ -1,5 +1,4 @@
 defmodule Matplotex.Figure.Areal.LinePlot do
-  alias Matplotex.Utils.Algebra
   alias Matplotex.Figure.Areal.Region
   alias Matplotex.Figure.Areal.Ticker
   alias Matplotex.Figure.Marker
@@ -71,10 +70,6 @@ defmodule Matplotex.Figure.Areal.LinePlot do
     shrinked_width_region_content = width_region_content - x_padding_value * 2
     shrinked_height_region_content = height_region_content - y_padding_value * 2
 
-    IO.inspect({shrinked_height_region_content, shrinked_height_region_content, y_region_content},
-      label: "Shrinked size"
-    )
-
     line_elements =
       data
       |> Enum.map(fn dataset ->
@@ -100,31 +95,6 @@ defmodule Matplotex.Figure.Areal.LinePlot do
     value * s + transition - minl * s
   end
 
-  def tick_homogeneous_transformation(value, {x_min, x_max}, axis_size, transition, :x) do
-    sx = axis_size / (x_max - x_min)
-    # no need y scale
-    sy = 0
-    x = value
-    # Ignoring y here
-    y = 0
-    tx = transition
-    ty = 0
-    # not applying rotation
-    theta = 0
-    Algebra.transform_given_point(x, y, sx, sy, tx, ty, theta)
-  end
-
-  def tick_homogeneous_transformation(value, {y_min, y_max}, axis_size, transition, :y) do
-    sx = 0
-    sy = axis_size / (y_max - y_min)
-    x = 0
-    y = value
-    tx = 0
-    ty = transition
-    # not applying rotation
-    theta = 0
-    Algebra.transform_given_point(x, y, sx, sy, tx, ty, theta)
-  end
 
   def generate_ticks([{_l, _v} | _] = data) do
     {data, min_max(data)}
