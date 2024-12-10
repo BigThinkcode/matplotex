@@ -75,7 +75,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
           shrinked_height_region_content,
           {x_region_content + x_padding_value, y_region_content + y_padding_value}
         )
-        |> capture(y_region_content)
+        |> capture(-y_region_content)
       end)
       |> List.flatten()
 
@@ -124,6 +124,8 @@ defmodule Matplotex.Figure.Areal.BarChart do
          } = dataset,
          bly
        ) do
+
+
     capture(
       to_capture,
       captured ++
@@ -133,7 +135,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
             x: bar_position(x, pos_factor),
             y: y,
             width: width,
-            height: y - bly,
+            height: bly - y,
             color: color
           }
         ],

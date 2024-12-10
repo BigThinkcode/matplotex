@@ -451,8 +451,7 @@ defmodule Matplotex.Figure.Cast do
             tick_position,
             0,
             x_region_x_with_padding,
-            y_x_tick,
-            0
+            y_x_tick
           )
           |> Algebra.flip_y_coordinate()
 
@@ -461,7 +460,7 @@ defmodule Matplotex.Figure.Cast do
             type: @xtick_type,
             x: x_x_tick,
             y: y_x_tick,
-            text: label
+            text: format_tick_label(label)
           }
           |> Label.cast_label(x_tick_font)
 
@@ -476,7 +475,6 @@ defmodule Matplotex.Figure.Cast do
         {%Tick{type: @xtick_type, tick_line: line, label: label}, {x_x_tick, y_x_tick_line}}
       end)
       |> Enum.unzip()
-
     elements = elements ++ x_tick_elements
 
     %Figure{
@@ -492,7 +490,8 @@ defmodule Matplotex.Figure.Cast do
   end
 
   def cast_xticks_by_region(figure), do: figure
-
+  defp format_tick_label({label, _index}), do: label
+  defp format_tick_label(label), do: label
   defp content_linespace(number_of_ticks_required, axis_size) do
     Nx.linspace(0, axis_size, n: number_of_ticks_required) |> Nx.to_list()
   end

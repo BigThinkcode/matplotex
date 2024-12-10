@@ -227,7 +227,7 @@ defmodule Matplotex.Helpers do
     Matplotex.bar(width, values1, width, label: "Dataset1", color: "#255199")
     |> Matplotex.bar(-width, values2, width, label: "Dataset2", color: "orange")
     |> Matplotex.set_xticks(categories)
-    |> Matplotex.figure(%{figsize: {3, 3}, margin: 0.05})
+    |> Matplotex.figure(%{figsize: {10, 10}, margin: 0.05})
     |> Matplotex.set_title("Bar chart")
     |> Matplotex.set_xlabel("X-axis")
     |> Matplotex.set_ylabel("Y-Axis")
