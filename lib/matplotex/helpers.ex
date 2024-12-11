@@ -219,9 +219,9 @@ defmodule Matplotex.Helpers do
   end
 
   def multi_bar() do
-    categories = ["apple", "banana", "fig"]
-    values1 = [22, 33, 28]
-    values2 = [53, 63, 59]
+    categories = ["apple", "banana", "fig", "avocado"]
+    values1 = [22, 33, 28, 34]
+    values2 = [53, 63, 59, 60]
     width = 0.22
 
     Matplotex.bar(width, values1, width, label: "Dataset1", color: "#255199")
@@ -232,6 +232,8 @@ defmodule Matplotex.Helpers do
     |> Matplotex.set_xlabel("X-axis")
     |> Matplotex.set_ylabel("Y-Axis")
     |> Matplotex.hide_v_grid()
+    |> Matplotex.set_rc_params(y_tick_flate: -0.6)
+    |> Matplotex.set_ylim({0, 70})
     |> Matplotex.show()
     |> copy()
   end

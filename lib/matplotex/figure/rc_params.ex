@@ -44,6 +44,7 @@ defmodule Matplotex.Figure.RcParams do
             tick_line_length: @tick_line_length,
             x_padding: @chart_padding,
             y_padding: @chart_padding,
+            white_space: 0,
             label_padding: @label_padding,
             legend_width: @default_legend_width_percentage,
             legend_items_orientation: @default_legend_items_orientation
@@ -142,7 +143,6 @@ defmodule Matplotex.Figure.RcParams do
        ) do
     element_font_keys = font_associated_keys(element)
     element_params = Map.take(params, element_font_keys)
-
     font = Map.get(rc_params, :"#{element}_font")
     updated_font = Font.update(font, element_params, element)
     Map.put(rc_params, :"#{element}_font", updated_font)

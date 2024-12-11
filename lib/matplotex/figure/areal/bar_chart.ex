@@ -33,7 +33,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
     dataset = Dataset.cast(%Dataset{x: x, y: values, pos: pos, width: width}, opts)
     datasets = data ++ [dataset]
     xydata = flatten_for_data(datasets)
-    %Figure{figure | axes: %{axes | data: xydata, dataset: datasets}}
+    %Figure{figure | rc_params: %RcParams{white_space: width, y_padding: 0}, axes: %{axes | data: xydata, dataset: datasets}}
   end
 
   @impl Areal
@@ -56,13 +56,11 @@ defmodule Matplotex.Figure.Areal.BarChart do
                },
                element: elements
              } = axes,
-           rc_params: %RcParams{x_padding: x_padding, y_padding: y_padding}
+           rc_params: %RcParams{x_padding: x_padding, white_space: white_space}
          } = figure
        ) do
-    x_padding_value = width_region_content * x_padding
-    y_padding_value = height_region_content * y_padding
+    x_padding_value = width_region_content * x_padding + white_space
     shrinked_width_region_content = width_region_content - x_padding_value * 2
-    shrinked_height_region_content = height_region_content - y_padding_value * 2
 
     bar_elements =
       data
@@ -72,8 +70,8 @@ defmodule Matplotex.Figure.Areal.BarChart do
           xlim,
           ylim,
           shrinked_width_region_content,
-          shrinked_height_region_content,
-          {x_region_content + x_padding_value, y_region_content + y_padding_value}
+          height_region_content,
+          {x_region_content + x_padding_value, y_region_content}
         )
         |> capture(-y_region_content)
       end)
@@ -124,8 +122,6 @@ defmodule Matplotex.Figure.Areal.BarChart do
          } = dataset,
          bly
        ) do
-
-
     capture(
       to_capture,
       captured ++
@@ -147,7 +143,8 @@ defmodule Matplotex.Figure.Areal.BarChart do
   defp capture([], captured, _dataset, _bly), do: captured
 
   defp hypox(y) do
-    1..length(y) |> Enum.into([])
+    nof_x = length(y)
+    0|>Nx.linspace(nof_x, n: nof_x)|>Nx.to_list()
   end
 
   defp bar_position(x, pos_factor) when pos_factor < 0 do

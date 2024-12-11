@@ -422,7 +422,8 @@ defmodule Matplotex.Figure.Cast do
           rc_params: %RcParams{
             x_tick_font: x_tick_font,
             x_padding: x_padding,
-            tick_line_length: tick_line_length
+            tick_line_length: tick_line_length,
+            white_space: white_space
           }
         } = figure
       )
@@ -430,7 +431,7 @@ defmodule Matplotex.Figure.Cast do
     x_ticks = confine_ticks(x_ticks, xlim)
     x_data = confine_data(x_data, xlim)
     dataset = confine_data(dataset, xlim, :x)
-    x_padding_value = width_region_x * x_padding
+    x_padding_value = width_region_x * x_padding + white_space
     shrinked_width_region_x = width_region_x - x_padding_value * 2
     x_region_x_with_padding = x_region_x + x_padding_value
 
@@ -491,6 +492,7 @@ defmodule Matplotex.Figure.Cast do
 
   def cast_xticks_by_region(figure), do: figure
   defp format_tick_label({label, _index}), do: label
+  defp format_tick_label(label) when is_float(label), do: Float.round(label, 2)
   defp format_tick_label(label), do: label
   defp content_linespace(number_of_ticks_required, axis_size) do
     Nx.linspace(0, axis_size, n: number_of_ticks_required) |> Nx.to_list()
@@ -636,7 +638,7 @@ defmodule Matplotex.Figure.Cast do
             type: @ytick_type,
             y: y_y_tick,
             x: x_y_tick,
-            text: label
+            text: format_tick_label(label)
           }
           |> Label.cast_label(y_tick_font)
 

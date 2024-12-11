@@ -533,7 +533,7 @@ defmodule Matplotex.Figure.Lead do
   end
 
   defp tick_length(tick) when is_float(tick) do
-    tick |> Float.to_string() |> String.length()
+    tick|>Float.round(2) |> Float.to_string() |> String.length()
   end
 
   defp tick_length({label, _v}) when is_binary(label) do

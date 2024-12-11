@@ -225,14 +225,17 @@ defmodule Matplotex.Figure.Areal do
       end
     end
   end
-
-  def transformation({_label, value}, y, xminmax, yminmax, width, height, transition) do
-    transformation(value, y, xminmax, yminmax, width, height, transition)
+  def transformation({_labelx, x}, {_labely, y}, xminmax, yminmax, width, height, transition) do
+    transformation(x, y, xminmax, yminmax, width, height, transition)
+  end
+  def transformation({_label, x}, y, xminmax, yminmax, width, height, transition) do
+    transformation(x, y, xminmax, yminmax, width, height, transition)
   end
 
-  def transformation(x, {_label, value}, y, xminmax, yminmax, width, transition) do
-    transformation(x, value, y, xminmax, yminmax, width, transition)
+  def transformation(x, {_label, y}, xminmax, yminmax, width, height, transition) do
+    transformation(x, y, xminmax, yminmax, width, height, transition)
   end
+
 
   def transformation(
         x,
@@ -245,10 +248,9 @@ defmodule Matplotex.Figure.Areal do
       ) do
     sx = svg_width / (xmax - xmin)
     sy = svg_height / (ymax - ymin)
-
-    tx = transition_x - xmin * sx
-    ty = transition_y - ymin * sy
-
+    IO.inspect({x, y, transition_x, transition_y, xmin, xmax, ymin, ymax, svg_height, svg_width}, label: "Transformation")
+    tx = transition_x #- xmin * sx
+    ty = transition_y #- ymin * sy
     Algebra.transform_given_point(x, y, sx, sy, tx, ty)
   end
 
@@ -257,11 +259,11 @@ defmodule Matplotex.Figure.Areal do
       x
       |> Enum.zip(y)
       |> Enum.map(fn {x, y} ->
+
         x
         |> transformation(y, xlim, ylim, width, height, transition)
         |> Algebra.flip_y_coordinate()
       end)
-
     %Dataset{dataset | transformed: transformed}
   end
 end
