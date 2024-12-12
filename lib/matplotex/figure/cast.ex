@@ -14,6 +14,8 @@ defmodule Matplotex.Figure.Cast do
   @ytick_type "figure.y_tick"
   @stroke_grid "#ddd"
   @stroke_width_grid 1
+  @lowest_tick 0
+  @zero_to_move 0
 
   def cast_spines(
         %Figure{
@@ -444,13 +446,14 @@ defmodule Matplotex.Figure.Cast do
     {x_tick_elements, vgrid_coords} =
       Enum.map(ticks_width_position, fn {tick_position, label} ->
         {_, y_x_tick_line} =
-          Algebra.transform_given_point(0, height_region_x, x_region_x, y_region_x)
+          @zero_to_move
+          |>Algebra.transform_given_point(height_region_x, x_region_x, y_region_x)
           |> Algebra.flip_y_coordinate()
 
         {x_x_tick, y_x_tick} =
-          Algebra.transform_given_point(
-            tick_position,
-            0,
+          tick_position
+          |>Algebra.transform_given_point(
+            @zero_to_move,
             x_region_x_with_padding,
             y_x_tick
           )
@@ -495,7 +498,7 @@ defmodule Matplotex.Figure.Cast do
   defp format_tick_label(label) when is_float(label), do: Float.round(label, 2)
   defp format_tick_label(label), do: label
   defp content_linespace(number_of_ticks_required, axis_size) do
-    Nx.linspace(0, axis_size, n: number_of_ticks_required) |> Nx.to_list()
+    @lowest_tick |> Nx.linspace(axis_size, n: number_of_ticks_required) |> Nx.to_list()
   end
 
   @spec cast_yticks(Matplotex.Figure.t()) :: Matplotex.Figure.t()
@@ -622,11 +625,11 @@ defmodule Matplotex.Figure.Cast do
     {ytick_elements, hgrid_coords} =
       Enum.map(ticks_width_position, fn {tick_position, label} ->
         {x_y_tick_line, _} =
-          Algebra.transform_given_point(width_region_y, 0, x_region_y, y_region_y)
+          Algebra.transform_given_point(width_region_y, @zero_to_move, x_region_y, y_region_y)
 
         {x_y_tick, y_y_tick} =
-          Algebra.transform_given_point(
-            0,
+          @zero_to_move
+          |>Algebra.transform_given_point(
             tick_position,
             x_y_tick,
             y_region_y_with_padding

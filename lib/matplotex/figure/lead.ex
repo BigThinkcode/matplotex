@@ -11,6 +11,7 @@ defmodule Matplotex.Figure.Lead do
   @pt_to_inch 1 / 150
   @padding 10 / 96
   @tick_line_offset 5 / 96
+  @zero_to_move 0
 
   def set_spines(%Figure{} = figure) do
     figure
@@ -138,15 +139,15 @@ defmodule Matplotex.Figure.Lead do
       [space_for_x_label, space_for_x_tick, tick_line_length] |> Enum.sum()
 
     {x_region_x, y_region_x} =
-      Algebra.transform_given_point(space_required_for_region_y, 0, lx, by)
+      Algebra.transform_given_point(space_required_for_region_y, @zero_to_move, lx, by)
 
     {x_region_y, y_region_y} =
-      Algebra.transform_given_point(0, space_required_for_region_x, lx, by)
+      Algebra.transform_given_point(@zero_to_move, space_required_for_region_x, lx, by)
 
-    x_label_coords = Algebra.transform_given_point(0, 0, x_region_x, y_region_x)
-    x_tick_coords = Algebra.transform_given_point(0, space_for_x_label, x_region_x, y_region_x)
-    y_label_coords = Algebra.transform_given_point(0, 0, x_region_y, y_region_y)
-    y_tick_coords = Algebra.transform_given_point(space_for_ylabel, 0, x_region_y, y_region_y)
+    x_label_coords = Algebra.transform_given_point(@zero_to_move, @zero_to_move, x_region_x, y_region_x)
+    x_tick_coords = Algebra.transform_given_point(@zero_to_move, space_for_x_label, x_region_x, y_region_x)
+    y_label_coords = Algebra.transform_given_point(@zero_to_move, @zero_to_move, x_region_y, y_region_y)
+    y_tick_coords = Algebra.transform_given_point(space_for_ylabel, @zero_to_move, x_region_y, y_region_y)
 
     %Figure{
       figure
@@ -191,7 +192,7 @@ defmodule Matplotex.Figure.Lead do
     space_for_title = height_required_for_text(title_font, title)
 
     {x_region_title, y_region_title} =
-      Algebra.transform_given_point(0, -space_for_title, lx, ty, 0)
+      Algebra.transform_given_point(@zero_to_move, -space_for_title, lx, ty, 0)
 
     %Figure{
       figure

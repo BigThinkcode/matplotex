@@ -30,7 +30,7 @@ defmodule Matplotex.Figure.Areal do
       alias Matplotex.Figure.Dataset
 
       alias Matplotex.Figure.Text
-
+      @default_tick_minimum 0
       def add_label(%__MODULE__{label: nil} = axes, {key, label}, opts) when is_binary(label) do
         label =
           Map.new()
@@ -66,7 +66,7 @@ defmodule Matplotex.Figure.Areal do
           if number_based?(ticks) do
             {ticks, Enum.min_max(ticks)}
           else
-            {Enum.with_index(ticks), {0, length(ticks)}}
+            {Enum.with_index(ticks), {@default_tick_minimum, length(ticks)}}
           end
 
         tick = Map.put(tick, key, ticks)
@@ -248,9 +248,8 @@ defmodule Matplotex.Figure.Areal do
       ) do
     sx = svg_width / (xmax - xmin)
     sy = svg_height / (ymax - ymin)
-    IO.inspect({x, y, transition_x, transition_y, xmin, xmax, ymin, ymax, svg_height, svg_width}, label: "Transformation")
-    tx = transition_x #- xmin * sx
-    ty = transition_y #- ymin * sy
+    tx = transition_x - xmin * sx
+    ty = transition_y - ymin * sy
     Algebra.transform_given_point(x, y, sx, sy, tx, ty)
   end
 

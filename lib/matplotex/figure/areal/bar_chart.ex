@@ -9,6 +9,8 @@ defmodule Matplotex.Figure.Areal.BarChart do
   alias Matplotex.Figure.Areal
   use Areal
 
+  @xmin_value 0
+
   frame(
     legend: %Legend{},
     coords: %Coords{},
@@ -100,7 +102,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
   def generate_ticks(data) do
     max = Enum.max(data)
     step = max |> round_to_best() |> div(5) |> round_to_best()
-    {list_of_ticks(data, step), {0, max}}
+    {list_of_ticks(data, step), {@xmin_value, max}}
   end
 
   def generate_ticks(side, {min, max} = lim) do
@@ -144,7 +146,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
 
   defp hypox(y) do
     nof_x = length(y)
-    0|>Nx.linspace(nof_x, n: nof_x)|>Nx.to_list()
+    @xmin_value|>Nx.linspace(nof_x, n: nof_x)|>Nx.to_list()
   end
 
   defp bar_position(x, pos_factor) when pos_factor < 0 do
