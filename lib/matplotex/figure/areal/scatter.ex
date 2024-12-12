@@ -84,7 +84,7 @@ defmodule Matplotex.Figure.Areal.Scatter do
   end
 
   def materialize(xystream, figure) do
-    __MODULE__.materialized(figure)
+    __MODULE__.materialized_by_region(figure)
     |> material_stream(xystream)
   end
 

@@ -430,6 +430,7 @@ defmodule Matplotex.Figure.Cast do
         } = figure
       )
       when is_list(x_ticks) do
+
     x_ticks = confine_ticks(x_ticks, xlim)
     x_data = confine_data(x_data, xlim)
     dataset = confine_data(dataset, xlim, :x)

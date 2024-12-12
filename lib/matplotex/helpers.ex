@@ -60,8 +60,8 @@ defmodule Matplotex.Helpers do
     x = [1, 2, 3, 4, 6, 6, 7]
     y = [1, 3, 4, 4, 5, 6, 7]
 
-    frame_width = 10
-    frame_height = 10
+    frame_width = 6
+    frame_height = 6
     size = {frame_width, frame_height}
     margin = 0.05
     font_size = "16pt"
@@ -212,6 +212,7 @@ defmodule Matplotex.Helpers do
     |> Matplotex.plot(x, y2, color: "red", linestyle: "--", marker: "^", label: "Dataset 2")
     |> Matplotex.plot(x, y3, color: "green", linestyle: "-.", marker: "s", label: "Dataset 3")
     |> Matplotex.set_title("Title")
+    |> Matplotex.set_xticks([1,2,3,4,5])
     |> Matplotex.set_xlabel("X-Axis")
     |> Matplotex.set_ylabel("Y-Axis")
     |> Matplotex.show()
@@ -232,7 +233,6 @@ defmodule Matplotex.Helpers do
     |> Matplotex.set_xlabel("X-axis")
     |> Matplotex.set_ylabel("Y-Axis")
     |> Matplotex.hide_v_grid()
-    |> Matplotex.set_rc_params(y_tick_flate: -0.6)
     |> Matplotex.set_ylim({0, 70})
     |> Matplotex.show()
     |> copy()
@@ -251,7 +251,7 @@ defmodule Matplotex.Helpers do
     |> Matplotex.scatter(y1, color: "blue", linestyle: "_", marker: "o", label: "Dataset 1")
     |> Matplotex.scatter(x, y2, color: "red", linestyle: "--", marker: "^", label: "Dataset 2")
     |> Matplotex.scatter(x, y3, color: "green", linestyle: "-.", marker: "s", label: "Dataset 3")
-    |> Matplotex.figure(%{figsize: {3, 3}, margin: 0.05})
+    |> Matplotex.figure(%{figsize: {8, 8}, margin: 0.05})
     |> Matplotex.set_title("Title")
     |> Matplotex.set_xlabel("X-Axis")
     |> Matplotex.set_ylabel("Y-Axis")

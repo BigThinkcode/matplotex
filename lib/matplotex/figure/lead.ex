@@ -4,24 +4,12 @@ defmodule Matplotex.Figure.Lead do
   alias Matplotex.Figure.Font
   alias Matplotex.Figure.Areal.Region
   alias Matplotex.Figure.TwoD
-  alias Matplotex.Figure.Dimension
   alias Matplotex.Figure.Coords
   alias Matplotex.Figure.RcParams
   alias Matplotex.Figure
   @pt_to_inch 1 / 150
   @padding 10 / 96
-  @tick_line_offset 5 / 96
   @zero_to_move 0
-
-  def set_spines(%Figure{} = figure) do
-    figure
-    |> set_xlabel_coords()
-    |> set_ylabel_coords()
-    |> set_title_coords()
-    |> set_xticks_coords()
-    |> set_yticks_coords()
-    |> set_border_coords()
-  end
 
   @spec set_regions(Matplotex.Figure.t()) :: Matplotex.Figure.t()
 
@@ -68,7 +56,6 @@ defmodule Matplotex.Figure.Lead do
        ) do
     {x_ticks, x_lim} = maybe_generate_ticks(x_ticks, x_lim, x_data, width)
     {y_ticks, y_lim} = maybe_generate_ticks(y_ticks, y_lim, y_data, height)
-
     %Figure{
       figure
       | axes: %{
@@ -281,171 +268,6 @@ defmodule Matplotex.Figure.Lead do
 
   defp set_region_content(figure), do: figure
 
-  defp set_xlabel_coords(%Figure{axes: %{tick: %{y: nil}, show_y_ticks: true}} = figure) do
-    figure
-    |> generate_yticks()
-    |> set_xlabel_coords()
-  end
-
-  defp set_xlabel_coords(
-         %Figure{
-           rc_params: rc_params,
-           margin: margin,
-           figsize: {f_width, f_height},
-           axes:
-             %{coords: coords, label: %{y: ylabel}, tick: %{y: y_ticks}, dimension: dimension} =
-               axes
-         } = figure
-       ) do
-    y_label_font_size = RcParams.get_rc(rc_params, :get_y_label_font_size)
-    y_tick_font_size = RcParams.get_rc(rc_params, :get_y_tick_font_size)
-    label_offset = label_offset(ylabel, y_label_font_size)
-    y_tick_offset = ytick_offset(y_ticks, y_tick_font_size)
-    y_tick_height = label_offset(y_ticks, y_tick_font_size)
-
-    x_labelx =
-      f_width * margin + label_offset + y_tick_offset
-
-    %Figure{
-      figure
-      | axes: %{
-          axes
-          | coords: %Coords{coords | x_label: {x_labelx, f_height * margin}},
-            dimension: %Dimension{
-              dimension
-              | y_label: {0, label_offset},
-                y_tick: {y_tick_offset, y_tick_height}
-            }
-        }
-    }
-  end
-
-  defp set_xlabel_coords(%Figure{} = figure), do: figure
-
-  defp set_ylabel_coords(%Figure{axes: %{tick: %{x: nil}, show_x_ticks: true}} = figure) do
-    figure
-    |> generate_xticks()
-    |> set_ylabel_coords()
-  end
-
-  defp set_ylabel_coords(
-         %Figure{
-           rc_params: rc_params,
-           margin: margin,
-           figsize: {f_width, f_height},
-           axes:
-             %{coords: coords, dimension: dimension, label: %{x: xlabel}, tick: %{x: x_ticks}} =
-               axes
-         } = figure
-       ) do
-    x_label_font_size = RcParams.get_rc(rc_params, :get_x_label_font_size)
-    x_tick_font_size = RcParams.get_rc(rc_params, :get_x_tick_font_size)
-    xlabel_offset = label_offset(xlabel, x_label_font_size)
-    x_tick_offset = xtick_offset(x_ticks, x_tick_font_size)
-    x_tick_width = ytick_offset(x_ticks, x_tick_font_size)
-
-    y_labely =
-      f_height * margin + xlabel_offset + x_tick_offset
-
-    %Figure{
-      figure
-      | axes: %{
-          axes
-          | coords: %Coords{coords | y_label: {f_width * margin, y_labely}},
-            dimension: %Dimension{
-              dimension
-              | x_label: {0, xlabel_offset},
-                x_tick: {x_tick_width, x_tick_offset}
-            }
-        }
-    }
-  end
-
-  defp set_ylabel_coords(%Figure{} = figure), do: figure
-
-  defp set_title_coords(
-         %Figure{
-           margin: margin,
-           figsize: {_f_width, f_height},
-           axes: %{coords: %Coords{x_label: {xlx, _xly}} = coords} = axes
-         } = figure
-       ) do
-    %Figure{
-      figure
-      | axes: %{axes | coords: %Coords{coords | title: {xlx, f_height - f_height * margin}}}
-    }
-  end
-
-  defp set_xticks_coords(
-         %Figure{
-           rc_params: rc_params,
-           axes: %{coords: %Coords{x_label: {xlx, xly}} = coords, label: %{x: xlabel}} = axes
-         } = figure
-       ) do
-    x_label_font_size = RcParams.get_rc(rc_params, :get_x_label_font_size)
-    xlable_offset = label_offset(xlabel, x_label_font_size)
-
-    %Figure{
-      figure
-      | axes: %{axes | coords: %Coords{coords | x_ticks: {xlx + @padding, xly + xlable_offset}}}
-    }
-  end
-
-  defp set_yticks_coords(
-         %Figure{
-           rc_params: rc_params,
-           axes: %{coords: %Coords{y_label: {ylx, yly}} = coords, label: %{y: ylabel}} = axes
-         } = figure
-       ) do
-    y_label_font_size = RcParams.get_rc(rc_params, :get_y_label_font_size)
-    ylabel_offset = label_offset(ylabel, y_label_font_size)
-
-    %Figure{
-      figure
-      | axes: %{axes | coords: %Coords{coords | y_ticks: {ylx + ylabel_offset + @padding, yly}}}
-    }
-  end
-
-  defp set_border_coords(
-         %Figure{
-           margin: margin,
-           figsize: {f_width, _},
-           rc_params: rc_params,
-           axes:
-             %{
-               coords: %Coords{x_label: {xlx, _}, y_label: {_ylx, yly}, title: {_, ytt}} = coords,
-               title: title
-             } =
-               axes
-         } = figure
-       ) do
-    bottom_left = {xlx, yly}
-    title_font_size = rc_params |> RcParams.get_rc(:get_title_font_size)
-    title_offset = label_offset(title, title_font_size)
-    topy = ytt - title_offset
-    top_left = {xlx, topy}
-    rightx = f_width - f_width * margin
-    top_right = {rightx, topy}
-    bottom_right = {rightx, yly}
-    width = rightx - xlx
-    height = topy - yly
-
-    %Figure{
-      figure
-      | axes: %{
-          axes
-          | coords: %Coords{
-              coords
-              | bottom_left: bottom_left,
-                top_right: top_right,
-                bottom_right: bottom_right,
-                top_left: top_left
-            },
-            size: {width, height}
-        }
-    }
-  end
-
   def focus_to_origin(
         %Figure{
           figsize: {width, height},
@@ -503,7 +325,7 @@ defmodule Matplotex.Figure.Lead do
     {{centerx, centery}, radius}
   end
 
-  # TODO: Sort out how the user gets the control on font of the all texts
+
 
   defp label_offset(nil, _font_size), do: 0
   defp label_offset("", _font_size), do: 0
@@ -515,16 +337,6 @@ defmodule Matplotex.Figure.Lead do
   defp label_offset(_label, font_size) do
     font_size * @pt_to_inch + @padding
   end
-
-  defp ytick_offset(y_ticks, font_size) do
-    tick_size = y_ticks |> Enum.max_by(fn tick -> tick_length(tick) end) |> tick_length()
-    font_size * @pt_to_inch * tick_size + @tick_line_offset + @padding
-  end
-
-  defp xtick_offset(xticks, font_size) do
-    label_offset(xticks, font_size) + @tick_line_offset
-  end
-
   defp tick_length(tick) when is_integer(tick) do
     tick |> Integer.to_string() |> String.length()
   end
@@ -539,14 +351,6 @@ defmodule Matplotex.Figure.Lead do
 
   defp tick_length({label, _v}) when is_binary(label) do
     String.length(label)
-  end
-
-  defp generate_yticks(%Figure{axes: %module{} = axes} = figure) do
-    %Figure{figure | axes: module.generate_yticks(axes)}
-  end
-
-  defp generate_xticks(%Figure{axes: %module{} = axes} = figure) do
-    %Figure{figure | axes: module.generate_xticks(axes)}
   end
 
   defp height_required_for_text(
@@ -586,7 +390,7 @@ defmodule Matplotex.Figure.Lead do
          },
          text
        ),
-       do: tick_length(text) * to_number(font_size) * pt_to_inch_ratio + flate
+       do: tick_length(text) * to_number(font_size) * (pt_to_inch_ratio/2) + flate
 
   defp length_required_for_text(
          %Font{
@@ -597,7 +401,7 @@ defmodule Matplotex.Figure.Lead do
          },
          text
        ) do
-    text_length = tick_length(text) * to_number(font_size) * pt_to_inch_ratio
+    text_length = tick_length(text) * to_number(font_size) * (pt_to_inch_ratio/2)
     rotation = deg_to_rad(rotation)
     leng_for_rotation = :math.cos(rotation) * text_length
     leng_for_rotation + flate

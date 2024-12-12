@@ -141,18 +141,6 @@ defmodule Matplotex.Figure.Areal do
 
       defp update_limit(limit, _, _), do: limit
 
-      def materialized(figure) do
-        figure
-        |> Lead.set_spines()
-        |> Cast.cast_xticks()
-        |> Cast.cast_yticks()
-        |> Cast.cast_hgrids()
-        |> Cast.cast_vgrids()
-        |> Cast.cast_spines()
-        |> Cast.cast_label()
-        |> Cast.cast_title()
-      end
-
       def materialized_by_region(figure) do
         figure
         |> Lead.set_regions()
