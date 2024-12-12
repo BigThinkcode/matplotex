@@ -57,6 +57,11 @@ defmodule Matplotex.Element.Label do
     """
   end
 
+  def cast_label(label, font) do
+    font = Map.from_struct(font)
+    struct(label, font)
+  end
+
   defp rotate(%{rotate: nil}), do: nil
 
   defp rotate(%{rotate: rotate, x: x, y: y}),

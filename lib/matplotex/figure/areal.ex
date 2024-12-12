@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Areal do
+  alias Matplotex.Utils.Algebra
   alias Matplotex.Figure.Dataset
   alias Matplotex.Figure.TwoD
   @callback create(struct(), any(), keyword()) :: struct()
@@ -29,7 +30,7 @@ defmodule Matplotex.Figure.Areal do
       alias Matplotex.Figure.Dataset
 
       alias Matplotex.Figure.Text
-
+      @default_tick_minimum 0
       def add_label(%__MODULE__{label: nil} = axes, {key, label}, opts) when is_binary(label) do
         label =
           Map.new()
@@ -61,15 +62,18 @@ defmodule Matplotex.Figure.Areal do
       end
 
       def add_ticks(%__MODULE__{tick: tick} = axes, {key, ticks}) when is_list(ticks) do
-        ticks =
+        {ticks, lim} =
           if number_based?(ticks) do
-            ticks
+            {ticks, Enum.min_max(ticks)}
           else
-            Enum.with_index(ticks, 1)
+            {Enum.with_index(ticks), {@default_tick_minimum, length(ticks)}}
           end
 
         tick = Map.put(tick, key, ticks)
-        update_tick(axes, tick)
+
+        axes
+        |> set_limit({key, lim})
+        |> update_tick(tick)
       end
 
       def add_ticks(%__MODULE__{tick: tick, size: size} = axes, {key, {_min, _max} = lim}) do
@@ -78,16 +82,16 @@ defmodule Matplotex.Figure.Areal do
         tick = Map.put(tick, key, ticks)
 
         axes
-        |> set_limit(lim)
+        |> set_limit({key, lim})
         |> update_tick(tick)
-      end
-
-      def hide_v_grid(axes) do
-        %{axes | show_v_grid: false}
       end
 
       def add_ticks(_, _) do
         raise Matplotex.InputError, keys: [:tick], message: "Invalid Input"
+      end
+
+      def hide_v_grid(axes) do
+        %{axes | show_v_grid: false}
       end
 
       def set_limit(%__MODULE__{limit: limit} = axes, {key, {_, _} = lim}) do
@@ -137,16 +141,16 @@ defmodule Matplotex.Figure.Areal do
 
       defp update_limit(limit, _, _), do: limit
 
-      def materialized(figure) do
+      def materialized_by_region(figure) do
         figure
-        |> Lead.set_spines()
-        |> Cast.cast_xticks()
-        |> Cast.cast_yticks()
-        |> Cast.cast_hgrids()
-        |> Cast.cast_vgrids()
-        |> Cast.cast_spines()
-        |> Cast.cast_label()
-        |> Cast.cast_title()
+        |> Lead.set_regions()
+        |> Cast.cast_xticks_by_region()
+        |> Cast.cast_yticks_by_region()
+        |> Cast.cast_hgrids_by_region()
+        |> Cast.cast_vgrids_by_region()
+        |> Cast.cast_spines_by_region()
+        |> Cast.cast_label_by_region()
+        |> Cast.cast_title_by_region()
       end
 
       defp update_tick(axes, tick) do
@@ -209,18 +213,17 @@ defmodule Matplotex.Figure.Areal do
       end
     end
   end
-
-  @tensor_data_type_bits 64
-
-  alias Nx
-
-  def transformation({_label, value}, y, xminmax, yminmax, width, height, transition) do
-    transformation(value, y, xminmax, yminmax, width, height, transition)
+  def transformation({_labelx, x}, {_labely, y}, xminmax, yminmax, width, height, transition) do
+    transformation(x, y, xminmax, yminmax, width, height, transition)
+  end
+  def transformation({_label, x}, y, xminmax, yminmax, width, height, transition) do
+    transformation(x, y, xminmax, yminmax, width, height, transition)
   end
 
-  def transformation(x, {_label, value}, y, xminmax, yminmax, width, transition) do
-    transformation(x, value, y, xminmax, yminmax, width, transition)
+  def transformation(x, {_label, y}, xminmax, yminmax, width, height, transition) do
+    transformation(x, y, xminmax, yminmax, width, height, transition)
   end
+
 
   def transformation(
         x,
@@ -233,24 +236,9 @@ defmodule Matplotex.Figure.Areal do
       ) do
     sx = svg_width / (xmax - xmin)
     sy = svg_height / (ymax - ymin)
-
     tx = transition_x - xmin * sx
     ty = transition_y - ymin * sy
-
-    # TODO: work for the datasets which has values in a range way far from zero in both directi
-    point_matrix = Nx.tensor([x, y, 1], type: {:f, @tensor_data_type_bits})
-
-    Nx.tensor(
-      [
-        [sx, 0, tx],
-        [0, sy, ty],
-        [0, 0, 1]
-      ],
-      type: {:f, @tensor_data_type_bits}
-    )
-    |> Nx.dot(point_matrix)
-    |> Nx.to_flat_list()
-    |> then(fn [x_trans, y_trans, _] -> {x_trans, y_trans} end)
+    Algebra.transform_given_point(x, y, sx, sy, tx, ty)
   end
 
   def do_transform(%Dataset{x: x, y: y} = dataset, xlim, ylim, width, height, transition) do
@@ -258,9 +246,11 @@ defmodule Matplotex.Figure.Areal do
       x
       |> Enum.zip(y)
       |> Enum.map(fn {x, y} ->
-        transformation(x, y, xlim, ylim, width, height, transition)
-      end)
 
+        x
+        |> transformation(y, xlim, ylim, width, height, transition)
+        |> Algebra.flip_y_coordinate()
+      end)
     %Dataset{dataset | transformed: transformed}
   end
 end

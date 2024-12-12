@@ -8,6 +8,8 @@ defmodule Matplotex.Figure.Font do
   @pt_to_inch_ratio 1 / 72
   @text_rotation 0
   @flate 0
+  @dominant_baseline "middle"
+  @default_text_anchor "middle"
 
   defstruct font_size: @default_font_size,
             font_style: @default_font_style,
@@ -17,6 +19,8 @@ defmodule Matplotex.Figure.Font do
             unit_of_measurement: @font_unit,
             pt_to_inch_ratio: @pt_to_inch_ratio,
             rotation: @text_rotation,
+            dominant_baseline: @dominant_baseline,
+            text_anchor: @default_text_anchor,
             flate: @flate
 
   def font_keys() do
@@ -31,7 +35,18 @@ defmodule Matplotex.Figure.Font do
     struct(__MODULE__, params)
   end
 
-  def update(font, params) do
-    struct(font, params)
+  def update(font, params, element) do
+    update_font(font, params, element)
+  end
+
+  defp update_font(font, params, element) do
+    font
+    |> Map.from_struct()
+    |> Map.keys()
+    |> Enum.reduce(font, fn key, acc ->
+      existing_value = Map.get(font, key)
+      value = Map.get(params, :"#{element}_#{key}", existing_value)
+      Map.put(acc, key, value)
+    end)
   end
 end

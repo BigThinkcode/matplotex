@@ -19,8 +19,8 @@ defmodule Matplotex.Figure.RcParams do
   @label_padding 5 / 96
   @default_legend_width_percentage 0.2
   @default_legend_items_orientation :horizontal
-  defstruct x_tick_font: @font,
-            y_tick_font: @font,
+  defstruct x_tick_font: %Font{dominant_baseline: "middle"},
+            y_tick_font: %Font{text_anchor: "start"},
             x_label_font: @font,
             y_label_font: @font,
             title_font: %Font{font_size: @default_title_font_size},
@@ -44,6 +44,7 @@ defmodule Matplotex.Figure.RcParams do
             tick_line_length: @tick_line_length,
             x_padding: @chart_padding,
             y_padding: @chart_padding,
+            white_space: 0,
             label_padding: @label_padding,
             legend_width: @default_legend_width_percentage,
             legend_items_orientation: @default_legend_items_orientation
@@ -128,60 +129,70 @@ defmodule Matplotex.Figure.RcParams do
 
   def update_with_font(rc_params, params) do
     rc_params
-    |> update_font(params, :x_label_font)
-    |> update_font(params, :y_label_font)
-    |> update_font(params, :x_tick_font)
-    |> update_font(params, :y_tick_font)
-    |> update_font(params, :title_font)
+    |> update_font(params, :x_label)
+    |> update_font(params, :y_label)
+    |> update_font(params, :x_tick)
+    |> update_font(params, :y_tick)
+    |> update_font(params, :title)
   end
 
   defp update_font(
-         %__MODULE__{x_label_font: x_label_font} = rc_params,
-         %{x_label_font_size: x_label_font_size},
-         :x_label_font
+         rc_params,
+         params,
+         element
        ) do
-    %__MODULE__{
-      rc_params
-      | x_label_font: Font.update(x_label_font, %{font_size: x_label_font_size})
-    }
+    element_font_keys = font_associated_keys(element)
+    element_params = Map.take(params, element_font_keys)
+    font = Map.get(rc_params, :"#{element}_font")
+    updated_font = Font.update(font, element_params, element)
+    Map.put(rc_params, :"#{element}_font", updated_font)
   end
 
-  defp update_font(
-         %__MODULE__{y_label_font: y_label_font} = rc_params,
-         %{y_label_font_size: y_label_font_size},
-         :y_label_font
-       ) do
-    %__MODULE__{
-      rc_params
-      | y_label_font: Font.update(y_label_font, %{font_size: y_label_font_size})
-    }
-  end
+  # defp update_font(
+  #        %__MODULE__{y_label_font: y_label_font} = rc_params,
+  #        %{y_label_font_size: y_label_font_size},
+  #        :y_label_font
+  #      ) do
+  #   %__MODULE__{
+  #     rc_params
+  #     | y_label_font: Font.update(y_label_font, %{font_size: y_label_font_size})
+  #   }
+  # end
 
-  defp update_font(
-         %__MODULE__{x_tick_font: x_tick_font} = rc_params,
-         %{x_tick_font_size: x_tick_font_size},
-         :x_tick_font
-       ) do
-    %__MODULE__{rc_params | x_tick_font: Font.update(x_tick_font, %{font_size: x_tick_font_size})}
-  end
+  # defp update_font(
+  #        %__MODULE__{x_tick_font: x_tick_font} = rc_params,
+  #        %{x_tick_font_size: x_tick_font_size},
+  #        :x_tick_font
+  #      ) do
+  #   %__MODULE__{rc_params | x_tick_font: Font.update(x_tick_font, %{font_size: x_tick_font_size})}
+  # end
 
-  defp update_font(
-         %__MODULE__{y_tick_font: y_tick_font} = rc_params,
-         %{y_tick_font_size: y_tick_font_size},
-         :y_tick_font
-       ) do
-    %__MODULE__{rc_params | y_tick_font: Font.update(y_tick_font, %{font_size: y_tick_font_size})}
-  end
+  # defp update_font(
+  #        %__MODULE__{y_tick_font: y_tick_font} = rc_params,
+  #        %{y_tick_font_size: y_tick_font_size},
+  #        :y_tick_font
+  #      ) do
+  #   %__MODULE__{rc_params | y_tick_font: Font.update(y_tick_font, %{font_size: y_tick_font_size})}
+  # end
 
-  defp update_font(
-         %__MODULE__{title_font: title_font} = rc_params,
-         %{title_font_size: title_font_size},
-         :title_font
-       ) do
-    %__MODULE__{rc_params | title_font: Font.update(title_font, %{font_size: title_font_size})}
-  end
+  # defp update_font(
+  #        %__MODULE__{title_font: title_font} = rc_params,
+  #        %{title_font_size: title_font_size},
+  #        :title_font
+  #      ) do
+  #   %__MODULE__{rc_params | title_font: Font.update(title_font, %{font_size: title_font_size})}
+  # end
 
-  defp update_font(rc_params, _, _), do: rc_params
+  # defp update_font(rc_params, _, _), do: rc_params
+
+  def font_associated_keys(element) do
+    %Font{}
+    |> Map.from_struct()
+    |> Map.keys()
+    |> Enum.map(fn fkey ->
+      :"#{element}_#{fkey}"
+    end)
+  end
 
   defp convert_font_size(<<font_size::binary-size(2)>> <> "pt") do
     String.to_integer(font_size)

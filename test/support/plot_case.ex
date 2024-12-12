@@ -4,8 +4,6 @@ defmodule Matplotex.PlotCase do
 
   using do
     quote do
-      alias Matplotex.Blueprint.Label
-      alias Matplotex.Blueprint.Line
       import Matplotex.PlotCase, only: [set_bar: 0]
     end
   end

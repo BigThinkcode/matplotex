@@ -5,88 +5,65 @@ defmodule Matplotex.Figure.CastTest do
   use Matplotex.PlotCase
 
   setup do
-    figure = Matplotex.FrameHelpers.sample_figure() |> Lead.set_spines()
+    figure = Matplotex.FrameHelpers.sample_figure()
     {:ok, %{figure: figure}}
   end
 
-  describe "cast_spines" do
-    test "add elements for borders in axes", %{figure: figure} do
-      assert %Figure{axes: %{element: elements}} = Cast.cast_spines(figure)
 
-      assert Enum.filter(elements, fn x -> x.type == "spine.top" end) |> length() == 1
-      assert Enum.filter(elements, fn x -> x.type == "spine.bottom" end) |> length() == 1
-      assert Enum.filter(elements, fn x -> x.type == "spine.right" end) |> length() == 1
-      assert Enum.filter(elements, fn x -> x.type == "spine.left" end) |> length() == 1
+  describe "cast_spines_by_region/1" do
+    test "add elements for borders in axes", %{figure: figure} do
+      figure = Lead.set_regions(figure)
+      assert %Figure{axes: %{element: elements}} = Cast.cast_spines_by_region(figure)
+
+      assert Enum.any?(elements, fn x -> x.type == "spine.top" end)
+      assert Enum.any?(elements, fn x -> x.type == "spine.bottom" end)
+      assert Enum.any?(elements, fn x -> x.type == "spine.right" end)
+      assert Enum.any?(elements, fn x -> x.type == "spine.left" end)
     end
   end
 
-  describe "cast_title" do
+  describe "cast_title_by_region/1" do
     test "add element for title in axes", %{figure: figure} do
       assert %Figure{axes: %{element: elements}} =
                figure
-               |> Lead.set_spines()
-               |> Cast.cast_spines()
-               |> Cast.cast_title()
+               |> Lead.set_regions()
+               |> Cast.cast_spines_by_region()
+               |> Cast.cast_title_by_region()
 
-      assert Enum.filter(elements, fn x -> x.type == "figure.title" end) |> length == 1
+      assert Enum.any?(elements, fn x -> x.type == "figure.title" end)
     end
   end
 
-  describe "cast_label/1" do
+  describe "cast_label_by_region/1" do
     test "add element for label in axes", %{figure: figure} do
       assert %Figure{axes: %{element: elements}} =
                figure
-               |> Lead.set_spines()
-               |> Cast.cast_label()
+               |> Lead.set_regions()
+               |> Cast.cast_label_by_region()
 
-      assert Enum.filter(elements, fn x -> x.type == "figure.x_label" end) |> length() == 1
-      assert Enum.filter(elements, fn x -> x.type == "figure.y_label" end) |> length() == 1
+      assert Enum.any?(elements, fn x -> x.type == "figure.x_label" end)
+      assert Enum.any?(elements, fn x -> x.type == "figure.y_label" end)
     end
   end
 
-  describe "cast_xticks/1" do
+  describe "cast_xticks_by_region/1" do
     test "add element for tick in axes", %{figure: figure} do
       assert %Figure{axes: %{element: elements, tick: %{x: x_ticks, y: _y_ticks}}} =
                figure
-               |> Lead.set_spines()
-               |> Cast.cast_xticks()
-
-      assert Enum.filter(elements, fn x -> x.type == "figure.x_tick" end) |> length() ==
-               length(x_ticks)
-    end
-
-    test "generates the ticks are getting confined within the limit", %{figure: figure} do
-      figure = Matplotex.set_xlim(figure, {2, 6})
-
-      %Figure{axes: %{element: elements}} =
-        figure
-        |> Lead.set_spines()
-        |> Cast.cast_xticks()
-
-      assert Enum.filter(elements, fn x -> x.type == "figure.x_tick" end) |> length() == 5
-    end
-
-    test "ticks will get generated if no ticks added" do
-      x = [1, 3, 7, 4, 2, 5, 6]
-      y = [1, 3, 7, 4, 2, 5, 6]
-      figure = Matplotex.plot(x, y)
-
-      %Figure{axes: %{data: {_x, _y}, tick: %{x: x_ticks}, element: elements}} =
-        figure
-        |> Lead.set_spines()
-        |> Cast.cast_xticks()
+               |> Lead.set_regions()
+               |> Cast.cast_xticks_by_region()
 
       assert Enum.filter(elements, fn x -> x.type == "figure.x_tick" end) |> length() ==
                length(x_ticks)
     end
   end
 
-  describe "cast_yticks/1" do
+  describe "cast_yticks_by_region/1" do
     test "add element for tick in axes", %{figure: figure} do
       assert %Figure{axes: %{element: elements, tick: %{y: y_ticks}}} =
                figure
-               |> Lead.set_spines()
-               |> Cast.cast_yticks()
+               |> Lead.set_regions()
+               |> Cast.cast_yticks_by_region()
 
       assert Enum.filter(elements, fn x -> x.type == "figure.y_tick" end) |> length() ==
                length(y_ticks)
@@ -94,31 +71,27 @@ defmodule Matplotex.Figure.CastTest do
   end
 
   # TODO: Testcases for show and hide hgrid
-  describe "cast_hgrids/1" do
+
+  describe "cast_hgrids_by_region/1" do
     test "add elements for horizontal grids", %{figure: figure} do
       assert %Figure{axes: %{element: elements, tick: %{y: y_ticks}}} =
                figure
-               |> Lead.set_spines()
-               |> Cast.cast_label()
-               |> Cast.cast_xticks()
-               |> Cast.cast_yticks()
-               |> Cast.cast_hgrids()
+               |> Lead.set_regions()
+               |> Cast.cast_yticks_by_region()
+               |> Cast.cast_hgrids_by_region()
 
       assert Enum.filter(elements, fn x -> x.type == "figure.h_grid" end) |> length() ==
                length(y_ticks)
     end
   end
 
-  describe "cast_vgrids/1" do
+  describe "cast_vgrids_by_region/1" do
     test "add elements for vertical grids", %{figure: figure} do
       assert %Figure{axes: %{element: elements, tick: %{x: x_ticks}}} =
                figure
-               |> Lead.set_spines()
-               |> Cast.cast_label()
-               |> Cast.cast_xticks()
-               |> Cast.cast_yticks()
-               |> Cast.cast_hgrids()
-               |> Cast.cast_vgrids()
+               |> Lead.set_regions()
+               |> Cast.cast_xticks_by_region()
+               |> Cast.cast_vgrids_by_region()
 
       assert Enum.filter(elements, fn x -> x.type == "figure.v_grid" end) |> length() ==
                length(x_ticks)

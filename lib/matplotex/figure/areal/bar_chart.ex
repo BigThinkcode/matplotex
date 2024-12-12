@@ -9,6 +9,8 @@ defmodule Matplotex.Figure.Areal.BarChart do
   alias Matplotex.Figure.Areal
   use Areal
 
+  @xmin_value 0
+
   frame(
     legend: %Legend{},
     coords: %Coords{},
@@ -33,12 +35,12 @@ defmodule Matplotex.Figure.Areal.BarChart do
     dataset = Dataset.cast(%Dataset{x: x, y: values, pos: pos, width: width}, opts)
     datasets = data ++ [dataset]
     xydata = flatten_for_data(datasets)
-    %Figure{figure | axes: %{axes | data: xydata, dataset: datasets}}
+    %Figure{figure | rc_params: %RcParams{white_space: width, y_padding: 0}, axes: %{axes | data: xydata, dataset: datasets}}
   end
 
   @impl Areal
   def materialize(figure) do
-    __MODULE__.materialized(figure)
+    __MODULE__.materialized_by_region(figure)
     |> materialize_bars()
   end
 
@@ -48,24 +50,32 @@ defmodule Matplotex.Figure.Areal.BarChart do
              %{
                dataset: data,
                limit: %{x: xlim, y: ylim},
-               size: {width, height},
-               coords: %Coords{bottom_left: {blx, bly}},
+               region_content: %Region{
+                 x: x_region_content,
+                 y: y_region_content,
+                 width: width_region_content,
+                 height: height_region_content
+               },
                element: elements
              } = axes,
-           rc_params: %RcParams{x_padding: padding}
+           rc_params: %RcParams{x_padding: x_padding, white_space: white_space}
          } = figure
        ) do
-    px = width * padding
-    width = width - px * 2
-    py = height * padding
-    height = height - py * 2
+    x_padding_value = width_region_content * x_padding + white_space
+    shrinked_width_region_content = width_region_content - x_padding_value * 2
 
     bar_elements =
       data
       |> Enum.map(fn dataset ->
         dataset
-        |> do_transform(xlim, ylim, width, height, {blx + px, bly + py})
-        |> capture(bly)
+        |> do_transform(
+          xlim,
+          ylim,
+          shrinked_width_region_content,
+          height_region_content,
+          {x_region_content + x_padding_value, y_region_content}
+        )
+        |> capture(-y_region_content)
       end)
       |> List.flatten()
 
@@ -92,7 +102,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
   def generate_ticks(data) do
     max = Enum.max(data)
     step = max |> round_to_best() |> div(5) |> round_to_best()
-    {list_of_ticks(data, step), {0, max}}
+    {list_of_ticks(data, step), {@xmin_value, max}}
   end
 
   def generate_ticks(side, {min, max} = lim) do
@@ -123,7 +133,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
             x: bar_position(x, pos_factor),
             y: y,
             width: width,
-            height: y - bly,
+            height: bly - y,
             color: color
           }
         ],
@@ -135,7 +145,8 @@ defmodule Matplotex.Figure.Areal.BarChart do
   defp capture([], captured, _dataset, _bly), do: captured
 
   defp hypox(y) do
-    1..length(y) |> Enum.into([])
+    nof_x = length(y)
+    @xmin_value|>Nx.linspace(nof_x, n: nof_x)|>Nx.to_list()
   end
 
   defp bar_position(x, pos_factor) when pos_factor < 0 do
