@@ -65,7 +65,7 @@ defmodule Matplotex.Figure.RcParamTest do
                x_label_font: font,
                y_label_font: font,
                x_tick_font: font,
-               y_tick_font: font
+               y_tick_font: %Font{font | text_anchor: "start"}
              } == RcParams.update_with_font(rc_params, params)
     end
   end
@@ -85,7 +85,8 @@ defmodule Matplotex.Figure.RcParamTest do
                :y_label_unit_of_measurement,
                :y_label_pt_to_inch_ratio,
                :y_label_rotation,
-               :y_label_flate
+               :y_label_flate,
+               :y_label_text_anchor
              ]
              |> Enum.sort()
   end
