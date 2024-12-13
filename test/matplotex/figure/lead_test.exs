@@ -6,8 +6,18 @@ defmodule Matplotex.Figure.LeadTest do
   alias Matplotex.Figure.Lead
 
 
-  setup do
-    figure = Matplotex.FrameHelpers.sample_figure()
+  setup(context) do
+    figure =
+      if context.radial do
+        categories = ["2008", "2009", "2010", "2011"]
+        values = [18.48923375, 17.1923791, 17.48479218, 17.02021634]
+
+        colors = ["#76b5c5", "#DEDEDE", "#FBD1A2", "#6195B4"]
+        Matplotex.pie(values, colors: colors, labels: categories)
+      else
+        Matplotex.FrameHelpers.sample_figure()
+      end
+
 
     frame_width = 8
     frame_height = 6
@@ -28,14 +38,14 @@ defmodule Matplotex.Figure.LeadTest do
     {:ok, %{figure: figure, figure2: figure2}}
   end
 
-  describe "set_regions/1" do
+  describe "set_regions_areal/1" do
     test "sets region_xy", %{figure2: figure} do
       assert %Figure{
                axes: %{
                  region_x: %Region{x: rxx, y: rxy, width: rxwidth, height: rxheight},
                  region_y: %Region{x: ryx, y: ryy, width: rywidth, height: ryheight}
                }
-             } = Lead.set_regions(figure)
+             } = Lead.set_regions_areal(figure)
 
       assert Enum.all?([rxx, rxy, rxwidth, rxheight, ryx, ryy, rywidth, ryheight], &(&1 != 0))
     end
@@ -45,7 +55,7 @@ defmodule Matplotex.Figure.LeadTest do
                axes: %{
                  region_title: %Region{x: rtx, y: rty, width: rtwidth, height: rtheight}
                }
-             } = Lead.set_regions(figure)
+             } = Lead.set_regions_areal(figure)
 
       assert Enum.all?([rtx, rty, rtwidth, rtheight], &(&1 != 0))
     end
@@ -57,7 +67,7 @@ defmodule Matplotex.Figure.LeadTest do
                axes: %{
                  region_legend: %Region{x: rlx, y: rly, width: rlwidth, height: rlheight}
                }
-             } = Lead.set_regions(figure)
+             } = Lead.set_regions_areal(figure)
 
       assert Enum.all?([rlx, rly, rlwidth, rlheight], &(&1 != 0))
     end
@@ -69,7 +79,7 @@ defmodule Matplotex.Figure.LeadTest do
                  region_y: %Region{y: ryy, height: ryheight},
                  region_content: %Region{x: rcx, y: rcy, width: rcwidth, height: rcheight}
                }
-             } = Lead.set_regions(figure)
+             } = Lead.set_regions_areal(figure)
 
       assert rxx == rcx
       assert ryy == rcy
@@ -91,7 +101,7 @@ defmodule Matplotex.Figure.LeadTest do
                  tick: %TwoD{x: xticks, y: yticks},
                  data: {x, y}
                }
-             } = Lead.set_regions(figure)
+             } = Lead.set_regions_areal(figure)
 
       assert Enum.min(xticks) == 0
       assert Enum.min(yticks) == 0
@@ -112,7 +122,7 @@ defmodule Matplotex.Figure.LeadTest do
                region_title: %Region{x: rtx, y: rty, width: rtwidth, height: rtheight},
                region_content: %Region{x: rcx, y: rcy, width: rcwidth, height: rcheight}
              }
-           } = Lead.set_regions(figure)
+           } = Lead.set_regions_areal(figure)
 
     assert rxx == 0
     assert ryy == 0
@@ -137,7 +147,7 @@ defmodule Matplotex.Figure.LeadTest do
                region_title: %Region{height: rtheight},
                region_content: %Region{height: rcheight}
              }
-           } = Lead.set_regions(figure)
+           } = Lead.set_regions_areal(figure)
 
     margin_two_side = height * margin * 2
     assert height == margin_two_side + rxheight + rtheight + rcheight
@@ -152,9 +162,22 @@ defmodule Matplotex.Figure.LeadTest do
                region_content: %Region{width: rcwidth},
                region_legend: %Region{width: rlwidth}
              }
-           } = Lead.set_regions(figure)
+           } = Lead.set_regions_areal(figure)
 
     two_side_margin = width * margin * 2
     assert width == two_side_margin + ry_width + rcwidth + rlwidth
+  end
+
+  describe "set_regions_areal" do
+    @tag radial: true
+    test "updates with all borders" do
+    %Figure{axes: %{border: {lx, by, rx, ty}}} = Lead.set_regions_radial(figure)
+      assert lx > 0 && by > 0 && rx > 0 && ty > 0
+    end
+    @tag radial: true
+    test "updates region titles" do
+      %Figure{axes: %{region_title: %Region{}}} = Lead.set_regions_radial(figure)
+    end
+
   end
 end

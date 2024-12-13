@@ -12,7 +12,7 @@ defmodule Matplotex.Figure.CastTest do
 
   describe "cast_spines_by_region/1" do
     test "add elements for borders in axes", %{figure: figure} do
-      figure = Lead.set_regions(figure)
+      figure = Lead.set_regions_areal(figure)
       assert %Figure{axes: %{element: elements}} = Cast.cast_spines_by_region(figure)
 
       assert Enum.any?(elements, fn x -> x.type == "spine.top" end)
@@ -26,7 +26,7 @@ defmodule Matplotex.Figure.CastTest do
     test "add element for title in axes", %{figure: figure} do
       assert %Figure{axes: %{element: elements}} =
                figure
-               |> Lead.set_regions()
+               |> Lead.set_regions_areal()
                |> Cast.cast_spines_by_region()
                |> Cast.cast_title_by_region()
 
@@ -38,7 +38,7 @@ defmodule Matplotex.Figure.CastTest do
     test "add element for label in axes", %{figure: figure} do
       assert %Figure{axes: %{element: elements}} =
                figure
-               |> Lead.set_regions()
+               |> Lead.set_regions_areal()
                |> Cast.cast_label_by_region()
 
       assert Enum.any?(elements, fn x -> x.type == "figure.x_label" end)
@@ -50,7 +50,7 @@ defmodule Matplotex.Figure.CastTest do
     test "add element for tick in axes", %{figure: figure} do
       assert %Figure{axes: %{element: elements, tick: %{x: x_ticks, y: _y_ticks}}} =
                figure
-               |> Lead.set_regions()
+               |> Lead.set_regions_areal()
                |> Cast.cast_xticks_by_region()
 
       assert Enum.filter(elements, fn x -> x.type == "figure.x_tick" end) |> length() ==
@@ -62,7 +62,7 @@ defmodule Matplotex.Figure.CastTest do
     test "add element for tick in axes", %{figure: figure} do
       assert %Figure{axes: %{element: elements, tick: %{y: y_ticks}}} =
                figure
-               |> Lead.set_regions()
+               |> Lead.set_regions_areal()
                |> Cast.cast_yticks_by_region()
 
       assert Enum.filter(elements, fn x -> x.type == "figure.y_tick" end) |> length() ==
@@ -76,7 +76,7 @@ defmodule Matplotex.Figure.CastTest do
     test "add elements for horizontal grids", %{figure: figure} do
       assert %Figure{axes: %{element: elements, tick: %{y: y_ticks}}} =
                figure
-               |> Lead.set_regions()
+               |> Lead.set_regions_areal()
                |> Cast.cast_yticks_by_region()
                |> Cast.cast_hgrids_by_region()
 
@@ -89,7 +89,7 @@ defmodule Matplotex.Figure.CastTest do
     test "add elements for vertical grids", %{figure: figure} do
       assert %Figure{axes: %{element: elements, tick: %{x: x_ticks}}} =
                figure
-               |> Lead.set_regions()
+               |> Lead.set_regions_areal()
                |> Cast.cast_xticks_by_region()
                |> Cast.cast_vgrids_by_region()
 

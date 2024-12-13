@@ -143,7 +143,7 @@ defmodule Matplotex.Figure.Areal do
 
       def materialized_by_region(figure) do
         figure
-        |> Lead.set_regions()
+        |> Lead.set_regions_areal()
         |> Cast.cast_xticks_by_region()
         |> Cast.cast_yticks_by_region()
         |> Cast.cast_hgrids_by_region()

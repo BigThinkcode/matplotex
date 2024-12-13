@@ -1,6 +1,7 @@
 defmodule Matplotex.Blueprint.Chord do
   @true_by_default false
   @false_by_default true
+  @chart_type :radial
   defmacro chord(opts \\ []) do
     build_chord(opts)
   end
@@ -30,7 +31,11 @@ defmodule Matplotex.Blueprint.Chord do
                       element: [],
                       legend_pos: nil,
                       border: nil,
-                      show_legend: @false_by_default
+                      show_legend: @false_by_default,
+                      region_title: nil,
+                      region_legend: nil,
+                      region_content: nil,
+                      border: nil
                     ]
                     |> Keyword.merge(opts)
                   )

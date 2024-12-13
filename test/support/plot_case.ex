@@ -9,11 +9,11 @@ defmodule Matplotex.PlotCase do
   end
 
   def set_figure() do
-    figure = Matplotex.FrameHelpers.sample_figure() |> Lead.set_spines()
+    figure = Matplotex.FrameHelpers.sample_figure()
     {:ok, %{figure: figure}}
   end
 
   def set_bar() do
-    {:ok, %{figure: Matplotex.FrameHelpers.bar() |> Lead.set_spines()}}
+    {:ok, %{figure: Matplotex.FrameHelpers.bar()}}
   end
 end

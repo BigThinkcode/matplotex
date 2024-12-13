@@ -11,9 +11,9 @@ defmodule Matplotex.Figure.Lead do
   @padding 10 / 96
   @zero_to_move 0
 
-  @spec set_regions(Matplotex.Figure.t()) :: Matplotex.Figure.t()
+  @spec set_regions_areal(Matplotex.Figure.t()) :: Matplotex.Figure.t()
 
-  def set_regions(%Figure{figsize: {width, height}} = figure) when width > 0 and height > 0 do
+  def set_regions_areal(%Figure{figsize: {width, height}} = figure) when width > 0 and height > 0 do
     figure
     |> set_frame_size()
     |> ensure_ticks_are_valid()
@@ -23,8 +23,16 @@ defmodule Matplotex.Figure.Lead do
     |> set_region_content()
   end
 
-  def set_regions(figure), do: figure
+  def set_regions_areal(figure), do: figure
+  def set_regions_radial(%Figure{figsize: {width, height}} = figure) when width > 0 and height >0 do
+    figure
+    |> set_frame_size()
+    |> set_region_title()
+    |> set_region_legend()
+    |> set_region_content()
+  end
 
+  def set_regions_radial(figure), do: figure
   def set_border(%Figure{margin: margin, axes: axes, figsize: {fig_width, fig_height}} = figure) do
     margin = margin / 2
     lx = fig_width * margin
@@ -179,7 +187,7 @@ defmodule Matplotex.Figure.Lead do
     space_for_title = height_required_for_text(title_font, title)
 
     {x_region_title, y_region_title} =
-      Algebra.transform_given_point(@zero_to_move, -space_for_title, lx, ty, 0)
+      Algebra.transform_given_point(@zero_to_move, -space_for_title, lx, ty)
 
     %Figure{
       figure
@@ -198,6 +206,14 @@ defmodule Matplotex.Figure.Lead do
             }
         }
     }
+  end
+
+  defp set_region_title(%Figure{axes: %{title: title, center: _center, border: {lx, _by, _rx, ty}, size: {width, height}} = axes, rc_params: %RcParams{title_font: title_font}} = figure) do
+    space_for_title = height_required_for_text(title_font, title)
+
+    {x_region_title, y_region_title} = Algebra.transform_given_point(@zero_to_move, -space_for_title, lx, ty )
+
+    %Figure{figure | axes: %{axes | region_title: %Region{x: x_region_title, y: y_region_title, width: width, height: space_for_title}}}
   end
 
   defp set_region_legend(
