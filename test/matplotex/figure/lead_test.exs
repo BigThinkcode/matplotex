@@ -5,10 +5,9 @@ defmodule Matplotex.Figure.LeadTest do
   use Matplotex.PlotCase
   alias Matplotex.Figure.Lead
 
-
   setup(context) do
     figure =
-      if context.radial do
+      if Map.get(context, :radial, false) do
         categories = ["2008", "2009", "2010", "2011"]
         values = [18.48923375, 17.1923791, 17.48479218, 17.02021634]
 
@@ -17,7 +16,6 @@ defmodule Matplotex.Figure.LeadTest do
       else
         Matplotex.FrameHelpers.sample_figure()
       end
-
 
     frame_width = 8
     frame_height = 6
@@ -168,16 +166,89 @@ defmodule Matplotex.Figure.LeadTest do
     assert width == two_side_margin + ry_width + rcwidth + rlwidth
   end
 
-  describe "set_regions_areal" do
+  describe "set_regions_radial" do
     @tag radial: true
-    test "updates with all borders" do
-    %Figure{axes: %{border: {lx, by, rx, ty}}} = Lead.set_regions_radial(figure)
-      assert lx > 0 && by > 0 && rx > 0 && ty > 0
-    end
-    @tag radial: true
-    test "updates region titles" do
-      %Figure{axes: %{region_title: %Region{}}} = Lead.set_regions_radial(figure)
+    test "updates with all borders", %{figure: figure} do
+      %Figure{axes: %{border: {lx, by, rx, ty}}} = Lead.set_regions_radial(figure)
+      assert lx != 0 && by != 0 && rx != 0 && ty != 0
     end
 
+    @tag radial: true
+    test "updates region titles", %{figure: figure} do
+      %Figure{
+        margin: margin,
+        figsize: {fwidth, fheight},
+        axes: %{
+          region_title: %Region{
+            x: x_region_title,
+            y: y_region_title,
+            width: width_region_title,
+            height: height_region_title
+          }
+        }
+      } = Lead.set_regions_radial(figure)
+
+      width_margin_value = margin * fwidth
+      height_margin_value = margin * fheight
+
+      assert x_region_title == width_margin_value
+      assert y_region_title == -(height_margin_value + height_region_title)
+      assert width_region_title == fwidth - 2 * width_margin_value
+    end
+
+    @tag radial: true
+    test "updates region legend", %{figure: figure} do
+      %Figure{
+        margin: margin,
+        figsize: {fwidth, fheight},
+        axes: %{
+          region_legend: %Region{
+            x: x_region_legend,
+            y: y_region_legend,
+            width: width_region_legend,
+            height: height_region_legend
+          },
+          region_title: %Region{height: height_region_title}
+        }
+      } = Lead.set_regions_radial(figure)
+
+      width_margin_value = margin * fwidth
+      height_margin_value = margin * fheight
+      assert x_region_legend == fwidth - width_margin_value - width_region_legend
+
+      assert y_region_legend ==
+               -(height_margin_value + height_region_title + height_region_legend)
+    end
+
+    @tag radial: true
+    test "updates region content", %{figure: figure} do
+      %Figure{
+        figsize: {fwidth, fheight},
+        axes: %{
+          region_content: %Region{
+            x: x_region_content,
+            y: y_region_content,
+            width: width_region_content,
+            height: height_region_content
+          },
+          border: {lx, by, _rx, ty},
+          region_legend: %Region{width: width_region_legend},
+          region_title: %Region{height: height_region_title}
+        }
+      } = Lead.set_regions_radial(figure)
+
+      assert x_region_content == lx
+      assert y_region_content == by
+      assert 2 * lx + width_region_content + width_region_legend == fwidth
+      assert 2 * abs(ty) + height_region_content + height_region_title == fheight
+    end
+  end
+
+  describe "focus_to_origin/1" do
+    @tab radial: true
+    test "sets origin to center of the figure", %{figure: figure} do
+     assert  %Figure{axes: %{center: {cx, cy}}} = Lead.focus_to_origin(figure)
+     assert cx != 0 && cy != 0
+    end
   end
 end

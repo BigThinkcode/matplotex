@@ -44,6 +44,7 @@ defmodule Matplotex.Figure.RcParams do
             tick_line_length: @tick_line_length,
             x_padding: @chart_padding,
             y_padding: @chart_padding,
+            padding: @chart_padding,
             white_space: 0,
             label_padding: @label_padding,
             legend_width: @default_legend_width_percentage,

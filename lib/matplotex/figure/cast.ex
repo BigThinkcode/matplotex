@@ -430,7 +430,6 @@ defmodule Matplotex.Figure.Cast do
         } = figure
       )
       when is_list(x_ticks) do
-
     x_ticks = confine_ticks(x_ticks, xlim)
     x_data = confine_data(x_data, xlim)
     dataset = confine_data(dataset, xlim, :x)
@@ -448,12 +447,12 @@ defmodule Matplotex.Figure.Cast do
       Enum.map(ticks_width_position, fn {tick_position, label} ->
         {_, y_x_tick_line} =
           @zero_to_move
-          |>Algebra.transform_given_point(height_region_x, x_region_x, y_region_x)
+          |> Algebra.transform_given_point(height_region_x, x_region_x, y_region_x)
           |> Algebra.flip_y_coordinate()
 
         {x_x_tick, y_x_tick} =
           tick_position
-          |>Algebra.transform_given_point(
+          |> Algebra.transform_given_point(
             @zero_to_move,
             x_region_x_with_padding,
             y_x_tick
@@ -480,6 +479,7 @@ defmodule Matplotex.Figure.Cast do
         {%Tick{type: @xtick_type, tick_line: line, label: label}, {x_x_tick, y_x_tick_line}}
       end)
       |> Enum.unzip()
+
     elements = elements ++ x_tick_elements
 
     %Figure{
@@ -498,6 +498,7 @@ defmodule Matplotex.Figure.Cast do
   defp format_tick_label({label, _index}), do: label
   defp format_tick_label(label) when is_float(label), do: Float.round(label, 2)
   defp format_tick_label(label), do: label
+
   defp content_linespace(number_of_ticks_required, axis_size) do
     @lowest_tick |> Nx.linspace(axis_size, n: number_of_ticks_required) |> Nx.to_list()
   end
@@ -630,7 +631,7 @@ defmodule Matplotex.Figure.Cast do
 
         {x_y_tick, y_y_tick} =
           @zero_to_move
-          |>Algebra.transform_given_point(
+          |> Algebra.transform_given_point(
             tick_position,
             x_y_tick,
             y_region_y_with_padding

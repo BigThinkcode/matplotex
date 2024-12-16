@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Radial.Pie do
+  alias Matplotex.Figure.Areal.Region
   alias Matplotex.Figure.Radial
   alias Matplotex.Element.RadLegend
   alias Matplotex.Figure.Radial.LegendAcc
@@ -12,7 +13,15 @@ defmodule Matplotex.Figure.Radial.Pie do
   use Radial
 
   @full_circle 2 * :math.pi()
-  chord(center: %TwoD{}, lead: %TwoD{}, coords: %Coords{})
+  chord(
+    center: %TwoD{},
+    lead: %TwoD{},
+    coords: %Coords{},
+    region_title: %Region{},
+    region_legend: %Region{},
+    region_content: %Region{}
+  )
+
   @impl Radial
   def create(%Figure{axes: axes} = figure, sizes, opts) do
     dataset = Dataset.cast(%Dataset{sizes: sizes}, opts)

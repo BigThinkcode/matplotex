@@ -212,7 +212,7 @@ defmodule Matplotex.Helpers do
     |> Matplotex.plot(x, y2, color: "red", linestyle: "--", marker: "^", label: "Dataset 2")
     |> Matplotex.plot(x, y3, color: "green", linestyle: "-.", marker: "s", label: "Dataset 3")
     |> Matplotex.set_title("Title")
-    |> Matplotex.set_xticks([1,2,3,4,5])
+    |> Matplotex.set_xticks([1, 2, 3, 4, 5])
     |> Matplotex.set_xlabel("X-Axis")
     |> Matplotex.set_ylabel("Y-Axis")
     |> Matplotex.show()

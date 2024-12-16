@@ -9,7 +9,6 @@ defmodule Matplotex.Figure.CastTest do
     {:ok, %{figure: figure}}
   end
 
-
   describe "cast_spines_by_region/1" do
     test "add elements for borders in axes", %{figure: figure} do
       figure = Lead.set_regions_areal(figure)

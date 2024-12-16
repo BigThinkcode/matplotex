@@ -1,5 +1,4 @@
 defmodule Matplotex.PlotCase do
-  alias Matplotex.Figure.Lead
   use ExUnit.CaseTemplate
 
   using do
