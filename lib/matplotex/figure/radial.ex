@@ -1,4 +1,6 @@
 defmodule Matplotex.Figure.Radial do
+  alias Matplotex.Utils.Algebra
+
   @callback create(struct(), list(), keyword()) :: struct()
   @callback materialize(struct()) :: struct()
 
@@ -31,7 +33,7 @@ defmodule Matplotex.Figure.Radial do
         figure
         |> Lead.set_regions_radial()
         |> Cast.cast_border()
-        |> Cast.cast_title()
+        |> Cast.cast_title_by_region()
       end
 
       def set_region_title(
@@ -72,17 +74,18 @@ defmodule Matplotex.Figure.Radial do
                rc_params: %RcParams{legend_width: legend_width},
                axes:
                  %{
-                   border: {_lx, by, rx, _ty},
+                   border: {_lx, by, rx, ty},
                    show_legend: true,
-                   region_title: %Region{y: y_region_title}
+                   region_title: %Region{y: y_region_title, height: height_region_title}
                  } = axes
              } = figure
            ) do
+        IO.inspect(legend_width)
         width_region_legend = fwidth * legend_width
         height_region_legend = abs(by - y_region_title)
 
         {x_region_legend, y_region_legend} =
-          Algebra.transform_given_point(rx - width_region_legend, 0, 0, by)
+          Algebra.transform_given_point(rx, abs(ty), -width_region_legend,height_region_title)|>Algebra.flip_y_coordinate()
 
         %Figure{
           figure
@@ -110,6 +113,7 @@ defmodule Matplotex.Figure.Radial do
                  } = axes
              } = figure
            ) do
+
         width_region_content = width - width_region_legend
         height_region_content = height - height_region_title
 

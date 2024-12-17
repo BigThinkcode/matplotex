@@ -138,6 +138,8 @@ defmodule Matplotex.Figure.Cast do
           rc_params: %RcParams{line_width: line_width}
         } = figure
       ) do
+    {lx, by} = Algebra.flip_y_coordinate({lx, by})
+    {rx, ty} = Algebra.flip_y_coordinate({rx, ty})
     left = %Line{x1: lx, y1: by, x2: lx, y2: ty, type: "border.left", stroke_width: line_width}
     right = %Line{x1: rx, y1: by, x2: rx, y2: ty, type: "border.right", stroke_width: line_width}
     top = %Line{x1: lx, x2: rx, y1: ty, y2: ty, type: "border.top", stroke_width: line_width}
@@ -158,14 +160,14 @@ defmodule Matplotex.Figure.Cast do
         %Figure{
           axes:
             %{
-              coords: %Coords{title: title_coord} = coords,
+              region_title: region_title,
               title: title,
               element: elements
             } = axes,
           rc_params: %RcParams{title_font: title_font}
         } = figure
       ) do
-    {ttx, tty} = calculate_center(coords, title_coord, :x)
+    {ttx, tty} = calculate_center(region_title, :x)
 
     title =
       %Label{
@@ -189,14 +191,15 @@ defmodule Matplotex.Figure.Cast do
         %Figure{
           axes:
             %{
-              region_title: region,
+              region_title: region_title,
               title: title,
               element: elements
             } = axes,
           rc_params: %RcParams{title_font: title_font, label_padding: title_padding}
         } = figure
       ) do
-    {title_x, title_y} = region |> calculate_center(:x) |> Algebra.flip_y_coordinate()
+
+    {title_x, title_y} = region_title |> calculate_center(:x) |> Algebra.flip_y_coordinate()
 
     title =
       %Label{

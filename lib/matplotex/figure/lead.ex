@@ -33,6 +33,7 @@ defmodule Matplotex.Figure.Lead do
     |> module.set_region_title()
     |> module.set_region_legend()
     |> module.set_region_content()
+    |> focus_to_origin()
   end
 
   def set_regions_radial(figure), do: figure
@@ -195,11 +196,12 @@ defmodule Matplotex.Figure.Lead do
         }
     }
   end
+  def focus_to_origin(figure), do: figure
   defp plotable_radius(width, height, padding) when height < width do
-    (height - height * padding) / 2
+    (height - height * padding * 2) / 2
   end
  defp plotable_radius(width, height, padding) when width < height do
-  (width - width * padding) / 2
+  (width - width * padding * 2) / 2
  end
   # def focus_to_origin(
   #       %Figure{
@@ -242,32 +244,32 @@ defmodule Matplotex.Figure.Lead do
   #   }
   # end
 
-  defp center_and_radius(width, height, {leftx, _rightx, bottomy, _topy}) when height < width do
-    radius = height / 2
+  # defp center_and_radius(width, height, {leftx, _rightx, bottomy, _topy}) when height < width do
+  #   radius = height / 2
 
-    centerx = leftx + radius
-    centery = bottomy + radius
-    {{centerx, centery}, radius}
-  end
+  #   centerx = leftx + radius
+  #   centery = bottomy + radius
+  #   {{centerx, centery}, radius}
+  # end
 
-  defp center_and_radius(width, _height, {leftx, _rightx, _bottomy, topy}) do
-    radius = width / 2
+  # defp center_and_radius(width, _height, {leftx, _rightx, _bottomy, topy}) do
+  #   radius = width / 2
 
-    centerx = leftx + radius
-    centery = topy - radius
-    {{centerx, centery}, radius}
-  end
+  #   centerx = leftx + radius
+  #   centery = topy - radius
+  #   {{centerx, centery}, radius}
+  # end
 
-  defp label_offset(nil, _font_size), do: 0
-  defp label_offset("", _font_size), do: 0
+  # defp label_offset(nil, _font_size), do: 0
+  # defp label_offset("", _font_size), do: 0
 
-  defp label_offset(ticks, font_size) when is_list(ticks) do
-    font_size * @pt_to_inch + @padding
-  end
+  # defp label_offset(ticks, font_size) when is_list(ticks) do
+  #   font_size * @pt_to_inch + @padding
+  # end
 
-  defp label_offset(_label, font_size) do
-    font_size * @pt_to_inch + @padding
-  end
+  # defp label_offset(_label, font_size) do
+  #   font_size * @pt_to_inch + @padding
+  # end
 
   defp tick_length(tick) when is_integer(tick) do
     tick |> Integer.to_string() |> String.length()

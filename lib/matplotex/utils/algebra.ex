@@ -1,4 +1,5 @@
 defmodule Matplotex.Utils.Algebra do
+  alias Matplotex.Figure.TwoD
   alias Nx
 
   @tensor_data_type_bits 64
@@ -89,5 +90,9 @@ defmodule Matplotex.Utils.Algebra do
 
   def flip_y_coordinate({x, y}) do
     {x, -y}
+  end
+
+  def flip_y_coordinate(%{y: y} = point) do
+    %{point | y: -y}
   end
 end

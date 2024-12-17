@@ -270,7 +270,8 @@ defmodule Matplotex.Helpers do
     sizes
     |> Matplotex.pie(colors: colors, labels: labels)
     |> Matplotex.set_title("Pie chart")
-    |> Matplotex.figure(%{figsize: {3.5, 2.5}, margin: 0.05})
+    |> Matplotex.figure(%{figsize: {4, 3}, margin: 0.05})
+    |> Matplotex.set_rc_params(%{line_width: 1, legend_width: 0.25})
     |> Matplotex.show()
     |> copy()
   end
@@ -305,7 +306,7 @@ defmodule Matplotex.Helpers do
     values
     |> Matplotex.pie(colors: colors, labels: categories)
     |> Matplotex.set_title("Asias Emission distribution(2008-2011)")
-    |> Matplotex.set_rc_params(%{line_width: 1})
+    |> Matplotex.set_rc_params(%{line_width: 1, legend_width: 0.5})
     |> Matplotex.figure(%{figsize: {10, 4}, margin: 0.15})
     |> Matplotex.show()
     |> copy()

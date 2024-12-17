@@ -1,4 +1,7 @@
 defmodule Matplotex.Figure.Radial.Pie do
+
+  alias Matplotex.Figure.RcParams
+  alias Matplotex.Utils.Algebra
   alias Matplotex.Figure.Areal.Region
   alias Matplotex.Figure.Radial
   alias Matplotex.Element.RadLegend
@@ -24,7 +27,11 @@ defmodule Matplotex.Figure.Radial.Pie do
 
   @impl Radial
   def create(%Figure{axes: axes} = figure, sizes, opts) do
-    dataset = Dataset.cast(%Dataset{sizes: sizes}, opts)
+    dataset = if sizes|>Enum.sum()|>abs() > 0 do
+      Dataset.cast(%Dataset{sizes: sizes}, opts)
+    else
+      raise Matplotex.InputError, "Invalid set of values for a pie chart, sum of sizes should be greater than 0"
+    end
     %Figure{figure | axes: %{axes | dataset: dataset}}
   end
 
@@ -37,13 +44,14 @@ defmodule Matplotex.Figure.Radial.Pie do
 
   defp materialize_slices(
          %Figure{
-           figsize: {_fwidth, fheight},
+           figsize: {fwidth, fheight},
+           rc_params: %RcParams{legend_font: legend_font},
            axes:
              %__MODULE__{
                size: {_width, height},
                radius: radius,
-               center: %{y: cy} = center,
-               legend_pos: {legx, legy},
+               center: center,
+               region_legend: region_legend,
                dataset: %Dataset{
                  sizes: sizes,
                  labels: labels,
@@ -53,11 +61,11 @@ defmodule Matplotex.Figure.Radial.Pie do
                element: elements
              } = axes
          } = figure
-       ) do
+  ) when fwidth > 0  and fheight > 0 do
+    %Region{x: legx, y: legy} = Algebra.flip_y_coordinate(region_legend)
     total_size = Enum.sum(sizes)
     legend_rect_side = height / length(sizes) / 2
-    center = %{center | y: fheight - cy}
-
+    center = Algebra.flip_y_coordinate(center)
     slices =
       sizes
       |> Enum.zip(labels)
@@ -74,7 +82,7 @@ defmodule Matplotex.Figure.Radial.Pie do
           }
         },
         fn raw, color, acc ->
-          roll_across(raw, color, acc, center, radius, total_size)
+          roll_across(raw, color, acc, center, radius, total_size, legend_font)
         end
       )
       |> then(fn %Accumulator{slices: slices, legends: legends} ->
@@ -108,7 +116,8 @@ defmodule Matplotex.Figure.Radial.Pie do
          },
          %{x: cx, y: cy} = center,
          radius,
-         total_size
+         total_size,
+         legend_font
        ) do
     percentage = size / total_size
     angle_for_size = percentage * @full_circle + start_angle
@@ -128,7 +137,7 @@ defmodule Matplotex.Figure.Radial.Pie do
       cy: cy
     }
 
-    y_legend = y_legend - legend_unit_height
+    {x_legend, y_legend} = Algebra.transform_given_point(0, legend_unit_height, x_legend, y_legend)
 
     legend =
       %RadLegend{
@@ -140,7 +149,7 @@ defmodule Matplotex.Figure.Radial.Pie do
         height: legend_unit_height,
         label: "#{label}-#{Float.ceil(percentage * 100, 2)}%"
       }
-      |> RadLegend.with_label()
+      |> RadLegend.with_label(legend_font)
 
     %Accumulator{
       lead: {x2, y2},
