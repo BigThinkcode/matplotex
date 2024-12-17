@@ -1,5 +1,4 @@
 defmodule Matplotex.Utils.Algebra do
-  alias Matplotex.Figure.TwoD
   alias Nx
 
   @tensor_data_type_bits 64

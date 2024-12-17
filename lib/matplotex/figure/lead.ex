@@ -4,11 +4,8 @@ defmodule Matplotex.Figure.Lead do
   alias Matplotex.Figure.Font
   alias Matplotex.Figure.Areal.Region
   alias Matplotex.Figure.TwoD
-  alias Matplotex.Figure.Coords
   alias Matplotex.Figure.RcParams
   alias Matplotex.Figure
-  @pt_to_inch 1 / 150
-  @padding 10 / 96
   @zero_to_move 0
 
   @spec set_regions_areal(Matplotex.Figure.t()) :: Matplotex.Figure.t()

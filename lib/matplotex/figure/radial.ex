@@ -80,7 +80,6 @@ defmodule Matplotex.Figure.Radial do
                  } = axes
              } = figure
            ) do
-        IO.inspect(legend_width)
         width_region_legend = fwidth * legend_width
         height_region_legend = abs(by - y_region_title)
 

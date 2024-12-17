@@ -205,8 +205,7 @@ defmodule Matplotex.Figure.LeadTest do
           region_legend: %Region{
             x: x_region_legend,
             y: y_region_legend,
-            width: width_region_legend,
-            height: height_region_legend
+            width: width_region_legend
           },
           region_title: %Region{height: height_region_title}
         }
@@ -216,8 +215,7 @@ defmodule Matplotex.Figure.LeadTest do
       height_margin_value = margin * fheight
       assert x_region_legend == fwidth - width_margin_value - width_region_legend
 
-      assert y_region_legend ==
-               -(height_margin_value + height_region_title + height_region_legend)
+      assert abs(y_region_legend) == height_margin_value + height_region_title
     end
 
     @tag radial: true
