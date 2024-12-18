@@ -5,6 +5,7 @@ defmodule Matplotex.Figure.Areal do
   @callback create(struct(), any(), keyword()) :: struct()
   @callback materialize(struct()) :: struct()
   @callback plotify(number(), tuple(), number(), number(), list(), atom()) :: number()
+  @callback with_legend_handle(struct(), struct()) :: struct()
   defmacro __using__(_) do
     quote do
       @behaviour Matplotex.Figure.Areal

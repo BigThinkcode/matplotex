@@ -1,5 +1,4 @@
 defmodule Matplotex.Figure.Marker do
-
   alias Matplotex.Utils.Algebra
   alias Matplotex.Element.Rect
   alias Matplotex.Element.Polygon
@@ -30,17 +29,16 @@ defmodule Matplotex.Figure.Marker do
     }
 
   def marker_legend("o", x, y, fill, marker_size) do
-    {cx, cy} = Algebra.transform_given_point(x, y, marker_size / 2, marker_size /2)
+    {cx, cy} = Algebra.transform_given_point(x, y, marker_size / 2, marker_size / 2)
     %Circle{type: "legend.handle", cx: cx, cy: cy, fill: fill, r: marker_size / 2}
   end
 
   def marker_legend("^", x, y, fill, marker_size) do
     %Polygon{
       type: "legend.handle",
-      points: [{x , y}, {x + marker_size, y}, {x, y + marker_size}],
+      points: [{x, y}, {x + marker_size, y}, {x, y + marker_size}],
       fill: fill
     }
-
   end
 
   def marker_legend("s", x, y, fill, marker_size),
@@ -52,5 +50,4 @@ defmodule Matplotex.Figure.Marker do
       height: marker_size,
       color: fill
     }
-
 end

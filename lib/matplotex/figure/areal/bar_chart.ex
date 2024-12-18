@@ -100,6 +100,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
     value * s + transition - minl * s
   end
 
+  @impl Areal
   def with_legend_handle(
         %Legend{x: x, y: y, color: color, width: width, height: height} = legend,
         _dataset

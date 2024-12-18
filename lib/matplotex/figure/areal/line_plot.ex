@@ -96,25 +96,27 @@ defmodule Matplotex.Figure.Areal.LinePlot do
     value * s + transition - minl * s
   end
 
+  @impl Areal
   def with_legend_handle(
-    %Legend{x: x, y: y, color: color, width: marker_size} = legend,
-    %Dataset{linestyle: linestyle}
-  ) do
+        %Legend{x: x, y: y, color: color, width: marker_size} = legend,
+        %Dataset{linestyle: linestyle}
+      ) do
+    {x2, y2} = Algebra.transform_given_point(x, y, marker_size, marker_size / 2)
 
-    {x2, y2} = Algebra.transform_given_point(x, y, marker_size, marker_size /2)
-
-%Legend{legend | handle: %Line{
-  type: "plot.line",
-  x1: x,
-  y1: y + marker_size /2,
-  x2: x2,
-  y2: y2 ,
-  stroke: color,
-  fill: color,
-  linestyle: linestyle
-}}
-end
-
+    %Legend{
+      legend
+      | handle: %Line{
+          type: "plot.line",
+          x1: x,
+          y1: y + marker_size / 2,
+          x2: x2,
+          y2: y2,
+          stroke: color,
+          fill: color,
+          linestyle: linestyle
+        }
+    }
+  end
 
   def generate_ticks([{_l, _v} | _] = data) do
     {data, min_max(data)}
