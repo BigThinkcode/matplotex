@@ -808,30 +808,33 @@ defmodule Matplotex.Figure.Cast do
         %Figure{
           rc_params: %RcParams{legend_font: legend_font, x_padding: padding},
           axes:
-            %{
+            %chart{
               dataset: datasets,
               element: elements,
-              region_legend: %Region{x: x_region_legend, y: y_region_legend, width: width_region_legend},
-
+              show_legend: true,
+              region_legend: %Region{
+                x: x_region_legend,
+                y: y_region_legend,
+                width: width_region_legend
+              }
             } = axes
         } = figure
       ) do
-
     space_for_one_line = Lead.height_required_for_text(legend_font, "")
     padding = padding * width_region_legend
 
     legend_elements =
       datasets
       |> Enum.with_index()
-      |> Enum.map(fn {%Dataset{color: color, label: label}, idx} ->
+      |> Enum.map(fn {%Dataset{color: color, label: label} = dataset, idx} ->
         {x_region_legend, y_region_legend} =
           Algebra.transform_given_point(
             x_region_legend,
             y_region_legend,
             padding,
-            -idx * space_for_one_line-padding
+            -idx * space_for_one_line - padding
           )
-          |>Algebra.flip_y_coordinate()
+          |> Algebra.flip_y_coordinate()
 
         %Legend{
           type: "figure.legend",
@@ -839,14 +842,17 @@ defmodule Matplotex.Figure.Cast do
           y: y_region_legend,
           color: color,
           label: label,
-          width: space_for_one_line,
-          height: space_for_one_line
+          width: space_for_one_line - padding,
+          height: space_for_one_line - padding
         }
         |> Legend.with_label(legend_font, padding)
+        |> chart.with_legend_handle(dataset)
       end)
 
     %Figure{figure | axes: %{axes | element: elements ++ legend_elements}}
   end
+
+  def cast_legends(figure), do: figure
 
   defp plotify_tick(module, {label, value}, lim, axis_size, transition, data, axis) do
     {module.plotify(value, lim, axis_size, transition, data, axis), label}

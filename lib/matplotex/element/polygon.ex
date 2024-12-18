@@ -10,6 +10,7 @@ defmodule Matplotex.Element.Polygon do
     ~s(
     <polygon points="#{assemble_point(polygon)}"
      fill="#{polygon.fill}"
+     type="#{polygon.type}"
      />
     )
   end

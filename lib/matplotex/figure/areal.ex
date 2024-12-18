@@ -12,7 +12,6 @@ defmodule Matplotex.Figure.Areal do
       alias Matplotex.Figure.Dimension
       alias Matplotex.Figure.Coords
       alias Matplotex.Figure.Text
-      alias Matplotex.Figure.Legend
 
       import Matplotex.Figure.Areal, only: [transformation: 7, do_transform: 6]
       import Matplotex.Blueprint.Frame
@@ -272,6 +271,7 @@ defmodule Matplotex.Figure.Areal do
           ) do
         region_legend_width = f_width * legend_width
         region_x_width_after_legend = region_x_width - region_legend_width
+
         {x_region_legend, y_region_legend} =
           Algebra.transform_given_point(-region_legend_width, -region_title_height, rx, ty)
 

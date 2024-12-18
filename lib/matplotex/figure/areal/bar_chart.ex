@@ -1,6 +1,7 @@
 defmodule Matplotex.Figure.Areal.BarChart do
   import Matplotex.Figure.Numer
   alias Matplotex.Figure.Areal.Region
+  alias Matplotex.Element.Legend
   alias Matplotex.Figure.Dataset
   alias Matplotex.Element.Rect
   alias Matplotex.Figure.RcParams
@@ -12,7 +13,6 @@ defmodule Matplotex.Figure.Areal.BarChart do
   @xmin_value 0
 
   frame(
-    legend: %Legend{},
     coords: %Coords{},
     dimension: %Dimension{},
     tick: %TwoD{},
@@ -98,6 +98,13 @@ defmodule Matplotex.Figure.Areal.BarChart do
   def plotify(value, {minl, maxl}, axis_size, transition, _data, :y) do
     s = axis_size / (maxl - minl)
     value * s + transition - minl * s
+  end
+
+  def with_legend_handle(
+        %Legend{x: x, y: y, color: color, width: width, height: height} = legend,
+        _dataset
+      ) do
+    %Legend{legend | handle: %Rect{x: x, y: y, color: color, width: width, height: height}}
   end
 
   def generate_ticks([{_l, _v} | _] = data) do

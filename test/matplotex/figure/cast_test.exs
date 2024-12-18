@@ -102,6 +102,7 @@ defmodule Matplotex.Figure.CastTest do
       assert %Figure{axes: %{element: elements, dataset: dataset}} =
                figure
                |> Lead.set_regions_areal()
+               |> Matplotex.show_legend()
                |> Cast.cast_legends()
 
       assert Enum.filter(elements, fn x -> x.type == "figure.legend" end) |> length() ==

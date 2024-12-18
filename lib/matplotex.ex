@@ -196,19 +196,19 @@ defmodule Matplotex do
 
   """
 
-  @spec legend(Figure.t(), keyword() | map()) :: Figure.t()
-  def legend(figure, opts) when is_map(opts) do
-    Figure.add_legend(figure, opts)
-  end
+  # @spec legend(Figure.t(), keyword() | map()) :: Figure.t()
+  # def legend(figure, opts) when is_map(opts) do
+  #   Figure.add_legend(figure, opts)
+  # end
 
-  def legend(figure, [h | _t] = opts) when is_tuple(h) do
-    params = Enum.into(opts, %{})
-    Figure.add_legend(figure, params)
-  end
+  # def legend(figure, [h | _t] = opts) when is_tuple(h) do
+  #   params = Enum.into(opts, %{})
+  #   Figure.add_legend(figure, params)
+  # end
 
-  def legend(figure, labels) when is_list(labels) do
-    Figure.add_legend(figure, %{labels: labels})
-  end
+  # def legend(figure, labels) when is_list(labels) do
+  #   Figure.add_legend(figure, %{labels: labels})
+  # end
 
   @doc """
   Function to update figure params
