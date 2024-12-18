@@ -30,7 +30,10 @@ defmodule Matplotex.Figure.Areal do
       alias Matplotex.Figure.Dataset
 
       alias Matplotex.Figure.Text
+      alias Matplotex.Figure.Areal.Region
+      alias Matplotex.Figure.RcParams
       @default_tick_minimum 0
+      @zero_to_move 0
       def add_label(%__MODULE__{label: nil} = axes, {key, label}, opts) when is_binary(label) do
         label =
           Map.new()
@@ -143,7 +146,7 @@ defmodule Matplotex.Figure.Areal do
 
       def materialized_by_region(figure) do
         figure
-        |> Lead.set_regions()
+        |> Lead.set_regions_areal()
         |> Cast.cast_xticks_by_region()
         |> Cast.cast_yticks_by_region()
         |> Cast.cast_hgrids_by_region()
@@ -211,11 +214,119 @@ defmodule Matplotex.Figure.Areal do
       def set_frame_size(%__MODULE__{} = axes, frame_size) do
         %__MODULE__{axes | size: frame_size}
       end
+
+      def set_region_title(
+            %Figure{
+              axes:
+                %{
+                  title: title,
+                  region_x: %Region{width: region_x_width},
+                  region_y: %Region{height: region_y_height} = region_y,
+                  region_title: region_title,
+                  size: {_f_width, _f_height},
+                  border: {lx, _by, _, ty}
+                } = axes,
+              rc_params: %RcParams{title_font: title_font}
+            } = figure
+          ) do
+        space_for_title = Lead.height_required_for_text(title_font, title)
+
+        {x_region_title, y_region_title} =
+          Algebra.transform_given_point(@zero_to_move, -space_for_title, lx, ty)
+
+        %Figure{
+          figure
+          | axes: %{
+              axes
+              | region_title: %Region{
+                  region_title
+                  | x: x_region_title,
+                    y: y_region_title + space_for_title,
+                    width: region_x_width,
+                    height: space_for_title
+                },
+                region_y: %Region{
+                  region_y
+                  | height: region_y_height - space_for_title
+                }
+            }
+        }
+      end
+
+      def set_region_title(figure), do: figure
+
+
+      def set_region_legend(
+            %Figure{
+              axes:
+                %{
+                  show_legend: true,
+                  region_x: %Region{width: region_x_width} = region_x,
+                  region_title: %Region{height: region_title_height},
+                  region_legend: region_legend,
+                  size: {f_width, _f_height},
+                  border: {_lx, by, rx, ty}
+                } = axes,
+              rc_params: %RcParams{legend_width: legend_width}
+            } = figure
+          ) do
+        region_legend_width = f_width * legend_width
+        region_x_width_after_legend = region_x_width - region_legend_width
+
+        {x_region_legend, y_region_legend} =
+          Algebra.transform_given_point(-region_legend_width, -region_title_height, rx, ty, 0)
+
+        %Figure{
+          figure
+          | axes: %{
+              axes
+              | region_x: %Region{
+                  region_x
+                  | width: region_x_width_after_legend
+                },
+                region_legend: %Region{
+                  region_legend
+                  | x: x_region_legend,
+                    y: y_region_legend,
+                    width: region_legend_width,
+                    height: y_region_legend - by
+                }
+            }
+        }
+      end
+      def set_region_legend(figure), do: figure
+      def set_region_content(
+             %Figure{
+               axes:
+                 %{
+                   region_x: %Region{x: x_region_x, width: region_x_width},
+                   region_y: %Region{y: y_region_y, height: region_y_height},
+                   region_content: region_content
+                 } = axes
+             } = figure
+           ) do
+        %Figure{
+          figure
+          | axes: %{
+              axes
+              | region_content: %Region{
+                  region_content
+                  | x: x_region_x,
+                    y: y_region_y,
+                    width: region_x_width,
+                    height: region_y_height
+                }
+            }
+        }
+      end
+      def set_region_content(figure), do: figure
     end
   end
+
   def transformation({_labelx, x}, {_labely, y}, xminmax, yminmax, width, height, transition) do
     transformation(x, y, xminmax, yminmax, width, height, transition)
   end
+
   def transformation({_label, x}, y, xminmax, yminmax, width, height, transition) do
     transformation(x, y, xminmax, yminmax, width, height, transition)
   end
@@ -223,7 +334,6 @@ defmodule Matplotex.Figure.Areal do
   def transformation(x, {_label, y}, xminmax, yminmax, width, height, transition) do
     transformation(x, y, xminmax, yminmax, width, height, transition)
   end
-
 
   def transformation(
         x,
@@ -246,11 +356,11 @@ defmodule Matplotex.Figure.Areal do
       x
       |> Enum.zip(y)
       |> Enum.map(fn {x, y} ->
-
         x
         |> transformation(y, xlim, ylim, width, height, transition)
         |> Algebra.flip_y_coordinate()
       end)
+
     %Dataset{dataset | transformed: transformed}
   end
 end

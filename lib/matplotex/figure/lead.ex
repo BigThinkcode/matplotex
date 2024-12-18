@@ -4,26 +4,36 @@ defmodule Matplotex.Figure.Lead do
   alias Matplotex.Figure.Font
   alias Matplotex.Figure.Areal.Region
   alias Matplotex.Figure.TwoD
-  alias Matplotex.Figure.Coords
   alias Matplotex.Figure.RcParams
   alias Matplotex.Figure
-  @pt_to_inch 1 / 150
-  @padding 10 / 96
   @zero_to_move 0
 
-  @spec set_regions(Matplotex.Figure.t()) :: Matplotex.Figure.t()
+  @spec set_regions_areal(Matplotex.Figure.t()) :: Matplotex.Figure.t()
 
-  def set_regions(%Figure{figsize: {width, height}} = figure) when width > 0 and height > 0 do
+  def set_regions_areal(%Figure{figsize: {width, height}, axes: %module{}} = figure)
+      when width > 0 and height > 0 do
     figure
     |> set_frame_size()
     |> ensure_ticks_are_valid()
     |> set_region_xy()
-    |> set_region_title()
-    |> set_region_legend()
-    |> set_region_content()
+    |> module.set_region_title()
+    |> module.set_region_legend()
+    |> module.set_region_content()
   end
 
-  def set_regions(figure), do: figure
+  def set_regions_areal(figure), do: figure
+
+  def set_regions_radial(%Figure{figsize: {width, height}, axes: %module{}} = figure)
+      when width > 0 and height > 0 do
+    figure
+    |> set_frame_size()
+    |> module.set_region_title()
+    |> module.set_region_legend()
+    |> module.set_region_content()
+    |> focus_to_origin()
+  end
+
+  def set_regions_radial(figure), do: figure
 
   def set_border(%Figure{margin: margin, axes: axes, figsize: {fig_width, fig_height}} = figure) do
     margin = margin / 2
@@ -56,6 +66,7 @@ defmodule Matplotex.Figure.Lead do
        ) do
     {x_ticks, x_lim} = maybe_generate_ticks(x_ticks, x_lim, x_data, width)
     {y_ticks, y_lim} = maybe_generate_ticks(y_ticks, y_lim, y_data, height)
+
     %Figure{
       figure
       | axes: %{
@@ -131,10 +142,17 @@ defmodule Matplotex.Figure.Lead do
     {x_region_y, y_region_y} =
       Algebra.transform_given_point(@zero_to_move, space_required_for_region_x, lx, by)
 
-    x_label_coords = Algebra.transform_given_point(@zero_to_move, @zero_to_move, x_region_x, y_region_x)
-    x_tick_coords = Algebra.transform_given_point(@zero_to_move, space_for_x_label, x_region_x, y_region_x)
-    y_label_coords = Algebra.transform_given_point(@zero_to_move, @zero_to_move, x_region_y, y_region_y)
-    y_tick_coords = Algebra.transform_given_point(space_for_ylabel, @zero_to_move, x_region_y, y_region_y)
+    x_label_coords =
+      Algebra.transform_given_point(@zero_to_move, @zero_to_move, x_region_x, y_region_x)
+
+    x_tick_coords =
+      Algebra.transform_given_point(@zero_to_move, space_for_x_label, x_region_x, y_region_x)
+
+    y_label_coords =
+      Algebra.transform_given_point(@zero_to_move, @zero_to_move, x_region_y, y_region_y)
+
+    y_tick_coords =
+      Algebra.transform_given_point(space_for_ylabel, @zero_to_move, x_region_y, y_region_y)
 
     %Figure{
       figure
@@ -160,183 +178,96 @@ defmodule Matplotex.Figure.Lead do
     }
   end
 
-  defp set_region_xy(figure), do: figure
-
-  defp set_region_title(
-         %Figure{
-           axes:
-             %{
-               title: title,
-               region_x: %Region{width: region_x_width},
-               region_y: %Region{height: region_y_height} = region_y,
-               region_title: region_title,
-               size: {_f_width, _f_height},
-               border: {lx, _by, _, ty}
-             } = axes,
-           rc_params: %RcParams{title_font: title_font}
-         } = figure
-       ) do
-    space_for_title = height_required_for_text(title_font, title)
-
-    {x_region_title, y_region_title} =
-      Algebra.transform_given_point(@zero_to_move, -space_for_title, lx, ty, 0)
-
-    %Figure{
-      figure
-      | axes: %{
-          axes
-          | region_title: %Region{
-              region_title
-              | x: x_region_title,
-                y: y_region_title + space_for_title,
-                width: region_x_width,
-                height: space_for_title
-            },
-            region_y: %Region{
-              region_y
-              | height: region_y_height - space_for_title
-            }
-        }
-    }
-  end
-
-  defp set_region_legend(
-         %Figure{
-           axes:
-             %{
-               show_legend: true,
-               region_x: %Region{width: region_x_width} = region_x,
-               region_title: %Region{height: region_title_height},
-               region_legend: region_legend,
-               size: {f_width, _f_height},
-               border: {_lx, by, rx, ty}
-             } = axes,
-           rc_params: %RcParams{legend_width: legend_width}
-         } = figure
-       ) do
-    region_legend_width = f_width * legend_width
-    region_x_width_after_legend = region_x_width - region_legend_width
-
-    {x_region_legend, y_region_legend} =
-      Algebra.transform_given_point(-region_legend_width, -region_title_height, rx, ty, 0)
-
-    %Figure{
-      figure
-      | axes: %{
-          axes
-          | region_x: %Region{
-              region_x
-              | width: region_x_width_after_legend
-            },
-            region_legend: %Region{
-              region_legend
-              | x: x_region_legend,
-                y: y_region_legend,
-                width: region_legend_width,
-                height: y_region_legend - by
-            }
-        }
-    }
-  end
-
-  defp set_region_legend(figure), do: figure
-
-  defp set_region_content(
-         %Figure{
-           axes:
-             %{
-               region_x: %Region{x: x_region_x, width: region_x_width},
-               region_y: %Region{y: y_region_y, height: region_y_height},
-               region_content: region_content
-             } = axes
-         } = figure
-       ) do
-    %Figure{
-      figure
-      | axes: %{
-          axes
-          | region_content: %Region{
-              region_content
-              | x: x_region_x,
-                y: y_region_y,
-                width: region_x_width,
-                height: region_y_height
-            }
-        }
-    }
-  end
-
-  defp set_region_content(figure), do: figure
-
-  def focus_to_origin(
-        %Figure{
-          figsize: {width, height},
-          margin: margin,
-          rc_params: %RcParams{title_font_size: title_font_size},
-          axes: %{title: title} = axes
-        } = figure
-      ) do
-    leftx = width * margin
-    bottomy = height * margin
-    rightx = width - width * margin
-    topy = height - height * margin
-    title_coords = {leftx, topy}
-    title_offset = label_offset(title, title_font_size)
-    topy = topy - title_offset
-    inner_size = {width, height} = {width - 2 * leftx, height - 2 * bottomy - title_offset}
-
-    {{centerx, centery}, radius} =
-      center_and_radius(width, height, {leftx, rightx, bottomy, topy})
-
-    coords = %Coords{
-      title: title_coords,
-      bottom_left: {leftx, bottomy},
-      top_left: {leftx, topy},
-      bottom_right: {rightx, bottomy},
-      top_right: {rightx, topy}
-    }
+  def focus_to_origin(%Figure{rc_params: %RcParams{padding: padding}, axes: %{region_content: %Region{x: x_region_content, y: y_region_content, width: width_region_content, height: height_region_content}}=axes}=figure) do
+    width_padding_value = width_region_content * padding
+    height_padding_value = height_region_content * padding
+    radius = plotable_radius(width_region_content, height_region_content, padding)
+    {center_x, center_y} = x_region_content|>Algebra.transform_given_point(y_region_content, width_padding_value, height_padding_value)|>Algebra.transform_given_point({radius, radius})
 
     %Figure{
       figure
       | axes: %{
           axes
           | radius: radius,
-            center: %TwoD{x: centerx, y: centery},
-            coords: coords,
-            size: inner_size,
-            legend_pos: {2 * leftx + 2 * radius, topy}
+            center: %TwoD{x: center_x, y: center_y}
         }
     }
   end
-
-  defp center_and_radius(width, height, {leftx, _rightx, bottomy, _topy}) when height < width do
-    radius = height / 2
-
-    centerx = leftx + radius
-    centery = bottomy + radius
-    {{centerx, centery}, radius}
+  def focus_to_origin(figure), do: figure
+  defp plotable_radius(width, height, padding) when height < width do
+    (height - height * padding * 2) / 2
   end
+ defp plotable_radius(width, height, padding) when width < height do
+  (width - width * padding * 2) / 2
+ end
+  # def focus_to_origin(
+  #       %Figure{
+  #         figsize: {width, height},
+  #         margin: margin,
+  #         rc_params: %RcParams{title_font_size: title_font_size},
+  #         axes: %{title: title} = axes
+  #       } = figure
+  #     ) do
+  #   leftx = width * margin
+  #   bottomy = height * margin
+  #   rightx = width - width * margin
+  #   topy = height - height * margin
+  #   title_coords = {leftx, topy}
+  #   title_offset = label_offset(title, title_font_size)
+  #   topy = topy - title_offset
+  #   inner_size = {width, height} = {width - 2 * leftx, height - 2 * bottomy - title_offset}
 
-  defp center_and_radius(width, _height, {leftx, _rightx, _bottomy, topy}) do
-    radius = width / 2
+  #   {{centerx, centery}, radius} =
+  #     center_and_radius(width, height, {leftx, rightx, bottomy, topy})
 
-    centerx = leftx + radius
-    centery = topy - radius
-    {{centerx, centery}, radius}
-  end
+  #   coords = %Coords{
+  #     title: title_coords,
+  #     bottom_left: {leftx, bottomy},
+  #     top_left: {leftx, topy},
+  #     bottom_right: {rightx, bottomy},
+  #     top_right: {rightx, topy}
+  #   }
 
+  #   %Figure{
+  #     figure
+  #     | axes: %{
+  #         axes
+  #         | radius: radius,
+  #           center: %TwoD{x: centerx, y: centery},
+  #           coords: coords,
+  #           size: inner_size,
+  #           legend_pos: {2 * leftx + 2 * radius, topy}
+  #       }
+  #   }
+  # end
 
+  # defp center_and_radius(width, height, {leftx, _rightx, bottomy, _topy}) when height < width do
+  #   radius = height / 2
 
-  defp label_offset(nil, _font_size), do: 0
-  defp label_offset("", _font_size), do: 0
+  #   centerx = leftx + radius
+  #   centery = bottomy + radius
+  #   {{centerx, centery}, radius}
+  # end
 
-  defp label_offset(ticks, font_size) when is_list(ticks) do
-    font_size * @pt_to_inch + @padding
-  end
+  # defp center_and_radius(width, _height, {leftx, _rightx, _bottomy, topy}) do
+  #   radius = width / 2
 
-  defp label_offset(_label, font_size) do
-    font_size * @pt_to_inch + @padding
-  end
+  #   centerx = leftx + radius
+  #   centery = topy - radius
+  #   {{centerx, centery}, radius}
+  # end
+
+  # defp label_offset(nil, _font_size), do: 0
+  # defp label_offset("", _font_size), do: 0
+
+  # defp label_offset(ticks, font_size) when is_list(ticks) do
+  #   font_size * @pt_to_inch + @padding
+  # end
+
+  # defp label_offset(_label, font_size) do
+  #   font_size * @pt_to_inch + @padding
+  # end
+
   defp tick_length(tick) when is_integer(tick) do
     tick |> Integer.to_string() |> String.length()
   end
@@ -346,26 +277,29 @@ defmodule Matplotex.Figure.Lead do
   end
 
   defp tick_length(tick) when is_float(tick) do
-    tick|>Float.round(2) |> Float.to_string() |> String.length()
+    tick |> Float.round(2) |> Float.to_string() |> String.length()
   end
 
   defp tick_length({label, _v}) when is_binary(label) do
     String.length(label)
   end
 
-  defp height_required_for_text(
-         %Font{
-           font_size: font_size,
-           pt_to_inch_ratio: pt_to_inch_ratio,
-           flate: flate,
-           rotation: 0
-         },
-         _text
-       ) do
+  @doc """
+  Calculates the height required for a given text with given font details
+  """
+  def height_required_for_text(
+        %Font{
+          font_size: font_size,
+          pt_to_inch_ratio: pt_to_inch_ratio,
+          flate: flate,
+          rotation: 0
+        },
+        _text
+      ) do
     to_number(font_size) * pt_to_inch_ratio + flate
   end
 
-  defp height_required_for_text(
+  def height_required_for_text(
          %Font{
            font_size: font_size,
            pt_to_inch_ratio: pt_to_inch_ratio,
@@ -381,27 +315,31 @@ defmodule Matplotex.Figure.Lead do
     text_height + height_for_rotation + flate
   end
 
-  defp length_required_for_text(
-         %Font{
-           font_size: font_size,
-           pt_to_inch_ratio: pt_to_inch_ratio,
-           flate: flate,
-           rotation: 0
-         },
-         text
-       ),
-       do: tick_length(text) * to_number(font_size) * (pt_to_inch_ratio/2) + flate
+  @doc """
+  Length required for a text string with given font details
+  """
 
-  defp length_required_for_text(
-         %Font{
-           font_size: font_size,
-           pt_to_inch_ratio: pt_to_inch_ratio,
-           flate: flate,
-           rotation: rotation
-         },
-         text
-       ) do
-    text_length = tick_length(text) * to_number(font_size) * (pt_to_inch_ratio/2)
+  def length_required_for_text(
+        %Font{
+          font_size: font_size,
+          pt_to_inch_ratio: pt_to_inch_ratio,
+          flate: flate,
+          rotation: 0
+        },
+        text
+      ),
+      do: tick_length(text) * to_number(font_size) * (pt_to_inch_ratio / 2) + flate
+
+  def length_required_for_text(
+        %Font{
+          font_size: font_size,
+          pt_to_inch_ratio: pt_to_inch_ratio,
+          flate: flate,
+          rotation: rotation
+        },
+        text
+      ) do
+    text_length = tick_length(text) * to_number(font_size) * (pt_to_inch_ratio / 2)
     rotation = deg_to_rad(rotation)
     leng_for_rotation = :math.cos(rotation) * text_length
     leng_for_rotation + flate

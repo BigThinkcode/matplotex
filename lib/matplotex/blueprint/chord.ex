@@ -30,7 +30,10 @@ defmodule Matplotex.Blueprint.Chord do
                       element: [],
                       legend_pos: nil,
                       border: nil,
-                      show_legend: @false_by_default
+                      show_legend: @false_by_default,
+                      region_title: nil,
+                      region_legend: nil,
+                      region_content: nil
                     ]
                     |> Keyword.merge(opts)
                   )

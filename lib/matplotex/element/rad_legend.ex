@@ -41,19 +41,19 @@ defmodule Matplotex.Element.RadLegend do
           x: x,
           y: y,
           width: width,
-          height: height,
-          label_margin: label_margin
-        } = legend
+          height: height
+        } = legend, legend_font
       ) do
+
     %{
       legend
       | label: %Label{
-          x: x + width + label_margin,
-          y: y - height / 4,
+          x: x + width ,
+          y: y + height / 2,
           text: text,
-          type: @label_type,
-          text_anchor: "start"
+          type: @label_type
         }
+        |> Label.cast_label(legend_font)
     }
   end
 end

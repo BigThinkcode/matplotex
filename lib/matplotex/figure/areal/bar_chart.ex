@@ -35,7 +35,12 @@ defmodule Matplotex.Figure.Areal.BarChart do
     dataset = Dataset.cast(%Dataset{x: x, y: values, pos: pos, width: width}, opts)
     datasets = data ++ [dataset]
     xydata = flatten_for_data(datasets)
-    %Figure{figure | rc_params: %RcParams{white_space: width, y_padding: 0}, axes: %{axes | data: xydata, dataset: datasets}}
+
+    %Figure{
+      figure
+      | rc_params: %RcParams{white_space: width, y_padding: 0},
+        axes: %{axes | data: xydata, dataset: datasets}
+    }
   end
 
   @impl Areal
@@ -146,7 +151,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
 
   defp hypox(y) do
     nof_x = length(y)
-    @xmin_value|>Nx.linspace(nof_x, n: nof_x)|>Nx.to_list()
+    @xmin_value |> Nx.linspace(nof_x, n: nof_x) |> Nx.to_list()
   end
 
   defp bar_position(x, pos_factor) when pos_factor < 0 do

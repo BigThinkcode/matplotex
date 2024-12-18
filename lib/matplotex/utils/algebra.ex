@@ -51,6 +51,7 @@ defmodule Matplotex.Utils.Algebra do
 
   def transform_given_point(x, y, sx, sy, tx, ty, theta \\ 0) do
     point_matrix = Nx.tensor([x, y, 1], type: {:f, @tensor_data_type_bits})
+
     Nx.tensor(
       [
         [sx * :math.cos(theta), sy * -:math.sin(theta), tx],
@@ -64,9 +65,12 @@ defmodule Matplotex.Utils.Algebra do
     |> List.to_tuple()
     |> then(fn {x, y, _} -> {x, y} end)
   end
-
+  def transform_given_point({x, y}, {ox, oy}, theta \\ 0) do
+    transform_given_point(x, y, ox, oy, theta)
+  end
   def transform_given_point(x, y, ox, oy, theta \\ 0) do
     point_matrix = Nx.tensor([x, y, 1], type: {:f, @tensor_data_type_bits})
+
     Nx.tensor(
       [
         [:math.cos(theta), -:math.sin(theta), ox],
@@ -81,7 +85,13 @@ defmodule Matplotex.Utils.Algebra do
     |> then(fn {x, y, _} -> {x, y} end)
   end
 
+
+
   def flip_y_coordinate({x, y}) do
     {x, -y}
+  end
+
+  def flip_y_coordinate(%{y: y} = point) do
+    %{point | y: -y}
   end
 end
