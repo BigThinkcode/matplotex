@@ -154,6 +154,7 @@ defmodule Matplotex.Figure.Areal do
         |> Cast.cast_spines_by_region()
         |> Cast.cast_label_by_region()
         |> Cast.cast_title_by_region()
+        |> Cast.cast_legends()
       end
 
       defp update_tick(axes, tick) do
@@ -255,7 +256,6 @@ defmodule Matplotex.Figure.Areal do
 
       def set_region_title(figure), do: figure
 
-
       def set_region_legend(
             %Figure{
               axes:
@@ -272,9 +272,8 @@ defmodule Matplotex.Figure.Areal do
           ) do
         region_legend_width = f_width * legend_width
         region_x_width_after_legend = region_x_width - region_legend_width
-
         {x_region_legend, y_region_legend} =
-          Algebra.transform_given_point(-region_legend_width, -region_title_height, rx, ty, 0)
+          Algebra.transform_given_point(-region_legend_width, -region_title_height, rx, ty)
 
         %Figure{
           figure
@@ -294,17 +293,19 @@ defmodule Matplotex.Figure.Areal do
             }
         }
       end
+
       def set_region_legend(figure), do: figure
+
       def set_region_content(
-             %Figure{
-               axes:
-                 %{
-                   region_x: %Region{x: x_region_x, width: region_x_width},
-                   region_y: %Region{y: y_region_y, height: region_y_height},
-                   region_content: region_content
-                 } = axes
-             } = figure
-           ) do
+            %Figure{
+              axes:
+                %{
+                  region_x: %Region{x: x_region_x, width: region_x_width},
+                  region_y: %Region{y: y_region_y, height: region_y_height},
+                  region_content: region_content
+                } = axes
+            } = figure
+          ) do
         %Figure{
           figure
           | axes: %{
@@ -319,6 +320,7 @@ defmodule Matplotex.Figure.Areal do
             }
         }
       end
+
       def set_region_content(figure), do: figure
     end
   end

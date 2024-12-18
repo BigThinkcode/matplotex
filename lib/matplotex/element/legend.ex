@@ -1,4 +1,4 @@
-defmodule Matplotex.Element.RadLegend do
+defmodule Matplotex.Element.Legend do
   alias Matplotex.Element.Label
   alias Matplotex.Element
   alias Matplotex.Element.Rect
@@ -43,13 +43,13 @@ defmodule Matplotex.Element.RadLegend do
           width: width,
           height: height
         } = legend,
-        legend_font
+        legend_font, padding
       ) do
     %{
       legend
       | label:
           %Label{
-            x: x + width,
+            x: x + width + padding,
             y: y + height / 2,
             text: text,
             type: @label_type

@@ -31,6 +31,7 @@ defmodule Matplotex.Figure do
   def new(opts) do
     struct(__MODULE__, opts)
   end
+
   # TODO: put error message in error
   # def put_error(figure, opts) do
 
@@ -114,6 +115,4 @@ defmodule Matplotex.Figure do
   defp update_rc_params(_, _) do
     raise Matplotex.InputError, keys: [:rc_params], message: "Invalid Input"
   end
-
-
 end

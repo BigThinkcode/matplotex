@@ -1,5 +1,4 @@
 defmodule Matplotex.Figure.Radial.Pie do
-
   alias Matplotex.Figure.RcParams
   alias Matplotex.Utils.Algebra
   alias Matplotex.Figure.Areal.Region
@@ -27,11 +26,14 @@ defmodule Matplotex.Figure.Radial.Pie do
 
   @impl Radial
   def create(%Figure{axes: axes} = figure, sizes, opts) do
-    dataset = if sizes|>Enum.sum()|>abs() > 0 do
-      Dataset.cast(%Dataset{sizes: sizes}, opts)
-    else
-      raise Matplotex.InputError, "Invalid set of values for a pie chart, sum of sizes should be greater than 0"
-    end
+    dataset =
+      if sizes |> Enum.sum() |> abs() > 0 do
+        Dataset.cast(%Dataset{sizes: sizes}, opts)
+      else
+        raise Matplotex.InputError,
+              "Invalid set of values for a pie chart, sum of sizes should be greater than 0"
+      end
+
     %Figure{figure | axes: %{axes | dataset: dataset}}
   end
 
@@ -61,11 +63,13 @@ defmodule Matplotex.Figure.Radial.Pie do
                element: elements
              } = axes
          } = figure
-  ) when fwidth > 0  and fheight > 0 do
+       )
+       when fwidth > 0 and fheight > 0 do
     %Region{x: legx, y: legy} = Algebra.flip_y_coordinate(region_legend)
     total_size = Enum.sum(sizes)
     legend_rect_side = height / length(sizes) / 2
     center = Algebra.flip_y_coordinate(center)
+
     slices =
       sizes
       |> Enum.zip(labels)
@@ -137,7 +141,8 @@ defmodule Matplotex.Figure.Radial.Pie do
       cy: cy
     }
 
-    {x_legend, y_legend} = Algebra.transform_given_point(0, legend_unit_height, x_legend, y_legend)
+    {x_legend, y_legend} =
+      Algebra.transform_given_point(0, legend_unit_height, x_legend, y_legend)
 
     legend =
       %RadLegend{

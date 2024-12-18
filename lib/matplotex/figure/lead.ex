@@ -178,11 +178,32 @@ defmodule Matplotex.Figure.Lead do
     }
   end
 
-  def focus_to_origin(%Figure{rc_params: %RcParams{padding: padding}, axes: %{region_content: %Region{x: x_region_content, y: y_region_content, width: width_region_content, height: height_region_content}}=axes}=figure) do
+  def focus_to_origin(
+        %Figure{
+          rc_params: %RcParams{padding: padding},
+          axes:
+            %{
+              region_content: %Region{
+                x: x_region_content,
+                y: y_region_content,
+                width: width_region_content,
+                height: height_region_content
+              }
+            } = axes
+        } = figure
+      ) do
     width_padding_value = width_region_content * padding
     height_padding_value = height_region_content * padding
     radius = plotable_radius(width_region_content, height_region_content, padding)
-    {center_x, center_y} = x_region_content|>Algebra.transform_given_point(y_region_content, width_padding_value, height_padding_value)|>Algebra.transform_given_point({radius, radius})
+
+    {center_x, center_y} =
+      x_region_content
+      |> Algebra.transform_given_point(
+        y_region_content,
+        width_padding_value,
+        height_padding_value
+      )
+      |> Algebra.transform_given_point({radius, radius})
 
     %Figure{
       figure
@@ -193,13 +214,17 @@ defmodule Matplotex.Figure.Lead do
         }
     }
   end
+
   def focus_to_origin(figure), do: figure
+
   defp plotable_radius(width, height, padding) when height < width do
     (height - height * padding * 2) / 2
   end
- defp plotable_radius(width, height, padding) when width < height do
-  (width - width * padding * 2) / 2
- end
+
+  defp plotable_radius(width, height, padding) when width < height do
+    (width - width * padding * 2) / 2
+  end
+
   # def focus_to_origin(
   #       %Figure{
   #         figsize: {width, height},
@@ -300,14 +325,14 @@ defmodule Matplotex.Figure.Lead do
   end
 
   def height_required_for_text(
-         %Font{
-           font_size: font_size,
-           pt_to_inch_ratio: pt_to_inch_ratio,
-           rotation: rotation,
-           flate: flate
-         },
-         text
-       ) do
+        %Font{
+          font_size: font_size,
+          pt_to_inch_ratio: pt_to_inch_ratio,
+          rotation: rotation,
+          flate: flate
+        },
+        text
+      ) do
     text_height = to_number(font_size) * pt_to_inch_ratio
     text_length = tick_length(text) * pt_to_inch_ratio
     rotation = deg_to_rad(rotation)

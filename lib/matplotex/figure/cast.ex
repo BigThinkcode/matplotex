@@ -1,4 +1,6 @@
 defmodule Matplotex.Figure.Cast do
+  alias Matplotex.Figure.Lead
+  alias Matplotex.Element.Legend
   alias Matplotex.Utils.Algebra
   alias Matplotex.Figure.Areal.XyRegion.Coords, as: XyCoords
   alias Matplotex.Figure.Areal.Region
@@ -9,6 +11,7 @@ defmodule Matplotex.Figure.Cast do
   alias Matplotex.Element.Line
   alias Matplotex.Figure.Coords
   alias Matplotex.Figure
+  alias Matplotex.Figure.Dataset
   @tickline_offset 5 / 96
   @xtick_type "figure.x_tick"
   @ytick_type "figure.y_tick"
@@ -198,7 +201,6 @@ defmodule Matplotex.Figure.Cast do
           rc_params: %RcParams{title_font: title_font, label_padding: title_padding}
         } = figure
       ) do
-
     {title_x, title_y} = region_title |> calculate_center(:x) |> Algebra.flip_y_coordinate()
 
     title =
@@ -801,6 +803,50 @@ defmodule Matplotex.Figure.Cast do
   end
 
   def cast_vgrids_by_region(figure), do: figure
+
+  def cast_legends(
+        %Figure{
+          rc_params: %RcParams{legend_font: legend_font, x_padding: padding},
+          axes:
+            %{
+              dataset: datasets,
+              element: elements,
+              region_legend: %Region{x: x_region_legend, y: y_region_legend, width: width_region_legend},
+
+            } = axes
+        } = figure
+      ) do
+
+    space_for_one_line = Lead.height_required_for_text(legend_font, "")
+    padding = padding * width_region_legend
+
+    legend_elements =
+      datasets
+      |> Enum.with_index()
+      |> Enum.map(fn {%Dataset{color: color, label: label}, idx} ->
+        {x_region_legend, y_region_legend} =
+          Algebra.transform_given_point(
+            x_region_legend,
+            y_region_legend,
+            padding,
+            -idx * space_for_one_line-padding
+          )
+          |>Algebra.flip_y_coordinate()
+
+        %Legend{
+          type: "figure.legend",
+          x: x_region_legend,
+          y: y_region_legend,
+          color: color,
+          label: label,
+          width: space_for_one_line,
+          height: space_for_one_line
+        }
+        |> Legend.with_label(legend_font, padding)
+      end)
+
+    %Figure{figure | axes: %{axes | element: elements ++ legend_elements}}
+  end
 
   defp plotify_tick(module, {label, value}, lim, axis_size, transition, data, axis) do
     {module.plotify(value, lim, axis_size, transition, data, axis), label}

@@ -96,4 +96,16 @@ defmodule Matplotex.Figure.CastTest do
                length(x_ticks)
     end
   end
+
+  describe "cast_legends/1" do
+    test "add legends for each datasets", %{figure: figure} do
+      assert %Figure{axes: %{element: elements, dataset: dataset}} =
+               figure
+               |> Lead.set_regions_areal()
+               |> Cast.cast_legends()
+
+      assert Enum.filter(elements, fn x -> x.type == "figure.legend" end) |> length() ==
+               length(dataset)
+    end
+  end
 end
