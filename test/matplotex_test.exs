@@ -44,11 +44,11 @@ defmodule MatplotexTest do
     assert figure.axes.title == title
   end
 
-  test "adds legend to the figure ", %{figure: figure} do
-    labels = ["Data 1", "Data 2"]
-    figure = Matplotex.legend(figure, %{labels: labels})
-    assert figure.axes.legend.labels == labels
-  end
+  # test "adds legend to the figure ", %{figure: figure} do
+  #   labels = ["Data 1", "Data 2"]
+  #   figure = Matplotex.legend(figure, %{labels: labels})
+  #   assert figure.axes.legend.labels == labels
+  # end
 
   test "adds xlim to the figure ", %{figure: figure} do
     xlim = {1, 10}

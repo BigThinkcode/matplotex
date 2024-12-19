@@ -65,9 +65,11 @@ defmodule Matplotex.Utils.Algebra do
     |> List.to_tuple()
     |> then(fn {x, y, _} -> {x, y} end)
   end
+
   def transform_given_point({x, y}, {ox, oy}, theta \\ 0) do
     transform_given_point(x, y, ox, oy, theta)
   end
+
   def transform_given_point(x, y, ox, oy, theta \\ 0) do
     point_matrix = Nx.tensor([x, y, 1], type: {:f, @tensor_data_type_bits})
 
@@ -84,8 +86,6 @@ defmodule Matplotex.Utils.Algebra do
     |> List.to_tuple()
     |> then(fn {x, y, _} -> {x, y} end)
   end
-
-
 
   def flip_y_coordinate({x, y}) do
     {x, -y}

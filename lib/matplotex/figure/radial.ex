@@ -67,24 +67,27 @@ defmodule Matplotex.Figure.Radial do
             }
         }
       end
+
       def set_region_title(figure), do: figure
+
       def set_region_legend(
-             %Figure{
-               figsize: {fwidth, _fheight},
-               rc_params: %RcParams{legend_width: legend_width},
-               axes:
-                 %{
-                   border: {_lx, by, rx, ty},
-                   show_legend: true,
-                   region_title: %Region{y: y_region_title, height: height_region_title}
-                 } = axes
-             } = figure
-           ) do
+            %Figure{
+              figsize: {fwidth, _fheight},
+              rc_params: %RcParams{legend_width: legend_width},
+              axes:
+                %{
+                  border: {_lx, by, rx, ty},
+                  show_legend: true,
+                  region_title: %Region{y: y_region_title, height: height_region_title}
+                } = axes
+            } = figure
+          ) do
         width_region_legend = fwidth * legend_width
         height_region_legend = abs(by - y_region_title)
 
         {x_region_legend, y_region_legend} =
-          Algebra.transform_given_point(rx, abs(ty), -width_region_legend,height_region_title)|>Algebra.flip_y_coordinate()
+          Algebra.transform_given_point(rx, abs(ty), -width_region_legend, height_region_title)
+          |> Algebra.flip_y_coordinate()
 
         %Figure{
           figure
@@ -99,20 +102,20 @@ defmodule Matplotex.Figure.Radial do
             }
         }
       end
+
       def set_region_legend(figure), do: figure
 
       def set_region_content(
-             %Figure{
-               axes:
-                 %{
-                   border: {lx, by, _rx, _ty},
-                   region_title: %Region{height: height_region_title},
-                   region_legend: %Region{width: width_region_legend},
-                   size: {width, height}
-                 } = axes
-             } = figure
-           ) do
-
+            %Figure{
+              axes:
+                %{
+                  border: {lx, by, _rx, _ty},
+                  region_title: %Region{height: height_region_title},
+                  region_legend: %Region{width: width_region_legend},
+                  size: {width, height}
+                } = axes
+            } = figure
+          ) do
         width_region_content = width - width_region_legend
         height_region_content = height - height_region_title
 

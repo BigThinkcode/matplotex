@@ -3,7 +3,7 @@ defmodule Matplotex.Figure.Areal.Scatter do
   alias Matplotex.Figure.Areal.Ticker
   alias Matplotex.Figure.Marker
   alias Matplotex.Figure.Dataset
-
+  alias Matplotex.Element.Legend
   alias Matplotex.Figure.Areal
   alias Matplotex.Figure.RcParams
 
@@ -13,7 +13,6 @@ defmodule Matplotex.Figure.Areal.Scatter do
   use Areal
 
   frame(
-    legend: %Legend{},
     coords: %Coords{},
     dimension: %Dimension{},
     tick: %TwoD{},
@@ -134,6 +133,14 @@ defmodule Matplotex.Figure.Areal.Scatter do
   def plotify(value, {minl, maxl}, axis_size, transition, _, _) do
     s = axis_size / (maxl - minl)
     value * s + transition - minl * s
+  end
+
+  @impl Areal
+  def with_legend_handle(
+        %Legend{x: x, y: y, color: color, width: marker_size} = legend,
+        %Dataset{marker: marker}
+      ) do
+    %Legend{legend | handle: Marker.marker_legend(marker, x, y, color, marker_size)}
   end
 
   def generate_ticks([{_l, _v} | _] = data) do

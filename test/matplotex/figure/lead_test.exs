@@ -240,10 +240,11 @@ defmodule Matplotex.Figure.LeadTest do
       assert 2 * lx + width_region_content + width_region_legend == fwidth
       assert 2 * abs(ty) + height_region_content + height_region_title == fheight
     end
+
     @tag radial: true
     test "sets origin to center of the figure", %{figure: figure} do
-     assert  %Figure{axes: %{center: %TwoD{x: cx, y: cy} }} = Lead.set_regions_radial(figure)
-     assert cx != 0 && cy != 0
+      assert %Figure{axes: %{center: %TwoD{x: cx, y: cy}}} = Lead.set_regions_radial(figure)
+      assert cx != 0 && cy != 0
     end
   end
 end

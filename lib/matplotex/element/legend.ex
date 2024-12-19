@@ -1,7 +1,6 @@
-defmodule Matplotex.Element.RadLegend do
+defmodule Matplotex.Element.Legend do
   alias Matplotex.Element.Label
   alias Matplotex.Element
-  alias Matplotex.Element.Rect
 
   use Element
 
@@ -15,6 +14,7 @@ defmodule Matplotex.Element.RadLegend do
     :y,
     :color,
     :label,
+    :handle,
     width: @legend_size,
     height: @legend_size,
     label_margin: @legend_size,
@@ -25,7 +25,7 @@ defmodule Matplotex.Element.RadLegend do
   @impl Element
   def assemble(legend) do
     """
-    #{Rect.assemble(legend)}
+    #{handle(legend)}
     #{Element.assemble(legend.label)}
     """
   end
@@ -33,6 +33,10 @@ defmodule Matplotex.Element.RadLegend do
   @impl Element
   def flipy(%__MODULE__{y: y} = legend, height) do
     %__MODULE__{legend | y: height - y, label: Label.flipy(legend.label, height)}
+  end
+
+  defp handle(%__MODULE__{handle: %handle_element{} = handle}) do
+    handle_element.assemble(handle)
   end
 
   def with_label(
@@ -43,13 +47,14 @@ defmodule Matplotex.Element.RadLegend do
           width: width,
           height: height
         } = legend,
-        legend_font
+        legend_font,
+        padding
       ) do
     %{
       legend
       | label:
           %Label{
-            x: x + width,
+            x: x + width + padding,
             y: y + height / 2,
             text: text,
             type: @label_type

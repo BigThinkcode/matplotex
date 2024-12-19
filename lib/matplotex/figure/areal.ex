@@ -5,6 +5,7 @@ defmodule Matplotex.Figure.Areal do
   @callback create(struct(), any(), keyword()) :: struct()
   @callback materialize(struct()) :: struct()
   @callback plotify(number(), tuple(), number(), number(), list(), atom()) :: number()
+  @callback with_legend_handle(struct(), struct()) :: struct()
   defmacro __using__(_) do
     quote do
       @behaviour Matplotex.Figure.Areal
@@ -12,7 +13,6 @@ defmodule Matplotex.Figure.Areal do
       alias Matplotex.Figure.Dimension
       alias Matplotex.Figure.Coords
       alias Matplotex.Figure.Text
-      alias Matplotex.Figure.Legend
 
       import Matplotex.Figure.Areal, only: [transformation: 7, do_transform: 6]
       import Matplotex.Blueprint.Frame
@@ -154,6 +154,7 @@ defmodule Matplotex.Figure.Areal do
         |> Cast.cast_spines_by_region()
         |> Cast.cast_label_by_region()
         |> Cast.cast_title_by_region()
+        |> Cast.cast_legends()
       end
 
       defp update_tick(axes, tick) do
@@ -255,7 +256,6 @@ defmodule Matplotex.Figure.Areal do
 
       def set_region_title(figure), do: figure
 
-
       def set_region_legend(
             %Figure{
               axes:
@@ -274,7 +274,7 @@ defmodule Matplotex.Figure.Areal do
         region_x_width_after_legend = region_x_width - region_legend_width
 
         {x_region_legend, y_region_legend} =
-          Algebra.transform_given_point(-region_legend_width, -region_title_height, rx, ty, 0)
+          Algebra.transform_given_point(-region_legend_width, -region_title_height, rx, ty)
 
         %Figure{
           figure
@@ -294,17 +294,19 @@ defmodule Matplotex.Figure.Areal do
             }
         }
       end
+
       def set_region_legend(figure), do: figure
+
       def set_region_content(
-             %Figure{
-               axes:
-                 %{
-                   region_x: %Region{x: x_region_x, width: region_x_width},
-                   region_y: %Region{y: y_region_y, height: region_y_height},
-                   region_content: region_content
-                 } = axes
-             } = figure
-           ) do
+            %Figure{
+              axes:
+                %{
+                  region_x: %Region{x: x_region_x, width: region_x_width},
+                  region_y: %Region{y: y_region_y, height: region_y_height},
+                  region_content: region_content
+                } = axes
+            } = figure
+          ) do
         %Figure{
           figure
           | axes: %{
@@ -319,6 +321,7 @@ defmodule Matplotex.Figure.Areal do
             }
         }
       end
+
       def set_region_content(figure), do: figure
     end
   end
