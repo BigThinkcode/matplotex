@@ -3,6 +3,8 @@ defmodule Matplotex.Figure do
   @row_column_default 1
   @margin_default 0.05
   @figsize {10, 6}
+
+  @restricted_keys [:axes, :element, :valid?, :rc_params, :errors]
   defstruct [
     :id,
     :axes,
@@ -31,6 +33,8 @@ defmodule Matplotex.Figure do
   def new(opts) do
     struct(__MODULE__, opts)
   end
+
+  def restricted_keys(), do: @restricted_keys
 
   # TODO: put error message in error
   # def put_error(figure, opts) do
