@@ -3,6 +3,7 @@ defmodule Matplotex.Figure.Sketch do
   @dpi 96
 
   def call({stream, %Figure{figsize: {width, height}}}) do
+
     stream
     |> Stream.map(fn %module{} = elem ->
       elem = module.flipy(elem, height)

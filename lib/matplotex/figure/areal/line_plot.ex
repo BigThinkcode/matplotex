@@ -32,7 +32,7 @@ defmodule Matplotex.Figure.Areal.LinePlot do
   def create(
         %Figure{axes: %__MODULE__{dataset: data} = axes} = figure,
         {x, y},
-        opts \\ []
+        opts
       ) do
     x = determine_numeric_value(x)
     y = determine_numeric_value(y)

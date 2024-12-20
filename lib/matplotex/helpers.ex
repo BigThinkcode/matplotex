@@ -18,44 +18,6 @@ defmodule Matplotex.Helpers do
     :ok
   end
 
-  def pie_chart_params() do
-    %{
-      "id" => "chart-container",
-      "dataset" => [280, 45, 133, 152, 278, 221, 56],
-      "labels" => ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-      "color_palette" => ["#f66", "pink", "orange", "gray", "#fcc", "green", "#0f0"],
-      "width" => 700,
-      "height" => 400,
-      "margin" => 15,
-      "legends" => true
-    }
-  end
-
-  def lineplot_params() do
-    %{
-      "id" => "line-plot",
-      "dataset" => [
-        [1, 9, 8, 4, 6, 5, 3],
-        [1, 6, 5, 3, 3, 8, 6]
-      ],
-      "x_labels" => ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-      "y_labels" => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-      "width" => 700,
-      "height" => 400,
-      "x_margin" => 20,
-      "y_margin" => 10,
-      "x_label_offset" => 40,
-      "y_label_offset" => 40,
-      "y_scale" => 1,
-      "x_scale" => 1,
-      "color_palette" => ["red", "green"],
-      "type" => "line_chart",
-      "x_label" => "Days",
-      "y_label" => "Count",
-      "line_width" => 3
-    }
-  end
-
   def line_plot() do
     x = [1, 2, 3, 4, 6, 6, 7]
     y = [1, 3, 4, 4, 5, 6, 7]
@@ -86,6 +48,40 @@ defmodule Matplotex.Helpers do
       x_label_font_size: font_size,
       y_label_font_size: font_size,
       title_font_size: title_font_size
+    )
+    |> Matplotex.show()
+    |> copy()
+  end
+
+  def line_plot_by_options() do
+    x = [1, 2, 3, 4, 6, 6, 7]
+    y = [1, 3, 4, 4, 5, 6, 7]
+
+    frame_width = 6
+    frame_height = 6
+    size = {frame_width, frame_height}
+    margin = 0.05
+    font_size = "16pt"
+    title_font_size = "18pt"
+    ticks = [0, 1, 2, 3, 4, 5, 6, 7]
+
+    x
+    |> Matplotex.plot(y,
+      figsize: size,
+      margin: margin,
+      title: "The plot title",
+      x_label: "X Axis",
+      y_label: "Y Axis",
+      x_tick: ticks,
+      y_tick: ticks,
+      x_limit: {0, 7},
+      y_limit: {0, 7},
+      x_tick_font_size: font_size,
+      y_tick_font_size: font_size,
+      title_font_size: title_font_size,
+      x_label_font_size: font_size,
+      y_label_font_size: font_size,
+      y_tick_font_text_anchor: "start"
     )
     |> Matplotex.show()
     |> copy()

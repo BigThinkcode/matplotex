@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Areal.Scatter do
+  alias Matplotex.Figure.Areal.PlotOptions
   alias Matplotex.Figure.Areal.Region
   alias Matplotex.Figure.Areal.Ticker
   alias Matplotex.Figure.Marker
@@ -32,7 +33,9 @@ defmodule Matplotex.Figure.Areal.Scatter do
     dataset = Dataset.cast(%Dataset{x: x, y: y}, opts)
     datasets = data ++ [dataset]
     xydata = flatten_for_data(datasets)
+
     %Figure{figure | axes: %{axes | data: xydata, dataset: datasets}}
+    |> PlotOptions.set_options_in_figure(opts)
   end
 
   @impl Areal

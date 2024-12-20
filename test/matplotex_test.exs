@@ -189,4 +189,87 @@ defmodule MatplotexTest do
       assert figure.rc_params.y_label_font.font_size == 10
     end
   end
+
+  test "updates the values according to the plot options in bar_chart" do
+    values = [1, 3, 7, 4, 2, 5, 6]
+    width = 0.22
+
+    options = [
+      x_label: "X Axis",
+      y_label: "Y Axis",
+      title: "The Plot Title",
+      x_ticks: [1, 2, 3, 4, 5, 6, 7],
+      y_ticks: [1, 2, 3, 4, 5, 6, 7],
+      x_tick_font_size: 12,
+      y_tick_font_size: 16,
+      title_font_size: 14,
+      x_label_font_size: 10,
+      y_label_font_size: 10,
+      title_font_size: 14,
+      line_width: 2,
+      figsize: {10, 10},
+      x_limit: [1, 7],
+      y_limit: [1, 7],
+      line_style: "_"
+    ]
+
+    figure = Matplotex.bar(values, width, options)
+
+    assert figure.axes.label.x == "X Axis"
+    assert figure.axes.label.y == "Y Axis"
+    assert figure.axes.title == "The Plot Title"
+    assert figure.axes.dataset |> List.first() |> Map.get(:y) == values
+    assert figure.axes.limit.x == [1, 7]
+    assert figure.axes.limit.y == [1, 7]
+    assert figure.rc_params.line_width == 2
+    assert figure.figsize == {10, 10}
+    assert figure.rc_params.line_style == "_"
+    assert figure.rc_params.x_tick_font.font_size == 12
+    assert figure.rc_params.y_tick_font.font_size == 16
+    assert figure.rc_params.title_font.font_size == 14
+    assert figure.rc_params.x_label_font.font_size == 10
+    assert figure.rc_params.y_label_font.font_size == 10
+  end
+
+  test "updates the values according to the plot options in scatter plot" do
+    x = [1, 3, 7, 4, 2, 5, 6]
+    y = [1, 3, 7, 4, 2, 5, 6]
+
+    options = [
+      x_label: "X Axis",
+      y_label: "Y Axis",
+      title: "The Plot Title",
+      x_ticks: [1, 2, 3, 4, 5, 6, 7],
+      y_ticks: [1, 2, 3, 4, 5, 6, 7],
+      x_tick_font_size: 12,
+      y_tick_font_size: 16,
+      title_font_size: 14,
+      x_label_font_size: 10,
+      y_label_font_size: 10,
+      title_font_size: 14,
+      line_width: 2,
+      figsize: {10, 10},
+      x_limit: [1, 7],
+      y_limit: [1, 7],
+      line_style: "_"
+    ]
+
+    figure = Matplotex.scatter(x, y, options)
+
+    assert figure.axes.label.x == "X Axis"
+    assert figure.axes.label.y == "Y Axis"
+    assert figure.axes.title == "The Plot Title"
+    assert figure.axes.dataset |> List.first() |> Map.get(:x) == x
+    assert figure.axes.dataset |> List.first() |> Map.get(:y) == y
+    assert figure.axes.limit.x == [1, 7]
+    assert figure.axes.limit.y == [1, 7]
+    assert figure.rc_params.line_width == 2
+    assert figure.figsize == {10, 10}
+    assert figure.rc_params.line_style == "_"
+    assert figure.rc_params.x_tick_font.font_size == 12
+    assert figure.rc_params.y_tick_font.font_size == 16
+    assert figure.rc_params.title_font.font_size == 14
+    assert figure.rc_params.x_label_font.font_size == 10
+    assert figure.rc_params.y_label_font.font_size == 10
+  end
 end

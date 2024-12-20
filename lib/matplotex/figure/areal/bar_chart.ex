@@ -1,5 +1,6 @@
 defmodule Matplotex.Figure.Areal.BarChart do
   import Matplotex.Figure.Numer
+  alias Matplotex.Figure.Areal.PlotOptions
   alias Matplotex.Figure.Areal.Region
   alias Matplotex.Element.Legend
   alias Matplotex.Figure.Dataset
@@ -41,6 +42,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
       | rc_params: %RcParams{white_space: width, y_padding: 0},
         axes: %{axes | data: xydata, dataset: datasets}
     }
+    |> PlotOptions.set_options_in_figure(opts)
   end
 
   @impl Areal
