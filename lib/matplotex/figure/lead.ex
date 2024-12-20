@@ -64,10 +64,9 @@ defmodule Matplotex.Figure.Lead do
              } = axes
          } = figure
        ) do
-
-
     {x_ticks, x_lim} = maybe_generate_ticks(x_ticks, x_lim, x_data, width)
     {y_ticks, y_lim} = maybe_generate_ticks(y_ticks, y_lim, y_data, height)
+
     %Figure{
       figure
       | axes: %{
@@ -79,24 +78,23 @@ defmodule Matplotex.Figure.Lead do
   end
 
   defp maybe_generate_ticks(ticks, limit, data, number_of_ticks) do
-
     cond do
       is_nil(ticks) || length(ticks) < 3 ->
         generate_ticks(limit, data, ceil(number_of_ticks))
+
       is_nil(limit) ->
         {ticks, generate_limit(data)}
+
       true ->
         {ticks, limit}
-
     end
   end
 
   defp generate_ticks(nil, data, number_of_ticks) do
     data
-    |>generate_limit()
-    |>generate_ticks(data, number_of_ticks)
+    |> generate_limit()
+    |> generate_ticks(data, number_of_ticks)
   end
-
 
   defp generate_ticks({lower_limit, upper_limit} = lim, _data, number_of_ticks) do
     {lower_limit |> Nx.linspace(upper_limit, n: number_of_ticks) |> Nx.to_list(), lim}
@@ -104,12 +102,14 @@ defmodule Matplotex.Figure.Lead do
 
   defp generate_limit(data) do
     {min, upper_limit} = Enum.min_max(data)
+
     lower_limit =
       if min < 0 do
         min
       else
         0
       end
+
     {lower_limit, upper_limit}
   end
 
@@ -364,12 +364,11 @@ defmodule Matplotex.Figure.Lead do
           rotation: 0
         },
         text
-      )
-      do
-        text_size = tick_length(text) * to_number(font_size) * (pt_to_inch_ratio / 2)
-        offset_for_text_length = ((1/tick_length(text)) * (pt_to_inch_ratio/2) * to_number(font_size))
-        text_size + offset_for_text_length + flate
-      end
+      ) do
+    text_size = tick_length(text) * to_number(font_size) * (pt_to_inch_ratio / 2)
+    offset_for_text_length = 1 / tick_length(text) * (pt_to_inch_ratio / 2) * to_number(font_size)
+    text_size + offset_for_text_length + flate
+  end
 
   def length_required_for_text(
         %Font{

@@ -101,7 +101,6 @@ defmodule Matplotex.Figure.Areal.PlotOptions do
 
   @spec set_options_in_figure(Figure.t(), keyword()) :: Figure.t()
   def set_options_in_figure(%Figure{} = figure, opts) do
-
     figure
     |> cast_figure(opts)
     |> cast_axes(opts)
@@ -114,9 +113,12 @@ defmodule Matplotex.Figure.Areal.PlotOptions do
 
   defp cast_axes(%Figure{axes: axes} = figure, opts) do
     opts = Keyword.delete(opts, :label)
-    %Figure{figure | axes: axes |> struct(opts) |> cast_two_d_structs(opts)
-    # |>fulfill_tick_and_lim()
-  }
+
+    %Figure{
+      figure
+      | axes: axes |> struct(opts) |> cast_two_d_structs(opts)
+        # |>fulfill_tick_and_lim()
+    }
   end
 
   # defp fulfill_tick_and_lim(%{tick: nil, limit: nil} = axes) do
@@ -125,7 +127,6 @@ defmodule Matplotex.Figure.Areal.PlotOptions do
 
   defp cast_two_d_structs(%{label: label, tick: tick, limit: limit} = axes, opts)
        when is_map(opts) do
-
     %{
       axes
       | label: TwoD.update(label, opts, :label),
