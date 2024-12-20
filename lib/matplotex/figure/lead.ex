@@ -78,14 +78,29 @@ defmodule Matplotex.Figure.Lead do
   end
 
   defp maybe_generate_ticks(ticks, limit, data, number_of_ticks) do
-    if is_nil(ticks) || length(ticks) < 3 do
-      generate_ticks(limit, data, ceil(number_of_ticks))
-    else
-      {ticks, limit}
+    cond do
+      is_nil(ticks) || length(ticks) < 3 ->
+        generate_ticks(limit, data, ceil(number_of_ticks))
+
+      is_nil(limit) ->
+        {ticks, generate_limit(data)}
+
+      true ->
+        {ticks, limit}
     end
   end
 
   defp generate_ticks(nil, data, number_of_ticks) do
+    data
+    |> generate_limit()
+    |> generate_ticks(data, number_of_ticks)
+  end
+
+  defp generate_ticks({lower_limit, upper_limit} = lim, _data, number_of_ticks) do
+    {lower_limit |> Nx.linspace(upper_limit, n: number_of_ticks) |> Nx.to_list(), lim}
+  end
+
+  defp generate_limit(data) do
     {min, upper_limit} = Enum.min_max(data)
 
     lower_limit =
@@ -95,11 +110,7 @@ defmodule Matplotex.Figure.Lead do
         0
       end
 
-    generate_ticks({lower_limit, upper_limit}, data, number_of_ticks)
-  end
-
-  defp generate_ticks({lower_limit, upper_limit} = lim, _data, number_of_ticks) do
-    {lower_limit |> Nx.linspace(upper_limit, n: number_of_ticks) |> Nx.to_list(), lim}
+    {lower_limit, upper_limit}
   end
 
   defp set_region_xy(
@@ -124,6 +135,7 @@ defmodule Matplotex.Figure.Lead do
        ) do
     space_for_ylabel = height_required_for_text(y_label_font, y_label)
     y_tick = Enum.max_by(y_ticks, &tick_length(&1))
+
     space_for_yticks = length_required_for_text(y_tick_font, y_tick)
 
     space_required_for_region_y =
@@ -352,8 +364,11 @@ defmodule Matplotex.Figure.Lead do
           rotation: 0
         },
         text
-      ),
-      do: tick_length(text) * to_number(font_size) * (pt_to_inch_ratio / 2) + flate
+      ) do
+    text_size = tick_length(text) * to_number(font_size) * (pt_to_inch_ratio / 2)
+    offset_for_text_length = 1 / tick_length(text) * (pt_to_inch_ratio / 2) * to_number(font_size)
+    text_size + offset_for_text_length + flate
+  end
 
   def length_required_for_text(
         %Font{

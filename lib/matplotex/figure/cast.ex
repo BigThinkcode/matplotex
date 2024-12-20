@@ -89,7 +89,6 @@ defmodule Matplotex.Figure.Cast do
         } = figure
       ) do
     #  Convert to the svg plane
-
     {left_x, bottom_y} = Algebra.flip_y_coordinate({content_x, content_y})
 
     {right_x, top_y} =

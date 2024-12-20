@@ -128,13 +128,18 @@ defmodule Matplotex.Figure.RcParams do
     y_label_font
   end
 
-  def update_with_font(rc_params, params) do
+  def update_with_font(rc_params, params) when is_map(params) do
     rc_params
     |> update_font(params, :x_label)
     |> update_font(params, :y_label)
     |> update_font(params, :x_tick)
     |> update_font(params, :y_tick)
     |> update_font(params, :title)
+  end
+
+  def update_with_font(rc_params, params) do
+    params = Enum.into(params, %{})
+    update_with_font(rc_params, params)
   end
 
   defp update_font(
