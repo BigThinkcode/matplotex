@@ -10,6 +10,14 @@ defmodule Matplotex do
   alias Matplotex.Figure
   alias Matplotex.Figure.Areal.BarChart
 
+  def bar(values, width) do
+    bar(width, values, width, [])
+  end
+
+  def bar(values, width, opts) when is_list(opts) do
+    bar(width, values, width, opts)
+  end
+
   def bar(pos, values, width) do
     bar(pos, values, width, [])
   end

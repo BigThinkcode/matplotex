@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Areal.LinePlot do
+  alias Matplotex.Figure.Areal.PlotOptions
   alias Matplotex.Utils.Algebra
   alias Matplotex.Figure.Areal.Region
   alias Matplotex.Figure.Areal.Ticker
@@ -31,14 +32,16 @@ defmodule Matplotex.Figure.Areal.LinePlot do
   def create(
         %Figure{axes: %__MODULE__{dataset: data} = axes} = figure,
         {x, y},
-        opts \\ []
+        opts
       ) do
     x = determine_numeric_value(x)
     y = determine_numeric_value(y)
     dataset = Dataset.cast(%Dataset{x: x, y: y}, opts)
     datasets = data ++ [dataset]
     xydata = flatten_for_data(datasets)
+
     %Figure{figure | axes: %{axes | data: xydata, dataset: datasets}}
+    |> PlotOptions.set_options_in_figure(opts)
   end
 
   @impl Areal
