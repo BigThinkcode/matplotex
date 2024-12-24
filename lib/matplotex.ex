@@ -2,6 +2,7 @@ defmodule Matplotex do
   @moduledoc """
   Module to generate a graph.
   """
+  alias Matplotex.Figure.Areal.Histogram
   alias Matplotex.InputError
   alias Matplotex.Figure.Radial.Pie
   alias Matplotex.Figure.Areal.Scatter
@@ -81,6 +82,10 @@ defmodule Matplotex do
     figure
     |> show_legend()
     |> LinePlot.create({x, y}, opts)
+  end
+
+  def hist(data, bins, opts) do
+    Histogram.create(%Figure{axes: %Histogram{}}, {data, bins}, opts)
   end
 
   @doc """

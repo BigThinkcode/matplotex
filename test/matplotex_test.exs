@@ -1,4 +1,5 @@
 defmodule MatplotexTest do
+  alias Matplotex.Figure.Dataset
   alias Matplotex.InputError
   use Matplotex.PlotCase
   alias Matplotex.Figure
@@ -271,5 +272,20 @@ defmodule MatplotexTest do
     assert figure.rc_params.title_font.font_size == 14
     assert figure.rc_params.x_label_font.font_size == 10
     assert figure.rc_params.y_label_font.font_size == 10
+  end
+
+  describe "hist" do
+    test "creates a figure for histogram" do
+      values =
+        Nx.Random.key(12) |> Nx.Random.normal(0, 1, shape: {1000}) |> elem(0) |> Nx.to_list()
+
+      bins = 30
+      figure = Matplotex.hist(values, bins, x_label: "Value", y_label: "Frequency")
+      assert %Dataset{x: x, y: y} = hd(figure.axes.dataset)
+      assert length(x) == bins
+      assert length(y) == bins
+      assert figure.axes.label.x == "Value"
+      assert figure.axes.label.y == "Frequency"
+    end
   end
 end

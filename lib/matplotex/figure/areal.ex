@@ -4,8 +4,8 @@ defmodule Matplotex.Figure.Areal do
   alias Matplotex.Figure.TwoD
   @callback create(struct(), any(), keyword()) :: struct()
   @callback materialize(struct()) :: struct()
-  @callback plotify(number(), tuple(), number(), number(), list(), atom()) :: number()
   @callback with_legend_handle(struct(), struct()) :: struct()
+  @optional_callbacks with_legend_handle: 2
   defmacro __using__(_) do
     quote do
       @behaviour Matplotex.Figure.Areal

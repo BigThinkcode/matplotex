@@ -91,7 +91,6 @@ defmodule Matplotex.Figure.Areal.BarChart do
     %Figure{figure | axes: %{axes | element: elements_with_bar}}
   end
 
-  @impl Areal
   def plotify(value, {minl, maxl}, axis_size, transition, _data, :x) do
     s = axis_size / (maxl - minl)
     value * s + transition - minl * s
