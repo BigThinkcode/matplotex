@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Areal do
+  alias Matplotex.Figure.Areal.Ticker
   alias Matplotex.Utils.Algebra
   alias Matplotex.Figure.Dataset
   alias Matplotex.Figure.TwoD
@@ -79,8 +80,13 @@ defmodule Matplotex.Figure.Areal do
         |> update_tick(tick)
       end
 
-      def add_ticks(%__MODULE__{tick: tick, size: size} = axes, {key, {_min, _max} = lim}) do
-        {ticks, lim} = __MODULE__.generate_ticks(lim)
+      def add_ticks(%__MODULE__{tick: tick, size: {width, height}= size} = axes, {key, {_min, _max} = lim}) do
+        number_of_ticks = if key == :x do
+          ceil(width)
+        else
+          ceil(height)
+        end
+        {ticks, lim} = Ticker.generate_ticks(lim, number_of_ticks )
 
         tick = Map.put(tick, key, ticks)
 
@@ -116,23 +122,6 @@ defmodule Matplotex.Figure.Areal do
         %{axes | legend: legend}
       end
 
-      def generate_xticks(%module{data: {x, _y}, tick: tick, limit: limit} = axes) do
-        {xticks, xlim} =
-          module.generate_ticks(x)
-
-        tick = Map.put(tick, :x, xticks)
-        limit = update_limit(limit, :x, xlim)
-        %__MODULE__{axes | tick: tick, limit: limit}
-      end
-
-      def generate_yticks(%module{data: {_x, y}, tick: tick, limit: limit} = axes) do
-        {yticks, ylim} =
-          module.generate_ticks(y)
-
-        tick = Map.put(tick, :y, yticks)
-        limit = update_limit(limit, :y, ylim)
-        %__MODULE__{axes | tick: tick, limit: limit}
-      end
 
       defp update_limit(%TwoD{x: nil} = limit, :x, xlim) do
         %TwoD{limit | x: xlim}

@@ -48,7 +48,9 @@ defmodule Matplotex.Figure.RcParams do
             white_space: 0,
             label_padding: @label_padding,
             legend_width: @default_legend_width_percentage,
-            legend_items_orientation: @default_legend_items_orientation
+            legend_items_orientation: @default_legend_items_orientation,
+            x_ticks_count: nil,
+            y_ticks_count: nil
 
   def get_rc(%__MODULE__{} = rc_param, get_func) do
     apply(__MODULE__, get_func, [rc_param])

@@ -4,6 +4,9 @@ defmodule Matplotex.Figure.Areal.Ticker do
     step = (max - min) / @tick_in_plot
     produce_ticks(min, max, step, [format_number(min)])
   end
+  def generate_ticks({lower_limit, upper_limit} = lim, number_of_ticks) do
+    {lower_limit |> Nx.linspace(upper_limit, n: number_of_ticks) |> Nx.to_list(), lim}
+  end
 
   defp produce_ticks(value, max, _step, ticks) when value >= max do
     Enum.reverse(ticks)

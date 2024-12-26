@@ -8,10 +8,13 @@ defmodule Matplotex.Figure.Areal.Histogram do
   alias Matplotex.Figure.Areal
   use Areal
 
+  @make_it_zero 0
+
   frame(
     tick: %TwoD{},
     limit: %TwoD{},
     label: %TwoD{},
+    scale: %TwoD{},
     region_x: %Region{},
     region_y: %Region{},
     region_title: %Region{},
@@ -20,12 +23,11 @@ defmodule Matplotex.Figure.Areal.Histogram do
   )
 
   @impl Areal
-  def create(%Figure{axes: %__MODULE__{} = axes} = figure, {data, bins}, opts) do
+  def create(%Figure{axes: %__MODULE__{} = axes, rc_params: rc_params} = figure, {data, bins}, opts) do
     {x, y} = bins_and_hists(data, bins)
 
     dataset = Dataset.cast(%Dataset{x: x, y: y}, opts)
-
-    %Figure{figure | axes: %__MODULE__{axes | data: {x, y}, dataset: [dataset]}}
+    %Figure{figure | axes: %__MODULE__{axes | data: {x, y}, dataset: [dataset]}, rc_params: %RcParams{rc_params | y_padding: @make_it_zero}}
     |> PlotOptions.set_options_in_figure(opts)
   end
 
@@ -119,8 +121,7 @@ defmodule Matplotex.Figure.Areal.Histogram do
   defp sanitize(%Figure{axes: %__MODULE__{data: {x, y}}= axes} = figure) do
     {ymin, ymax} = Enum.min_max(y)
     {xmin, xmax} = Enum.min_max(x)
-    {xmin, xmax} = {floor(xmin), ceil(xmax)}
 
-    %Figure{figure | axes: %__MODULE__{axes | limit: %TwoD{y: {floor(ymin), ceil(ymax)}, x: xlim }}}
+    %Figure{figure | axes: %__MODULE__{axes | limit: %TwoD{x: {floor(xmin), ceil(xmax)},y: {floor(ymin), ceil(ymax)}}}}
    end
 end

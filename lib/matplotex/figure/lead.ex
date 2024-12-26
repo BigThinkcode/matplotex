@@ -56,6 +56,7 @@ defmodule Matplotex.Figure.Lead do
   defp ensure_ticks_are_valid(
          %Figure{
            figsize: {width, height},
+           rc_params: %RcParams{x_ticks_count: x_ticks_count, y_ticks_count: y_ticks_count},
            axes:
              %{
                data: {x_data, y_data},
@@ -64,8 +65,8 @@ defmodule Matplotex.Figure.Lead do
              } = axes
          } = figure
        ) do
-    {x_ticks, x_lim} = maybe_generate_ticks(x_ticks, x_lim, x_data, width)
-    {y_ticks, y_lim} = maybe_generate_ticks(y_ticks, y_lim, y_data, height)
+    {x_ticks, x_lim} = maybe_generate_ticks(x_ticks, x_lim, x_data, x_ticks_count || width)
+    {y_ticks, y_lim} = maybe_generate_ticks(y_ticks, y_lim, y_data, y_ticks_count || height)
 
     %Figure{
       figure

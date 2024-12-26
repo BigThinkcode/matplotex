@@ -312,7 +312,7 @@ defmodule Matplotex.Helpers do
     values = Nx.Random.key(12) |> Nx.Random.normal(0, 1, shape: {1000}) |> elem(0) |> Nx.to_list()
     bins = 30
 
-    Matplotex.hist(values, bins, x_label: "Value", y_label: "Frequency", title: "Histogram", color: "blue", edge_color: "black", alpha: 0.7)
+    Matplotex.hist(values, bins, x_label: "Value", y_label: "Frequency", title: "Histogram", color: "blue", edge_color: "black", alpha: 0.7, x_ticks_count: 9)
     |> Matplotex.show()
     |> copy()
   end
