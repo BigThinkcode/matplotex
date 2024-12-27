@@ -117,13 +117,8 @@ defmodule Matplotex.Figure.Areal.PlotOptions do
     %Figure{
       figure
       | axes: axes |> struct(opts) |> cast_two_d_structs(opts)
-        # |>fulfill_tick_and_lim()
     }
   end
-
-  # defp fulfill_tick_and_lim(%{tick: nil, limit: nil} = axes) do
-
-  # end
 
   defp cast_two_d_structs(%{label: label, tick: tick, limit: limit} = axes, opts)
        when is_map(opts) do

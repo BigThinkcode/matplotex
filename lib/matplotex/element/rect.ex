@@ -1,8 +1,9 @@
 defmodule Matplotex.Element.Rect do
   alias Matplotex.Element
 
-  @default_stroke_width 1
-  @default_stroke "rgba(0,0,0,0)"
+  @default_stroke_width 2
+  @default_stroke "black"
+  @default_opacity 1.0
   use Element
 
   @type t :: %__MODULE__{
@@ -22,6 +23,8 @@ defmodule Matplotex.Element.Rect do
     :color,
     :type,
     stroke: @default_stroke,
+    fill_opacity: @default_opacity,
+    stroke_opacity: @default_opacity,
     stroke_width: @default_stroke_width
   ]
 
@@ -37,6 +40,8 @@ defmodule Matplotex.Element.Rect do
       width="#{get_width(rect)}"
       height="#{get_height(rect)}"
       stroke-width="#{rect.stroke_width}"
+      stroke-opacity="#{rect.stroke_opacity}"
+      fill-opacity="#{rect.fill_opacity}"
       filter="">
       </rect>)
   end

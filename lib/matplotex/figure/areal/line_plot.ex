@@ -94,12 +94,6 @@ defmodule Matplotex.Figure.Areal.LinePlot do
   end
 
   @impl Areal
-  def plotify(value, {minl, maxl}, axis_size, transition, _, _) do
-    s = axis_size / (maxl - minl)
-    value * s + transition - minl * s
-  end
-
-  @impl Areal
   def with_legend_handle(
         %Legend{x: x, y: y, color: color, width: marker_size} = legend,
         %Dataset{linestyle: linestyle}

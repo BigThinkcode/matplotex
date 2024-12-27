@@ -132,11 +132,6 @@ defmodule Matplotex.Figure.Areal.Scatter do
   end
 
   defp capture(_, captured, _), do: captured
-  @impl Areal
-  def plotify(value, {minl, maxl}, axis_size, transition, _, _) do
-    s = axis_size / (maxl - minl)
-    value * s + transition - minl * s
-  end
 
   @impl Areal
   def with_legend_handle(
