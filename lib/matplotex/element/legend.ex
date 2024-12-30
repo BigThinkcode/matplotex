@@ -30,11 +30,6 @@ defmodule Matplotex.Element.Legend do
     """
   end
 
-  @impl Element
-  def flipy(%__MODULE__{y: y} = legend, height) do
-    %__MODULE__{legend | y: height - y, label: Label.flipy(legend.label, height)}
-  end
-
   defp handle(%__MODULE__{handle: %handle_element{} = handle}) do
     handle_element.assemble(handle)
   end

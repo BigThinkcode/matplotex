@@ -1,7 +1,10 @@
 defmodule Matplotex.Element do
   @callback assemble(element :: struct()) :: String.t()
-  @callback flipy(element :: struct(), height :: number()) :: struct()
   def assemble(%module{} = element), do: module.assemble(element)
+
+  def to_pixel({x, y}) do
+    "#{to_pixel(x)},#{to_pixel(y)}"
+  end
 
   def to_pixel(inch) when is_number(inch), do: inch * 96
   def to_pixel(_), do: 0

@@ -30,11 +30,6 @@ defmodule Matplotex.Element.RadLegend do
     """
   end
 
-  @impl Element
-  def flipy(%__MODULE__{y: y} = legend, height) do
-    %__MODULE__{legend | y: height - y, label: Label.flipy(legend.label, height)}
-  end
-
   def with_label(
         %__MODULE__{
           label: text,

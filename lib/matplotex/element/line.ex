@@ -52,10 +52,6 @@ defmodule Matplotex.Element.Line do
   def get_x2(%{x2: x2}), do: to_pixel(x2)
   def get_y1(%{y1: y1}), do: to_pixel(y1)
   def get_y2(%{y2: y2}), do: to_pixel(y2)
-  @impl Element
-  def flipy(%__MODULE__{y1: y1, y2: y2} = line, height) do
-    %__MODULE__{line | y1: height - y1, y2: height - y2}
-  end
 
   defp stroke_dasharray(%{linestyle: "_"}), do: nil
 

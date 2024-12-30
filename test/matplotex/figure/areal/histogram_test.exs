@@ -24,7 +24,7 @@ defmodule Matplotex.Figure.Areal.HistogramTest do
       assert y_label.text == "Frequency"
       x_ticks = elements |> Enum.filter(fn elem -> elem.type == "figure.x_tick" end)
       y_ticks = elements |> Enum.filter(fn elem -> elem.type == "figure.y_tick" end)
-      histogram_elements = elements|>Enum.filter(fn elem -> elem.type == "figure.histogram" end)
+      histogram_elements = elements |> Enum.filter(fn elem -> elem.type == "figure.histogram" end)
       assert length(histogram_elements) == bins
       assert length(x_ticks) > 3
       assert length(y_ticks) > 3
