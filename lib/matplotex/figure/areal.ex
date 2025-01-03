@@ -80,13 +80,18 @@ defmodule Matplotex.Figure.Areal do
         |> update_tick(tick)
       end
 
-      def add_ticks(%__MODULE__{tick: tick, size: {width, height}= size} = axes, {key, {_min, _max} = lim}) do
-        number_of_ticks = if key == :x do
-          ceil(width)
-        else
-          ceil(height)
-        end
-        {ticks, lim} = Ticker.generate_ticks(lim, number_of_ticks )
+      def add_ticks(
+            %__MODULE__{tick: tick, size: {width, height} = size} = axes,
+            {key, {_min, _max} = lim}
+          ) do
+        number_of_ticks =
+          if key == :x do
+            ceil(width)
+          else
+            ceil(height)
+          end
+
+        {ticks, lim} = Ticker.generate_ticks(lim, number_of_ticks)
 
         tick = Map.put(tick, key, ticks)
 
@@ -121,7 +126,6 @@ defmodule Matplotex.Figure.Areal do
         legend = struct(legend, params)
         %{axes | legend: legend}
       end
-
 
       defp update_limit(%TwoD{x: nil} = limit, :x, xlim) do
         %TwoD{limit | x: xlim}

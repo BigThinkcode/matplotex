@@ -17,13 +17,4 @@ defmodule Matplotex.Element.Tick do
      #{Element.assemble(tick.label)}
     )
   end
-
-  @impl Element
-  def flipy(%__MODULE__{label: label, tick_line: tick_line} = tick, height) do
-    %__MODULE__{
-      tick
-      | label: Label.flipy(label, height),
-        tick_line: Line.flipy(tick_line, height)
-    }
-  end
 end

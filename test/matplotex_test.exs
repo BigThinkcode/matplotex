@@ -288,4 +288,20 @@ defmodule MatplotexTest do
       assert figure.axes.label.y == "Frequency"
     end
   end
+
+  describe "spline" do
+    test "creates a figure for spline" do
+      x_nx = Nx.linspace(0, 10, n: 100)
+      x = Nx.to_list(x_nx)
+      y = x_nx |> Nx.sin() |> Nx.to_list()
+
+      assert %Figure{axes: %{dataset: [data1], label: label}} =
+               Matplotex.spline(x, y, x_label: "X", y_label: "Y")
+
+      assert label.x == "X"
+      assert label.y == "Y"
+      assert data1.x == x
+      assert data1.y == y
+    end
+  end
 end

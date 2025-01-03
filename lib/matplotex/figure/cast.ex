@@ -325,7 +325,6 @@ defmodule Matplotex.Figure.Cast do
     %Figure{figure | axes: %{axes | element: element}}
   end
 
-
   def cast_xticks_by_region(
         %Figure{
           axes:
@@ -426,7 +425,6 @@ defmodule Matplotex.Figure.Cast do
   defp content_linespace(number_of_ticks_required, axis_size) do
     @lowest_tick |> Nx.linspace(axis_size, n: number_of_ticks_required) |> Nx.to_list()
   end
-
 
   def cast_yticks_by_region(
         %Figure{
@@ -693,7 +691,6 @@ defmodule Matplotex.Figure.Cast do
 
   def cast_legends(figure), do: figure
 
-
   defp calculate_center(%Coords{bottom_left: bottom_left, bottom_right: bottom_right}, {x, y}, :x) do
     {calculate_distance(bottom_left, bottom_right) / 2 + x, y}
   end
@@ -721,7 +718,6 @@ defmodule Matplotex.Figure.Cast do
   end
 
   defp rotate_label(:y), do: -90
-
 
   defp confine_ticks([{_l, _v} | _] = ticks, {min, max}) do
     ticks

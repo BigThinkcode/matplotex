@@ -37,8 +37,4 @@ defmodule Matplotex.Element.Slice do
   def get_cx(%{cx: cx}), do: to_pixel(cx)
   def get_cy(%{cy: cy}), do: to_pixel(cy)
   def get_radius(%{radius: radius}), do: to_pixel(radius)
-  @impl Element
-  def flipy(slice, _height) do
-    slice
-  end
 end

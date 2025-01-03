@@ -2,6 +2,7 @@ defmodule Matplotex do
   @moduledoc """
   Module to generate a graph.
   """
+  alias Matplotex.Figure.Areal.Spline
   alias Matplotex.Figure.Areal.Histogram
   alias Matplotex.InputError
   alias Matplotex.Figure.Radial.Pie
@@ -33,6 +34,9 @@ defmodule Matplotex do
     |> BarChart.create({pos, values, width}, opts)
   end
 
+  @doc """
+  Creates a scatter plot based on the given data
+  """
   def scatter(stream, opts) when is_struct(stream, Stream) do
     Scatter.create(stream, opts)
   end
@@ -51,6 +55,9 @@ defmodule Matplotex do
     |> Scatter.create({x, y}, opts)
   end
 
+  @doc """
+  Creates a piec charts based on the size and opts
+  """
   def pie(sizes, opts \\ []) do
     Pie.create(%Figure{axes: %Pie{}}, sizes, opts)
   end
@@ -84,8 +91,24 @@ defmodule Matplotex do
     |> LinePlot.create({x, y}, opts)
   end
 
+  @doc """
+   Creates a histogram with given data and bins.
+
+   ## Examples
+
+       iex> Matplotex.hist([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 5)
+  """
+  def hist(data, bins), do: hist(data, bins, [])
+
   def hist(data, bins, opts) do
     Histogram.create(%Figure{axes: %Histogram{}}, {data, bins}, opts)
+  end
+
+  def spline(x, y), do: spline(x, y, [])
+  def spline(x, y, opts), do: spline(%Figure{axes: %Spline{}}, x, y, opts)
+
+  def spline(%Figure{} = figure, x, y, opts) do
+    Spline.create(figure, {x, y}, opts)
   end
 
   @doc """

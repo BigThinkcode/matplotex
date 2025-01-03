@@ -312,8 +312,28 @@ defmodule Matplotex.Helpers do
     values = Nx.Random.key(12) |> Nx.Random.normal(0, 1, shape: {1000}) |> elem(0) |> Nx.to_list()
     bins = 30
 
-    Matplotex.hist(values, bins, x_label: "Value", y_label: "Frequency", title: "Histogram", color: "blue", edge_color: "black", alpha: 0.7, x_ticks_count: 9)
+    Matplotex.hist(values, bins,
+      x_label: "Value",
+      y_label: "Frequency",
+      title: "Histogram",
+      color: "blue",
+      edge_color: "black",
+      alpha: 0.7,
+      x_ticks_count: 9
+    )
     |> Matplotex.show()
     |> copy()
   end
+
+  def spline() do
+    x_nx = Nx.linspace(0, 10, n: 100)
+    x = Nx.to_list(x_nx)
+    y = x_nx |> Nx.sin() |> Nx.to_list()
+
+
+    Matplotex.spline(x, y, x_label: "X", y_label: "Y", edge_color: "green")
+    |> Matplotex.show()
+    |> copy()
+  end
+
 end

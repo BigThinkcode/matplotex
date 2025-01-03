@@ -23,11 +23,20 @@ defmodule Matplotex.Figure.Areal.Histogram do
   )
 
   @impl Areal
-  def create(%Figure{axes: %__MODULE__{} = axes, rc_params: rc_params} = figure, {data, bins}, opts) do
+  def create(
+        %Figure{axes: %__MODULE__{} = axes, rc_params: rc_params} = figure,
+        {data, bins},
+        opts
+      ) do
     {x, y} = bins_and_hists(data, bins)
 
     dataset = Dataset.cast(%Dataset{x: x, y: y}, opts)
-    %Figure{figure | axes: %__MODULE__{axes | data: {x, y}, dataset: [dataset]}, rc_params: %RcParams{rc_params | y_padding: @make_it_zero}}
+
+    %Figure{
+      figure
+      | axes: %__MODULE__{axes | data: {x, y}, dataset: [dataset]},
+        rc_params: %RcParams{rc_params | y_padding: @make_it_zero}
+    }
     |> PlotOptions.set_options_in_figure(opts)
   end
 
@@ -39,18 +48,38 @@ defmodule Matplotex.Figure.Areal.Histogram do
     |> materialize_hist()
   end
 
-  defp materialize_hist(%Figure{axes: %{dataset: data,limit: %TwoD{x: x_lim, y: y_lim}, region_content: %Region{x: x_region_content, y: y_region_content, width: width_region_content, height: height_region_content}, element: element}, rc_params: %RcParams{x_padding: x_padding, white_space: white_space}}) do
+  defp materialize_hist(%Figure{
+         axes: %{
+           dataset: data,
+           limit: %TwoD{x: x_lim, y: y_lim},
+           region_content: %Region{
+             x: x_region_content,
+             y: y_region_content,
+             width: width_region_content,
+             height: height_region_content
+           },
+           element: element
+         },
+         rc_params: %RcParams{x_padding: x_padding, white_space: white_space}
+       }) do
     x_padding_value = width_region_content * x_padding + white_space
     shrinked_width_region_content = width_region_content - x_padding_value * 2
 
     hist_elements =
-     data
-     |>Enum.map(fn dataset ->
-      dataset
-      |> do_transform(x_lim, y_lim, shrinked_width_region_content, height_region_content, {x_region_content + x_padding_value, y_region_content})
-      |> capture(abs(y_region_content), shrinked_width_region_content)
-     end)
-     |>List.flatten()
+      data
+      |> Enum.map(fn dataset ->
+        dataset
+        |> do_transform(
+          x_lim,
+          y_lim,
+          shrinked_width_region_content,
+          height_region_content,
+          {x_region_content + x_padding_value, y_region_content}
+        )
+        |> capture(abs(y_region_content), shrinked_width_region_content)
+      end)
+      |> List.flatten()
+
     %Figure{axes: %{element: element ++ hist_elements}}
   end
 
@@ -95,12 +124,12 @@ defmodule Matplotex.Figure.Areal.Histogram do
 
   defp capture([], captured, _dataset, _bly, _region_width), do: captured
 
-
   defp bin_position(x, pos_factor) when pos_factor < 0 do
     x + pos_factor
   end
 
   defp bin_position(x, _pos_factor), do: x
+
   defp bins_and_hists(data, bins) do
     {data_min, data_max} = Enum.min_max(data)
 
@@ -118,10 +147,16 @@ defmodule Matplotex.Figure.Areal.Histogram do
     {bins_dist, hists}
   end
 
-  defp sanitize(%Figure{axes: %__MODULE__{data: {x, y}}= axes} = figure) do
+  defp sanitize(%Figure{axes: %__MODULE__{data: {x, y}} = axes} = figure) do
     {ymin, ymax} = Enum.min_max(y)
     {xmin, xmax} = Enum.min_max(x)
 
-    %Figure{figure | axes: %__MODULE__{axes | limit: %TwoD{x: {floor(xmin), ceil(xmax)},y: {floor(ymin), ceil(ymax)}}}}
-   end
+    %Figure{
+      figure
+      | axes: %__MODULE__{
+          axes
+          | limit: %TwoD{x: {floor(xmin), ceil(xmax)}, y: {floor(ymin), ceil(ymax)}}
+        }
+    }
+  end
 end
