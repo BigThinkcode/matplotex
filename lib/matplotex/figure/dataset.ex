@@ -6,6 +6,7 @@ defmodule Matplotex.Figure.Dataset do
   @default_marker_size 3.5
   @default_stroke "black"
   @default_alpha 1.0
+  @line_width 2
 
   defstruct [
     :label,
@@ -19,7 +20,8 @@ defmodule Matplotex.Figure.Dataset do
     alpha: @default_alpha,
     marker: @default_marker,
     linestyle: @default_linestyle,
-    marker_size: @default_marker_size
+    marker_size: @default_marker_size,
+    line_width: @line_width
   ]
 
   def cast(dataset, values) do

@@ -1,4 +1,6 @@
 defmodule Matplotex.Figure.Areal.Spline do
+  alias Matplotex.Element.Spline
+  alias Matplotex.Figure.RcParams
   alias Matplotex.Figure.Areal
   alias Matplotex.Figure.Dataset
   alias Matplotex.Figure.Areal.PlotOptions
@@ -27,6 +29,7 @@ defmodule Matplotex.Figure.Areal.Spline do
       ) do
     x = determine_numeric_value(x)
     y = determine_numeric_value(y)
+    opts = Keyword.put_new(opts, :color, "none")
     dataset = Dataset.cast(%Dataset{x: x, y: y}, opts)
     datasets = data ++ [dataset]
     xydata = flatten_for_data(datasets)
@@ -54,12 +57,12 @@ defmodule Matplotex.Figure.Areal.Spline do
     },
     element: elements
   } = axes,
-   rc_params: %RcParams{x_padding: x_padding, y_padding: y_padding}}) do
+   rc_params: %RcParams{x_padding: x_padding, y_padding: y_padding}} = figure) do
     x_padding_value = width_region_content * x_padding
     y_padding_value = height_region_content * y_padding
     shrinked_width_region_content = width_region_content - x_padding_value * 2
     shrinked_height_region_content = height_region_content - y_padding_value * 2
-
+    transition = {x_region_content + x_padding_value, y_region_content + y_padding_value}
     line_elements =
       data
       |> Enum.map(fn dataset ->
@@ -69,9 +72,9 @@ defmodule Matplotex.Figure.Areal.Spline do
           ylim,
           shrinked_width_region_content,
           shrinked_height_region_content,
-          {x_region_content + x_padding_value, y_region_content + y_padding_value}
+          transition
         )
-        |> capture()
+        |> capture(transition)
       end)
       |> List.flatten()
 
@@ -81,50 +84,18 @@ defmodule Matplotex.Figure.Areal.Spline do
   end
 
 
-  defp capture(%Dataset{transformed: transformed} = dataset) do
-    capture(transformed, [], dataset)
+
+  defp capture(%Dataset{transformed: transformed, color: color,edge_color: edge_color, line_width: stroke_width}, move_to_def) do
+    {moveto, transformed} = List.pop_at(transformed, 0, move_to_def)
+    cubic = Enum.slice(transformed, 0..2)
+    smooths = blend(transformed, 3)
+    %Spline{type: "figure.spline", moveto: moveto, cubic: cubic, smooths: smooths, fill: color, stroke: edge_color, stroke_width: stroke_width}
   end
 
+  defp blend(smooths, start_from) do
+  smooths
+  |>Enum.slice(start_from..-1//1)
+  |>Enum.chunk_every(2)
 
-  defp capture(%Dataset{transformed: transformed} = dataset, bly, region_width) do
-    capture(transformed, [], dataset, bly, region_width)
   end
-
-  defp capture(
-         [{x, y} | to_capture],
-         captured,
-         %Dataset{
-           color: color,
-           x: bins,
-           pos: pos_factor,
-           edge_color: edge_color,
-           alpha: alpha
-         } = dataset,
-         bly,
-         region_width
-       ) do
-    capture(
-      to_capture,
-      captured ++
-        [
-          %Rect{
-            type: "figure.histogram",
-            x: bin_position(x, pos_factor),
-            y: y,
-            width: region_width / length(bins),
-            height: bly - y,
-            color: color,
-            stroke: edge_color,
-            fill_opacity: alpha,
-            stroke_opacity: alpha
-          }
-        ],
-      dataset,
-      bly,
-      region_width
-    )
-  end
-
-  defp capture([], captured, _dataset, _bly, _region_width), do: captured
-
 end

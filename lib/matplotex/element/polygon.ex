@@ -15,13 +15,6 @@ defmodule Matplotex.Element.Polygon do
     )
   end
 
-  defp flip_point(point, height) do
-    Enum.map(point, &flip_coord(&1, height))
-  end
-
-  defp flip_coord({x, y}, height) do
-    {x, height - y}
-  end
 
   defp assemble_point(%{points: point}) do
     for {x, y} <- point do

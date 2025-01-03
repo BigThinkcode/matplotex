@@ -330,8 +330,10 @@ defmodule Matplotex.Helpers do
     x = Nx.to_list(x_nx)
     y = x_nx |> Nx.sin() |> Nx.to_list()
 
-    Matplotex.spline(x, y, x_label: "X", y_label: "Y")
+
+    Matplotex.spline(x, y, x_label: "X", y_label: "Y", edge_color: "green")
     |> Matplotex.show()
     |> copy()
   end
+
 end
