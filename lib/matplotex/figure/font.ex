@@ -2,7 +2,7 @@ defmodule Matplotex.Figure.Font do
   @default_font_color "black"
   @default_font_family "Arial, Verdana, sans-serif"
   @default_font_style "normal"
-  @default_font_size 16
+  @default_font_size 12
   @default_font_weight "normal"
   @font_unit "pt"
   @pt_to_inch_ratio 1 / 72

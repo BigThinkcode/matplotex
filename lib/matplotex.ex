@@ -1,6 +1,116 @@
 defmodule Matplotex do
   @moduledoc """
-  Module to generate a graph.
+  # Matplotex
+
+  a lightweight and efficient library for Elixir projects that facilitates server-side
+  SVG generation for data visualization. Designed to integrate seamlessly with Phoenix LiveView,
+  it serves as a powerful tool for creating dynamic visualizations in web applications.
+
+  it supports the following graphs
+  - Line plots
+  - Bar charts
+  - Pie charts
+  - Spline graphs
+  - Histograms
+  - Scatter plots
+
+  The plotting of a graph comes with set of common parameters and set of plot specific parameters
+  all of them will share with the corresponding function documentation, this section covers one examaple
+  as a line plot.
+  There are two approach to generate plots
+  - by using specific function to set parameters
+  - by using parameters along with options
+
+  ```elixir
+  alias Matplotex as: M
+
+    x = [1, 2, 3, 4, 6, 6, 7]
+    y = [1, 3, 4, 4, 5, 6, 7]
+
+    frame_width = 6
+    frame_height = 6
+    size = {frame_width, frame_height}
+    margin = 0.05
+    font_size = "16pt"
+    title_font_size = "18pt"
+    ticks = [1, 2, 3, 4, 5, 6, 7]
+
+    x
+    |> M.plot(y)
+    |> M.figure(%{figsize: size, margin: margin})
+    |> M.set_title("The Plot Title")
+    |> M.set_xlabel("X Axis")
+    |> M.set_ylabel("Y Axis")
+    |> M.set_xticks(ticks)
+    |> M.set_yticks(ticks)
+    |> M.set_xlim({4, 7})
+    |> M.set_ylim({4, 7})
+    |> M.set_rc_params(
+      x_tick_font_size: font_size,
+      y_tick_font_size: font_size,
+      title_font_size: title_font_size,
+      x_label_font_size: font_size,
+      y_label_font_size: font_size,
+      title_font_size: title_font_size
+    )
+    |> M.show()
+  ```
+  This module exposes all of the functions for setters
+  and another approach is creating plots by using plot options the code is as follows
+  ```elixir
+  alis Matplotex as: M
+   x = [1, 2, 3, 4, 6, 6, 7]
+    y = [1, 3, 4, 4, 5, 6, 7]
+
+    frame_width = 6
+    frame_height = 6
+    size = {frame_width, frame_height}
+    margin = 0.05
+    font_size = "16pt"
+    title_font_size = "18pt"
+    ticks = [0, 1, 2, 3, 4, 5, 6, 7]
+
+    x
+    |> M.plot(y,
+      figsize: size,
+      margin: margin,
+      title: "The plot title",
+      x_label: "X Axis",
+      y_label: "Y Axis",
+      x_tick: ticks,
+      y_tick: ticks,
+      x_limit: {0, 7},
+      y_limit: {0, 7},
+      x_tick_font_size: font_size,
+      y_tick_font_size: font_size,
+      title_font_size: title_font_size,
+      x_label_font_size: font_size,
+      y_label_font_size: font_size,
+      y_tick_font_text_anchor: "start"
+    )
+    |> M.show()
+  ```
+  just for simplicity and convenience of the user it is keeping both patterns, no difference on using one on another
+
+  So the user has the control on the all parameters on the inner elements of the chart
+
+  ## Rc Params
+  In the first example along with the setter functions you might noticed M.set_rc_params/2
+  The role of this function is similar to other functions we are keeping some values with the plot data
+  and the acronym RC stands for Runtime configuration, the plot data holds the labels limits ticks, etc
+  The RC params are holding the font size, color, style etc, by defaul one chart object kickstart with some default values
+  just for the sake of it needed some values, by default all the fonts are Areal, Veradana, sans-serif  and using standard font size 12
+  if a user creates a plots with no inputs for any of these the plot will be choosing the default values
+  besides font configuration Rc params covers
+  `line_width, line_style, grid_color, grid_linestyle, grid_alpha, tick_line_length, x_padding, y_padding, legend_width`
+  There is two types of padding `x_padding, y_padding` and `padding` the perfect use of those can be found on upcoming plot specific documentations
+
+  ## Elements
+  The output format of the plot is SVG will support more formats in future, anyway the svg is a group of some elements put together, throught the execution
+  it is generating those elements through elixir data structure, all element data structure contains some svg equivalent data that converts the elements to
+  SVG string, the output SVG string can be used directly in the web application.
+
+
   """
   alias Matplotex.Figure.Areal.Spline
   alias Matplotex.Figure.Areal.Histogram
