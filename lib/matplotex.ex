@@ -110,6 +110,17 @@ defmodule Matplotex do
   it is generating those elements through elixir data structure, all element data structure contains some svg equivalent data that converts the elements to
   SVG string, the output SVG string can be used directly in the web application.
 
+  ## Figure
+  The execution a plot carriec out by a data structure named Matplotex.Figure it holds all the adequate information to generate a figure it containst the keys
+  `:figsize` - is a tuple carries width and height of the figure eg: {10,6}
+  `:axes` - is another object that will varie according to the plot
+  `:rc_params` - the runtime configurations
+  `:margin` - the margin of the figure
+
+  ## M.show/1
+  All examples above using this function `M.show/1` after a plot generation API call
+  The all APIs from this module is ment to return an svg equivalent Data Matplotex.Figure with distinct object associated with the `axes` key, so to convert that data to
+  an SVG chart  use  `M.show/1`
 
   """
   alias Matplotex.Figure.Areal.Spline
@@ -121,7 +132,36 @@ defmodule Matplotex do
   alias Matplotex.Figure.Sketch
   alias Matplotex.Figure
   alias Matplotex.Figure.Areal.BarChart
+  @doc """
+  Generates a bar chart using the provided values and bar widths.
 
+## Parameters
+
+  - `values` (list of numbers): A list of numerical values representing the heights of the bars in the chart.
+  - `width` (floatiung point number): The width of each bar in inches.
+  - `opts` (keyword list): It will support all opts mentioned above, some bar specific options are there those are
+      - `:label` (string): Label for specific dataset passed on first argument.
+      - `:color` (string): Color of the bar.
+      - `:edge_color` (string): Color of the edge of the bar.
+
+
+## Returns
+
+  - A figure with the axes of a bar chart
+```elixir
+
+    alias Matplotex as: M
+  categories = ["apple", "banana", "fig", "avocado"]
+    values1 = [22, 33, 28, 34]
+    iex> Matplotex.bar(width, values1, width, label: "Dataset1", color: "#255199")
+    %M.Figure{axes: %M.Figure.Areal.BarChart{...}, ...}
+  ```
+
+This function takes a list of numerical `values` and a single `width` value to create a bar chart where:
+  - The height of each bar corresponds to its respective value from the list.
+  - Each bar has the specified constant width.
+"""
+  @spec bar(list(), float()) :: Matplotex.Figure.t()
   def bar(values, width) do
     bar(width, values, width, [])
   end
@@ -137,7 +177,33 @@ defmodule Matplotex do
   def bar(pos, values, width, opts) do
     BarChart.create(%Figure{axes: %BarChart{}}, {pos, values, width}, opts)
   end
+  @doc """
+Adds an additional dataset to a bar plot in the given `%Figure{}`.
 
+This function allows you to append multiple datasets to a bar plot by providing new values and corresponding options. Each dataset can be customized with options such as color, label, and bar width.
+
+## Parameters
+
+  - `figure` (%Figure{}): The figure to which the new dataset will be added.
+  - `values` (list): A list of numerical values representing the heights of the bars in the new dataset.
+  - `width` (float): The width of the bars in the dataset.
+  - `opts` (keyword list, optional): A set of options for customizing the appearance of the new dataset, such as color and label.
+
+## Usage
+
+This function is used when generating multi-bar plots to represent data from multiple datasets. Here's an example demonstrating its usage:
+
+```elixir
+alias Matplotex, as: M
+
+categories = ["apple", "banana", "fig", "avocado"]
+values1 = [22, 33, 28, 34]
+values2 = [53, 63, 59, 60]
+width = 0.22
+
+Matplotex.bar(width, values1, width, label: "Dataset1", color: "#255199")
+|> M.bar(width, values2, width, label: "Dataset2", color: "#D3D3D3")
+"""
   def bar(%Figure{} = figure, pos, values, width, opts) do
     figure
     |> show_legend()
@@ -150,7 +216,26 @@ defmodule Matplotex do
   def scatter(stream, opts) when is_struct(stream, Stream) do
     Scatter.create(stream, opts)
   end
+  @doc """
+Creates a scatter plot based on the given `x` and `y` values, with optional customization provided via `opts`.
 
+## Parameters
+
+  - `x` (list): A list of numerical values representing the x-coordinates.
+  - `y` (list): A list of numerical values representing the y-coordinates.
+  - `opts` (keyword list, optional): A set of options for customizing the scatter plot, such as color, marker size, and labels.
+
+## Examples
+
+```elixir
+# Basic usage:
+x = [1, 2, 3, 4]
+y = [10, 20, 30, 40]
+opts = [color: "blue", marker_size: 5]
+
+iex> M.scatter(x, y, opts)
+ %M.Figure{axes: %Matplotex.Figure.Areal.Scatter{...}, ...}
+"""
   def scatter(x, y) do
     scatter(x, y, [])
   end
@@ -158,7 +243,39 @@ defmodule Matplotex do
   def scatter(x, y, opts) do
     Scatter.create(%Figure{axes: %Scatter{}}, {x, y}, opts)
   end
+ @doc """
+Adds an additional dataset to a scatter plot in the given `%Figure{}`.
 
+This function allows you to overlay multiple scatter plots on the same figure by providing new `x` and `y` values, along with customization options via `opts`.
+
+## Parameters
+
+  - `figure` (%Figure{}): The figure to which the new dataset will be added.
+  - `x` (list): A list of numerical values representing the x-coordinates of the new dataset.
+  - `y` (list): A list of numerical values representing the y-coordinates of the new dataset.
+  - `opts` (keyword list, optional): A set of options for customizing the appearance of the new dataset, such as color, marker style, line style, and labels.
+
+## Usage
+
+This function is typically used when you want to generate multi-pattern scatter plots with multiple datasets. The following example demonstrates its usage:
+
+```elixir
+x = [1, 2, 3, 4, 5]
+
+# Dataset 1
+y1 = [20, 5, 12, 16, 25]
+
+# Dataset 2
+y2 = [10, 1, 6, 10, 15]
+
+# Dataset 3
+y3 = [17, 5, 8, 12, 17]
+
+x
+|> Matplotex.scatter(y1, color: "blue", linestyle: "_", marker: "o", label: "Dataset 1")
+|> Matplotex.scatter(x, y2, color: "red", linestyle: "--", marker: "^", label: "Dataset 2")
+|> Matplotex.scatter(x, y3, color: "green", linestyle: "-.", marker: "s", label: "Dataset 3")
+"""
   def scatter(%Figure{} = figure, x, y, opts) do
     figure
     |> show_legend()
@@ -166,22 +283,70 @@ defmodule Matplotex do
   end
 
   @doc """
-  Creates a piec charts based on the size and opts
-  """
+Generates a pie chart based on the provided data, labels, and options.
+
+### Parameters:
+- `sizes` (list of integers/floats): Percentages or proportions for each slice of the pie chart.
+- `opts` (keyword list): Options to customize the chart, such as:
+  - `:labels` (list of strings): Labels for each slice.
+  - `:colors` (list of strings): Colors for the slices.
+
+### Example:
+
+```elixir
+# Percentages for each slice
+sizes = [25, 35, 20, 20]
+
+# Labels for each slice
+labels = ["A", "B", "C", "D"]
+
+# Colors for the slices
+colors = ["lightblue", "lightgreen", "orange", "pink"]
+
+# Generate the pie chart
+sizes
+|> Matplotex.pie(colors: colors, labels: labels)
+
+%M.Figure{axes: %Matplotex.Figure.Radial.Pie{...}, ...}
+"""
   def pie(sizes, opts \\ []) do
     Pie.create(%Figure{axes: %Pie{}}, sizes, opts)
   end
 
-  @doc """
-  Creates a line plot with given x and y data.
+ @doc """
+Generates a line plot using the provided `x` and `y` data points.
+##Parameters
+`x`: A list of x-coordinates for the data points (e.g., [1, 2, 3]).
+`y`: A list of y-coordinates corresponding to x (e.g., [2, 4, 6]).
+`opts`:  it also expect some plot specific options such as
+     `color`: line color
+     `linestyle`: line style
+     `marker`: marker style
 
-  ## Examples
+### Example
 
-      iex> Matplotex.plot([1, 2, 3], [4, 5, 6])
-      %Matplotex.Figure{}
+```elixir
+# Define the data points
+x = [1, 2, 3, 4, 6, 6, 7]
+y = [1, 3, 4, 4, 5, 6, 7]
 
-  """
+# Specify plot configurations
+frame_width = 6
+frame_height = 6
+size = {frame_width, frame_height}
+margin = 0.05
+font_size = "16pt"
+title_font_size = "18pt"
+ticks = [1, 2, 3, 4, 5, 6, 7]
 
+# Create and configure the plot
+x
+|> Matplotex.plot(y)                                # Create a line plot
+|> Matplotex.figure(%{                              # Configure the figure
+     figsize: size,
+     margin: margin
+   })
+"""
   @spec plot(list(), list()) :: Figure.t()
   def plot(x, y) when is_list(x) and is_list(y) do
     plot(x, y, [])
