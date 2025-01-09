@@ -1,11 +1,11 @@
 defmodule Matplotex.Figure.TwoD do
   defstruct [:x, :y]
 
-  def update(twod, opts, context) do
+  def update(%__MODULE__{x: x, y: y} = twod, opts, context) do
     %__MODULE__{
       twod
-      | x: fetch_from_opts(opts, :x, context),
-        y: fetch_from_opts(opts, :y, context)
+      | x: fetch_from_opts(opts, :x, context) || x,
+        y: fetch_from_opts(opts, :y, context) || y
     }
   end
 

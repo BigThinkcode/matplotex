@@ -15,7 +15,6 @@ defmodule Matplotex.Element.Polygon do
     )
   end
 
-
   defp assemble_point(%{points: point}) do
     for {x, y} <- point do
       "#{to_pixel(x)},#{to_pixel(y)} "

@@ -24,17 +24,20 @@ defmodule Matplotex.Figure.Areal.Histogram do
 
   @impl Areal
   def create(
-        %Figure{axes: %__MODULE__{} = axes, rc_params: rc_params} = figure,
+        %Figure{axes: %__MODULE__{dataset: datasets} = axes, rc_params: rc_params} = figure,
         {data, bins},
         opts
       ) do
     {x, y} = bins_and_hists(data, bins)
 
     dataset = Dataset.cast(%Dataset{x: x, y: y}, opts)
+    datasets = datasets ++ [dataset]
+
+    xydata = flatten_for_data(datasets)
 
     %Figure{
       figure
-      | axes: %__MODULE__{axes | data: {x, y}, dataset: [dataset]},
+      | axes: %__MODULE__{axes | data: xydata, dataset: datasets},
         rc_params: %RcParams{rc_params | y_padding: @make_it_zero}
     }
     |> PlotOptions.set_options_in_figure(opts)
