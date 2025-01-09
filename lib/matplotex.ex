@@ -212,12 +212,6 @@ defmodule Matplotex do
     |> BarChart.create({pos, values, width}, opts)
   end
 
-  @doc """
-  Creates a scatter plot based on the given data
-  """
-  def scatter(stream, opts) when is_struct(stream, Stream) do
-    Scatter.create(stream, opts)
-  end
 
   @doc """
   Creates a scatter plot based on the given `x` and `y` values, with optional customization provided via `opts`.
@@ -678,28 +672,7 @@ defmodule Matplotex do
 
   """
 
-  # @spec legend(Figure.t(), keyword() | map()) :: Figure.t()
-  # def legend(figure, opts) when is_map(opts) do
-  #   Figure.add_legend(figure, opts)
-  # end
 
-  # def legend(figure, [h | _t] = opts) when is_tuple(h) do
-  #   params = Enum.into(opts, %{})
-  #   Figure.add_legend(figure, params)
-  # end
-
-  # def legend(figure, labels) when is_list(labels) do
-  #   Figure.add_legend(figure, %{labels: labels})
-  # end
-
-  @doc """
-  Function to update figure params
-  ## Examples
-
-      iex> Matplotex.figure(figure, figsize: {10,6}, margin: 0.1)
-      %Matplotex.Figure{}
-  """
-  @deprecated
   def figure(figure, params) do
     Figure.update_figure(figure, params)
   end
