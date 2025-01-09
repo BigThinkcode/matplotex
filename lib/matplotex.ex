@@ -2,25 +2,19 @@ defmodule Matplotex do
   @moduledoc """
   # Matplotex
 
-  a lightweight and efficient library for Elixir projects that facilitates server-side
-  SVG generation for data visualization. Designed to integrate seamlessly with Phoenix LiveView,
-  it serves as a powerful tool for creating dynamic visualizations in web applications.
+  A lightweight and efficient Elixir library designed for server-side SVG generation, ideal for data visualization in web applications. It integrates seamlessly with Phoenix LiveView and provides powerful tools for generating dynamic visualizations.
 
-  it supports the following graphs
-  - Line plots
-  - Bar charts
-  - Pie charts
-  - Spline graphs
-  - Histograms
-  - Scatter plots
+  ## Supported Graph Types
 
-  The plotting of a graph comes with set of common parameters and set of plot specific parameters
-  all of them will share with the corresponding function documentation, this section covers one examaple
-  as a line plot.
-  There are two approach to generate plots
-  - by using specific function to set parameters
-  - by using parameters along with options
+Matplotex supports the following types of visualizations:
 
+- Line Plots
+- Bar Charts
+- Pie Charts
+- Spline Graphs
+- Histograms
+- Scatter Plots
+## Examples
   ```elixir
   alias Matplotex as: M
 
@@ -55,8 +49,7 @@ defmodule Matplotex do
     )
     |> M.show()
   ```
-  This module exposes all of the functions for setters
-  and another approach is creating plots by using plot options the code is as follows
+
   ```elixir
   alis Matplotex as: M
    x = [1, 2, 3, 4, 6, 6, 7]
@@ -90,37 +83,39 @@ defmodule Matplotex do
     )
     |> M.show()
   ```
-  just for simplicity and convenience of the user it is keeping both patterns, no difference on using one on another
+  **Note**: Both approaches are equivalent, and users can choose whichever pattern is more convenient.
 
-  So the user has the control on the all parameters on the inner elements of the chart
 
-  ## Rc Params
-  In the first example along with the setter functions you might noticed M.set_rc_params/2
-  The role of this function is similar to other functions we are keeping some values with the plot data
-  and the acronym RC stands for Runtime configuration, the plot data holds the labels limits ticks, etc
-  The RC params are holding the font size, color, style etc, by defaul one chart object kickstart with some default values
-  just for the sake of it needed some values, by default all the fonts are Areal, Veradana, sans-serif  and using standard font size 12
-  if a user creates a plots with no inputs for any of these the plot will be choosing the default values
-  besides font configuration Rc params covers
-  `line_width, line_style, grid_color, grid_linestyle, grid_alpha, tick_line_length, x_padding, y_padding, legend_width`
-  There is two types of padding `x_padding, y_padding` and `padding` the perfect use of those can be found on upcoming plot specific documentations
+## Runtime Configuration (RC Params)
+The function M.set_rc_params/2 allows you to set runtime configuration parameters for the plot, such as font sizes, colors, and line styles. These settings affect visual elements like the font style and size for the labels, ticks, and title.
+
+By default, the plot starts with standard values (e.g., Arial or Verdana font, size 12). You can modify these using the RC parameters.
+
+### Available RC Params:
+line_width, line_style
+grid_color, grid_linestyle, grid_alpha
+tick_line_length
+x_padding, y_padding, padding
+legend_width
+Refer to specific plot documentation for detailed information on padding usage.
+
 
   ## Elements
   The output format of the plot is SVG will support more formats in future, anyway the svg is a group of some elements put together, throught the execution
   it is generating those elements through elixir data structure, all element data structure contains some svg equivalent data that converts the elements to
   SVG string, the output SVG string can be used directly in the web application.
 
-  ## Figure
-  The execution a plot carriec out by a data structure named Matplotex.Figure it holds all the adequate information to generate a figure it containst the keys
-  `:figsize` - is a tuple carries width and height of the figure eg: {10,6}
-  `:axes` - is another object that will varie according to the plot
-  `:rc_params` - the runtime configurations
-  `:margin` - the margin of the figure
+## Figure Data Structure
+The main data structure used to generate a plot is Matplotex.Figure, which contains all the necessary information for the plot, including:
 
-  ## M.show/1
-  All examples above using this function `M.show/1` after a plot generation API call
-  The all APIs from this module is ment to return an svg equivalent Data Matplotex.Figure with distinct object associated with the `axes` key, so to convert that data to
-  an SVG chart  use  `M.show/1`
+- `:figsize`: A tuple specifying the width and height of the figure (e.g., {10, 6}).
+- `:axes`: Contains the axes data, which varies depending on the plot type.
+- `:rc_params`: The runtime configuration parameters.
+- `:margin`: Specifies the margin of the figure.
+
+## `M.show/1`
+After creating a figure using the functions provided,  call M.show/1 to generate and display the final SVG representation of the plot. The show/1 function will convert the Matplotex.Figure data into a valid SVG string.
+
 
   """
   alias Matplotex.Figure.Areal.Spline
