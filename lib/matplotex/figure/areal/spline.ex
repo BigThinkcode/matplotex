@@ -8,7 +8,6 @@ defmodule Matplotex.Figure.Areal.Spline do
   alias Matplotex.Figure.TwoD
   alias Matplotex.Figure
 
-
   use Areal
 
   frame(
@@ -21,6 +20,7 @@ defmodule Matplotex.Figure.Areal.Spline do
     region_legend: %Region{},
     region_content: %Region{}
   )
+
   @impl Areal
   def create(
         %Figure{axes: %__MODULE__{dataset: data} = axes} = figure,
@@ -40,29 +40,34 @@ defmodule Matplotex.Figure.Areal.Spline do
 
   @impl Areal
   def materialize(figure) do
-   figure
-   |>__MODULE__.materialized_by_region()
-   |> materialize_spline()
-
+    figure
+    |> __MODULE__.materialized_by_region()
+    |> materialize_spline()
   end
-  defp materialize_spline(%Figure{axes:
-  %{
-    dataset: data,
-    limit: %{x: xlim, y: ylim},
-    region_content: %Region{
-      x: x_region_content,
-      y: y_region_content,
-      width: width_region_content,
-      height: height_region_content
-    },
-    element: elements
-  } = axes,
-   rc_params: %RcParams{x_padding: x_padding, y_padding: y_padding}} = figure) do
+
+  defp materialize_spline(
+         %Figure{
+           axes:
+             %{
+               dataset: data,
+               limit: %{x: xlim, y: ylim},
+               region_content: %Region{
+                 x: x_region_content,
+                 y: y_region_content,
+                 width: width_region_content,
+                 height: height_region_content
+               },
+               element: elements
+             } = axes,
+           rc_params: %RcParams{x_padding: x_padding, y_padding: y_padding}
+         } = figure
+       ) do
     x_padding_value = width_region_content * x_padding
     y_padding_value = height_region_content * y_padding
     shrinked_width_region_content = width_region_content - x_padding_value * 2
     shrinked_height_region_content = height_region_content - y_padding_value * 2
     transition = {x_region_content + x_padding_value, y_region_content + y_padding_value}
+
     line_elements =
       data
       |> Enum.map(fn dataset ->
@@ -83,19 +88,33 @@ defmodule Matplotex.Figure.Areal.Spline do
     %Figure{figure | axes: %{axes | element: elements}}
   end
 
-
-
-  defp capture(%Dataset{transformed: transformed, color: color,edge_color: edge_color, line_width: stroke_width}, move_to_def) do
+  defp capture(
+         %Dataset{
+           transformed: transformed,
+           color: color,
+           edge_color: edge_color,
+           line_width: stroke_width
+         },
+         move_to_def
+       ) do
     {moveto, transformed} = List.pop_at(transformed, 0, move_to_def)
     cubic = Enum.slice(transformed, 0..2)
     smooths = blend(transformed, 3)
-    %Spline{type: "figure.spline", moveto: moveto, cubic: cubic, smooths: smooths, fill: color, stroke: edge_color, stroke_width: stroke_width}
+
+    %Spline{
+      type: "figure.spline",
+      moveto: moveto,
+      cubic: cubic,
+      smooths: smooths,
+      fill: color,
+      stroke: edge_color,
+      stroke_width: stroke_width
+    }
   end
 
   defp blend(smooths, start_from) do
-  smooths
-  |>Enum.slice(start_from..-1//1)
-  |>Enum.chunk_every(2)
-
+    smooths
+    |> Enum.slice(start_from..-1//1)
+    |> Enum.chunk_every(2)
   end
 end
