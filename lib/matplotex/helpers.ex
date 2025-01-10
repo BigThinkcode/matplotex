@@ -1,4 +1,5 @@
 defmodule Matplotex.Helpers do
+@moduledoc false
   def copy(term) do
     text =
       if is_binary(term) do

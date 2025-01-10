@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure do
+@moduledoc false
   alias Matplotex.Figure.RcParams
   @row_column_default 1
   @margin_default 0.05

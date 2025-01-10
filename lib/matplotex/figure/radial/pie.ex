@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Radial.Pie do
+@moduledoc false
   alias Matplotex.Figure.RcParams
   alias Matplotex.Utils.Algebra
   alias Matplotex.Figure.Areal.Region

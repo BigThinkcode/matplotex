@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Areal.BarChart do
+@moduledoc false
   import Matplotex.Figure.Numer
   alias Matplotex.Figure.Areal.PlotOptions
   alias Matplotex.Figure.Areal.Region

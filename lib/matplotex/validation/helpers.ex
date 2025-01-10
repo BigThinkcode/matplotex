@@ -1,4 +1,5 @@
 defmodule Matplotex.Validation.Helpers do
+@moduledoc false
   alias Matplotex.InputError
 
   # TODO: Move module specific validators to particular module

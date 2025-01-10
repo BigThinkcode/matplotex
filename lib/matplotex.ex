@@ -1,7 +1,5 @@
 defmodule Matplotex do
   @moduledoc """
-  # Matplotex
-
   A lightweight and efficient Elixir library designed for server-side SVG generation, ideal for data visualization in web applications. It integrates seamlessly with Phoenix LiveView and provides powerful tools for generating dynamic visualizations.
 
   ## Supported Graph Types

@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Areal.Spline do
+@moduledoc false
   alias Matplotex.Element.Spline
   alias Matplotex.Figure.RcParams
   alias Matplotex.Figure.Areal

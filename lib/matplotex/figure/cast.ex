@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Cast do
+@moduledoc false
   alias Matplotex.Figure.Lead
   alias Matplotex.Element.Legend
   alias Matplotex.Utils.Algebra

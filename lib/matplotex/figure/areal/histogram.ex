@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Areal.Histogram do
+@moduledoc false
   alias Matplotex.Element.Rect
   alias Matplotex.Figure.RcParams
   alias Matplotex.Figure.Areal.PlotOptions

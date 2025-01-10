@@ -1,4 +1,5 @@
 defmodule Matplotex.Element.Rect do
+@moduledoc false
   alias Matplotex.Element
 
   @default_stroke_width 2

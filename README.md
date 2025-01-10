@@ -22,7 +22,7 @@ The package can be installed by adding <font color="darkblue"> **Matplotex**</fo
 ```elixir
 def deps do
 [
-    {:matplotex, git: "git@github.com:BigThinkcode/matplotex.git" }
+    {:matplotex, "~> 0.2.0" }
 ]
 ```
 

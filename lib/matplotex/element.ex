@@ -1,4 +1,5 @@
 defmodule Matplotex.Element do
+@moduledoc false
   @callback assemble(element :: struct()) :: String.t()
   def assemble(%module{} = element), do: module.assemble(element)
 

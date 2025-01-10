@@ -1,4 +1,5 @@
 defmodule Matplotex.Element.Label do
+@moduledoc false
   alias Matplotex.Element
   use Element
   @default_fill "black"
