@@ -27,3 +27,4 @@ matplotex-*.tar
 
 /.github
 /samples
+/add_line.sh
