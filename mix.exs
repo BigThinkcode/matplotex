@@ -4,7 +4,6 @@ defmodule Matplotex.MixProject do
   def project do
     [
       app: :matplotex,
-
       organization: :bigthinkcode,
       version: "0.1.0",
       elixir: "~> 1.17",
@@ -14,6 +13,7 @@ defmodule Matplotex.MixProject do
       package: package()
     ]
   end
+
   defp package do
     [
       description: "A library for generating plots in Elixir.",
@@ -21,10 +21,10 @@ defmodule Matplotex.MixProject do
       links: %{
         "GitHub" => "https://github.com/bigthinkcode/matplotex"
       },
-      maintainers: ["BigThinkCode", "Mohammed Sadique P", "Karthikeyan Mayilvahanam"],
-
+      maintainers: ["BigThinkCode", "Mohammed Sadique P", "Karthikeyan Mayilvahanam"]
     ]
   end
+
   defp elixirc_paths(:test), do: elixirc_paths(:dev) ++ ["test/support"]
   defp elixirc_paths(_), do: ["lib"]
 
@@ -42,7 +42,8 @@ defmodule Matplotex.MixProject do
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
       {:csv, "~> 3.2"},
       {:nx, "~> 0.7.3"},
-      {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false}
+      {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
+      {:ex_doc, "~> 0.34", only: :dev, runtime: false}
     ]
   end
 end
