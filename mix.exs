@@ -4,11 +4,15 @@ defmodule Matplotex.MixProject do
   def project do
     [
       app: :matplotex,
+      description: "A library for generating plots in Elixir.",
+      organization: :bigthinkcode,
       version: "0.1.0",
       elixir: "~> 1.17",
       start_permanent: Mix.env() == :prod,
       elixirc_paths: elixirc_paths(Mix.env()),
-      deps: deps()
+      deps: deps(),
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/BigThinkcode/matplotex"}
     ]
   end
 
