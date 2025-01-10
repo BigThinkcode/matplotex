@@ -1,4 +1,5 @@
 defmodule Matplotex.Element.Polygon do
+@moduledoc false
   alias Matplotex.Element
   use Element
   @default_fill "blue"

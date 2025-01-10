@@ -1,4 +1,5 @@
 defmodule Matplotex.Element.Slice do
+@moduledoc false
   alias Matplotex.Element
   use Element
 

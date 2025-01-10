@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Areal.LinePlot do
+@moduledoc false
   alias Matplotex.Figure.Areal.PlotOptions
   alias Matplotex.Utils.Algebra
   alias Matplotex.Figure.Areal.Region

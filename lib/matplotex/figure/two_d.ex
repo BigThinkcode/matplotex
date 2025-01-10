@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.TwoD do
+@moduledoc false
   defstruct [:x, :y]
 
   def update(%__MODULE__{x: x, y: y} = twod, opts, context) do

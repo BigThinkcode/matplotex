@@ -1,4 +1,5 @@
 defmodule Matplotex.Element.Circle do
+@moduledoc false
   alias Matplotex.Element
   use Element
 

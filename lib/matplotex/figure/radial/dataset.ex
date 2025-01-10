@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Radial.Dataset do
+@moduledoc false
   defstruct sizes: [],
             labels: [],
             colors: [],

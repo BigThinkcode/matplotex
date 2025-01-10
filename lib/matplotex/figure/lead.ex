@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Lead do
+@moduledoc false
   alias Matplotex.Utils.Algebra
   alias Matplotex.Figure.Areal.XyRegion.Coords, as: XyCoords
   alias Matplotex.Figure.Font

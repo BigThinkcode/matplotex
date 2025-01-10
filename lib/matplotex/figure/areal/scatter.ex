@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Areal.Scatter do
+@moduledoc false
   alias Matplotex.Figure.Areal.PlotOptions
   alias Matplotex.Figure.Areal.Region
   alias Matplotex.Figure.Areal.Ticker

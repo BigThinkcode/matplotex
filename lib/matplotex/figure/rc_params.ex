@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.RcParams do
+@moduledoc false
   alias Matplotex.Figure.Font
   @default_figsize {8, 6}
   @default_dpi 96

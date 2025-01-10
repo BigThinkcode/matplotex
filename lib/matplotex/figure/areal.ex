@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Areal do
+@moduledoc false
   alias Matplotex.Figure.Areal.Ticker
   alias Matplotex.Utils.Algebra
   alias Matplotex.Figure.Dataset

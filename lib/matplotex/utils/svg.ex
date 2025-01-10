@@ -1,7 +1,6 @@
 defmodule Matplotex.Utils.Svg do
-  @moduledoc """
-  Modules to wrap function shares common svg functions
-  """
+@moduledoc false
+
   def wrap_with_frame(%{width: width, height: height}, svg) do
     ~s(<svg width="#{width}"
     height="#{height}"

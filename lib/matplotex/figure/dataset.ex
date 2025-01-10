@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Dataset do
+@moduledoc false
   @default_color "blue"
   @default_marker "o"
   @default_linestyle "_"

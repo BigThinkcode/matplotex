@@ -1,4 +1,5 @@
 defmodule Matplotex.Element.RadLegend do
+@moduledoc false
   alias Matplotex.Element.Label
   alias Matplotex.Element
   alias Matplotex.Element.Rect
