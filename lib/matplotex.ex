@@ -6,15 +6,15 @@ defmodule Matplotex do
 
   ## Supported Graph Types
 
-Matplotex supports the following types of visualizations:
+  Matplotex supports the following types of visualizations:
 
-- Line Plots
-- Bar Charts
-- Pie Charts
-- Spline Graphs
-- Histograms
-- Scatter Plots
-## Examples
+  - Line Plots
+  - Bar Charts
+  - Pie Charts
+  - Spline Graphs
+  - Histograms
+  - Scatter Plots
+  ## Examples
   ```elixir
   alias Matplotex as: M
 
@@ -86,18 +86,18 @@ Matplotex supports the following types of visualizations:
   **Note**: Both approaches are equivalent, and users can choose whichever pattern is more convenient.
 
 
-## Runtime Configuration (RC Params)
-The function M.set_rc_params/2 allows you to set runtime configuration parameters for the plot, such as font sizes, colors, and line styles. These settings affect visual elements like the font style and size for the labels, ticks, and title.
+  ## Runtime Configuration (RC Params)
+  The function M.set_rc_params/2 allows you to set runtime configuration parameters for the plot, such as font sizes, colors, and line styles. These settings affect visual elements like the font style and size for the labels, ticks, and title.
 
-By default, the plot starts with standard values (e.g., Arial or Verdana font, size 12). You can modify these using the RC parameters.
+  By default, the plot starts with standard values (e.g., Arial or Verdana font, size 12). You can modify these using the RC parameters.
 
-### Available RC Params:
-line_width, line_style
-grid_color, grid_linestyle, grid_alpha
-tick_line_length
-x_padding, y_padding, padding
-legend_width
-Refer to specific plot documentation for detailed information on padding usage.
+  ### Available RC Params:
+  line_width, line_style
+  grid_color, grid_linestyle, grid_alpha
+  tick_line_length
+  x_padding, y_padding, padding
+  legend_width
+  Refer to specific plot documentation for detailed information on padding usage.
 
 
   ## Elements
@@ -105,16 +105,16 @@ Refer to specific plot documentation for detailed information on padding usage.
   it is generating those elements through elixir data structure, all element data structure contains some svg equivalent data that converts the elements to
   SVG string, the output SVG string can be used directly in the web application.
 
-## Figure Data Structure
-The main data structure used to generate a plot is Matplotex.Figure, which contains all the necessary information for the plot, including:
+  ## Figure Data Structure
+  The main data structure used to generate a plot is Matplotex.Figure, which contains all the necessary information for the plot, including:
 
-- `:figsize`: A tuple specifying the width and height of the figure (e.g., {10, 6}).
-- `:axes`: Contains the axes data, which varies depending on the plot type.
-- `:rc_params`: The runtime configuration parameters.
-- `:margin`: Specifies the margin of the figure.
+  - `:figsize`: A tuple specifying the width and height of the figure (e.g., {10, 6}).
+  - `:axes`: Contains the axes data, which varies depending on the plot type.
+  - `:rc_params`: The runtime configuration parameters.
+  - `:margin`: Specifies the margin of the figure.
 
-## `M.show/1`
-After creating a figure using the functions provided,  call M.show/1 to generate and display the final SVG representation of the plot. The show/1 function will convert the Matplotex.Figure data into a valid SVG string.
+  ## `M.show/1`
+  After creating a figure using the functions provided,  call M.show/1 to generate and display the final SVG representation of the plot. The show/1 function will convert the Matplotex.Figure data into a valid SVG string.
 
 
   """
@@ -206,7 +206,6 @@ After creating a figure using the functions provided,  call M.show/1 to generate
     |> show_legend()
     |> BarChart.create({pos, values, width}, opts)
   end
-
 
   @doc """
   Creates a scatter plot based on the given `x` and `y` values, with optional customization provided via `opts`.
@@ -666,7 +665,6 @@ After creating a figure using the functions provided,  call M.show/1 to generate
   `labels, title, position, size`
 
   """
-
 
   def figure(figure, params) do
     Figure.update_figure(figure, params)
