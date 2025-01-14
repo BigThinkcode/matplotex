@@ -258,11 +258,11 @@ defmodule Matplotex.Helpers do
 
   def pie() do
     # Percentages for each slice
-    sizes = [25, 35, 20, 20]
+    sizes = [25, 35, 20, 20, 10]
     # Labels for each slice
-    labels = ["A", "B", "C", "D"]
+    labels = ["A", "B", "C", "D", "E"]
     # Colors for the slices
-    colors = ["lightblue", "lightgreen", "orange", "pink"]
+    colors = ["#33BBEE", "#EE7733", "#EE3377", "#0077BB","#919D41"]
 
     sizes
     |> Matplotex.pie(colors: colors, labels: labels)
@@ -311,7 +311,7 @@ defmodule Matplotex.Helpers do
 
   def hist() do
     values = Nx.Random.key(12) |> Nx.Random.normal(0, 1, shape: {1000}) |> elem(0) |> Nx.to_list()
-    bins = 30
+    bins = 100
 
     Matplotex.hist(values, bins,
       x_label: "Value",

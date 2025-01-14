@@ -16,6 +16,7 @@ defmodule Matplotex.Figure.Radial.Pie do
   use Radial
 
   @full_circle 2 * :math.pi()
+  @legend_padding 5/96
   chord(
     center: %TwoD{},
     lead: %TwoD{},
@@ -68,7 +69,7 @@ defmodule Matplotex.Figure.Radial.Pie do
        when fwidth > 0 and fheight > 0 do
     %Region{x: legx, y: legy} = Algebra.flip_y_coordinate(region_legend)
     total_size = Enum.sum(sizes)
-    legend_rect_side = height / length(sizes) / 2
+    legend_rect_side = height / length(sizes) / 4
     center = Algebra.flip_y_coordinate(center)
 
     slices =
@@ -143,7 +144,7 @@ defmodule Matplotex.Figure.Radial.Pie do
     }
 
     {x_legend, y_legend} =
-      Algebra.transform_given_point(0, legend_unit_height, x_legend, y_legend)
+      Algebra.transform_given_point(0, legend_unit_height + @legend_padding, x_legend, y_legend)
 
     legend =
       %RadLegend{
