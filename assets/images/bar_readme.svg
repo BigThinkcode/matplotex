@@ -1,644 +1,629 @@
 <svg width="960"
-   height="384"
-   version="1.1"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   style="top: 0px;
+      height="576"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      style="top: 0px;
       left: 0px;
       position: absolute;">
-   <g>
-
-
-      <line
-         type="figure.x_tick"
-         x1="225.7714285714286"
-         y1="324.44000000000005"
-         x2="225.7714285714286"
-         y2="329.44"
-         fill="rgba(0,0,0,0)"
-         stroke="black"
-         stroke-width="1"
-         shape-rendering="geometricPrecision"
-         stroke-linecap="square"
-         stroke-dasharray=""
-      />
-
-
-      <text tag="figure.x_tick"
-         fill="black"
-         x="225.7714285714286"
-         y="337.12"
-         font-size="14"
-         font-weight="normal"
-         font-family="Arial, Verdana, sans-serif"
-         font-style="normal"
-         transform=""
-         dominant-baseline="hanging"
-         text-anchor="middle"
-      >
-         Africa
-      </text>
-
-
-      <line
-         type="figure.x_tick"
-         x1="340.1428571428571"
-         y1="324.44000000000005"
-         x2="340.1428571428571"
-         y2="329.44"
-         fill="rgba(0,0,0,0)"
-         stroke="black"
-         stroke-width="1"
-         shape-rendering="geometricPrecision"
-         stroke-linecap="square"
-         stroke-dasharray=""
-      />
-
-
-      <text tag="figure.x_tick"
-         fill="black"
-         x="340.1428571428571"
-         y="337.12"
-         font-size="14"
-         font-weight="normal"
-         font-family="Arial, Verdana, sans-serif"
-         font-style="normal"
-         transform=""
-         dominant-baseline="hanging"
-         text-anchor="middle"
-      >
-         Asia
-      </text>
-
-
-      <line
-         type="figure.x_tick"
-         x1="454.51428571428573"
-         y1="324.44000000000005"
-         x2="454.51428571428573"
-         y2="329.44"
-         fill="rgba(0,0,0,0)"
-         stroke="black"
-         stroke-width="1"
-         shape-rendering="geometricPrecision"
-         stroke-linecap="square"
-         stroke-dasharray=""
-      />
-
-
-      <text tag="figure.x_tick"
-         fill="black"
-         x="454.51428571428573"
-         y="337.12"
-         font-size="14"
-         font-weight="normal"
-         font-family="Arial, Verdana, sans-serif"
-         font-style="normal"
-         transform=""
-         dominant-baseline="hanging"
-         text-anchor="middle"
-      >
-         Europe
-      </text>
-
-
-      <line
-         type="figure.x_tick"
-         x1="568.8857142857144"
-         y1="324.44000000000005"
-         x2="568.8857142857144"
-         y2="329.44"
-         fill="rgba(0,0,0,0)"
-         stroke="black"
-         stroke-width="1"
-         shape-rendering="geometricPrecision"
-         stroke-linecap="square"
-         stroke-dasharray=""
-      />
-
-
-      <text tag="figure.x_tick"
-         fill="black"
-         x="568.8857142857144"
-         y="337.12"
-         font-size="14"
-         font-weight="normal"
-         font-family="Arial, Verdana, sans-serif"
-         font-style="normal"
-         transform=""
-         dominant-baseline="hanging"
-         text-anchor="middle"
-      >
-         North America
-      </text>
-
-
-      <line
-         type="figure.x_tick"
-         x1="683.257142857143"
-         y1="324.44000000000005"
-         x2="683.257142857143"
-         y2="329.44"
-         fill="rgba(0,0,0,0)"
-         stroke="black"
-         stroke-width="1"
-         shape-rendering="geometricPrecision"
-         stroke-linecap="square"
-         stroke-dasharray=""
-      />
-
-
-      <text tag="figure.x_tick"
-         fill="black"
-         x="683.257142857143"
-         y="337.12"
-         font-size="14"
-         font-weight="normal"
-         font-family="Arial, Verdana, sans-serif"
-         font-style="normal"
-         transform=""
-         dominant-baseline="hanging"
-         text-anchor="middle"
-      >
-         Oceania
-      </text>
-
-
-      <line
-         type="figure.x_tick"
-         x1="797.6285714285716"
-         y1="324.44000000000005"
-         x2="797.6285714285716"
-         y2="329.44"
-         fill="rgba(0,0,0,0)"
-         stroke="black"
-         stroke-width="1"
-         shape-rendering="geometricPrecision"
-         stroke-linecap="square"
-         stroke-dasharray=""
-      />
-
-
-      <text tag="figure.x_tick"
-         fill="black"
-         x="797.6285714285716"
-         y="337.12"
-         font-size="14"
-         font-weight="normal"
-         font-family="Arial, Verdana, sans-serif"
-         font-style="normal"
-         transform=""
-         dominant-baseline="hanging"
-         text-anchor="middle"
-      >
-         South America
-      </text>
-
-
-      <line
-         type="figure.y_tick"
-         x1="111.4"
-         y1="270.5995532230864"
-         x2="106.4"
-         y2="270.5995532230864"
-         fill="rgba(0,0,0,0)"
-         stroke="black"
-         stroke-width="1"
-         shape-rendering="geometricPrecision"
-         stroke-linecap="square"
-         stroke-dasharray=""
-      />
-
-
-      <text tag="figure.y_tick"
-         fill="black"
-         x="95.68"
-         y="270.5995532230864"
-         font-size="14"
-         font-weight="normal"
-         font-family="Arial, Verdana, sans-serif"
-         font-style="normal"
-         transform=""
-         dominant-baseline="middle"
-         text-anchor="end"
-      >
-         200
-      </text>
-
-
-      <line
-         type="figure.y_tick"
-         x1="111.4"
-         y1="230.94510644617276"
-         x2="106.4"
-         y2="230.94510644617276"
-         fill="rgba(0,0,0,0)"
-         stroke="black"
-         stroke-width="1"
-         shape-rendering="geometricPrecision"
-         stroke-linecap="square"
-         stroke-dasharray=""
-      />
-
-
-      <text tag="figure.y_tick"
-         fill="black"
-         x="95.68"
-         y="230.94510644617276"
-         font-size="14"
-         font-weight="normal"
-         font-family="Arial, Verdana, sans-serif"
-         font-style="normal"
-         transform=""
-         dominant-baseline="middle"
-         text-anchor="end"
-      >
-         400
-      </text>
-
-
-      <line
-         type="figure.y_tick"
-         x1="111.4"
-         y1="191.29065966925913"
-         x2="106.4"
-         y2="191.29065966925913"
-         fill="rgba(0,0,0,0)"
-         stroke="black"
-         stroke-width="1"
-         shape-rendering="geometricPrecision"
-         stroke-linecap="square"
-         stroke-dasharray=""
-      />
-
-
-      <text tag="figure.y_tick"
-         fill="black"
-         x="95.68"
-         y="191.29065966925913"
-         font-size="14"
-         font-weight="normal"
-         font-family="Arial, Verdana, sans-serif"
-         font-style="normal"
-         transform=""
-         dominant-baseline="middle"
-         text-anchor="end"
-      >
-         600
-      </text>
-
-
-      <line
-         type="figure.y_tick"
-         x1="111.4"
-         y1="151.63621289234555"
-         x2="106.4"
-         y2="151.63621289234555"
-         fill="rgba(0,0,0,0)"
-         stroke="black"
-         stroke-width="1"
-         shape-rendering="geometricPrecision"
-         stroke-linecap="square"
-         stroke-dasharray=""
-      />
-
-
-      <text tag="figure.y_tick"
-         fill="black"
-         x="95.68"
-         y="151.63621289234555"
-         font-size="14"
-         font-weight="normal"
-         font-family="Arial, Verdana, sans-serif"
-         font-style="normal"
-         transform=""
-         dominant-baseline="middle"
-         text-anchor="end"
-      >
-         800
-      </text>
-
-
-      <line
-         type="figure.y_tick"
-         x1="111.4"
-         y1="111.98176611543191"
-         x2="106.4"
-         y2="111.98176611543191"
-         fill="rgba(0,0,0,0)"
-         stroke="black"
-         stroke-width="1"
-         shape-rendering="geometricPrecision"
-         stroke-linecap="square"
-         stroke-dasharray=""
-      />
-
-
-      <text tag="figure.y_tick"
-         fill="black"
-         x="95.68"
-         y="111.98176611543191"
-         font-size="14"
-         font-weight="normal"
-         font-family="Arial, Verdana, sans-serif"
-         font-style="normal"
-         transform=""
-         dominant-baseline="middle"
-         text-anchor="end"
-      >
-         1000
-      </text>
-
-
-      <line
-         type="figure.y_tick"
-         x1="111.4"
-         y1="72.32731933851828"
-         x2="106.4"
-         y2="72.32731933851828"
-         fill="rgba(0,0,0,0)"
-         stroke="black"
-         stroke-width="1"
-         shape-rendering="geometricPrecision"
-         stroke-linecap="square"
-         stroke-dasharray=""
-      />
-
-
-      <text tag="figure.y_tick"
-         fill="black"
-         x="95.68"
-         y="72.32731933851828"
-         font-size="14"
-         font-weight="normal"
-         font-family="Arial, Verdana, sans-serif"
-         font-style="normal"
-         transform=""
-         dominant-baseline="middle"
-         text-anchor="end"
-      >
-         1200
-      </text>
-
-
-      <line
-         type="figure.h_grid"
-         x1="111.4"
-         y1="270.5995532230864"
-         x2="912.0"
-         y2="270.5995532230864"
-         fill="rgba(0,0,0,0)"
-         stroke="#ddd"
-         stroke-width="0.5"
-         shape-rendering="geometricPrecision"
-         stroke-linecap="square"
-         stroke-dasharray=""
-      />
-
-
-      <line
-         type="figure.h_grid"
-         x1="111.4"
-         y1="230.94510644617276"
-         x2="912.0"
-         y2="230.94510644617276"
-         fill="rgba(0,0,0,0)"
-         stroke="#ddd"
-         stroke-width="0.5"
-         shape-rendering="geometricPrecision"
-         stroke-linecap="square"
-         stroke-dasharray=""
-      />
-
-
-      <line
-         type="figure.h_grid"
-         x1="111.4"
-         y1="191.29065966925913"
-         x2="912.0"
-         y2="191.29065966925913"
-         fill="rgba(0,0,0,0)"
-         stroke="#ddd"
-         stroke-width="0.5"
-         shape-rendering="geometricPrecision"
-         stroke-linecap="square"
-         stroke-dasharray=""
-      />
-
-
-      <line
-         type="figure.h_grid"
-         x1="111.4"
-         y1="151.63621289234555"
-         x2="912.0"
-         y2="151.63621289234555"
-         fill="rgba(0,0,0,0)"
-         stroke="#ddd"
-         stroke-width="0.5"
-         shape-rendering="geometricPrecision"
-         stroke-linecap="square"
-         stroke-dasharray=""
-      />
-
-
-      <line
-         type="figure.h_grid"
-         x1="111.4"
-         y1="111.98176611543191"
-         x2="912.0"
-         y2="111.98176611543191"
-         fill="rgba(0,0,0,0)"
-         stroke="#ddd"
-         stroke-width="0.5"
-         shape-rendering="geometricPrecision"
-         stroke-linecap="square"
-         stroke-dasharray=""
-      />
-
-
-      <line
-         type="figure.h_grid"
-         x1="111.4"
-         y1="72.32731933851828"
-         x2="912.0"
-         y2="72.32731933851828"
-         fill="rgba(0,0,0,0)"
-         stroke="#ddd"
-         stroke-width="0.5"
-         shape-rendering="geometricPrecision"
-         stroke-linecap="square"
-         stroke-dasharray=""
-      />
-
-
-      <line
-         type="spine.left"
-         x1="111.4"
-         y1="324.44000000000005"
-         x2="111.4"
-         y2="40.72000000000001"
-         fill="rgba(0,0,0,0)"
-         stroke="black"
-         stroke-width="1"
-         shape-rendering="geometricPrecision"
-         stroke-linecap="square"
-         stroke-dasharray=""
-      />
-
-
-      <line
-         type="spine.right"
-         x1="912.0"
-         y1="324.44000000000005"
-         x2="912.0"
-         y2="40.72000000000001"
-         fill="rgba(0,0,0,0)"
-         stroke="black"
-         stroke-width="1"
-         shape-rendering="geometricPrecision"
-         stroke-linecap="square"
-         stroke-dasharray=""
-      />
-
-
-      <line
-         type="spine.top"
-         x1="111.4"
-         y1="40.72000000000001"
-         x2="912.0"
-         y2="40.72000000000001"
-         fill="rgba(0,0,0,0)"
-         stroke="black"
-         stroke-width="1"
-         shape-rendering="geometricPrecision"
-         stroke-linecap="square"
-         stroke-dasharray=""
-      />
-
-
-      <line
-         type="spine.bottom"
-         x1="111.4"
-         y1="324.44000000000005"
-         x2="912.0"
-         y2="324.44000000000005"
-         fill="rgba(0,0,0,0)"
-         stroke="black"
-         stroke-width="1"
-         shape-rendering="geometricPrecision"
-         stroke-linecap="square"
-         stroke-dasharray=""
-      />
-
-      <text tag="figure.x_label"
-         fill="black"
-         x="511.7"
-         y="364.79999999999995"
-         font-size="14"
-         font-weight="normal"
-         font-family="Arial, Verdana, sans-serif"
-         font-style="normal"
-         transform=""
-         dominant-baseline="hanging"
-         text-anchor="middle"
-      >
-         Continents
-      </text>
-      <text tag="figure.y_label"
-         fill="black"
-         x="48.0"
-         y="182.58000000000004"
-         font-size="14"
-         font-weight="normal"
-         font-family="Arial, Verdana, sans-serif"
-         font-style="normal"
-         transform="rotate(-90, 48.0, 182.58000000000004)"
-         dominant-baseline="hanging"
-         text-anchor="middle"
-      >
-         Emission
-      </text>
-      <text tag="figure.title"
-         fill="black"
-         x="511.7"
-         y="19.200000000000017"
-         font-size="18"
-         font-weight="normal"
-         font-family="Arial, Verdana, sans-serif"
-         font-style="normal"
-         transform=""
-         dominant-baseline="hanging"
-         text-anchor="middle"
-      >
-         Continentwise Cumulative Emissions from 2008 to 2011
-      </text>
+      <g>
+      
+     
+    <line
+    type="figure.x_tick"
+    x1="177.05"
+    y1="510.2"
+    x2="177.05"
+    y2="515.1999999999999"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.x_tick"
+     fill="black"
+     x="177.05"
+     y="531.2"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="middle"
+     >
+     Lorem
+    </text>
+
+    
+     
+    <line
+    type="figure.x_tick"
+    x1="397.35000305175777"
+    y1="510.2"
+    x2="397.35000305175777"
+    y2="515.1999999999999"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.x_tick"
+     fill="black"
+     x="397.35000305175777"
+     y="531.2"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="middle"
+     >
+     Ipsum
+    </text>
+
+    
+     
+    <line
+    type="figure.x_tick"
+    x1="617.6500061035156"
+    y1="510.2"
+    x2="617.6500061035156"
+    y2="515.1999999999999"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.x_tick"
+     fill="black"
+     x="617.6500061035156"
+     y="531.2"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="middle"
+     >
+     Amet
+    </text>
+
+    
+     
+    <line
+    type="figure.x_tick"
+    x1="837.9500091552734"
+    y1="510.2"
+    x2="837.9500091552734"
+    y2="515.1999999999999"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.x_tick"
+     fill="black"
+     x="837.9500091552734"
+     y="531.2"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="middle"
+     >
+     Donor
+    </text>
+
+    
+     
+    <line
+    type="figure.y_tick"
+    x1="102.99999999999999"
+    y1="510.2"
+    x2="98.0"
+    y2="510.2"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.y_tick"
+     fill="black"
+     x="64.0"
+     y="510.2"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="start"
+     >
+     0.0
+    </text>
+
+    
+     
+    <line
+    type="figure.y_tick"
+    x1="102.99999999999999"
+    y1="418.7200042724609"
+    x2="98.0"
+    y2="418.7200042724609"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.y_tick"
+     fill="black"
+     x="64.0"
+     y="418.7200042724609"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="start"
+     >
+     14.0
+    </text>
+
+    
+     
+    <line
+    type="figure.y_tick"
+    x1="102.99999999999999"
+    y1="327.24000854492186"
+    x2="98.0"
+    y2="327.24000854492186"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.y_tick"
+     fill="black"
+     x="64.0"
+     y="327.24000854492186"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="start"
+     >
+     28.0
+    </text>
+
+    
+     
+    <line
+    type="figure.y_tick"
+    x1="102.99999999999999"
+    y1="235.7600128173828"
+    x2="98.0"
+    y2="235.7600128173828"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.y_tick"
+     fill="black"
+     x="64.0"
+     y="235.7600128173828"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="start"
+     >
+     42.0
+    </text>
+
+    
+     
+    <line
+    type="figure.y_tick"
+    x1="102.99999999999999"
+    y1="144.28001708984374"
+    x2="98.0"
+    y2="144.28001708984374"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.y_tick"
+     fill="black"
+     x="64.0"
+     y="144.28001708984374"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="start"
+     >
+     56.0
+    </text>
+
+    
+     
+    <line
+    type="figure.y_tick"
+    x1="102.99999999999999"
+    y1="52.800021362304676"
+    x2="98.0"
+    y2="52.800021362304676"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.y_tick"
+     fill="black"
+     x="64.0"
+     y="52.800021362304676"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="start"
+     >
+     70.0
+    </text>
+
+    
+    <line
+    type="figure.h_grid"
+    x1="102.99999999999999"
+    y1="510.2"
+    x2="912.0"
+    y2="510.2"
+    fill="rgba(0,0,0,0)"
+    stroke="#ddd"
+    stroke-width="1"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="figure.h_grid"
+    x1="102.99999999999999"
+    y1="418.7200042724609"
+    x2="912.0"
+    y2="418.7200042724609"
+    fill="rgba(0,0,0,0)"
+    stroke="#ddd"
+    stroke-width="1"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="figure.h_grid"
+    x1="102.99999999999999"
+    y1="327.24000854492186"
+    x2="912.0"
+    y2="327.24000854492186"
+    fill="rgba(0,0,0,0)"
+    stroke="#ddd"
+    stroke-width="1"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="figure.h_grid"
+    x1="102.99999999999999"
+    y1="235.7600128173828"
+    x2="912.0"
+    y2="235.7600128173828"
+    fill="rgba(0,0,0,0)"
+    stroke="#ddd"
+    stroke-width="1"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="figure.h_grid"
+    x1="102.99999999999999"
+    y1="144.28001708984374"
+    x2="912.0"
+    y2="144.28001708984374"
+    fill="rgba(0,0,0,0)"
+    stroke="#ddd"
+    stroke-width="1"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="figure.h_grid"
+    x1="102.99999999999999"
+    y1="52.800021362304676"
+    x2="912.0"
+    y2="52.800021362304676"
+    fill="rgba(0,0,0,0)"
+    stroke="#ddd"
+    stroke-width="1"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="spine.left"
+    x1="102.99999999999999"
+    y1="510.2"
+    x2="102.99999999999999"
+    y2="52.79999999999998"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="spine.right"
+    x1="912.0"
+    y1="510.2"
+    x2="912.0"
+    y2="52.79999999999998"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="spine.top"
+    x1="102.99999999999999"
+    y1="52.79999999999998"
+    x2="912.0"
+    y2="52.79999999999998"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="spine.bottom"
+    x1="102.99999999999999"
+    y1="510.2"
+    x2="912.0"
+    y2="510.2"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+        <text tag="figure.x_label"
+     fill="black"
+     x="507.50000000000006"
+     y="547.2"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="middle"
+     >
+     
+    </text>
+    <text tag="figure.y_label"
+     fill="black"
+     x="48.0"
+     y="281.5"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform="rotate(-90, 48.0, 281.5)"
+     dominant-baseline="middle"
+     text-anchor="middle"
+     >
+     
+    </text>
+    <text tag="figure.title"
+     fill="black"
+     x="452.5"
+     y="33.800000000000004"
+     font-size="18"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="auto"
+     text-anchor="middle"
+     >
+     
+    </text>
 
       <rect
-         type="figure.bar"
-         stroke="rgba(0,0,0,0)"
-         fill="#a3e4d7"
-         x="211.37142857142862"
-         y="259.14691138726636"
-         width="28.799999999999997"
-         height="65.29308861273367"
-         stroke-width="1"
-         filter="">
+      type="figure.bar"
+      stroke="black"
+      fill="#EE3377"
+      x="177.05"
+      y="366.44571428571425"
+      width="33.599999999999994"
+      height="143.75428571428574"
+      stroke-width="2"
+      stroke-opacity="1.0"
+      fill-opacity="1.0"
+      filter="">
       </rect>
       <rect
-         type="figure.bar"
-         stroke="rgba(0,0,0,0)"
-         fill="#a3e4d7"
-         x="325.74285714285713"
-         y="54.90600000000006"
-         width="28.799999999999997"
-         height="269.534"
-         stroke-width="1"
-         filter="">
+      type="figure.bar"
+      stroke="black"
+      fill="#EE3377"
+      x="397.3500065654517"
+      y="294.56857142857143"
+      width="33.599999999999994"
+      height="215.63142857142856"
+      stroke-width="2"
+      stroke-opacity="1.0"
+      fill-opacity="1.0"
+      filter="">
       </rect>
       <rect
-         type="figure.bar"
-         stroke="rgba(0,0,0,0)"
-         fill="#a3e4d7"
-         x="440.11428571428576"
-         y="69.0117457768414"
-         width="28.799999999999997"
-         height="255.42825422315863"
-         stroke-width="1"
-         filter="">
+      type="figure.bar"
+      stroke="black"
+      fill="#EE3377"
+      x="617.6500131309033"
+      y="327.24"
+      width="33.599999999999994"
+      height="182.95999999999998"
+      stroke-width="2"
+      stroke-opacity="1.0"
+      fill-opacity="1.0"
+      filter="">
       </rect>
       <rect
-         type="figure.bar"
-         stroke="rgba(0,0,0,0)"
-         fill="#a3e4d7"
-         x="554.4857142857143"
-         y="186.25865806942815"
-         width="28.799999999999997"
-         height="138.18134193057185"
-         stroke-width="1"
-         filter="">
+      type="figure.bar"
+      stroke="black"
+      fill="#EE3377"
+      x="837.95"
+      y="288.0342857142857"
+      width="33.599999999999994"
+      height="222.16571428571427"
+      stroke-width="2"
+      stroke-opacity="1.0"
+      fill-opacity="1.0"
+      filter="">
       </rect>
       <rect
-         type="figure.bar"
-         stroke="rgba(0,0,0,0)"
-         fill="#a3e4d7"
-         x="668.8571428571429"
-         y="261.6025460785111"
-         width="28.799999999999997"
-         height="62.83745392148888"
-         stroke-width="1"
-         filter="">
+      type="figure.bar"
+      stroke="black"
+      fill="#0077BB"
+      x="143.45"
+      y="163.88285714285715"
+      width="33.599999999999994"
+      height="346.3171428571428"
+      stroke-width="2"
+      stroke-opacity="1.0"
+      fill-opacity="1.0"
+      filter="">
       </rect>
       <rect
-         type="figure.bar"
-         stroke="rgba(0,0,0,0)"
-         fill="#a3e4d7"
-         x="783.2285714285715"
-         y="263.7221410360604"
-         width="28.799999999999997"
-         height="60.717858963939584"
-         stroke-width="1"
-         filter="">
+      type="figure.bar"
+      stroke="black"
+      fill="#0077BB"
+      x="363.75000656545166"
+      y="98.53999999999999"
+      width="33.599999999999994"
+      height="411.65999999999997"
+      stroke-width="2"
+      stroke-opacity="1.0"
+      fill-opacity="1.0"
+      filter="">
       </rect>
-   </g>
-</svg>
+      <rect
+      type="figure.bar"
+      stroke="black"
+      fill="#0077BB"
+      x="584.0500131309033"
+      y="124.67714285714285"
+      width="33.599999999999994"
+      height="385.5228571428571"
+      stroke-width="2"
+      stroke-opacity="1.0"
+      fill-opacity="1.0"
+      filter="">
+      </rect>
+      <rect
+      type="figure.bar"
+      stroke="black"
+      fill="#0077BB"
+      x="804.35"
+      y="118.14285714285714"
+      width="33.599999999999994"
+      height="392.0571428571428"
+      stroke-width="2"
+      stroke-opacity="1.0"
+      fill-opacity="1.0"
+      filter="">
+      </rect>
+      </g>
+      </svg>
       

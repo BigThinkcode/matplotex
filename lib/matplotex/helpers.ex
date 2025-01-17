@@ -216,6 +216,19 @@ defmodule Matplotex.Helpers do
     |> copy()
   end
 
+  def minscatter() do
+    x= Nx.Random.key(12) |> Nx.Random.normal(0, 1, shape: {1000}) |> elem(0) |> Nx.to_list()
+    y1 = Nx.Random.key(13) |> Nx.Random.normal(0, 1, shape: {1000}) |> elem(0) |> Nx.to_list()
+    y2 = Nx.Random.key(14) |> Nx.Random.normal(0, 1, shape: {1000}) |> elem(0) |> Nx.to_list()
+    x
+    |>Matplotex.scatter(y1, color: "#EE3377", x_label: "", y_label: "", label: "Amet")
+    |>Matplotex.scatter(x,y2, color: "#0077BB", x_label: "", y_label: "", label: "Donor")
+    |>Matplotex.show()
+    |>copy()
+
+
+  end
+
   def multi_bar() do
     categories = ["apple", "banana", "fig", "avocado"]
     values1 = [22, 33, 28, 34]
@@ -309,6 +322,21 @@ defmodule Matplotex.Helpers do
     |> copy()
   end
 
+  def rdpie() do
+      # Percentages for each slice
+      sizes = [25, 35, 20, 20, 10]
+      # Labels for each slice
+      labels = ["Lorem", "Ipsum", "Donor", "Bit", "Amet"]
+      # Colors for the slices
+      colors = ["#33BBEE", "#EE7733", "#EE3377", "#EE3377","#008080"]
+
+      sizes
+      |> Matplotex.pie(colors: colors, labels: labels)
+      |> Matplotex.set_rc_params(%{line_width: 1, legend_width: 0.25})
+      |> Matplotex.show()
+      |>copy()
+  end
+
   def hist() do
     values = Nx.Random.key(12) |> Nx.Random.normal(0, 1, shape: {1000}) |> elem(0) |> Nx.to_list()
     bins = 100
@@ -356,6 +384,44 @@ defmodule Matplotex.Helpers do
     |> Matplotex.show()
     |> copy()
   end
+  def rdspline() do
+    x = Nx.linspace(0, 10, n: 100)|> Nx.to_list()
+    y1 = Nx.Random.key(12) |> Nx.Random.normal(0, 10, shape: {100}) |> elem(0) |> Nx.to_list()
+    y2 = Nx.Random.key(13) |> Nx.Random.normal(0, 10, shape: {100}) |> elem(0) |> Nx.to_list()
+
+    Matplotex.spline(x, y1, x_label: "", y_label: "", edge_color: "#919D41", line_width: 3)
+    |>Matplotex.spline(x,y2, x_label: "", y_label: "", edge_color: "#008080", line_width: 3)
+    |> Matplotex.set_ylim({-30, 30})
+    |> Matplotex.show()
+    |> copy()
+  end
+  def minhist() do
+    values = Nx.Random.key(12) |> Nx.Random.normal(0, 1, shape: {1000}) |> elem(0) |> Nx.to_list()
+    bins = 100
+
+    Matplotex.hist(values, bins,
+      x_label: "",
+      y_label: "",
+      color: "#EE7733",
+      edge_color: "#EE7733"
+    )
+    |> Matplotex.set_ylim({0, 50})
+    |> Matplotex.show()
+    |> copy()
+  end
+
+  def line_n() do
+    x = Nx.linspace(0, 10, n: 100)|> Nx.to_list()
+    y1 = Nx.Random.key(12) |> Nx.Random.normal(0, 10, shape: {100}) |> elem(0) |> Nx.to_list()
+    y2 = Nx.Random.key(13) |> Nx.Random.normal(0, 10, shape: {100}) |> elem(0) |> Nx.to_list()
+
+    x
+    |> Matplotex.plot(y1, color: "#EE3377", x_label: "", y_label: "", label: "Tarus")
+    |> Matplotex.plot(x,y2, color: "#0077BB", x_label: "", y_label: "", label: "Ipsum")
+    |> Matplotex.show()
+    |> copy()
+  end
+
 
   def multi_spline() do
     x_nx = Nx.linspace(0, 10, n: 100)

@@ -1,0 +1,877 @@
+<svg width="960"
+      height="576"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      style="top: 0px;
+      left: 0px;
+      position: absolute;">
+      <g>
+      
+     
+    <line
+    type="figure.x_tick"
+    x1="150.67000000000002"
+    y1="510.2"
+    x2="150.67000000000002"
+    y2="515.1999999999999"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.x_tick"
+     fill="black"
+     x="150.67000000000002"
+     y="531.2"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="middle"
+     >
+     0.0
+    </text>
+
+    
+     
+    <line
+    type="figure.x_tick"
+    x1="230.80999938964842"
+    y1="510.2"
+    x2="230.80999938964842"
+    y2="515.1999999999999"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.x_tick"
+     fill="black"
+     x="230.80999938964842"
+     y="531.2"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="middle"
+     >
+     1.11
+    </text>
+
+    
+     
+    <line
+    type="figure.x_tick"
+    x1="310.94999877929683"
+    y1="510.2"
+    x2="310.94999877929683"
+    y2="515.1999999999999"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.x_tick"
+     fill="black"
+     x="310.94999877929683"
+     y="531.2"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="middle"
+     >
+     2.22
+    </text>
+
+    
+     
+    <line
+    type="figure.x_tick"
+    x1="391.08999816894527"
+    y1="510.2"
+    x2="391.08999816894527"
+    y2="515.1999999999999"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.x_tick"
+     fill="black"
+     x="391.08999816894527"
+     y="531.2"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="middle"
+     >
+     3.33
+    </text>
+
+    
+     
+    <line
+    type="figure.x_tick"
+    x1="471.2299975585937"
+    y1="510.2"
+    x2="471.2299975585937"
+    y2="515.1999999999999"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.x_tick"
+     fill="black"
+     x="471.2299975585937"
+     y="531.2"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="middle"
+     >
+     4.44
+    </text>
+
+    
+     
+    <line
+    type="figure.x_tick"
+    x1="551.3699969482421"
+    y1="510.2"
+    x2="551.3699969482421"
+    y2="515.1999999999999"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.x_tick"
+     fill="black"
+     x="551.3699969482421"
+     y="531.2"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="middle"
+     >
+     5.56
+    </text>
+
+    
+     
+    <line
+    type="figure.x_tick"
+    x1="631.5099963378906"
+    y1="510.2"
+    x2="631.5099963378906"
+    y2="515.1999999999999"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.x_tick"
+     fill="black"
+     x="631.5099963378906"
+     y="531.2"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="middle"
+     >
+     6.67
+    </text>
+
+    
+     
+    <line
+    type="figure.x_tick"
+    x1="711.649995727539"
+    y1="510.2"
+    x2="711.649995727539"
+    y2="515.1999999999999"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.x_tick"
+     fill="black"
+     x="711.649995727539"
+     y="531.2"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="middle"
+     >
+     7.78
+    </text>
+
+    
+     
+    <line
+    type="figure.x_tick"
+    x1="791.7899951171876"
+    y1="510.2"
+    x2="791.7899951171876"
+    y2="515.1999999999999"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.x_tick"
+     fill="black"
+     x="791.7899951171876"
+     y="531.2"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="middle"
+     >
+     8.89
+    </text>
+
+    
+     
+    <line
+    type="figure.x_tick"
+    x1="871.929994506836"
+    y1="510.2"
+    x2="871.929994506836"
+    y2="515.1999999999999"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.x_tick"
+     fill="black"
+     x="871.929994506836"
+     y="531.2"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="middle"
+     >
+     10.0
+    </text>
+
+    
+     
+    <line
+    type="figure.y_tick"
+    x1="110.6"
+    y1="487.33"
+    x2="105.60000000000001"
+    y2="487.33"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.y_tick"
+     fill="black"
+     x="64.0"
+     y="487.33"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="start"
+     >
+     -30.0
+    </text>
+
+    
+     
+    <line
+    type="figure.y_tick"
+    x1="110.6"
+    y1="404.9979992675781"
+    x2="105.60000000000001"
+    y2="404.9979992675781"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.y_tick"
+     fill="black"
+     x="64.0"
+     y="404.9979992675781"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="start"
+     >
+     -18.0
+    </text>
+
+    
+     
+    <line
+    type="figure.y_tick"
+    x1="110.6"
+    y1="322.66599853515623"
+    x2="105.60000000000001"
+    y2="322.66599853515623"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.y_tick"
+     fill="black"
+     x="64.0"
+     y="322.66599853515623"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="start"
+     >
+     -6.0
+    </text>
+
+    
+     
+    <line
+    type="figure.y_tick"
+    x1="110.6"
+    y1="240.33399780273436"
+    x2="105.60000000000001"
+    y2="240.33399780273436"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.y_tick"
+     fill="black"
+     x="64.0"
+     y="240.33399780273436"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="start"
+     >
+     6.0
+    </text>
+
+    
+     
+    <line
+    type="figure.y_tick"
+    x1="110.6"
+    y1="158.00199707031248"
+    x2="105.60000000000001"
+    y2="158.00199707031248"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.y_tick"
+     fill="black"
+     x="64.0"
+     y="158.00199707031248"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="start"
+     >
+     18.0
+    </text>
+
+    
+     
+    <line
+    type="figure.y_tick"
+    x1="110.6"
+    y1="75.66999633789061"
+    x2="105.60000000000001"
+    y2="75.66999633789061"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+         <text tag="figure.y_tick"
+     fill="black"
+     x="64.0"
+     y="75.66999633789061"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="start"
+     >
+     30.0
+    </text>
+
+    
+    <line
+    type="figure.h_grid"
+    x1="110.6"
+    y1="487.33"
+    x2="912.0"
+    y2="487.33"
+    fill="rgba(0,0,0,0)"
+    stroke="#ddd"
+    stroke-width="1"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="figure.h_grid"
+    x1="110.6"
+    y1="404.9979992675781"
+    x2="912.0"
+    y2="404.9979992675781"
+    fill="rgba(0,0,0,0)"
+    stroke="#ddd"
+    stroke-width="1"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="figure.h_grid"
+    x1="110.6"
+    y1="322.66599853515623"
+    x2="912.0"
+    y2="322.66599853515623"
+    fill="rgba(0,0,0,0)"
+    stroke="#ddd"
+    stroke-width="1"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="figure.h_grid"
+    x1="110.6"
+    y1="240.33399780273436"
+    x2="912.0"
+    y2="240.33399780273436"
+    fill="rgba(0,0,0,0)"
+    stroke="#ddd"
+    stroke-width="1"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="figure.h_grid"
+    x1="110.6"
+    y1="158.00199707031248"
+    x2="912.0"
+    y2="158.00199707031248"
+    fill="rgba(0,0,0,0)"
+    stroke="#ddd"
+    stroke-width="1"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="figure.h_grid"
+    x1="110.6"
+    y1="75.66999633789061"
+    x2="912.0"
+    y2="75.66999633789061"
+    fill="rgba(0,0,0,0)"
+    stroke="#ddd"
+    stroke-width="1"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="figure.v_grid"
+    x1="150.67000000000002"
+    y1="510.2"
+    x2="150.67000000000002"
+    y2="52.79999999999998"
+    fill="rgba(0,0,0,0)"
+    stroke="#ddd"
+    stroke-width="1"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="figure.v_grid"
+    x1="230.80999938964842"
+    y1="510.2"
+    x2="230.80999938964842"
+    y2="52.79999999999998"
+    fill="rgba(0,0,0,0)"
+    stroke="#ddd"
+    stroke-width="1"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="figure.v_grid"
+    x1="310.94999877929683"
+    y1="510.2"
+    x2="310.94999877929683"
+    y2="52.79999999999998"
+    fill="rgba(0,0,0,0)"
+    stroke="#ddd"
+    stroke-width="1"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="figure.v_grid"
+    x1="391.08999816894527"
+    y1="510.2"
+    x2="391.08999816894527"
+    y2="52.79999999999998"
+    fill="rgba(0,0,0,0)"
+    stroke="#ddd"
+    stroke-width="1"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="figure.v_grid"
+    x1="471.2299975585937"
+    y1="510.2"
+    x2="471.2299975585937"
+    y2="52.79999999999998"
+    fill="rgba(0,0,0,0)"
+    stroke="#ddd"
+    stroke-width="1"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="figure.v_grid"
+    x1="551.3699969482421"
+    y1="510.2"
+    x2="551.3699969482421"
+    y2="52.79999999999998"
+    fill="rgba(0,0,0,0)"
+    stroke="#ddd"
+    stroke-width="1"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="figure.v_grid"
+    x1="631.5099963378906"
+    y1="510.2"
+    x2="631.5099963378906"
+    y2="52.79999999999998"
+    fill="rgba(0,0,0,0)"
+    stroke="#ddd"
+    stroke-width="1"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="figure.v_grid"
+    x1="711.649995727539"
+    y1="510.2"
+    x2="711.649995727539"
+    y2="52.79999999999998"
+    fill="rgba(0,0,0,0)"
+    stroke="#ddd"
+    stroke-width="1"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="figure.v_grid"
+    x1="791.7899951171876"
+    y1="510.2"
+    x2="791.7899951171876"
+    y2="52.79999999999998"
+    fill="rgba(0,0,0,0)"
+    stroke="#ddd"
+    stroke-width="1"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="figure.v_grid"
+    x1="871.929994506836"
+    y1="510.2"
+    x2="871.929994506836"
+    y2="52.79999999999998"
+    fill="rgba(0,0,0,0)"
+    stroke="#ddd"
+    stroke-width="1"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="spine.left"
+    x1="110.6"
+    y1="510.2"
+    x2="110.6"
+    y2="52.79999999999998"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="spine.right"
+    x1="912.0"
+    y1="510.2"
+    x2="912.0"
+    y2="52.79999999999998"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="spine.top"
+    x1="110.6"
+    y1="52.79999999999998"
+    x2="912.0"
+    y2="52.79999999999998"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+    
+    <line
+    type="spine.bottom"
+    x1="110.6"
+    y1="510.2"
+    x2="912.0"
+    y2="510.2"
+    fill="rgba(0,0,0,0)"
+    stroke="black"
+    stroke-width="2"
+    shape-rendering="geometricPrecision"
+    stroke-linecap="square"
+    stroke-dasharray=""
+    />
+
+        <text tag="figure.x_label"
+     fill="black"
+     x="511.3"
+     y="547.2"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="middle"
+     >
+     
+    </text>
+    <text tag="figure.y_label"
+     fill="black"
+     x="48.0"
+     y="281.5"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform="rotate(-90, 48.0, 281.5)"
+     dominant-baseline="middle"
+     text-anchor="middle"
+     >
+     
+    </text>
+    <text tag="figure.title"
+     fill="black"
+     x="448.7"
+     y="33.800000000000004"
+     font-size="18"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="auto"
+     text-anchor="middle"
+     >
+     
+    </text>
+ <path d="M 150.67000000000002,334.9465288791656
+ C 157.95545440432429,195.84723532772063 165.2409088086486,236.31911734008787 172.52636428773405,266.9269361531734  S 179.81181761729715,294.9515008795261 187.09727094686033,404.8264121856689 S 194.38272857546806,337.97644356918335 201.6681819050312,185.29985853290557 S 208.95363523459434,331.0316485972404 216.2390885641575,280.64056653206046 S 223.52454189372062,385.1645908937454 230.80999522328375,268.812192158699 S 238.09545715093614,299.852641405344 245.38091048049927,296.67750129055975 S 252.66636381006242,292.6231355705261 259.9518171396255,363.51953141880034 S 267.23727046918873,155.68653289413453 274.5227237987518,388.207513384819 S 281.808177128315,370.43856924343106 289.09363045787813,298.6939427363872 S 296.37908378744123,216.99606813049314 303.6645371170044,258.940880774498 S 310.94999044656754,240.7529454154968 318.2354437761307,380.404625576973 S 325.52091430187227,315.5650525269508 332.80636763143536,265.1588108813762 S 340.0918209609985,309.89268615055084 347.3772742905617,262.3252515001297 S 354.66272762012477,255.1848536827564 361.948180949688,304.823842811346 S 369.2336342792511,320.02811543893813 376.51908760881423,273.22612821137903 S 383.80454093837733,322.98047405958175 391.0899942679405,260.004211258173 S 398.3754475975036,229.22207286167145 405.6609009270668,360.99828194713587 S 412.94635425663,132.86897849845886 420.2318075861931,281.1367461241558 S 427.51726091575625,310.9581905989647 434.80271424531935,408.83363934898375 S 442.0881675748825,226.31194379234313 449.37363810062413,328.695528008461 S 456.6590742340088,335.29321164131164 463.9445447597504,139.58279666900634 S 471.2299808931351,314.99653375720976 478.51545141887664,142.35445285415648 S 485.8008875522614,224.38996921157838 493.08635807800295,383.19060473823544 S 500.3718286037445,355.03876574516295 507.65726473712925,283.18939358068997 S 514.9427352628708,267.36217894315723 522.2281713962554,298.92770528793335 S 529.5136419219971,358.83328133678435 536.7990780553816,233.93408336257932 S 544.0845485811233,177.18276820659636 551.369984714508,137.52039279937745 S 558.6554552402496,343.3336357679367 565.9408913736343,189.8577907142639 S 573.2263618993759,274.49326748037333 580.5117980327606,245.74994649934766 S 587.7972685585021,328.75079153347014 595.0827046918869,286.6384936361313 S 602.3681752176284,221.87324760627746 609.6536113510131,272.2511434670687 S 616.9390818767547,291.587076975584 624.2245524024963,390.41715797233576 S 631.5099885358809,266.81508738493915 638.7954590616226,371.5419684000015 S 646.0808951950072,417.130090763092 653.366365720749,199.17761844444271 S 660.6518018541335,249.1304698472023 667.9372723798751,318.2192819004059 S 675.2227085132599,230.1897505326271 682.5081790390014,345.0678609304428 S 689.7936151723861,339.8061465148926 697.0790856981278,300.62700960826874 S 704.3645218315124,270.9915999883413 711.649992357254,253.27845345735545 S 718.9354284906387,298.95032171869275 726.2208990163803,331.266116174221 S 733.5063351497649,219.9611597394943 740.7918056755066,299.67589430975914 S 748.0772762012482,233.22330976247787 755.3627467269897,321.1103311166763 S 762.6481484680176,377.3945824623107 769.9336189937592,361.8029531574249 S 777.2190895195007,329.6227820401192 784.5045600452422,229.18273865842818 S 791.7899617862702,219.66994988346096 799.0754323120117,192.094105219841 S 806.3609028377532,209.50619198608396 813.6463733634948,251.81604095458985 S 820.9317751045227,263.3217795970439 828.2172456302642,239.41797403001786 S 835.5027161560058,231.01720175266263 842.7881866817474,330.876857073307 S 850.073657207489,314.8310539822578 857.3590589485168,265.748100910902 S 864.6445294742584,154.88300673675536 871.93,438.96110683059686  "
+  fill="none"
+  stroke="#919D41"
+  stroke-width="3" />
+ <path d="M 150.67000000000002,201.90509521675108
+ C 157.95545440432429,356.3285991449356 165.2409088086486,218.66092925930022 172.52636428773405,306.2977794537544  S 179.81181761729715,203.56607625198365 187.09727094686033,323.1599005789757 S 194.38272857546806,271.80396431839466 201.6681819050312,336.57319758605956 S 208.95363523459434,159.21508868217467 216.2390885641575,344.0210535602569 S 223.52454189372062,401.8661297988891 230.80999522328375,300.1226579678058 S 238.09545715093614,345.7724021711349 245.38091048049927,198.14357023525235 S 252.66636381006242,327.2287544898987 259.9518171396255,301.3295944442749 S 267.23727046918873,360.57317287540434 274.5227237987518,333.3290107808113 S 281.808177128315,306.03832845807074 289.09363045787813,257.9814981939793 S 296.37908378744123,367.8401693782806 303.6645371170044,321.782221991539 S 310.94999044656754,222.78208591556546 318.2354437761307,290.53147478115557 S 325.52091430187227,248.47593470287325 332.80636763143536,269.35380627453327 S 340.0918209609985,244.5793818106651 347.3772742905617,328.9566458740234 S 354.66272762012477,317.4291953926087 361.948180949688,381.51660281562806 S 369.2336342792511,187.21952337837217 376.51908760881423,216.14554900169372 S 383.80454093837733,347.1721410207748 391.0899942679405,295.7536382513046 S 398.3754475975036,369.4384669456482 405.6609009270668,207.5332461929321 S 412.94635425663,184.63109528827667 420.2318075861931,256.966577275753 S 427.51726091575625,322.88204531145095 434.80271424531935,313.06543474054337 S 442.0881675748825,393.4000404319763 449.37363810062413,354.4685359392166 S 456.6590742340088,270.30515958046914 463.9445447597504,276.9682711276412 S 471.2299808931351,244.5797874865532 478.51545141887664,133.47976935005187 S 485.8008875522614,385.1999108686447 493.08635807800295,387.36249050998686 S 500.3718286037445,276.7865221955776 507.65726473712925,398.2750606651306 S 514.9427352628708,188.42160646629333 522.2281713962554,330.3032804412842 S 529.5136419219971,344.2735933437347 536.7990780553816,294.87322097313404 S 544.0845485811233,268.6788834631443 551.369984714508,373.8139627542496 S 558.6554552402496,264.9967417283058 565.9408913736343,281.7915077742636 S 573.2263618993759,277.1176735418438 580.5117980327606,336.0175459394455 S 587.7972685585021,264.75770866179465 595.0827046918869,325.3124757294655 S 602.3681752176284,363.77239181709285 609.6536113510131,201.27238478088375 S 616.9390818767547,193.2309268350601 624.2245524024963,304.95071140217783 S 631.5099885358809,202.38401523208617 638.7954590616226,222.08075082302094 S 646.0808951950072,345.3601111488342 653.366365720749,206.82703644657136 S 660.6518018541335,314.54801980400083 667.9372723798751,256.8479972321987 S 675.2227085132599,279.67561050873996 682.5081790390014,363.94802984714505 S 689.7936151723861,267.12906089282035 697.0790856981278,329.42612738180156 S 704.3645218315124,397.0285495243072 711.649992357254,310.756595855236 S 718.9354284906387,379.47204214191436 726.2208990163803,201.4653883562088 S 733.5063351497649,172.45606176948547 740.7918056755066,386.2785179939269 S 748.0772762012482,419.1455409202576 755.3627467269897,271.75405718731884 S 762.6481484680176,331.86748160457614 769.9336189937592,329.17901187753677 S 777.2190895195007,238.1073791851997 784.5045600452422,432.24167462921145 S 791.7899617862702,219.97842059421538 799.0754323120117,289.45294862747187 S 806.3609028377532,432.43608498382565 813.6463733634948,379.1547381658554 S 820.9317751045227,301.3663620932102 828.2172456302642,255.58786323332785 S 835.5027161560058,390.1132020416259 842.7881866817474,301.7697511470318 S 850.073657207489,360.9028041639328 857.3590589485168,372.8352893037796 S 864.6445294742584,361.49403096866604 871.93,342.0194749011993  "
+  fill="none"
+  stroke="#008080"
+  stroke-width="3" />
+
+      </g>
+      </svg>
+      
