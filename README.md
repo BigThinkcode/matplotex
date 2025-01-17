@@ -1,6 +1,7 @@
 # <img src="assets/images/matplotex_logo.png" height="50" /> Matplotex
 
 <font color="darkblue"> **Matplotex**</font> is a lightweight and efficient library for Elixir projects that facilitates server-side SVG generation for data visualization. Designed to integrate seamlessly with Phoenix LiveView, it serves as a powerful tool for creating dynamic visualizations in web applications. Below are the key benefits and extended use cases of <font color="darkblue"> **Matplotex**</font>:
+<font color="darkblue"> **Matplotex**</font> is a lightweight and efficient library for Elixir projects that facilitates server-side SVG generation for data visualization. Designed to integrate seamlessly with Phoenix LiveView, it serves as a powerful tool for creating dynamic visualizations in web applications. Below are the key benefits and extended use cases of <font color="darkblue"> **Matplotex**</font>:
 
 - **Server-side SVG Generation:** <font color="darkblue"> **Matplotex**</font> enables the creation of larger, complex plots on the server, ensuring smooth performance on client-side devices with limited memory.
 - **Efficient Concurrent Processing :** Leveraging Elixir’s concurrency capabilities, <font color="darkblue"> **Matplotex**</font> can handle multiple requests simultaneously, making it ideal for high-performance applications.
