@@ -15,7 +15,7 @@ defmodule Matplotex.Figure.Cast do
   alias Matplotex.Figure.Dataset
   @xtick_type "figure.x_tick"
   @ytick_type "figure.y_tick"
-  @stroke_grid "#ddd"
+  @stroke_grid "#F3CC9C"
   @stroke_width_grid 1
   @lowest_tick 0
   @zero_to_move 0
@@ -453,6 +453,7 @@ defmodule Matplotex.Figure.Cast do
           }
         } = figure
       ) do
+        IO.inspect(ylim, label: "cast")
     y_ticks = confine_ticks(y_ticks, ylim)
     y_data = confine_data(y_data, ylim)
     dataset = confine_data(dataset, ylim, :y)

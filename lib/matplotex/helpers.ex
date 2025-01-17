@@ -21,7 +21,7 @@ defmodule Matplotex.Helpers do
 
   def line_plot() do
     x = [1, 2, 3, 4, 6, 6, 7]
-    y = [1, 3, 4, 4, 5, 6, 7]
+    y = [1, 7, 4,6, 5, 6, 7]
 
     frame_width = 6
     frame_height = 6
@@ -29,18 +29,18 @@ defmodule Matplotex.Helpers do
     margin = 0.05
     font_size = "16pt"
     title_font_size = "18pt"
-    ticks = [1, 2, 3, 4, 5, 6, 7]
+    ticks = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0]
 
     x
-    |> Matplotex.plot(y)
+    |> Matplotex.plot(y, color: "#D278AA")
     |> Matplotex.figure(%{figsize: size, margin: margin})
-    |> Matplotex.set_title("The Plot Title")
-    |> Matplotex.set_xlabel("X Axis")
-    |> Matplotex.set_ylabel("Y Axis")
+    # |> Matplotex.set_title("The Plot Title")
+    |> Matplotex.set_xlabel("")
+    |> Matplotex.set_ylabel("")
     |> Matplotex.set_xticks(ticks)
     |> Matplotex.set_yticks(ticks)
-    |> Matplotex.set_xlim({4, 7})
-    |> Matplotex.set_ylim({4, 7})
+    |> Matplotex.set_xlim({1, 7})
+    |> Matplotex.set_ylim({1, 7})
     # TODO: Setting limits are not taking the proper xy values
     |> Matplotex.set_rc_params(
       x_tick_font_size: font_size,
@@ -48,11 +48,22 @@ defmodule Matplotex.Helpers do
       title_font_size: title_font_size,
       x_label_font_size: font_size,
       y_label_font_size: font_size,
-      title_font_size: title_font_size
+      title_font_size: title_font_size,
+      grid_color: "#FAEBC3"
     )
     |> Matplotex.show()
     |> copy()
   end
+  def line_n() do
+    x = [1, 2, 3, 4, 6, 6, 7]
+    y = [1, 7, 4,6, 5, 6, 7]
+
+    x
+    |> Matplotex.plot(y, color: "#7C6D91", x_label: "", y_label: "")
+    |> Matplotex.show()
+    |> copy()
+  end
+
 
   def line_plot_by_options() do
     x = [1, 2, 3, 4, 6, 6, 7]
@@ -123,41 +134,18 @@ defmodule Matplotex.Helpers do
     |> copy()
   end
 
-  # def bar() do
-  #   values = [2, 1, 3, 7, 3, 5, 4]
-  #   categories = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+  def bar() do
+    categories = ["1","2", "3","4"]
+    values = [22, 33, 28, 34]
 
-  #   frame_width = 8
-  #   frame_height = 6
-  #   size = {frame_width, frame_height}
-  #   margin = 0.05
-  #   font_size = 0
-  #   title_font_size = 0
-  #   yticks = [0, 1, 2, 3, 4, 5, 6, 7]
-
-  #   categories
-  #   |> Matplotex.bar(values)
-  #   |> Matplotex.figure(%{figsize: size, margin: margin})
-  #   |> Matplotex.set_title("Sample barchart")
-  #   |> Matplotex.set_xticks(categories)
-  #   |> Matplotex.set_yticks(yticks)
-  #   |> Matplotex.set_xlabel("Category")
-  #   |> Matplotex.set_ylabel("Values")
-  #   |> Matplotex.set_xlim({1, 7})
-  #   |> Matplotex.set_ylim({0, 7})
-  #   |> Matplotex.hide_v_grid()
-  #   |> Matplotex.set_rc_params(
-  #     x_tick_font_size: font_size,
-  #     y_tick_font_size: font_size,
-  #     title_font_size: title_font_size,
-  #     x_label_font_size: font_size,
-  #     y_label_font_size: font_size,
-  #     title_font_size: title_font_size,
-  #     y_padding: 0
-  #   )
-  #   |> Matplotex.show()
-  #   |> copy()
-  # end
+    width = 0.8
+    Matplotex.bar(values,width, color: "#7C6D91", x_label: "", y_label: "")
+    |> Matplotex.set_xticks(categories)
+    |> Matplotex.set_ylim({0,40})
+    |> Matplotex.hide_v_grid()
+    |> Matplotex.show()
+    |> copy()
+  end
 
   def scatter() do
     # x = [10, 20, 3, 4, 6, 6, 7]
@@ -195,6 +183,17 @@ defmodule Matplotex.Helpers do
     |> copy()
   end
 
+  def minscatter() do
+    x= Nx.Random.key(12) |> Nx.Random.normal(0, 1, shape: {1000}) |> elem(0) |> Nx.to_list()
+    y = Nx.Random.key(13) |> Nx.Random.normal(0, 1, shape: {1000}) |> elem(0) |> Nx.to_list()
+    x
+    |>Matplotex.scatter(y, color: "#7C6D91", x_label: "", y_label: "")
+    |>Matplotex.show()
+    |>copy()
+
+
+  end
+
   def multiline_plot() do
     x = [1, 2, 3, 4, 5]
     # Dataset 1
@@ -225,7 +224,7 @@ defmodule Matplotex.Helpers do
     Matplotex.bar(width, values1, width, label: "Dataset1", color: "#255199")
     |> Matplotex.bar(-width, values2, width, label: "Dataset2", color: "orange")
     |> Matplotex.set_xticks(categories)
-    |> Matplotex.figure(%{figsize: {10, 10}, margin: 0.05})
+    |> Matplotex.figure(%{figsize: {6, 6}, margin: 0.05})
     |> Matplotex.set_title("Bar chart")
     |> Matplotex.set_xlabel("X-axis")
     |> Matplotex.set_ylabel("Y-Axis")
@@ -248,7 +247,7 @@ defmodule Matplotex.Helpers do
     |> Matplotex.scatter(y1, color: "blue", linestyle: "_", marker: "o", label: "Dataset 1")
     |> Matplotex.scatter(x, y2, color: "red", linestyle: "--", marker: "^", label: "Dataset 2")
     |> Matplotex.scatter(x, y3, color: "green", linestyle: "-.", marker: "s", label: "Dataset 3")
-    |> Matplotex.figure(%{figsize: {8, 8}, margin: 0.05})
+    |> Matplotex.figure(%{figsize: {6, 4}, margin: 0.05})
     |> Matplotex.set_title("Title")
     |> Matplotex.set_xlabel("X-Axis")
     |> Matplotex.set_ylabel("Y-Axis")
@@ -260,14 +259,12 @@ defmodule Matplotex.Helpers do
     # Percentages for each slice
     sizes = [25, 35, 20, 20, 10]
     # Labels for each slice
-    labels = ["A", "B", "C", "D", "E"]
+    labels = ["Lorem", "Ipsum", "Donor", "Bit", "Amet"]
     # Colors for the slices
-    colors = ["#33BBEE", "#EE7733", "#EE3377", "#0077BB","#919D41"]
+    colors = ["#7C6D91", "#D278AA", "#F3A09C", "#F3CC9C","#FAEBC3"]
 
     sizes
     |> Matplotex.pie(colors: colors, labels: labels)
-    |> Matplotex.set_title("Pie chart")
-    |> Matplotex.figure(%{figsize: {4, 3}, margin: 0.05})
     |> Matplotex.set_rc_params(%{line_width: 1, legend_width: 0.25})
     |> Matplotex.show()
     |> copy()
@@ -325,6 +322,20 @@ defmodule Matplotex.Helpers do
     |> Matplotex.show()
     |> copy()
   end
+  def minhist() do
+    values = Nx.Random.key(12) |> Nx.Random.normal(0, 1, shape: {1000}) |> elem(0) |> Nx.to_list()
+    bins = 100
+
+    Matplotex.hist(values, bins,
+      x_label: "",
+      y_label: "",
+      color: "#7C6D91",
+      edge_color: "#7C6D91"
+    )
+    |> Matplotex.set_ylim({0, 50})
+    |> Matplotex.show()
+    |> copy()
+  end
 
   def multi_hist() do
     values1 =
@@ -348,11 +359,11 @@ defmodule Matplotex.Helpers do
   end
 
   def spline() do
-    x_nx = Nx.linspace(0, 10, n: 100)
-    x = Nx.to_list(x_nx)
-    y = x_nx |> Nx.sin() |> Nx.to_list()
+    x = Nx.linspace(0, 10, n: 100)|> Nx.to_list()
+    y = Nx.Random.key(12) |> Nx.Random.normal(0, 10, shape: {100}) |> elem(0) |> Nx.to_list()
 
-    Matplotex.spline(x, y, x_label: "X", y_label: "Y", edge_color: "green")
+    Matplotex.spline(x, y, x_label: "", y_label: "", color: "#7C6D91", line_width: 3)
+    |> Matplotex.set_ylim({-30, 30})
     |> Matplotex.show()
     |> copy()
   end
@@ -364,7 +375,8 @@ defmodule Matplotex.Helpers do
     y2 = x_nx |> Nx.cos() |> Nx.to_list()
 
     Matplotex.spline(x, y1, x_label: "X", y_label: "Y", edge_color: "green")
-    |> Matplotex.spline(x, y2, x_label: "X", y_label: "Y", edge_color: "red")
+    |> Matplotex.spline(x, y2, x_label: "X", y_label: "Y", edge_color: "#7C6D91")
+
     |> Matplotex.show()
     |> copy()
   end

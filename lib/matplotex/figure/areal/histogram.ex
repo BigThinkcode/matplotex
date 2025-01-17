@@ -66,6 +66,7 @@ defmodule Matplotex.Figure.Areal.Histogram do
          },
          rc_params: %RcParams{x_padding: x_padding, white_space: white_space}
        }) do
+        IO.inspect(y_lim)
     x_padding_value = width_region_content * x_padding + white_space
     shrinked_width_region_content = width_region_content - x_padding_value * 2
 
@@ -151,7 +152,7 @@ defmodule Matplotex.Figure.Areal.Histogram do
     {bins_dist, hists}
   end
 
-  defp sanitize(%Figure{axes: %__MODULE__{data: {x, y}} = axes} = figure) do
+  defp sanitize(%Figure{axes: %__MODULE__{data: {x, y}, limit: %TwoD{x: xlim, y: ylim}} = axes} = figure) do
     {ymin, ymax} = Enum.min_max(y)
     {xmin, xmax} = Enum.min_max(x)
 
@@ -159,7 +160,7 @@ defmodule Matplotex.Figure.Areal.Histogram do
       figure
       | axes: %__MODULE__{
           axes
-          | limit: %TwoD{x: {floor(xmin), ceil(xmax)}, y: {floor(ymin), ceil(ymax)}}
+          | limit: %TwoD{x: xlim || {floor(xmin), ceil(xmax)}, y: ylim || {floor(ymin), ceil(ymax)}}
         }
     }
   end
