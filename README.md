@@ -15,8 +15,8 @@ The sample plots generated using <font color="darkblue"> **Matplotex**</font> ar
 </p> 
 </div>
 <div style="display: flex; justify-content: space-between;">
-</p align="center">
-<img src="assets/images/line_plot_readme.svg" alt="Line plot" width="45 %"/>
+<p align="center">
+<img src="assets/images/line_plot_readme.svg" alt="Line plot" width="45%"/>
 <img src="assets/images/scatter_plot_readme.svg" alt="Scater plot" width="45%"/>
 </p>
 </div>
