@@ -309,6 +309,21 @@ defmodule Matplotex.Helpers do
     |> copy()
   end
 
+  def rdpie() do
+      # Percentages for each slice
+      sizes = [25, 35, 20, 20, 10]
+      # Labels for each slice
+      labels = ["Lorem", "Ipsum", "Donor", "Bit", "Amet"]
+      # Colors for the slices
+      colors = ["#33BBEE", "#EE7733", "#EE3377", "#EE3377","#008080"]
+
+      sizes
+      |> Matplotex.pie(colors: colors, labels: labels)
+      |> Matplotex.set_rc_params(%{line_width: 1, legend_width: 0.25})
+      |> Matplotex.show()
+      |>copy()
+  end
+
   def hist() do
     values = Nx.Random.key(12) |> Nx.Random.normal(0, 1, shape: {1000}) |> elem(0) |> Nx.to_list()
     bins = 100

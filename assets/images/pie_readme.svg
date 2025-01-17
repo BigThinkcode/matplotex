@@ -1,5 +1,5 @@
 <svg width="960"
-      height="384"
+      height="576"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -10,10 +10,10 @@
       
     <line
     type="border.left"
-    x1="111.0"
-    y1="355.20000000000005"
-    x2="111.0"
-    y2="28.799999999999983"
+    x1="48.0"
+    y1="547.2"
+    x2="48.0"
+    y2="28.800000000000004"
     fill="rgba(0,0,0,0)"
     stroke="black"
     stroke-width="1"
@@ -26,9 +26,9 @@
     <line
     type="border.right"
     x1="912.0"
-    y1="355.20000000000005"
+    y1="547.2"
     x2="912.0"
-    y2="28.799999999999983"
+    y2="28.800000000000004"
     fill="rgba(0,0,0,0)"
     stroke="black"
     stroke-width="1"
@@ -40,10 +40,10 @@
     
     <line
     type="border.top"
-    x1="111.0"
-    y1="28.799999999999983"
+    x1="48.0"
+    y1="28.800000000000004"
     x2="912.0"
-    y2="28.799999999999983"
+    y2="28.800000000000004"
     fill="rgba(0,0,0,0)"
     stroke="black"
     stroke-width="1"
@@ -55,10 +55,10 @@
     
     <line
     type="border.bottom"
-    x1="111.0"
-    y1="355.20000000000005"
+    x1="48.0"
+    y1="547.2"
     x2="912.0"
-    y2="355.20000000000005"
+    y2="547.2"
     fill="rgba(0,0,0,0)"
     stroke="black"
     stroke-width="1"
@@ -69,140 +69,181 @@
 
         <text tag="figure.title"
      fill="black"
-     x="519.0"
-     y="57.60000000000001"
+     x="480.0"
+     y="57.80000000000001"
      font-size="18"
      font-weight="normal"
      font-family="Arial, Verdana, sans-serif"
      font-style="normal"
      transform=""
-     dominant-baseline="hanging"
+     dominant-baseline="auto"
      text-anchor="middle"
      >
-     Asias Emission distribution(2008-2011)
+     
     </text>
-<path d="M 267.64 79.12000000000003
- A 123.63999999999999 123.63999999999999 0 0 1 390.8400965815742 213.18045115581828
- L 267.64 202.76000000000002
- Z" fill="#76b5c5" />
-<path d="M 390.8400965815742 213.18045115581828
- A 123.63999999999999 123.63999999999999 0 0 1 261.131450798377 326.2285724680173
- L 267.64 202.76000000000002
- Z" fill="#DEDEDE" />
-<path d="M 261.131450798377 326.2285724680173
- A 123.63999999999999 123.63999999999999 0 0 1 144.13727637321526 196.93532346254113
- L 267.64 202.76000000000002
- Z" fill="#FBD1A2" />
-<path d="M 144.13727637321526 196.93532346254113
- A 123.63999999999999 123.63999999999999 0 0 1 267.64 79.12000000000003
- L 267.64 202.76000000000002
- Z" fill="#6195B4" />
+<path d="M 301.68 77.51999999999992
+ A 222.48000000000002 222.48000000000002 0 0 1 521.89547438967 268.3377947809594
+ L 301.68 299.99999999999994
+ Z" fill="#33BBEE" />
+<path d="M 521.89547438967 268.3377947809594
+ A 222.48000000000002 222.48000000000002 0 0 1 239.0001407539188 513.4679967697534
+ L 301.68 299.99999999999994
+ Z" fill="#EE7733" />
+<path d="M 239.0001407539188 513.4679967697534
+ A 222.48000000000002 222.48000000000002 0 0 1 81.46452561033006 331.66220521904046
+ L 301.68 299.99999999999994
+ Z" fill="#EE3377" />
+<path d="M 81.46452561033006 331.66220521904046
+ A 222.48000000000002 222.48000000000002 0 0 1 181.39823093247867 112.83791401571875
+ L 301.68 299.99999999999994
+ Z" fill="#EE3377" />
+<path d="M 181.39823093247867 112.83791401571875
+ A 222.48000000000002 222.48000000000002 0 0 1 301.67999999999995 77.51999999999992
+ L 301.68 299.99999999999994
+ Z" fill="#008080" />
 
       <rect
       type="pie.legend"
       stroke="rgba(0,0,0,0)"
-      fill="#76b5c5"
-      x="535.28"
-      y="110.02999999999999"
-      width="30.909999999999997"
-      height="30.909999999999997"
+      fill="#33BBEE"
+      x="672.0"
+      y="83.72"
+      width="25.92"
+      height="25.92"
       stroke-width="1"
+      stroke-opacity="1.0"
+      fill-opacity="1.0"
       filter="">
       </rect>
     <text tag="legend.label"
      fill="black"
-     x="586.19"
-     y="117.7575"
-     font-size="16pt"
+     x="702.9200000000001"
+     y="96.68"
+     font-size="12"
      font-weight="normal"
      font-family="Arial, Verdana, sans-serif"
      font-style="normal"
      transform=""
-     dominant-baseline="hanging"
+     dominant-baseline="middle"
      text-anchor="start"
      >
-     2008-26.35%
-    </text>
-
-
-      <rect
-      type="pie.legend"
-      stroke="rgba(0,0,0,0)"
-      fill="#DEDEDE"
-      x="535.28"
-      y="140.93999999999997"
-      width="30.909999999999997"
-      height="30.909999999999997"
-      stroke-width="1"
-      filter="">
-      </rect>
-    <text tag="legend.label"
-     fill="black"
-     x="586.19"
-     y="148.66749999999996"
-     font-size="16pt"
-     font-weight="normal"
-     font-family="Arial, Verdana, sans-serif"
-     font-style="normal"
-     transform=""
-     dominant-baseline="hanging"
-     text-anchor="start"
-     >
-     2009-24.5%
+     Lorem-22.73%
     </text>
 
 
       <rect
       type="pie.legend"
       stroke="rgba(0,0,0,0)"
-      fill="#FBD1A2"
-      x="535.28"
-      y="171.84999999999997"
-      width="30.909999999999997"
-      height="30.909999999999997"
+      fill="#EE7733"
+      x="672.0"
+      y="114.63999999999999"
+      width="25.92"
+      height="25.92"
       stroke-width="1"
+      stroke-opacity="1.0"
+      fill-opacity="1.0"
       filter="">
       </rect>
     <text tag="legend.label"
      fill="black"
-     x="586.19"
-     y="179.57749999999996"
-     font-size="16pt"
+     x="702.9200000000001"
+     y="127.6"
+     font-size="12"
      font-weight="normal"
      font-family="Arial, Verdana, sans-serif"
      font-style="normal"
      transform=""
-     dominant-baseline="hanging"
+     dominant-baseline="middle"
      text-anchor="start"
      >
-     2010-24.92%
+     Ipsum-31.82%
     </text>
 
 
       <rect
       type="pie.legend"
       stroke="rgba(0,0,0,0)"
-      fill="#6195B4"
-      x="535.28"
-      y="202.75999999999993"
-      width="30.909999999999997"
-      height="30.909999999999997"
+      fill="#EE3377"
+      x="672.0"
+      y="145.56"
+      width="25.92"
+      height="25.92"
       stroke-width="1"
+      stroke-opacity="1.0"
+      fill-opacity="1.0"
       filter="">
       </rect>
     <text tag="legend.label"
      fill="black"
-     x="586.19"
-     y="210.48749999999998"
-     font-size="16pt"
+     x="702.9200000000001"
+     y="158.51999999999998"
+     font-size="12"
      font-weight="normal"
      font-family="Arial, Verdana, sans-serif"
      font-style="normal"
      transform=""
-     dominant-baseline="hanging"
+     dominant-baseline="middle"
      text-anchor="start"
      >
-     2011-24.25%
+     Donor-18.19%
+    </text>
+
+
+      <rect
+      type="pie.legend"
+      stroke="rgba(0,0,0,0)"
+      fill="#EE3377"
+      x="672.0"
+      y="176.48"
+      width="25.92"
+      height="25.92"
+      stroke-width="1"
+      stroke-opacity="1.0"
+      fill-opacity="1.0"
+      filter="">
+      </rect>
+    <text tag="legend.label"
+     fill="black"
+     x="702.9200000000001"
+     y="189.44"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="start"
+     >
+     Bit-18.19%
+    </text>
+
+
+      <rect
+      type="pie.legend"
+      stroke="rgba(0,0,0,0)"
+      fill="#008080"
+      x="672.0"
+      y="207.39999999999998"
+      width="25.92"
+      height="25.92"
+      stroke-width="1"
+      stroke-opacity="1.0"
+      fill-opacity="1.0"
+      filter="">
+      </rect>
+    <text tag="legend.label"
+     fill="black"
+     x="702.9200000000001"
+     y="220.35999999999996"
+     font-size="12"
+     font-weight="normal"
+     font-family="Arial, Verdana, sans-serif"
+     font-style="normal"
+     transform=""
+     dominant-baseline="middle"
+     text-anchor="start"
+     >
+     Amet-9.1%
     </text>
 
 
