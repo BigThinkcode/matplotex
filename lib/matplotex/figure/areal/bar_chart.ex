@@ -125,7 +125,10 @@ defmodule Matplotex.Figure.Areal.BarChart do
          %Dataset{
            color: color,
            width: width,
-           pos: pos_factor
+           pos: pos_factor,
+           edge_color: edge_color,
+           alpha: alpha,
+           line_width: line_width
          } = dataset,
          bly
        ) do
@@ -139,7 +142,11 @@ defmodule Matplotex.Figure.Areal.BarChart do
             y: y,
             width: width,
             height: bly - y,
-            color: color
+            color: color,
+            stroke: edge_color,
+            fill_opacity: alpha,
+            stroke_opacity: alpha,
+            stroke_width: line_width
           }
         ],
       dataset,

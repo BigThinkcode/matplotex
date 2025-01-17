@@ -216,18 +216,24 @@ defmodule Matplotex.Helpers do
   end
 
   def multi_bar() do
-    categories = ["apple", "banana", "fig", "avocado"]
+    categories = ["Lorem", "Ipsum", "Amet", "Donor"]
     values1 = [22, 33, 28, 34]
     values2 = [53, 63, 59, 60]
-    width = 0.22
+    width = 0.35
 
-    Matplotex.bar(width, values1, width, label: "Dataset1", color: "#255199")
-    |> Matplotex.bar(-width, values2, width, label: "Dataset2", color: "orange")
+    Matplotex.bar(width, values1, width, label: "Eiusmod", color: "#EE3377", edge_color: "#EE3377")
+    |> Matplotex.bar(-width, values2, width, label: "Tempor", color: "#0077BB", edge_color: "#0077BB")
     |> Matplotex.set_xticks(categories)
+<<<<<<< Updated upstream
     |> Matplotex.figure(%{figsize: {6, 6}, margin: 0.05})
     |> Matplotex.set_title("Bar chart")
     |> Matplotex.set_xlabel("X-axis")
     |> Matplotex.set_ylabel("Y-Axis")
+=======
+    |> Matplotex.figure(%{figsize: {10, 6}, margin: 0.05})
+    |> Matplotex.set_xlabel("")
+    |> Matplotex.set_ylabel("")
+>>>>>>> Stashed changes
     |> Matplotex.hide_v_grid()
     |> Matplotex.set_ylim({0, 70})
     |> Matplotex.show()
