@@ -8,20 +8,20 @@
 
 
 The sample plots generated using <font color="darkblue"> **Matplotex**</font> are shown below.
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+<div style="display: flex; justify-content: space-between;">
 <div style="width: 48%; margin-bottom: 10px ">
-<img src="assets/images/bar_readme.svg"/>
+<img src="assets/images/bar_readme.svg" alt="Bar chart" width="100%"/>
 </div>
 <div style="width: 48%; margin-bottom: 10px ">
-<img src="assets/images/pie_readme.svg"/>
+<img src="assets/images/pie_readme.svg" alt="Pie chart" width="100%"/>
 </div> 
 </div>
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+<div style="display: flex; justify-content: space-between;">
 <div style="width: 48%; margin-bottom: 10px ">
-<img src="assets/images/line_plot_readme.svg"/>
+<img src="assets/images/line_plot_readme.svg" alt="Line plot"/>
 </div>
 <div style="width: 48%; margin-bottom: 10px">
-<img src="assets/images/scatter_plot_readme.svg"/>
+<img src="assets/images/scatter_plot_readme.svg" alt="Scater plot"/>
 </div>
 </div>
 
