@@ -24,6 +24,14 @@ The sample plots generated using <font color="darkblue"> **Matplotex**</font> ar
 <img src="assets/images/scatter_plot_readme.svg" alt="Scater plot"/>
 </div>
 </div>
+<div style="display: flex; justify-content: space-between;">
+<div style="width: 48%; margin-bottom: 10px ">
+<img src="assets/images/hist_readme.svg" alt="Histogram"/>
+</div>
+<div style="width: 48%; margin-bottom: 10px">
+<img src="assets/images/spline_readme.svg" alt="Spline"/>
+</div>
+</div>
 
 ## Installation
 
