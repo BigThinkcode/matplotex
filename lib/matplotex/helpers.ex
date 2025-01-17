@@ -384,6 +384,44 @@ defmodule Matplotex.Helpers do
     |> Matplotex.show()
     |> copy()
   end
+  def rdspline() do
+    x = Nx.linspace(0, 10, n: 100)|> Nx.to_list()
+    y1 = Nx.Random.key(12) |> Nx.Random.normal(0, 10, shape: {100}) |> elem(0) |> Nx.to_list()
+    y2 = Nx.Random.key(13) |> Nx.Random.normal(0, 10, shape: {100}) |> elem(0) |> Nx.to_list()
+
+    Matplotex.spline(x, y1, x_label: "", y_label: "", edge_color: "#919D41", line_width: 3)
+    |>Matplotex.spline(x,y2, x_label: "", y_label: "", edge_color: "#008080", line_width: 3)
+    |> Matplotex.set_ylim({-30, 30})
+    |> Matplotex.show()
+    |> copy()
+  end
+  def minhist() do
+    values = Nx.Random.key(12) |> Nx.Random.normal(0, 1, shape: {1000}) |> elem(0) |> Nx.to_list()
+    bins = 100
+
+    Matplotex.hist(values, bins,
+      x_label: "",
+      y_label: "",
+      color: "#EE7733",
+      edge_color: "#EE7733"
+    )
+    |> Matplotex.set_ylim({0, 50})
+    |> Matplotex.show()
+    |> copy()
+  end
+
+  def line_n() do
+    x = Nx.linspace(0, 10, n: 100)|> Nx.to_list()
+    y1 = Nx.Random.key(12) |> Nx.Random.normal(0, 10, shape: {100}) |> elem(0) |> Nx.to_list()
+    y2 = Nx.Random.key(13) |> Nx.Random.normal(0, 10, shape: {100}) |> elem(0) |> Nx.to_list()
+
+    x
+    |> Matplotex.plot(y1, color: "#EE3377", x_label: "", y_label: "", label: "Tarus")
+    |> Matplotex.plot(x,y2, color: "#0077BB", x_label: "", y_label: "", label: "Ipsum")
+    |> Matplotex.show()
+    |> copy()
+  end
+
 
   def multi_spline() do
     x_nx = Nx.linspace(0, 10, n: 100)
