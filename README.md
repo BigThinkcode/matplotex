@@ -17,17 +17,19 @@ The sample plots generated using <font color="darkblue"> **Matplotex**</font> ar
 </div>
 
 <div style="display: flex; justify-content: space-between;">
-<p align="center"> 
-<img src="assets/images/bar_readme.svg" alt="Bar chart" width="45%"/>
-<img src="assets/images/pie_readme.svg" alt="Pie chart" width="40%"/>
-</p> 
-</div>
-<div style="display: flex; justify-content: space-between;">
 <p align="center">
 <img src="assets/images/hist_readme.svg" alt="Histogram" width="45%"/>
 <img src="assets/images/spline_readme.svg" alt="Spline" width="45%"/>
 </p>
 </div>
+
+<div style="display: flex; justify-content: space-between;">
+<p align="center"> 
+<img src="assets/images/bar_readme.svg" alt="Bar chart" width="45%"/>
+<img src="assets/images/pie_readme.svg" alt="Pie chart" width="40%"/>
+</p> 
+</div>
+
 
 ## Installation
 
