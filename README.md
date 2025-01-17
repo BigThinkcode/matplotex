@@ -8,12 +8,18 @@
 
 
 The sample plots generated using <font color="darkblue"> **Matplotex**</font> are shown below.
-
-
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+<div style="width: 48%; margin-bottom: 10px ">
 <img src="assets/images/bar_readme.svg"/>
 <img src="assets/images/pie_readme.svg"/>
+</div> 
+</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+<div style="width: 48%; margin-bottom: 10px ">
 <img src="assets/images/line_plot_readme.svg"/>
 <img src="assets/images/scatter_plot_readme.svg"/>
+</div>
+</div>
 
 ## Installation
 
