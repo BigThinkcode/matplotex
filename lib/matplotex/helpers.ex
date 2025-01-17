@@ -216,6 +216,19 @@ defmodule Matplotex.Helpers do
     |> copy()
   end
 
+  def minscatter() do
+    x= Nx.Random.key(12) |> Nx.Random.normal(0, 1, shape: {1000}) |> elem(0) |> Nx.to_list()
+    y1 = Nx.Random.key(13) |> Nx.Random.normal(0, 1, shape: {1000}) |> elem(0) |> Nx.to_list()
+    y2 = Nx.Random.key(14) |> Nx.Random.normal(0, 1, shape: {1000}) |> elem(0) |> Nx.to_list()
+    x
+    |>Matplotex.scatter(y1, color: "#EE3377", x_label: "", y_label: "", label: "Amet")
+    |>Matplotex.scatter(x,y2, color: "#0077BB", x_label: "", y_label: "", label: "Donor")
+    |>Matplotex.show()
+    |>copy()
+
+
+  end
+
   def multi_bar() do
     categories = ["apple", "banana", "fig", "avocado"]
     values1 = [22, 33, 28, 34]
