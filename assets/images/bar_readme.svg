@@ -11,9 +11,9 @@
      
     <line
     type="figure.x_tick"
-    x1="168.41"
+    x1="177.05"
     y1="510.2"
-    x2="168.41"
+    x2="177.05"
     y2="515.1999999999999"
     fill="rgba(0,0,0,0)"
     stroke="black"
@@ -26,7 +26,7 @@
     
          <text tag="figure.x_tick"
      fill="black"
-     x="168.41"
+     x="177.05"
      y="531.2"
      font-size="12"
      font-weight="normal"
@@ -43,9 +43,9 @@
      
     <line
     type="figure.x_tick"
-    x1="336.87000671386716"
+    x1="397.35000305175777"
     y1="510.2"
-    x2="336.87000671386716"
+    x2="397.35000305175777"
     y2="515.1999999999999"
     fill="rgba(0,0,0,0)"
     stroke="black"
@@ -58,7 +58,7 @@
     
          <text tag="figure.x_tick"
      fill="black"
-     x="336.87000671386716"
+     x="397.35000305175777"
      y="531.2"
      font-size="12"
      font-weight="normal"
@@ -75,9 +75,9 @@
      
     <line
     type="figure.x_tick"
-    x1="505.33001342773434"
+    x1="617.6500061035156"
     y1="510.2"
-    x2="505.33001342773434"
+    x2="617.6500061035156"
     y2="515.1999999999999"
     fill="rgba(0,0,0,0)"
     stroke="black"
@@ -90,7 +90,7 @@
     
          <text tag="figure.x_tick"
      fill="black"
-     x="505.33001342773434"
+     x="617.6500061035156"
      y="531.2"
      font-size="12"
      font-weight="normal"
@@ -107,9 +107,9 @@
      
     <line
     type="figure.x_tick"
-    x1="673.7900201416015"
+    x1="837.9500091552734"
     y1="510.2"
-    x2="673.7900201416015"
+    x2="837.9500091552734"
     y2="515.1999999999999"
     fill="rgba(0,0,0,0)"
     stroke="black"
@@ -122,7 +122,7 @@
     
          <text tag="figure.x_tick"
      fill="black"
-     x="673.7900201416015"
+     x="837.9500091552734"
      y="531.2"
      font-size="12"
      font-weight="normal"
@@ -332,7 +332,7 @@
     type="figure.h_grid"
     x1="102.99999999999999"
     y1="510.2"
-    x2="739.2"
+    x2="912.0"
     y2="510.2"
     fill="rgba(0,0,0,0)"
     stroke="#ddd"
@@ -347,7 +347,7 @@
     type="figure.h_grid"
     x1="102.99999999999999"
     y1="418.7200042724609"
-    x2="739.2"
+    x2="912.0"
     y2="418.7200042724609"
     fill="rgba(0,0,0,0)"
     stroke="#ddd"
@@ -362,7 +362,7 @@
     type="figure.h_grid"
     x1="102.99999999999999"
     y1="327.24000854492186"
-    x2="739.2"
+    x2="912.0"
     y2="327.24000854492186"
     fill="rgba(0,0,0,0)"
     stroke="#ddd"
@@ -377,7 +377,7 @@
     type="figure.h_grid"
     x1="102.99999999999999"
     y1="235.7600128173828"
-    x2="739.2"
+    x2="912.0"
     y2="235.7600128173828"
     fill="rgba(0,0,0,0)"
     stroke="#ddd"
@@ -392,7 +392,7 @@
     type="figure.h_grid"
     x1="102.99999999999999"
     y1="144.28001708984374"
-    x2="739.2"
+    x2="912.0"
     y2="144.28001708984374"
     fill="rgba(0,0,0,0)"
     stroke="#ddd"
@@ -407,7 +407,7 @@
     type="figure.h_grid"
     x1="102.99999999999999"
     y1="52.800021362304676"
-    x2="739.2"
+    x2="912.0"
     y2="52.800021362304676"
     fill="rgba(0,0,0,0)"
     stroke="#ddd"
@@ -435,9 +435,9 @@
     
     <line
     type="spine.right"
-    x1="739.2"
+    x1="912.0"
     y1="510.2"
-    x2="739.2"
+    x2="912.0"
     y2="52.79999999999998"
     fill="rgba(0,0,0,0)"
     stroke="black"
@@ -452,7 +452,7 @@
     type="spine.top"
     x1="102.99999999999999"
     y1="52.79999999999998"
-    x2="739.2"
+    x2="912.0"
     y2="52.79999999999998"
     fill="rgba(0,0,0,0)"
     stroke="black"
@@ -467,7 +467,7 @@
     type="spine.bottom"
     x1="102.99999999999999"
     y1="510.2"
-    x2="739.2"
+    x2="912.0"
     y2="510.2"
     fill="rgba(0,0,0,0)"
     stroke="black"
@@ -479,7 +479,7 @@
 
         <text tag="figure.x_label"
      fill="black"
-     x="421.1"
+     x="507.50000000000006"
      y="547.2"
      font-size="12"
      font-weight="normal"
@@ -521,68 +521,10 @@
     </text>
 
       <rect
-      type=""
-      stroke="black"
-      fill="#EE3377"
-      x="747.84"
-      y="61.44"
-      width="7.359999999999998"
-      height="7.359999999999998"
-      stroke-width="2"
-      stroke-opacity="1.0"
-      fill-opacity="1.0"
-      filter="">
-      </rect>
-    <text tag="legend.label"
-     fill="black"
-     x="763.8399999999999"
-     y="65.12"
-     font-size="12"
-     font-weight="normal"
-     font-family="Arial, Verdana, sans-serif"
-     font-style="normal"
-     transform=""
-     dominant-baseline="middle"
-     text-anchor="start"
-     >
-     Eiusmod
-    </text>
-
-
-      <rect
-      type=""
-      stroke="black"
-      fill="#0077BB"
-      x="747.84"
-      y="77.44"
-      width="7.359999999999998"
-      height="7.359999999999998"
-      stroke-width="2"
-      stroke-opacity="1.0"
-      fill-opacity="1.0"
-      filter="">
-      </rect>
-    <text tag="legend.label"
-     fill="black"
-     x="763.8399999999999"
-     y="81.12"
-     font-size="12"
-     font-weight="normal"
-     font-family="Arial, Verdana, sans-serif"
-     font-style="normal"
-     transform=""
-     dominant-baseline="middle"
-     text-anchor="start"
-     >
-     Tempor
-    </text>
-
-
-      <rect
       type="figure.bar"
-      stroke="#EE3377"
+      stroke="black"
       fill="#EE3377"
-      x="168.41"
+      x="177.05"
       y="366.44571428571425"
       width="33.599999999999994"
       height="143.75428571428574"
@@ -593,9 +535,9 @@
       </rect>
       <rect
       type="figure.bar"
-      stroke="#EE3377"
+      stroke="black"
       fill="#EE3377"
-      x="336.8700050204992"
+      x="397.3500065654517"
       y="294.56857142857143"
       width="33.599999999999994"
       height="215.63142857142856"
@@ -606,9 +548,9 @@
       </rect>
       <rect
       type="figure.bar"
-      stroke="#EE3377"
+      stroke="black"
       fill="#EE3377"
-      x="505.3300100409985"
+      x="617.6500131309033"
       y="327.24"
       width="33.599999999999994"
       height="182.95999999999998"
@@ -619,9 +561,9 @@
       </rect>
       <rect
       type="figure.bar"
-      stroke="#EE3377"
+      stroke="black"
       fill="#EE3377"
-      x="673.7900000000001"
+      x="837.95"
       y="288.0342857142857"
       width="33.599999999999994"
       height="222.16571428571427"
@@ -632,9 +574,9 @@
       </rect>
       <rect
       type="figure.bar"
-      stroke="#0077BB"
+      stroke="black"
       fill="#0077BB"
-      x="134.81"
+      x="143.45"
       y="163.88285714285715"
       width="33.599999999999994"
       height="346.3171428571428"
@@ -645,9 +587,9 @@
       </rect>
       <rect
       type="figure.bar"
-      stroke="#0077BB"
+      stroke="black"
       fill="#0077BB"
-      x="303.27000502049924"
+      x="363.75000656545166"
       y="98.53999999999999"
       width="33.599999999999994"
       height="411.65999999999997"
@@ -658,9 +600,9 @@
       </rect>
       <rect
       type="figure.bar"
-      stroke="#0077BB"
+      stroke="black"
       fill="#0077BB"
-      x="471.73001004099854"
+      x="584.0500131309033"
       y="124.67714285714285"
       width="33.599999999999994"
       height="385.5228571428571"
@@ -671,9 +613,9 @@
       </rect>
       <rect
       type="figure.bar"
-      stroke="#0077BB"
+      stroke="black"
       fill="#0077BB"
-      x="640.19"
+      x="804.35"
       y="118.14285714285714"
       width="33.599999999999994"
       height="392.0571428571428"
