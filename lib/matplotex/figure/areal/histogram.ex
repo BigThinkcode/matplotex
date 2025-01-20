@@ -115,7 +115,7 @@ defmodule Matplotex.Figure.Areal.Histogram do
             width: region_width / length(bins),
             height: bly - y,
             color: color,
-            stroke: edge_color,
+            stroke: edge_color || color,
             fill_opacity: alpha,
             stroke_opacity: alpha
           }
@@ -151,7 +151,7 @@ defmodule Matplotex.Figure.Areal.Histogram do
     {bins_dist, hists}
   end
 
-  defp sanitize(%Figure{axes: %__MODULE__{data: {x, y}} = axes} = figure) do
+  defp sanitize(%Figure{axes: %__MODULE__{data: {x, y}, limit: %TwoD{x: xlim, y: ylim}} = axes} = figure) do
     {ymin, ymax} = Enum.min_max(y)
     {xmin, xmax} = Enum.min_max(x)
 
@@ -159,7 +159,7 @@ defmodule Matplotex.Figure.Areal.Histogram do
       figure
       | axes: %__MODULE__{
           axes
-          | limit: %TwoD{x: {floor(xmin), ceil(xmax)}, y: {floor(ymin), ceil(ymax)}}
+          | limit: %TwoD{x: xlim || {floor(xmin), ceil(xmax)}, y: ylim || {floor(ymin), ceil(ymax)}}
         }
     }
   end

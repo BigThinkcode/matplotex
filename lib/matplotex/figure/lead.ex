@@ -66,15 +66,16 @@ defmodule Matplotex.Figure.Lead do
              } = axes
          } = figure
        ) do
+
     {x_ticks, x_lim} = maybe_generate_ticks(x_ticks, x_lim, x_data, x_ticks_count || width)
-    {y_ticks, y_lim} = maybe_generate_ticks(y_ticks, y_lim, y_data, y_ticks_count || height)
+    {y_ticks, y_limt} = maybe_generate_ticks(y_ticks, y_lim, y_data, y_ticks_count || height)
 
     %Figure{
       figure
       | axes: %{
           axes
           | tick: %TwoD{ticks | x: x_ticks, y: y_ticks},
-            limit: %TwoD{limit | x: x_lim, y: y_lim}
+            limit: %TwoD{limit | x: x_lim, y: y_lim || y_limt}
         }
     }
   end

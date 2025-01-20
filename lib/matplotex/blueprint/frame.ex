@@ -4,6 +4,8 @@ defmodule Matplotex.Blueprint.Frame do
   @default_margin 0.05
   @show_by_default true
   @valid_by_default true
+  @default_stroke_grid "#C5C5C5"
+  @default_stroke_grid_width 1
   defmacro frame(opts \\ []) do
     build_struct(opts)
   end
@@ -70,6 +72,8 @@ defmodule Matplotex.Blueprint.Frame do
                       label: nil,
                       scale: nil,
                       grid: nil,
+                      stroke_grid: @default_stroke_grid,
+                      stroke_grid_width: @default_stroke_grid_width,
                       size: nil,
                       axis: nil,
                       center: nil,
