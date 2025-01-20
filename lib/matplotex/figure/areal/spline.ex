@@ -88,7 +88,6 @@ defmodule Matplotex.Figure.Areal.Spline do
 
     %Figure{figure | axes: %{axes | element: elements}}
   end
-
   defp capture(
          %Dataset{
            transformed: transformed,
@@ -107,8 +106,7 @@ defmodule Matplotex.Figure.Areal.Spline do
       moveto: moveto,
       cubic: cubic,
       smooths: smooths,
-      fill: color,
-      stroke: edge_color,
+      stroke: color || edge_color,
       stroke_width: stroke_width
     }
   end

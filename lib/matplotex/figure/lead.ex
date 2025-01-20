@@ -11,7 +11,7 @@ defmodule Matplotex.Figure.Lead do
 
   @spec set_regions_areal(Matplotex.Figure.t()) :: Matplotex.Figure.t()
 
-  def set_regions_areal(%Figure{figsize: {width, height}, axes: %module{} = axes} = figure)
+  def set_regions_areal(%Figure{figsize: {width, height}, axes: %module{}} = figure)
       when width > 0 and height > 0 do
     figure
     |> set_frame_size()
@@ -66,7 +66,7 @@ defmodule Matplotex.Figure.Lead do
              } = axes
          } = figure
        ) do
-        IO.inspect(y_lim, label: "lead")
+
     {x_ticks, x_lim} = maybe_generate_ticks(x_ticks, x_lim, x_data, x_ticks_count || width)
     {y_ticks, y_limt} = maybe_generate_ticks(y_ticks, y_lim, y_data, y_ticks_count || height)
 

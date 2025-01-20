@@ -66,7 +66,6 @@ defmodule Matplotex.Figure.Areal.Histogram do
          },
          rc_params: %RcParams{x_padding: x_padding, white_space: white_space}
        }) do
-        IO.inspect(y_lim)
     x_padding_value = width_region_content * x_padding + white_space
     shrinked_width_region_content = width_region_content - x_padding_value * 2
 
@@ -116,7 +115,7 @@ defmodule Matplotex.Figure.Areal.Histogram do
             width: region_width / length(bins),
             height: bly - y,
             color: color,
-            stroke: edge_color,
+            stroke: edge_color || color,
             fill_opacity: alpha,
             stroke_opacity: alpha
           }

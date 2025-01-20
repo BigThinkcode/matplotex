@@ -10,69 +10,69 @@ defmodule Matplotex.Figure.Cast do
   alias Matplotex.Figure.RcParams
   alias Matplotex.Element.Label
   alias Matplotex.Element.Line
-  alias Matplotex.Figure.Coords
+  # alias Matplotex.Figure.Coords
   alias Matplotex.Figure
   alias Matplotex.Figure.Dataset
   @xtick_type "figure.x_tick"
   @ytick_type "figure.y_tick"
-  @stroke_grid "#F3CC9C"
-  @stroke_width_grid 1
+  # @stroke_grid "#F3CC9C"
+  # @stroke_width_grid 1
   @lowest_tick 0
   @zero_to_move 0
 
-  def cast_spines(
-        %Figure{
-          axes:
-            %{
-              coords: %Coords{
-                bottom_left: {blx, bly},
-                bottom_right: {brx, bry},
-                top_left: {tlx, tly},
-                top_right: {trx, yrt}
-              },
-              element: elements
-            } = axes
-        } = figure
-      ) do
-    # Four Line struct representing each corners
-    left = %Line{
-      x1: blx,
-      y1: bly,
-      x2: tlx,
-      y2: tly,
-      type: "spine.left"
-    }
+  # def cast_spines(
+  #       %Figure{
+  #         axes:
+  #           %{
+  #             coords: %Coords{
+  #               bottom_left: {blx, bly},
+  #               bottom_right: {brx, bry},
+  #               top_left: {tlx, tly},
+  #               top_right: {trx, yrt}
+  #             },
+  #             element: elements
+  #           } = axes
+  #       } = figure
+  #     ) do
+  #   # Four Line struct representing each corners
+  #   left = %Line{
+  #     x1: blx,
+  #     y1: bly,
+  #     x2: tlx,
+  #     y2: tly,
+  #     type: "spine.left"
+  #   }
 
-    right = %Line{
-      x1: brx,
-      y1: bry,
-      x2: trx,
-      y2: yrt,
-      type: "spine.right"
-    }
+  #   right = %Line{
+  #     x1: brx,
+  #     y1: bry,
+  #     x2: trx,
+  #     y2: yrt,
+  #     type: "spine.right"
+  #   }
 
-    top = %Line{
-      x1: tlx,
-      y1: tly,
-      x2: trx,
-      y2: yrt,
-      type: "spine.top"
-    }
+  #   top = %Line{
+  #     x1: tlx,
+  #     y1: tly,
+  #     x2: trx,
+  #     y2: yrt,
+  #     type: "spine.top"
+  #   }
 
-    bottom = %Line{
-      x1: blx,
-      y1: bly,
-      x2: brx,
-      y2: bry,
-      type: "spine.bottom"
-    }
+  #   bottom = %Line{
+  #     x1: blx,
+  #     y1: bly,
+  #     x2: brx,
+  #     y2: bry,
+  #     type: "spine.bottom"
+  #   }
 
-    %Figure{figure | axes: %{axes | element: elements ++ [left, right, top, bottom]}}
-  end
+  #   %Figure{figure | axes: %{axes | element: elements ++ [left, right, top, bottom]}}
+  # end
 
-  def cast_spines(_figure) do
-    raise ArgumentError, message: "Figure does't contain enough data to proceed"
-  end
+  # def cast_spines(_figure) do
+  #   raise ArgumentError, message: "Figure does't contain enough data to proceed"
+  # end
 
   def cast_spines_by_region(
         %Figure{
@@ -158,36 +158,36 @@ defmodule Matplotex.Figure.Cast do
     %Figure{figure | axes: %{axes | element: element ++ [left, right, top, bottom]}}
   end
 
-  def cast_title(
-        %Figure{
-          axes:
-            %{
-              region_title: region_title,
-              title: title,
-              element: elements
-            } = axes,
-          rc_params: %RcParams{title_font: title_font}
-        } = figure
-      ) do
-    {ttx, tty} = calculate_center(region_title, :x)
+  # def cast_title(
+  #       %Figure{
+  #         axes:
+  #           %{
+  #             region_title: region_title,
+  #             title: title,
+  #             element: elements
+  #           } = axes,
+  #         rc_params: %RcParams{title_font: title_font}
+  #       } = figure
+  #     ) do
+  #   {ttx, tty} = calculate_center(region_title, :x)
 
-    title =
-      %Label{
-        type: "figure.title",
-        x: ttx,
-        y: tty,
-        text: title
-      }
-      |> merge_structs(title_font)
+  #   title =
+  #     %Label{
+  #       type: "figure.title",
+  #       x: ttx,
+  #       y: tty,
+  #       text: title
+  #     }
+  #     |> merge_structs(title_font)
 
-    %Figure{figure | axes: %{axes | element: elements ++ [title]}}
-  end
+  #   %Figure{figure | axes: %{axes | element: elements ++ [title]}}
+  # end
 
-  def cast_title(%Figure{axes: %{show_title: false}} = figure), do: figure
+  # def cast_title(%Figure{axes: %{show_title: false}} = figure), do: figure
 
-  def cast_title(_figure) do
-    raise ArgumentError, message: "Invalid figure to cast title"
-  end
+  # def cast_title(_figure) do
+  #   raise ArgumentError, message: "Invalid figure to cast title"
+  # end
 
   def cast_title_by_region(
         %Figure{
@@ -214,13 +214,13 @@ defmodule Matplotex.Figure.Cast do
     %Figure{figure | axes: %{axes | element: elements ++ [title]}}
   end
 
-  def cast_label(%Figure{axes: %{label: nil}} = figure), do: figure
+  # def cast_label(%Figure{axes: %{label: nil}} = figure), do: figure
 
-  def cast_label(figure) do
-    figure
-    |> cast_xlabel()
-    |> cast_ylabel()
-  end
+  # def cast_label(figure) do
+  #   figure
+  #   |> cast_xlabel()
+  #   |> cast_ylabel()
+  # end
 
   def cast_label_by_region(figure) do
     figure
@@ -228,30 +228,30 @@ defmodule Matplotex.Figure.Cast do
     |> cast_ylabel_by_region()
   end
 
-  def cast_xlabel(
-        %Figure{
-          axes: %{label: %{x: x_label}, coords: coords, element: element} = axes,
-          rc_params: %RcParams{x_label_font: label_font}
-        } = figure
-      )
-      when not is_nil(x_label) do
-    xlabel_coords = Map.get(coords, :x_label)
-    {x, y} = calculate_center(coords, xlabel_coords, :x)
+  # def cast_xlabel(
+  #       %Figure{
+  #         axes: %{label: %{x: x_label}, coords: coords, element: element} = axes,
+  #         rc_params: %RcParams{x_label_font: label_font}
+  #       } = figure
+  #     )
+  #     when not is_nil(x_label) do
+  #   xlabel_coords = Map.get(coords, :x_label)
+  #   {x, y} = calculate_center(coords, xlabel_coords, :x)
 
-    x_label =
-      %Label{
-        type: "figure.x_label",
-        x: x,
-        y: y,
-        text: x_label
-      }
-      |> merge_structs(label_font)
+  #   x_label =
+  #     %Label{
+  #       type: "figure.x_label",
+  #       x: x,
+  #       y: y,
+  #       text: x_label
+  #     }
+  #     |> merge_structs(label_font)
 
-    element = element ++ [x_label]
-    %Figure{figure | axes: %{axes | element: element}}
-  end
+  #   element = element ++ [x_label]
+  #   %Figure{figure | axes: %{axes | element: element}}
+  # end
 
-  def cast_xlabel(figure), do: figure
+  # def cast_xlabel(figure), do: figure
 
   def cast_xlabel_by_region(
         %Figure{
@@ -276,32 +276,34 @@ defmodule Matplotex.Figure.Cast do
     %Figure{figure | axes: %{axes | element: element}}
   end
 
-  def cast_ylabel(
-        %Figure{
-          axes: %{label: %{y: y_label}, coords: coords, element: element} = axes,
-          rc_params: %RcParams{y_label_font: label_font}
-        } = figure
-      )
-      when not is_nil(y_label) do
-    ylabel_coords = Map.get(coords, :y_label)
+  def cast_xlabel_by_region(figure), do: figure
 
-    {x, y} = calculate_center(coords, ylabel_coords, :y)
+  # def cast_ylabel(
+  #       %Figure{
+  #         axes: %{label: %{y: y_label}, coords: coords, element: element} = axes,
+  #         rc_params: %RcParams{y_label_font: label_font}
+  #       } = figure
+  #     )
+  #     when not is_nil(y_label) do
+  #   ylabel_coords = Map.get(coords, :y_label)
 
-    y_label =
-      %Label{
-        type: "figure.y_label",
-        x: x,
-        y: y,
-        text: y_label,
-        rotate: rotate_label(:y)
-      }
-      |> merge_structs(label_font)
+  #   {x, y} = calculate_center(coords, ylabel_coords, :y)
 
-    element = element ++ [y_label]
-    %Figure{figure | axes: %{axes | element: element}}
-  end
+  #   y_label =
+  #     %Label{
+  #       type: "figure.y_label",
+  #       x: x,
+  #       y: y,
+  #       text: y_label,
+  #       rotate: rotate_label(:y)
+  #     }
+  #     |> merge_structs(label_font)
 
-  def cast_ylabel(figure), do: figure
+  #   element = element ++ [y_label]
+  #   %Figure{figure | axes: %{axes | element: element}}
+  # end
+
+  # def cast_ylabel(figure), do: figure
 
   def cast_ylabel_by_region(
         %Figure{
@@ -325,7 +327,7 @@ defmodule Matplotex.Figure.Cast do
     element = element ++ [y_label]
     %Figure{figure | axes: %{axes | element: element}}
   end
-
+   def cast_ylabel_by_region(figure), do: figure
   def cast_xticks_by_region(
         %Figure{
           axes:
@@ -453,7 +455,7 @@ defmodule Matplotex.Figure.Cast do
           }
         } = figure
       ) do
-        IO.inspect(ylim, label: "cast")
+
     y_ticks = confine_ticks(y_ticks, ylim)
     y_data = confine_data(y_data, ylim)
     dataset = confine_data(dataset, ylim, :y)
@@ -519,42 +521,44 @@ defmodule Matplotex.Figure.Cast do
 
   def cast_yticks_by_region(figure), do: figure
 
-  def cast_hgrids(%Figure{axes: %{coords: %{hgrids: nil}}} = figure), do: figure
-  def cast_hgrids(%Figure{axes: %{show_h_grid: false}} = figure), do: figure
+  # def cast_hgrids(%Figure{axes: %{coords: %{hgrids: nil}}} = figure), do: figure
+  # def cast_hgrids(%Figure{axes: %{show_h_grid: false}} = figure), do: figure
 
-  def cast_hgrids(
-        %Figure{
-          axes:
-            %{
-              show_h_grid: true,
-              coords: %Coords{hgrids: hgrids, top_right: {rightx, _topy}},
-              element: elements
-            } = axes
-        } = figure
-      ) do
-    hgrid_elements =
-      Enum.map(hgrids, fn {x, y} ->
-        %Line{
-          x1: x,
-          x2: rightx,
-          y1: y,
-          y2: y,
-          type: "figure.h_grid",
-          stroke: @stroke_grid,
-          stroke_width: @stroke_width_grid
-        }
-      end)
+  # def cast_hgrids(
+  #       %Figure{
+  #         axes:
+  #           %{
+  #             show_h_grid: true,
+  #             coords: %Coords{hgrids: hgrids, top_right: {rightx, _topy}},
+  #             element: elements
+  #           } = axes
+  #       } = figure
+  #     ) do
+  #   hgrid_elements =
+  #     Enum.map(hgrids, fn {x, y} ->
+  #       %Line{
+  #         x1: x,
+  #         x2: rightx,
+  #         y1: y,
+  #         y2: y,
+  #         type: "figure.h_grid",
+  #         stroke: @stroke_grid,
+  #         stroke_width: @stroke_width_grid
+  #       }
+  #     end)
 
-    elements = elements ++ hgrid_elements
+  #   elements = elements ++ hgrid_elements
 
-    %Figure{figure | axes: %{axes | element: elements}}
-  end
+  #   %Figure{figure | axes: %{axes | element: elements}}
+  # end
 
   def cast_hgrids_by_region(
         %Figure{
           axes:
             %{
               show_h_grid: true,
+              stroke_grid: stroke_grid,
+              stroke_grid_width: stroke_grid_width,
               region_y: %Region{coords: %XyCoords{grids: hgrids}},
               region_x: %Region{width: width_region_x},
               element: elements
@@ -569,8 +573,8 @@ defmodule Matplotex.Figure.Cast do
           y1: y,
           y2: y,
           type: "figure.h_grid",
-          stroke: @stroke_grid,
-          stroke_width: @stroke_width_grid
+          stroke: stroke_grid,
+          stroke_width: stroke_grid_width
         }
       end)
 
@@ -581,42 +585,44 @@ defmodule Matplotex.Figure.Cast do
 
   def cast_hgrids_by_region(figure), do: figure
 
-  def cast_vgrids(%Figure{axes: %{coords: %{vgrids: nil}}} = figure), do: figure
-  def cast_vgrids(%Figure{axes: %{show_v_grid: false}} = figure), do: figure
+  # def cast_vgrids(%Figure{axes: %{coords: %{vgrids: nil}}} = figure), do: figure
+  # def cast_vgrids(%Figure{axes: %{show_v_grid: false}} = figure), do: figure
 
-  def cast_vgrids(
-        %Figure{
-          axes:
-            %{
-              show_v_grid: true,
-              coords: %Coords{vgrids: vgrids, top_right: {_rightx, topy}},
-              element: elements
-            } = axes
-        } = figure
-      ) do
-    vgrid_elements =
-      Enum.map(vgrids, fn {x, y} ->
-        %Line{
-          x1: x,
-          x2: x,
-          y1: y,
-          y2: topy,
-          type: "figure.v_grid",
-          stroke: @stroke_grid,
-          stroke_width: @stroke_width_grid
-        }
-      end)
+  # def cast_vgrids(
+  #       %Figure{
+  #         axes:
+  #           %{
+  #             show_v_grid: true,
+  #             coords: %Coords{vgrids: vgrids, top_right: {_rightx, topy}},
+  #             element: elements
+  #           } = axes
+  #       } = figure
+  #     ) do
+  #   vgrid_elements =
+  #     Enum.map(vgrids, fn {x, y} ->
+  #       %Line{
+  #         x1: x,
+  #         x2: x,
+  #         y1: y,
+  #         y2: topy,
+  #         type: "figure.v_grid",
+  #         stroke: @stroke_grid,
+  #         stroke_width: @stroke_width_grid
+  #       }
+  #     end)
 
-    elements = elements ++ vgrid_elements
+  #   elements = elements ++ vgrid_elements
 
-    %Figure{figure | axes: %{axes | element: elements}}
-  end
+  #   %Figure{figure | axes: %{axes | element: elements}}
+  # end
 
   def cast_vgrids_by_region(
         %Figure{
           axes:
             %{
               show_v_grid: true,
+              stroke_grid: stroke_grid,
+              stroke_grid_width: stroke_grid_width,
               region_x: %Region{coords: %XyCoords{grids: vgrids}},
               region_y: %Region{height: height_region_y},
               element: elements
@@ -631,8 +637,8 @@ defmodule Matplotex.Figure.Cast do
           y1: y,
           y2: y - height_region_y,
           type: "figure.v_grid",
-          stroke: @stroke_grid,
-          stroke_width: @stroke_width_grid
+          stroke: stroke_grid,
+          stroke_width: stroke_grid_width
         }
       end)
 
@@ -693,13 +699,13 @@ defmodule Matplotex.Figure.Cast do
 
   def cast_legends(figure), do: figure
 
-  defp calculate_center(%Coords{bottom_left: bottom_left, bottom_right: bottom_right}, {x, y}, :x) do
-    {calculate_distance(bottom_left, bottom_right) / 2 + x, y}
-  end
+  # defp calculate_center(%Coords{bottom_left: bottom_left, bottom_right: bottom_right}, {x, y}, :x) do
+  #   {calculate_distance(bottom_left, bottom_right) / 2 + x, y}
+  # end
 
-  defp calculate_center(%Coords{bottom_left: bottom_left, top_left: top_left}, {x, y}, :y) do
-    {x, calculate_distance(bottom_left, top_left) / 2 + y}
-  end
+  # defp calculate_center(%Coords{bottom_left: bottom_left, top_left: top_left}, {x, y}, :y) do
+  #   {x, calculate_distance(bottom_left, top_left) / 2 + y}
+  # end
 
   defp calculate_center(%Region{x: x, y: y, width: width}, :x) do
     {calculate_distance({x, y}, {x + width, y}) / 2 + x, y}
@@ -709,11 +715,11 @@ defmodule Matplotex.Figure.Cast do
     {x, calculate_distance({x, y}, {x, y + height}) / 2 + y}
   end
 
-  defp merge_structs(%module{} = st, sst) do
-    sst = Map.from_struct(sst)
-    params = st |> Map.from_struct() |> Map.merge(sst)
-    struct(module, params)
-  end
+  # defp merge_structs(%module{} = st, sst) do
+  #   sst = Map.from_struct(sst)
+  #   params = st |> Map.from_struct() |> Map.merge(sst)
+  #   struct(module, params)
+  # end
 
   defp calculate_distance({x1, y1}, {x2, y2}) do
     :math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)

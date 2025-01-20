@@ -143,7 +143,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
             width: width,
             height: bly - y,
             color: color,
-            stroke: edge_color,
+            stroke: edge_color || color,
             fill_opacity: alpha,
             stroke_opacity: alpha,
             stroke_width: line_width

@@ -221,19 +221,9 @@ defmodule Matplotex.Helpers do
     values2 = [53, 63, 59, 60]
     width = 0.35
 
-    Matplotex.bar(width, values1, width, label: "Eiusmod", color: "#EE3377", edge_color: "#EE3377")
-    |> Matplotex.bar(-width, values2, width, label: "Tempor", color: "#0077BB", edge_color: "#0077BB")
+    Matplotex.bar(width, values1, width, label: "Eiusmod", color: "#EE3377", edge_color: "green")
+    |> Matplotex.bar(-width, values2, width, label: "Tempor", color: "#0077BB")
     |> Matplotex.set_xticks(categories)
-<<<<<<< Updated upstream
-    |> Matplotex.figure(%{figsize: {6, 6}, margin: 0.05})
-    |> Matplotex.set_title("Bar chart")
-    |> Matplotex.set_xlabel("X-axis")
-    |> Matplotex.set_ylabel("Y-Axis")
-=======
-    |> Matplotex.figure(%{figsize: {10, 6}, margin: 0.05})
-    |> Matplotex.set_xlabel("")
-    |> Matplotex.set_ylabel("")
->>>>>>> Stashed changes
     |> Matplotex.hide_v_grid()
     |> Matplotex.set_ylim({0, 70})
     |> Matplotex.show()
@@ -321,9 +311,10 @@ defmodule Matplotex.Helpers do
       y_label: "Frequency",
       title: "Histogram",
       color: "blue",
-      edge_color: "black",
-      alpha: 0.7,
-      x_ticks_count: 9
+      y_limit: {0, 50},
+      x_ticks_count: 9,
+      stroke_grid: "violet",
+      stroke_grid_width: 4
     )
     |> Matplotex.show()
     |> copy()
@@ -368,7 +359,7 @@ defmodule Matplotex.Helpers do
     x = Nx.linspace(0, 10, n: 100)|> Nx.to_list()
     y = Nx.Random.key(12) |> Nx.Random.normal(0, 10, shape: {100}) |> elem(0) |> Nx.to_list()
 
-    Matplotex.spline(x, y, x_label: "", y_label: "", color: "#7C6D91", line_width: 3)
+    Matplotex.spline(x, y,color: "#7C6D91", line_width: 3)
     |> Matplotex.set_ylim({-30, 30})
     |> Matplotex.show()
     |> copy()
