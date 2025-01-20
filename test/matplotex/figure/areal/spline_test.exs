@@ -13,7 +13,7 @@ defmodule Matplotex.Figure.Areal.SplineTest do
   end
 
   test "adds a spline element in a figure", %{figure: figure} do
-    assert %Figure{axes: %Spline{element: elements}} = Spline.materialize(figure)
+    assert %Figure{axes: %Spline{element: elements}} = Figure.materialize(figure)
     assert Enum.any?(elements, &(&1.type == "figure.spline"))
   end
 end

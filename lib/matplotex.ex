@@ -114,6 +114,58 @@ defmodule Matplotex do
   ## `M.show/1`
   After creating a figure using the functions provided,  call M.show/1 to generate and display the final SVG representation of the plot. The show/1 function will convert the Matplotex.Figure data into a valid SVG string.
 
+  ## Matplotex.Figure.Areal behaviour
+  Matplotex.Figure.Areal is a behavior designed to facilitate the creation and management of areal plots. This module provides the functionality to produce data required for generating plots with essential components such as:
+  The frame, ticks, labels, title, etc, every areal charts requires such elements and user can disable if it wants to, the main agenda of this behavior is to reduce the complexity of production data for svg
+  Users interact with the module by implementing its callbacks to create and materialize data for custom SVG plots.
+
+  Example usage:
+   ```elixir
+     defmodule MyCustomAreaChart do
+        @behaviour Matplotex.Figure.Areal
+
+          frame(
+          tick: %TwoD{},
+          limit: %TwoD{},
+          label: %TwoD{},
+          region_x: %Region{},
+          region_y: %Region{},
+          region_title: %Region{},
+          region_legend: %Region{},
+          region_content: %Region{}
+          )
+
+
+        def create(figure, data, _opts) do
+        dataset = Dataset.cast(%Dataset{x: x, y: y}, opts)
+
+        %Figure{figure | axes: %{axes | data: xydata, dataset: datasets}}
+        |> PlotOptions.set_options_in_figure(opts)
+        end
+
+        def materialize(figure) do
+          materialize_chart_elements(figure)
+        end
+        defp materialize_chart_elements(%Figure{axes: %__MODULE__{elements: elements}}) do
+        elements ++ [%CustomElement{}]
+        end
+    ```
+     The snippet shows a pseudo code to use this behavior couple of things needed to explain here
+    *  Figure - The figure is a struct common to all charts for a convention all the apis in this library accepts figure as input and figure as output
+    *  Axes -  A struct contains all information about that particular chart
+    *  Dataset - Modularizing input datas for further conveninence, the key dataset in axes expects a list of [%Dataset{}] for converting points to its svg equivalent elements
+    *  custom elements - The main purpose of materializer function is generating list of structs that implements Matplotex.Element behaviour  so the svg generator produces the appropriate tags
+  ## Matplotex.Element behaviour
+  This is the behavour containing one callback called assemble/1 that expect that structs as input and a equivalent svg tag as output, so the assemble funcion should interpolate the values of element to that particular svg element
+  ### Example
+  ```elixir
+  defmodule MyCustomElement do
+        @behaviour Matplotex.Element
+
+        def assemble(%MyCustomElement{x: x, y: y, widht: width, height: height}) do
+        ~s(<rect x=#{x} y=#{y} width=#{width} height="#{height}" />)
+        end
+  ```
 
   """
   alias Matplotex.Figure.Areal.Spline

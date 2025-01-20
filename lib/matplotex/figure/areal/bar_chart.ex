@@ -48,8 +48,8 @@ defmodule Matplotex.Figure.Areal.BarChart do
 
   @impl Areal
   def materialize(figure) do
-    __MODULE__.materialized_by_region(figure)
-    |> materialize_bars()
+    # __MODULE__.materialized_by_region(figure)
+     materialize_bars(figure)
   end
 
   defp materialize_bars(

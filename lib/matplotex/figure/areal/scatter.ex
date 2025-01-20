@@ -41,8 +41,8 @@ defmodule Matplotex.Figure.Areal.Scatter do
 
   @impl Areal
   def materialize(figure) do
-    __MODULE__.materialized_by_region(figure)
-    |> materialize_elements()
+    # __MODULE__.materialized_by_region(figure)
+    materialize_elements(figure)
   end
 
   defp materialize_elements(
