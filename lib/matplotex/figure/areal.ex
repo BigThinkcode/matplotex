@@ -360,4 +360,5 @@ defmodule Matplotex.Figure.Areal do
 
     %Dataset{dataset | transformed: transformed}
   end
+
 end

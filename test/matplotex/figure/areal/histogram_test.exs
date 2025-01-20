@@ -1,6 +1,6 @@
 defmodule Matplotex.Figure.Areal.HistogramTest do
   use Matplotex.PlotCase
-  alias Matplotex.Figure.Areal.Histogram
+  alias Matplotex.Figure
 
   setup do
     values = Nx.Random.key(12) |> Nx.Random.normal(0, 1, shape: {1000}) |> elem(0) |> Nx.to_list()
@@ -14,7 +14,7 @@ defmodule Matplotex.Figure.Areal.HistogramTest do
 
   describe "materialyze/1" do
     test "materialyze with elements", %{figure: figure, bins: bins} do
-      assert figure = Histogram.materialize(figure)
+      assert figure = Figure.materialize(figure)
       elements = figure.axes.element
       assert title = elements |> Enum.filter(fn elem -> elem.type == "figure.title" end) |> hd
       assert title.text == "Histogram"

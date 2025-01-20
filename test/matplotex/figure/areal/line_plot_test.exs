@@ -49,7 +49,7 @@ defmodule Matplotex.Figure.Areal.LinePlotTest do
                |> Matplotex.set_title("Title")
                |> Matplotex.set_xlabel("X-Axis")
                |> Matplotex.set_ylabel("Y-Axis")
-               |> LinePlot.materialize()
+               |> Figure.materialize()
 
       element = Enum.filter(element, fn elem -> elem.type == "plot.line" end)
 

@@ -48,7 +48,6 @@ defmodule Matplotex.Figure.Areal.LinePlot do
   @impl Areal
   def materialize(figure) do
     figure
-    |> __MODULE__.materialized_by_region()
     |> materialize_lines()
   end
 

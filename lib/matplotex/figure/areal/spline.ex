@@ -30,7 +30,6 @@ defmodule Matplotex.Figure.Areal.Spline do
       ) do
     x = determine_numeric_value(x)
     y = determine_numeric_value(y)
-    opts = Keyword.put_new(opts, :color, "none")
     dataset = Dataset.cast(%Dataset{x: x, y: y}, opts)
     datasets = data ++ [dataset]
     xydata = flatten_for_data(datasets)
@@ -42,7 +41,6 @@ defmodule Matplotex.Figure.Areal.Spline do
   @impl Areal
   def materialize(figure) do
     figure
-    |> __MODULE__.materialized_by_region()
     |> materialize_spline()
   end
 
@@ -100,7 +98,6 @@ defmodule Matplotex.Figure.Areal.Spline do
     {moveto, transformed} = List.pop_at(transformed, 0, move_to_def)
     cubic = Enum.slice(transformed, 0..2)
     smooths = blend(transformed, 3)
-
     %Spline{
       type: "figure.spline",
       moveto: moveto,

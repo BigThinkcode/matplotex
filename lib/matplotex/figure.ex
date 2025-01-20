@@ -74,7 +74,7 @@ defmodule Matplotex.Figure do
     %__MODULE__{figure | margin: margin, axes: %{axes | size: frame_size}}
   end
 
-  def materialize(%__MODULE__{axes: %module{}} = figure), do: module.materialize(figure)
+  def materialize(%__MODULE__{axes: %module{}} = figure), do: figure|> module.materialized_by_region()|>module.materialize()
 
   def update_figure(figure, params) do
     if valid_params?(params) do
