@@ -48,7 +48,6 @@ defmodule Matplotex.Figure.Areal.Histogram do
   def materialize(figure) do
     figure
     |> sanitize()
-    # |> __MODULE__.materialized_by_region()
     |> materialize_hist()
   end
 

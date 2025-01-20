@@ -41,7 +41,6 @@ defmodule Matplotex.Figure.Areal.Spline do
   @impl Areal
   def materialize(figure) do
     figure
-    # |> __MODULE__.materialized_by_region()
     |> materialize_spline()
   end
 

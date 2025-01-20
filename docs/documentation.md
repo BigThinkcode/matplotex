@@ -1,0 +1,1 @@
+[for detailed documentation refer](https://hexdocs.pm/matplotex/Matplotex.html)
