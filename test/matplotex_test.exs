@@ -310,7 +310,7 @@ defmodule MatplotexTest do
       x = [1, 2, 3, 4, 5]
       y = [1,4,9,16,25]
       assert %Figure{axes: %{dataset: [data1], label: label}} =
-        Matplotex.spline(x, y, x_label: "X", y_label: "Y")
+        Matplotex.step(x, y, x_label: "X", y_label: "Y")
         assert label.x == "X"
         assert label.y == "Y"
         assert data1.x|>Enum.uniq() == x
