@@ -30,7 +30,7 @@ defmodule Matplotex.Figure.Radial do
         %{axes | title: title, show_title: true}
       end
 
-      def materialized(figure) do
+      def materialized_by_region(figure) do
         figure
         |> Lead.set_regions_radial()
         |> Cast.cast_border()

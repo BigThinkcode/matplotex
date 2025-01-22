@@ -26,6 +26,7 @@ defmodule Matplotex.Figure.RcParams do
             y_label_font: @font,
             title_font: %Font{font_size: @default_title_font_size, dominant_baseline: "auto"},
             legend_font: %Font{text_anchor: "start"},
+            slice_label_font: @font,
             figure_size: @default_figsize,
             figure_dpi: @default_dpi,
             line_width: @line_width,

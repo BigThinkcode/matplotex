@@ -28,6 +28,7 @@ defmodule Matplotex.Element.Slice do
      A #{get_radius(slice)} #{get_radius(slice)} 0 0 1 #{get_x2(slice)} #{get_y2(slice)}
      L #{get_cx(slice)} #{get_cy(slice)}
      Z" fill="#{slice.color}" />
+     #{Element.assemble(slice.label)}
     """
   end
 
