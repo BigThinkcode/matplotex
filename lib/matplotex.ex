@@ -598,6 +598,9 @@ defmodule Matplotex do
 
   """
 
+  def step(x, y, opts), do: Matplotex.Figure.Areal.Step.create(x, y, opts)
+  def step(figure, x, y, opts), do: Matplotex.Figure.Areal.Step.create(figure, x, y, opts)
+
   @spec set_xlabel(Figure.t(), String.t()) :: Figure.t()
   def set_xlabel(figure, label, opts \\ []) do
     Figure.add_label(figure, {:x, label}, opts)
