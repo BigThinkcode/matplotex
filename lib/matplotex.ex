@@ -589,6 +589,23 @@ defmodule Matplotex do
   end
 
   @doc """
+  Creates a step plot with the given parameters
+  ## Parameters
+
+  - `x` (list): A list of x-coordinates for the data points.
+  - `y` (list): A list of y-coordinates corresponding to the x-coordinates.
+  ```elixir
+   x = [1,2,3,4,5]
+   y = [1,4,9,16,25]
+   Matplotex.step(x, y, color: "blue")
+   |>Matplotex.set_xlabel("Numbers")
+   |>Matplotex.set_ylabel("Squares")
+  ```
+  """
+  def step(x, y, opts), do: Matplotex.Figure.Areal.Step.create(x, y, opts)
+  def step(figure, x, y, opts), do: Matplotex.Figure.Areal.Step.create(figure, x, y, opts)
+
+  @doc """
   Sets X labels for the graph with given font details
 
   ## Examples
@@ -597,7 +614,6 @@ defmodule Matplotex do
       %Matplotex.Figure{}
 
   """
-
   @spec set_xlabel(Figure.t(), String.t()) :: Figure.t()
   def set_xlabel(figure, label, opts \\ []) do
     Figure.add_label(figure, {:x, label}, opts)
