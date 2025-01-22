@@ -1,5 +1,5 @@
 defmodule Matplotex.Utils.Helpers do
-@moduledoc false
+  @moduledoc false
   # @moduledoc """
   # Module contains some misslenious helper functions
   # """

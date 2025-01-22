@@ -1,5 +1,5 @@
 defmodule Matplotex.Element.Line do
-@moduledoc false
+  @moduledoc false
   alias Matplotex.Element
   use Element
 

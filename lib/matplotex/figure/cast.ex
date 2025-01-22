@@ -1,5 +1,5 @@
 defmodule Matplotex.Figure.Cast do
-@moduledoc false
+  @moduledoc false
   alias Matplotex.Figure.Lead
   alias Matplotex.Element.Legend
   alias Matplotex.Utils.Algebra
@@ -17,7 +17,6 @@ defmodule Matplotex.Figure.Cast do
   @ytick_type "figure.y_tick"
   @lowest_tick 0
   @zero_to_move 0
-
 
   def cast_spines_by_region(
         %Figure{
@@ -128,13 +127,11 @@ defmodule Matplotex.Figure.Cast do
     %Figure{figure | axes: %{axes | element: elements ++ [title]}}
   end
 
-
   def cast_label_by_region(figure) do
     figure
     |> cast_xlabel_by_region()
     |> cast_ylabel_by_region()
   end
-
 
   def cast_xlabel_by_region(
         %Figure{
@@ -183,7 +180,9 @@ defmodule Matplotex.Figure.Cast do
     element = element ++ [y_label]
     %Figure{figure | axes: %{axes | element: element}}
   end
-   def cast_ylabel_by_region(figure), do: figure
+
+  def cast_ylabel_by_region(figure), do: figure
+
   def cast_xticks_by_region(
         %Figure{
           axes:
@@ -311,7 +310,6 @@ defmodule Matplotex.Figure.Cast do
           }
         } = figure
       ) do
-
     y_ticks = confine_ticks(y_ticks, ylim)
     y_data = confine_data(y_data, ylim)
     dataset = confine_data(dataset, ylim, :y)

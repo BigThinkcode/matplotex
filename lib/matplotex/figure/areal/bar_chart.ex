@@ -1,5 +1,5 @@
 defmodule Matplotex.Figure.Areal.BarChart do
-@moduledoc false
+  @moduledoc false
   import Matplotex.Figure.Numer
   alias Matplotex.Figure.Areal.PlotOptions
   alias Matplotex.Figure.Areal.Region
@@ -48,7 +48,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
 
   @impl Areal
   def materialize(figure) do
-     materialize_bars(figure)
+    materialize_bars(figure)
   end
 
   defp materialize_bars(

@@ -1,5 +1,5 @@
 defmodule Matplotex.Figure.Radial.Pie do
-@moduledoc false
+  @moduledoc false
   alias Matplotex.Figure.RcParams
   alias Matplotex.Utils.Algebra
   alias Matplotex.Figure.Areal.Region
@@ -16,7 +16,7 @@ defmodule Matplotex.Figure.Radial.Pie do
   use Radial
 
   @full_circle 2 * :math.pi()
-  @legend_padding 5/96
+  @legend_padding 5 / 96
   chord(
     center: %TwoD{},
     lead: %TwoD{},

@@ -1,5 +1,5 @@
 defmodule Matplotex.Figure.Marker do
-@moduledoc false
+  @moduledoc false
   alias Matplotex.Utils.Algebra
   alias Matplotex.Element.Rect
   alias Matplotex.Element.Polygon

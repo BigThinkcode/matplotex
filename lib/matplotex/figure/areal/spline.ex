@@ -1,5 +1,5 @@
 defmodule Matplotex.Figure.Areal.Spline do
-@moduledoc false
+  @moduledoc false
   alias Matplotex.Element.Spline
   alias Matplotex.Figure.RcParams
   alias Matplotex.Figure.Areal
@@ -86,6 +86,7 @@ defmodule Matplotex.Figure.Areal.Spline do
 
     %Figure{figure | axes: %{axes | element: elements}}
   end
+
   defp capture(
          %Dataset{
            transformed: transformed,
@@ -98,6 +99,7 @@ defmodule Matplotex.Figure.Areal.Spline do
     {moveto, transformed} = List.pop_at(transformed, 0, move_to_def)
     cubic = Enum.slice(transformed, 0..2)
     smooths = blend(transformed, 3)
+
     %Spline{
       type: "figure.spline",
       moveto: moveto,

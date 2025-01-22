@@ -1,5 +1,5 @@
 defmodule Matplotex.Blueprint.Frame do
-@moduledoc false
+  @moduledoc false
   alias Matplotex.Figure.Legend
   @default_margin 0.05
   @show_by_default true

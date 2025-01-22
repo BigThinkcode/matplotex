@@ -1,5 +1,5 @@
 defmodule Matplotex.Figure do
-@moduledoc false
+  @moduledoc false
   alias Matplotex.Figure.RcParams
   @row_column_default 1
   @margin_default 0.05
@@ -74,7 +74,8 @@ defmodule Matplotex.Figure do
     %__MODULE__{figure | margin: margin, axes: %{axes | size: frame_size}}
   end
 
-  def materialize(%__MODULE__{axes: %module{}} = figure), do: figure|> module.materialized_by_region()|>module.materialize()
+  def materialize(%__MODULE__{axes: %module{}} = figure),
+    do: figure |> module.materialized_by_region() |> module.materialize()
 
   def update_figure(figure, params) do
     if valid_params?(params) do

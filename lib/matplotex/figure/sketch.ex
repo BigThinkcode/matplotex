@@ -1,5 +1,5 @@
 defmodule Matplotex.Figure.Sketch do
-@moduledoc false
+  @moduledoc false
   alias Matplotex.Figure
   @dpi 96
 

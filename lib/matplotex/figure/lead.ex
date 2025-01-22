@@ -1,5 +1,5 @@
 defmodule Matplotex.Figure.Lead do
-@moduledoc false
+  @moduledoc false
   alias Matplotex.Utils.Algebra
   alias Matplotex.Figure.Areal.XyRegion.Coords, as: XyCoords
   alias Matplotex.Figure.Font
@@ -66,7 +66,6 @@ defmodule Matplotex.Figure.Lead do
              } = axes
          } = figure
        ) do
-
     {x_ticks, x_lim} = maybe_generate_ticks(x_ticks, x_lim, x_data, x_ticks_count || width)
     {y_ticks, y_limt} = maybe_generate_ticks(y_ticks, y_lim, y_data, y_ticks_count || height)
 

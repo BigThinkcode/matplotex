@@ -1,5 +1,5 @@
 defmodule Matplotex.Figure.Areal.Region do
-@moduledoc false
+  @moduledoc false
   alias Matplotex.Figure.Areal.XyRegion.Coords
   @zero_by_default 0
   defstruct x: @zero_by_default,

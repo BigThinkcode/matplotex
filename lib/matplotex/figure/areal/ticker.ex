@@ -1,5 +1,5 @@
 defmodule Matplotex.Figure.Areal.Ticker do
-@moduledoc false
+  @moduledoc false
   @tick_in_plot 5
   def generate_ticks({min, max}) do
     step = (max - min) / @tick_in_plot

@@ -1,5 +1,5 @@
 defmodule Matplotex.Element.Legend do
-@moduledoc false
+  @moduledoc false
   alias Matplotex.Element.Label
   alias Matplotex.Element
 

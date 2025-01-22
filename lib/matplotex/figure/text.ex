@@ -1,5 +1,5 @@
 defmodule Matplotex.Figure.Text do
-@moduledoc false
+  @moduledoc false
   alias Matplotex.Figure.Text
   alias Matplotex.Figure.Font
 

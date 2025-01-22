@@ -1,5 +1,5 @@
 defmodule Matplotex.Utils.Algebra do
-@moduledoc false
+  @moduledoc false
   alias Nx
 
   @tensor_data_type_bits 64

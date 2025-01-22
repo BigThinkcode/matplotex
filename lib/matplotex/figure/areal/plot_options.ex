@@ -1,5 +1,5 @@
 defmodule Matplotex.Figure.Areal.PlotOptions do
-@moduledoc false
+  @moduledoc false
   alias Matplotex.Figure
   alias Matplotex.Figure.TwoD
   alias Matplotex.Figure.RcParams
