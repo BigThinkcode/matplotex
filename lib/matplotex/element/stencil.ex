@@ -1,5 +1,5 @@
 defmodule Matplotex.Element.Stencil do
-@moduledoc false
+  @moduledoc false
   def line(line) do
     ~s(
     <line

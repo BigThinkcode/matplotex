@@ -1,4 +1,4 @@
 defmodule Matplotex.InputError do
-@moduledoc false
+  @moduledoc false
   defexception [:keys, :message]
 end

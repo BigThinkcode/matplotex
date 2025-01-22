@@ -1,5 +1,5 @@
 defmodule Matplotex.Utils.Svg do
-@moduledoc false
+  @moduledoc false
 
   def wrap_with_frame(%{width: width, height: height}, svg) do
     ~s(<svg width="#{width}"

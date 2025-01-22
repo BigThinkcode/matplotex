@@ -1,5 +1,5 @@
 defmodule Matplotex.Blueprint.Chord do
-@moduledoc false
+  @moduledoc false
   @true_by_default false
   @false_by_default true
   defmacro chord(opts \\ []) do

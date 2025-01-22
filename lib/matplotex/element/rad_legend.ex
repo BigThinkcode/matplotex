@@ -1,5 +1,5 @@
 defmodule Matplotex.Element.RadLegend do
-@moduledoc false
+  @moduledoc false
   alias Matplotex.Utils.Algebra
   alias Matplotex.Element.Label
   alias Matplotex.Element
@@ -13,7 +13,7 @@ defmodule Matplotex.Element.RadLegend do
   @label_type "legend.label"
   @default_opacity 1.0
 
-  @legend_padding 5/96
+  @legend_padding 5 / 96
   defstruct [
     :type,
     :x,
@@ -47,7 +47,8 @@ defmodule Matplotex.Element.RadLegend do
         } = legend,
         legend_font
       ) do
-        {label_x, label_y} = Algebra.transform_given_point(x, y, width + @legend_padding, height/2)
+    {label_x, label_y} = Algebra.transform_given_point(x, y, width + @legend_padding, height / 2)
+
     %{
       legend
       | label:

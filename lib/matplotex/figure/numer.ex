@@ -1,5 +1,5 @@
 defmodule Matplotex.Figure.Numer do
-@moduledoc false
+  @moduledoc false
   def round_to_best(value) when value > 10 do
     factor = value |> :math.log10() |> floor()
 

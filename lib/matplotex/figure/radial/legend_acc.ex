@@ -1,4 +1,4 @@
 defmodule Matplotex.Figure.Radial.LegendAcc do
-@moduledoc false
+  @moduledoc false
   defstruct [:x, :y, :uheight, :uwidth]
 end

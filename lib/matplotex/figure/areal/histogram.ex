@@ -1,5 +1,5 @@
 defmodule Matplotex.Figure.Areal.Histogram do
-@moduledoc false
+  @moduledoc false
   alias Matplotex.Element.Rect
   alias Matplotex.Figure.RcParams
   alias Matplotex.Figure.Areal.PlotOptions
@@ -150,7 +150,9 @@ defmodule Matplotex.Figure.Areal.Histogram do
     {bins_dist, hists}
   end
 
-  defp sanitize(%Figure{axes: %__MODULE__{data: {x, y}, limit: %TwoD{x: xlim, y: ylim}} = axes} = figure) do
+  defp sanitize(
+         %Figure{axes: %__MODULE__{data: {x, y}, limit: %TwoD{x: xlim, y: ylim}} = axes} = figure
+       ) do
     {ymin, ymax} = Enum.min_max(y)
     {xmin, xmax} = Enum.min_max(x)
 
@@ -158,7 +160,10 @@ defmodule Matplotex.Figure.Areal.Histogram do
       figure
       | axes: %__MODULE__{
           axes
-          | limit: %TwoD{x: xlim || {floor(xmin), ceil(xmax)}, y: ylim || {floor(ymin), ceil(ymax)}}
+          | limit: %TwoD{
+              x: xlim || {floor(xmin), ceil(xmax)},
+              y: ylim || {floor(ymin), ceil(ymax)}
+            }
         }
     }
   end

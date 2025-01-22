@@ -1,5 +1,5 @@
 defmodule Matplotex.Figure.Radial do
-@moduledoc false
+  @moduledoc false
   alias Matplotex.Utils.Algebra
 
   @callback create(struct(), list(), keyword()) :: struct()

@@ -1,5 +1,5 @@
 defmodule Matplotex.Figure.Radial.Accumulator do
-@moduledoc false
+  @moduledoc false
   alias Matplotex.Figure.Radial.LegendAcc
 
   @start_angle :math.pi() / 2

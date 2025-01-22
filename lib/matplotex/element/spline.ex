@@ -1,5 +1,5 @@
 defmodule Matplotex.Element.Spline do
-@moduledoc false
+  @moduledoc false
   alias Matplotex.Element
   use Element
   @default_stroke_width 2

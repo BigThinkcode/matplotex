@@ -1,5 +1,5 @@
 defmodule Matplotex.Figure.Font do
-@moduledoc false
+  @moduledoc false
   @default_font_color "black"
   @default_font_family "Arial, Verdana, sans-serif"
   @default_font_style "normal"

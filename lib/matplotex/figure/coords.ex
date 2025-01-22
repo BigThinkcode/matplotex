@@ -1,5 +1,5 @@
 defmodule Matplotex.Figure.Coords do
-@moduledoc false
+  @moduledoc false
   defstruct [
     :title,
     :x_label,

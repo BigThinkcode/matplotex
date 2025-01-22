@@ -1,5 +1,5 @@
 defmodule Matplotex.Utilities.MathFunc do
-@moduledoc false
+  @moduledoc false
   alias NX
   @tensor_double_data_type_bits 64
   def euclidean_distance(x1, y1, x2, y2) do
