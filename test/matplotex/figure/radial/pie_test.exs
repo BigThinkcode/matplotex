@@ -28,7 +28,7 @@ defmodule Matplotex.Figure.Radial.PieTest do
       # Colors for the slices
       colors = ["lightblue", "lightgreen", "orange", "pink"]
       figure = Pie.create(%Figure{axes: %Pie{}}, sizes, labels: labels, colors: colors)
-      assert %Figure{axes: %{element: element}} = Pie.materialize(figure)
+      assert %Figure{axes: %{element: element}} = figure |> Figure.materialize()
 
       assert Enum.filter(element, fn elem -> String.contains?(elem.type, "border") end)
              |> length() == 4
@@ -42,7 +42,7 @@ defmodule Matplotex.Figure.Radial.PieTest do
       # Colors for the slices
       colors = ["lightblue", "lightgreen", "orange", "pink"]
       figure = Pie.create(%Figure{axes: %Pie{}}, sizes, labels: labels, colors: colors)
-      assert %Figure{axes: %{element: element}} = Pie.materialize(figure)
+      assert %Figure{axes: %{element: element}} = figure|> Figure.materialize()
 
       assert Enum.filter(element, fn elem -> elem.type == "pie.slice" end) |> length() ==
                length(sizes)
