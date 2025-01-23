@@ -1,5 +1,6 @@
 defmodule Matplotex.Figure.Radial.Pie do
   @moduledoc false
+  alias Matplotex.Element.Label
   alias Matplotex.Figure.RcParams
   alias Matplotex.Utils.Algebra
   alias Matplotex.Figure.Areal.Region
@@ -42,14 +43,13 @@ defmodule Matplotex.Figure.Radial.Pie do
   @impl Radial
   def materialize(figure) do
     figure
-    |> __MODULE__.materialized()
     |> materialize_slices()
   end
 
   defp materialize_slices(
          %Figure{
            figsize: {fwidth, fheight},
-           rc_params: %RcParams{legend_font: legend_font},
+           rc_params: %RcParams{legend_font: legend_font, slice_label_font: slice_label_font},
            axes:
              %__MODULE__{
                size: {_width, height},
@@ -88,7 +88,7 @@ defmodule Matplotex.Figure.Radial.Pie do
           }
         },
         fn raw, color, acc ->
-          roll_across(raw, color, acc, center, radius, total_size, legend_font)
+          roll_across(raw, color, acc, center, radius, total_size, legend_font, slice_label_font)
         end
       )
       |> then(fn %Accumulator{slices: slices, legends: legends} ->
@@ -123,7 +123,8 @@ defmodule Matplotex.Figure.Radial.Pie do
          %{x: cx, y: cy} = center,
          radius,
          total_size,
-         legend_font
+         legend_font,
+         slice_label_font
        ) do
     percentage = size / total_size
     angle_for_size = percentage * @full_circle + start_angle
@@ -140,7 +141,8 @@ defmodule Matplotex.Figure.Radial.Pie do
       percentage: percentage,
       color: color,
       cx: cx,
-      cy: cy
+      cy: cy,
+      label: with_label(x1, y1, x2, y2, cx, cy, label, slice_label_font)
     }
 
     {x_legend, y_legend} =
@@ -165,5 +167,18 @@ defmodule Matplotex.Figure.Radial.Pie do
       start_angle: angle_for_size,
       legend_acc: %LegendAcc{legend_acc | y: y_legend}
     }
+  end
+
+  defp with_label(x1, y1, x2, y2, cx, cy, label, label_font) do
+    label_x = (x1 + x2 + cx) / 3
+    label_y = (y1 + y2 + cy) / 3
+
+    %Label{
+      type: "pie.slice",
+      text: label,
+      x: label_x,
+      y: label_y
+    }
+    |> Label.cast_label(label_font)
   end
 end

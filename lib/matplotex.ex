@@ -155,7 +155,7 @@ defmodule Matplotex do
 
     * Custom Elements: The materializer function's primary role is to generate a list of structs that implement the Matplotex.Element behavior. This enables the SVG generator to produce the appropriate tags for custom visualizations
 
-    ### Matplotex.Element behaviour
+    ## Matplotex.Element behaviour
 
     The Matplotex.Element behavior defines a callback function, assemble/1, which takes a struct as input and returns its corresponding SVG tag as a string. The assemble/1 function is responsible for interpolating the struct's values into the SVG element.
 
