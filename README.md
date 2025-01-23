@@ -39,7 +39,7 @@ The package can be installed by adding <font color="darkblue"> **Matplotex**</fo
 ```elixir
 def deps do
 [
-    {:matplotex, "~> 0.4.0" }
+    {:matplotex, "~> 0.4.5" }
 ]
 ```
 
