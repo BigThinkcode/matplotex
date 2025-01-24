@@ -210,6 +210,20 @@ defmodule Matplotex.Figure.Areal do
         %__MODULE__{axes | size: frame_size}
       end
 
+      def process_concurrently(transformed, concurrency, args) do
+        chunk_size = div(length(transformed), concurrency)
+
+        transformed
+        |> Enum.chunk_every(chunk_size)
+        |> Task.async_stream(fn part ->
+          args = [part | args]
+          apply(__MODULE__, :capture, args)
+        end)
+        |> Enum.reduce([], fn {:ok, elements}, acc ->
+          acc ++ elements
+        end)
+      end
+
       def set_region_title(
             %Figure{
               axes:

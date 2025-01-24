@@ -65,7 +65,11 @@ defmodule Matplotex.Figure.Areal.LinePlot do
                },
                element: elements
              } = axes,
-           rc_params: %RcParams{x_padding: x_padding, y_padding: y_padding}
+           rc_params: %RcParams{
+             x_padding: x_padding,
+             y_padding: y_padding,
+             concurrency: concurrency
+           }
          } = figure
        ) do
     # {x_region_content, y_region_content} = Algebra.flip_y_coordinate({x_region_content, y_region_content})
@@ -85,7 +89,7 @@ defmodule Matplotex.Figure.Areal.LinePlot do
           shrinked_height_region_content,
           {x_region_content + x_padding_value, y_region_content + y_padding_value}
         )
-        |> capture()
+        |> capture(concurrency)
       end)
       |> List.flatten()
 
@@ -129,19 +133,23 @@ defmodule Matplotex.Figure.Areal.LinePlot do
     {Ticker.generate_ticks(lim), lim}
   end
 
-  defp capture(%Dataset{transformed: transformed} = dataset) do
-    capture(transformed, [], dataset)
+  def capture(%Dataset{transformed: transformed} = dataset, concurrency) do
+    if concurrency do
+      process_concurrently(transformed, concurrency, [[], dataset])
+    else
+      capture(transformed, [], dataset)
+    end
   end
 
-  defp capture(
-         [{x1, y1} | [{x2, y2} | _] = to_capture],
-         captured,
-         %Dataset{
-           color: color,
-           marker: marker,
-           linestyle: linestyle
-         } = dataset
-       ) do
+  def capture(
+        [{x1, y1} | [{x2, y2} | _] = to_capture],
+        captured,
+        %Dataset{
+          color: color,
+          marker: marker,
+          linestyle: linestyle
+        } = dataset
+      ) do
     capture(
       to_capture,
       captured ++
@@ -162,7 +170,7 @@ defmodule Matplotex.Figure.Areal.LinePlot do
     )
   end
 
-  defp capture([{x, y}], captured, %Dataset{color: color, marker: marker}) do
+  def capture([{x, y}], captured, %Dataset{color: color, marker: marker}) do
     captured ++ [Marker.generate_marker(marker, x, y, color, @marker_size)]
   end
 end

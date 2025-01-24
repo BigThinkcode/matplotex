@@ -4,7 +4,7 @@ defmodule Matplotex.Figure.Dataset do
   @default_marker "o"
   @default_linestyle "_"
   @default_width 0.2
-  @default_marker_size 3.5
+  @default_marker_size 1
   @default_alpha 1.0
   @line_width 2
 

@@ -773,11 +773,6 @@ defmodule Matplotex do
     Figure.set_rc_params(figure, rc_params)
   end
 
-  def show({stream, figure}) do
-    Scatter.materialize(stream, figure)
-    |> Sketch.call()
-  end
-
   def show(figure) do
     figure
     |> Figure.materialize()
