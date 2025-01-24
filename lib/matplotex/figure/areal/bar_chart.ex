@@ -65,7 +65,11 @@ defmodule Matplotex.Figure.Areal.BarChart do
                },
                element: elements
              } = axes,
-           rc_params: %RcParams{x_padding: x_padding, white_space: white_space}
+           rc_params: %RcParams{
+             x_padding: x_padding,
+             white_space: white_space,
+             concurrency: concurrency
+           }
          } = figure
        ) do
     x_padding_value = width_region_content * x_padding + white_space
@@ -82,7 +86,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
           height_region_content,
           {x_region_content + x_padding_value, y_region_content}
         )
-        |> capture(-y_region_content)
+        |> capture(-y_region_content, concurrency)
       end)
       |> List.flatten()
 
@@ -114,23 +118,27 @@ defmodule Matplotex.Figure.Areal.BarChart do
     {min..max |> Enum.into([], fn d -> d * round_to_best(step) end), lim}
   end
 
-  defp capture(%Dataset{transformed: transformed} = dataset, bly) do
-    capture(transformed, [], dataset, bly)
+  def capture(%Dataset{transformed: transformed} = dataset, bly, concurrency) do
+    if concurrency do
+      process_concurrently(transformed, concurrency, [[], dataset, bly])
+    else
+      capture(transformed, [], dataset, bly)
+    end
   end
 
-  defp capture(
-         [{x, y} | to_capture],
-         captured,
-         %Dataset{
-           color: color,
-           width: width,
-           pos: pos_factor,
-           edge_color: edge_color,
-           alpha: alpha,
-           line_width: line_width
-         } = dataset,
-         bly
-       ) do
+  def capture(
+        [{x, y} | to_capture],
+        captured,
+        %Dataset{
+          color: color,
+          width: width,
+          pos: pos_factor,
+          edge_color: edge_color,
+          alpha: alpha,
+          line_width: line_width
+        } = dataset,
+        bly
+      ) do
     capture(
       to_capture,
       captured ++
@@ -153,7 +161,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
     )
   end
 
-  defp capture([], captured, _dataset, _bly), do: captured
+  def capture([], captured, _dataset, _bly), do: captured
 
   defp hypox(y) do
     nof_x = length(y)

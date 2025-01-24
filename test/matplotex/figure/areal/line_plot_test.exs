@@ -14,6 +14,14 @@ defmodule Matplotex.Figure.Areal.LinePlotTest do
       assert elem1.fill == "blue"
       assert elem1.linestyle == "_"
     end
+
+    test "materialize concurrently if rc_params contains a positive integer", %{figure: figure} do
+      figure = Matplotex.set_rc_params(figure, concurrency: 2)
+      assert %Figure{axes: %{element: elements}} = LinePlot.materialize(figure)
+      [elem1 | _] = Enum.filter(elements, fn elem -> elem.type == "plot.line" end)
+      assert elem1.fill == "blue"
+      assert elem1.linestyle == "_"
+    end
   end
 
   describe "create/4" do

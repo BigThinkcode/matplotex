@@ -63,7 +63,11 @@ defmodule Matplotex.Figure.Areal.Histogram do
            },
            element: element
          },
-         rc_params: %RcParams{x_padding: x_padding, white_space: white_space}
+         rc_params: %RcParams{
+           x_padding: x_padding,
+           white_space: white_space,
+           concurrency: concurrency
+         }
        }) do
     x_padding_value = width_region_content * x_padding + white_space
     shrinked_width_region_content = width_region_content - x_padding_value * 2
@@ -79,15 +83,19 @@ defmodule Matplotex.Figure.Areal.Histogram do
           height_region_content,
           {x_region_content + x_padding_value, y_region_content}
         )
-        |> capture(abs(y_region_content), shrinked_width_region_content)
+        |> capture(abs(y_region_content), shrinked_width_region_content, concurrency)
       end)
       |> List.flatten()
 
     %Figure{axes: %{element: element ++ hist_elements}}
   end
 
-  defp capture(%Dataset{transformed: transformed} = dataset, bly, region_width) do
-    capture(transformed, [], dataset, bly, region_width)
+  defp capture(%Dataset{transformed: transformed} = dataset, bly, region_width, concurrency) do
+    if concurrency do
+      process_concurrently(transformed, concurrency, [[], dataset, bly, region_width])
+    else
+      capture(transformed, [], dataset, bly, region_width)
+    end
   end
 
   defp capture(

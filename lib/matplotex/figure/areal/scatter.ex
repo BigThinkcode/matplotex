@@ -58,7 +58,11 @@ defmodule Matplotex.Figure.Areal.Scatter do
                },
                element: elements
              } = axes,
-           rc_params: %RcParams{x_padding: x_padding, y_padding: y_padding}
+           rc_params: %RcParams{
+             x_padding: x_padding,
+             y_padding: y_padding,
+             concurrency: concurrency
+           }
          } = figure
        ) do
     x_padding_value = width_region_content * x_padding
@@ -77,7 +81,7 @@ defmodule Matplotex.Figure.Areal.Scatter do
           shrinked_height_region_content,
           {x_region_content + x_padding_value, y_region_content + y_padding_value}
         )
-        |> capture()
+        |> capture(concurrency)
       end)
       |> List.flatten()
 
@@ -85,42 +89,23 @@ defmodule Matplotex.Figure.Areal.Scatter do
     %Figure{figure | axes: %{axes | element: elements}}
   end
 
-  def materialize(xystream, figure) do
-    __MODULE__.materialized_by_region(figure)
-    |> material_stream(xystream)
+  def capture(%Dataset{transformed: transformed} = dataset, concurrency) do
+    if concurrency do
+      process_concurrently(transformed, concurrency, [[], dataset])
+    else
+      capture(transformed, [], dataset)
+    end
   end
 
-  def material_stream(
-        %Figure{
-          axes: %__MODULE__{
-            limit: %TwoD{x: xlim, y: ylim},
-            element: element,
-            coords: %Coords{bottom_left: {blx, bly}},
-            size: {width, height}
-          }
-        } = figure,
-        xystream
+  def capture(
+        [{x, y} | to_capture],
+        captured,
+        %Dataset{
+          color: color,
+          marker: marker,
+          marker_size: marker_size
+        } = dataset
       ) do
-    {Stream.map(xystream, fn {x, y} ->
-       {matx, maty} = transformation(x, y, xlim, ylim, width, height, {blx, bly})
-       Marker.generate_marker("o", matx, maty, "blue", 5)
-     end)
-     |> Stream.concat(element), figure}
-  end
-
-  defp capture(%Dataset{transformed: transformed} = dataset) do
-    capture(transformed, [], dataset)
-  end
-
-  defp capture(
-         [{x, y} | to_capture],
-         captured,
-         %Dataset{
-           color: color,
-           marker: marker,
-           marker_size: marker_size
-         } = dataset
-       ) do
     capture(
       to_capture,
       captured ++
@@ -131,7 +116,7 @@ defmodule Matplotex.Figure.Areal.Scatter do
     )
   end
 
-  defp capture(_, captured, _), do: captured
+  def capture(_, captured, _), do: captured
 
   @impl Areal
   def with_legend_handle(
