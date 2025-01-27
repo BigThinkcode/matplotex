@@ -4,11 +4,22 @@ defmodule Matplotex.Figure.Areal.PlotOptions do
   alias Matplotex.Figure.TwoD
   alias Matplotex.Figure.RcParams
 
-  @immutable_keys [:axes, :rc_params, :elements, :region_x, :region_y, :region_title, :region_content, :region_legend, :region_color_bar]
+  @immutable_keys [
+    :axes,
+    :rc_params,
+    :elements,
+    :region_x,
+    :region_y,
+    :region_title,
+    :region_content,
+    :region_legend,
+    :region_color_bar
+  ]
 
   @spec set_options_in_figure(Figure.t(), keyword()) :: Figure.t()
   def set_options_in_figure(%Figure{} = figure, opts) do
     opts = sanitize(opts)
+
     figure
     |> cast_figure(opts)
     |> cast_axes(opts)
@@ -47,5 +58,4 @@ defmodule Matplotex.Figure.Areal.PlotOptions do
   defp sanitize(opts) do
     Keyword.drop(opts, @immutable_keys)
   end
-
 end
