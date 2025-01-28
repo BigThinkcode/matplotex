@@ -1,34 +1,31 @@
 defmodule Matplotex.Figure.Areal.PlotOptionsTest do
-  alias Matplotex.Figure
-  alias Matplotex.Figure.Areal.PlotOptions
   use Matplotex.PlotCase
 
   setup do
     {:ok, %{figure: Matplotex.FrameHelpers.sample_figure()}}
   end
 
-  describe "cast_options/1" do
-    test "generate PlotOptions struct", %{} do
-      assert %PlotOptions{} =
-               PlotOptions.cast_options(
-                 margin: 10,
-                 x_limit: {0, 10},
-                 y_limit: {-10, 10}
-               )
-    end
-  end
-
-  describe "set_options_in_figure/2" do
-    test "update figure struct with plotting options", %{figure: figure} do
-      options =
-        PlotOptions.cast_options(
-          margin: 10,
-          x_limit: {0, 10},
-          y_limit: {-10, 10}
+  describe "set_options_in_figure" do
+    test "plot options should't allow some restricted keys", %{figure: figure} do
+      figure =
+        figure
+        |> Matplotex.set_title("New title")
+        |> Matplotex.plot([1, 2, 3, 4, 5], [1, 2, 3, 4, 5],
+          x_lagel: "X",
+          axes: nil,
+          region_x: nil,
+          region_y: nil,
+          region_content: nil,
+          region_title: nil,
+          elements: nil
         )
 
-      assert %Figure{margin: 10, axes: %{limit: %{x: {0, 10}, y: {-10, 10}}}} =
-               PlotOptions.set_options_in_figure(figure, options)
+      refute figure.axes.region_x == nil
+      refute figure.axes.region_y == nil
+      refute figure.axes.region_content == nil
+      refute figure.axes.region_title == nil
+      refute figure.axes.element == nil
+      refute figure.axes == nil
     end
   end
 end
