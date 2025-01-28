@@ -161,6 +161,7 @@ defmodule Matplotex do
 
 
   """
+  alias Matplotex.Figure.Areal.PlotOptions
   alias Matplotex.Figure.Areal.Spline
   alias Matplotex.Figure.Areal.Histogram
   alias Matplotex.InputError
@@ -743,6 +744,10 @@ defmodule Matplotex do
 
   def show_legend(figure) do
     Figure.show_legend(figure)
+  end
+
+  def set_options(figure, opts) do
+    PlotOptions.set_options_in_figure(figure, opts)
   end
 
   @doc """

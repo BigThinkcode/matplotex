@@ -1,5 +1,8 @@
 defmodule Matplotex.Figure.Cast do
   @moduledoc false
+  alias Matplotex.Element.Rect
+  alias Matplotex.Colorscheme.Colormap
+  alias Matplotex.Element.Cmap
   alias Matplotex.Figure.Lead
   alias Matplotex.Element.Legend
   alias Matplotex.Utils.Algebra
@@ -489,8 +492,56 @@ defmodule Matplotex.Figure.Cast do
     %Figure{figure | axes: %{axes | element: elements ++ legend_elements}}
   end
 
-  def cast_legends(figure), do: figure
+  def cast_legends(
+        %Figure{
+          axes:
+            %{
+              dataset: datasets,
+              element: elements,
+              region_legend: %Region{
+                x: x_region_legend,
+                y: y_region_legend,
+                width: width_region_legend
+              },
+              region_content: %Region{
+                height: height_region_content
+              },
+              rc_params: %RcParams{cmap_width: cmap_width}
+            } = axes
+        } = figure
+      ) do
 
+
+    cmap_elements =
+      datasets
+      |> Enum.with_index()
+      |> Enum.map(fn {%Dataset{colors: colors, cmap: cmap}, idx} ->
+        {start, stop} = Enum.min_max(colors)
+        tick_labels = Nx.linspace(start, stop, n: 4)|> Nx.to_list()
+        {x_cmap, y_cmap} =
+          Algebra.transform_given_point(
+            x_region_legend,
+            y_region_legend,
+            idx * cmap_width,
+            0
+          )
+          |> Algebra.flip_y_coordinate()
+        %Cmap{
+          id: "colorGradient",
+          cmap: fetch_cmap(cmap),
+          container: %Rect{x: x_cmap, y: y_cmap, width: cmap_width, height: height_region_content}
+        }
+
+      end)
+
+    %Figure{figure | axes: %{axes | element: elements ++ cmap_elements}}
+  end
+
+  def cast_legends(figure), do: figure
+  defp fetch_cmap(cmap) when is_binary(cmap), do: cmap|> String.to_atom()|> fetch_cmap()
+  defp fetch_cmap(cmap) do
+    apply(Colormap, cmap, [])
+  end
   defp calculate_center(%Region{x: x, y: y, width: width}, :x) do
     {calculate_distance({x, y}, {x + width, y}) / 2 + x, y}
   end
