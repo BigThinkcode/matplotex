@@ -498,41 +498,56 @@ defmodule Matplotex.Figure.Cast do
             %{
               dataset: datasets,
               element: elements,
+              cmap: cmap,
               region_legend: %Region{
                 x: x_region_legend,
-                y: y_region_legend,
-                width: width_region_legend
+                y: y_region_legend
               },
               region_content: %Region{
                 height: height_region_content
-              },
-              rc_params: %RcParams{cmap_width: cmap_width}
-            } = axes
+              }
+            } = axes,
+            rc_params: %RcParams{cmap_width: cmap_width, x_tick_font: x_tick_font, tick_line_length: tick_line_length}
         } = figure
-      ) do
-
-
+  ) when not is_nil(cmap) do
     cmap_elements =
       datasets
       |> Enum.with_index()
       |> Enum.map(fn {%Dataset{colors: colors, cmap: cmap}, idx} ->
+
         {start, stop} = Enum.min_max(colors)
         tick_labels = Nx.linspace(start, stop, n: 4)|> Nx.to_list()
-        {x_cmap, y_cmap} =
+        {x_cmap, y_cmap} = cmap_coords =
           Algebra.transform_given_point(
             x_region_legend,
             y_region_legend,
             idx * cmap_width,
             0
           )
-          |> Algebra.flip_y_coordinate()
-        %Cmap{
+      unit_size = height_region_content / 5
+      ticks = tick_labels|>Enum.with_index()|>Enum.map(
+        fn {tick, idx} ->
+          position_on_bar = (idx + 1) * unit_size
+          tick_coords = {x_cmap_tick, y_cord_tick} = {x_cmap, y_cmap}|>Algebra.transform_given_point({cmap_width, position_on_bar})
+          {x2_cmap_tick, _} = Algebra.transform_given_point(tick_coords, {0, tick_line_length})
+          tick_label = Label.cast_label(%Label{text: tick}, x_tick_font)
+          %Tick{
+            type: "tick.cmap",
+            tick_line: %Line{x1: x_cmap_tick, x2: x2_cmap_tick, y1: y_cord_tick, y2: y_cord_tick },
+            label: tick_label
+          }
+        end
+      )
+
+      {x_cmap, y_cmap} = Algebra.flip_y_coordinate(cmap_coords)
+        [%Cmap{
           id: "colorGradient",
           cmap: fetch_cmap(cmap),
           container: %Rect{x: x_cmap, y: y_cmap, width: cmap_width, height: height_region_content}
-        }
+        }] ++ ticks
 
       end)
+      |> List.flatten()
 
     %Figure{figure | axes: %{axes | element: elements ++ cmap_elements}}
   end
@@ -540,7 +555,7 @@ defmodule Matplotex.Figure.Cast do
   def cast_legends(figure), do: figure
   defp fetch_cmap(cmap) when is_binary(cmap), do: cmap|> String.to_atom()|> fetch_cmap()
   defp fetch_cmap(cmap) do
-    apply(Colormap, cmap, [])
+    apply(Colormap, cmap, [])|>Colormap.make_colormap()
   end
   defp calculate_center(%Region{x: x, y: y, width: width}, :x) do
     {calculate_distance({x, y}, {x + width, y}) / 2 + x, y}

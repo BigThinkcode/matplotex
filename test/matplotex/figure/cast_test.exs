@@ -108,14 +108,15 @@ defmodule Matplotex.Figure.CastTest do
       assert Enum.filter(elements, fn x -> x.type == "figure.legend" end) |> length() ==
                length(dataset)
     end
-    test "add colormaps for charts with colormaps", %{figure: figure} do
+    test "add colormaps for charts with colormaps" do
       assert %Figure{axes: %{element: elements}} =
-        figure
+        [1,2,3,4,5,6]
+        |> Matplotex.plot([1,2,3,4,5], cmap: "viridis", colors: [3,4,5,6,7,3,2,4] )
         |> Lead.set_regions_areal()
-        |> Matplotex.set_options(cmap: "virids", colors: [3,4,5,6,7,3,2,4] )
         |> Cast.cast_legends()
 
       assert Enum.filter(elements, fn x -> x.type == "figure.cmap" end) |> length() == 1
+      assert Enum.filter(elements, fn x -> x.type == "tick.cmap" end) |> length() == 4
     end
   end
 end

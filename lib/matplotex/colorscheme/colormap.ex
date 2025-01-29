@@ -35,8 +35,8 @@ defmodule Matplotex.Colorscheme.Colormap do
     |> Enum.map(&colormap(&1, size))
   end
 
-  defp colormap({index, color}, size) do
-    offset = index / size / 100
+  defp colormap({color, idx}, size) do
+    offset = idx/ size / 100
     %__MODULE__{color: color, offset: offset}
   end
 end
