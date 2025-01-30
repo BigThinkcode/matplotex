@@ -550,11 +550,11 @@ defmodule Matplotex.Figure.Cast do
               |> Algebra.flip_y_coordinate()
               |> Algebra.transform_given_point({0, height_region_content})
 
-            {x2_cmap_tick, _} = Algebra.transform_given_point(tick_coords, {tick_line_length, 0})
-
+            {x2_cmap_tick, _} = tick_x2 = Algebra.transform_given_point(tick_coords, {tick_line_length, 0})
+            {tick_label_x, _} = Algebra.transform_given_point(tick_x2, {tick_line_length, 0})
             tick_label =
               Label.cast_label(
-                %Label{type: "tick.cmap", x: x2_cmap_tick, y: y_cord_tick, text: tick},
+                %Label{type: "tick.cmap", x: tick_label_x, y: y_cord_tick, text: tick},
                 cmap_tick_font
               )
 

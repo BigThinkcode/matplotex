@@ -1,32 +1,20 @@
 defmodule Matplotex.Colorscheme.Colormap do
   defstruct [:color, :offset, opacity: 1]
-  @dark_purple "#2A132F"
-  @purple "#441E4B"
-  @yellow "#fbde41"
-  @red "#eb3767"
-  @orange "#EEA103"
-  @black "#1e1b13"
-  @dark_blue "#245BC1"
   def viridis do
-    [@dark_purple, @yellow]
+    ["#fde725","#21918c","#3b528b","#440154"]
   end
 
   def plasma do
-    [@dark_purple, @red, @yellow]
+    ["#F7E425","#ED6925", "#9C179E", "#0C0786" ]
   end
 
   def inferno do
-    [@black, @red, @orange, @yellow]
+    ["#FCFFA4","#F56C3E","#B12A90","#000004"]
   end
 
   def magma do
-    [@black, @purple, @red, @yellow]
+    ["#FCFDBF","#FB8861", "#B73779", "#000004"]
   end
-
-  def civids do
-    [@dark_blue, @yellow]
-  end
-
   def make_colormap(colors) do
     size = length(colors)
     colors
