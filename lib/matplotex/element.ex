@@ -14,6 +14,12 @@ defmodule Matplotex.Element do
     quote do
       @behaviour Matplotex.Element
       import Matplotex.Element, only: [to_pixel: 1]
+
+      defimpl String.Chars, for: __MODULE__ do
+        def to_string(%module{} = element) do
+        module.assemble(element)
+        end
+      end
     end
   end
 end

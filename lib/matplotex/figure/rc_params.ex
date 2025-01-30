@@ -25,6 +25,7 @@ defmodule Matplotex.Figure.RcParams do
             y_tick_font: %Font{text_anchor: "start"},
             x_label_font: @font,
             y_label_font: @font,
+            cmap_tick_font: %Font{text_anchor: "start"},
             title_font: %Font{font_size: @default_title_font_size, dominant_baseline: "auto"},
             legend_font: %Font{text_anchor: "start"},
             slice_label_font: @font,

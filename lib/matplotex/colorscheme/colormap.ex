@@ -29,14 +29,13 @@ defmodule Matplotex.Colorscheme.Colormap do
 
   def make_colormap(colors) do
     size = length(colors)
-
     colors
     |> Enum.with_index()
     |> Enum.map(&colormap(&1, size))
   end
 
   defp colormap({color, idx}, size) do
-    offset = idx/ size / 100
+    offset = idx / size * 100
     %__MODULE__{color: color, offset: offset}
   end
 end

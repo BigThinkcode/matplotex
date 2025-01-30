@@ -3,15 +3,6 @@ defmodule Matplotex.Figure.Sketch do
   alias Matplotex.Figure
   @dpi 96
 
-  def call({stream, %Figure{figsize: {width, height}}}) do
-    stream
-    |> Stream.map(fn %module{} = elem ->
-      elem = module.flipy(elem, height)
-      module.assemble(elem)
-    end)
-    |> wrap_with_tag(width * @dpi, height * @dpi)
-  end
-
   def call(%Figure{axes: %{element: elements}, figsize: {width, height}}) do
     elements
     |> build_elements()
@@ -24,11 +15,11 @@ defmodule Matplotex.Figure.Sketch do
 
   defp build_elements(elements) do
     "#{for element <- elements do
-      svgfy_element(element)
+      to_string(element)
     end}"
   end
 
-  defp svgfy_element(%module{} = element), do: module.assemble(element)
+
 
   defp wrap_with_tag(svg, width, height) do
     ~s(<svg width="#{width}"
