@@ -60,6 +60,6 @@ end
 
 defimpl String.Chars, for: CssColors.RGB do
 def to_string(struct) do
-  CssColors.RGB.to_string(struct)
+ Matplotex.Colorscheme.Rgb.to_string(struct)
 end
 end

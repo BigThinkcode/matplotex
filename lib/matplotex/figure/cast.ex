@@ -576,7 +576,7 @@ defmodule Matplotex.Figure.Cast do
         [
           %Cmap{
             id: "colorGradient",
-            cmap: fetch_cmap(cmap),
+            cmap: Colormap.fetch_cmap(cmap),
             container: %Rect{
               x: x_cmap,
               y: y_cmap,
@@ -592,11 +592,7 @@ defmodule Matplotex.Figure.Cast do
   end
 
   def cast_legends(figure), do: figure
-  defp fetch_cmap(cmap) when is_binary(cmap), do: cmap |> String.to_atom() |> fetch_cmap()
 
-  defp fetch_cmap(cmap) do
-    apply(Colormap, cmap, []) |> Colormap.make_colormap()
-  end
 
   defp calculate_center(%Region{x: x, y: y, width: width}, :x) do
     {calculate_distance({x, y}, {x + width, y}) / 2 + x, y}

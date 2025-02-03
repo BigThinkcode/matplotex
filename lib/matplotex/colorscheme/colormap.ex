@@ -15,6 +15,12 @@ defmodule Matplotex.Colorscheme.Colormap do
   def magma do
     ["#FCFDBF","#FB8861", "#B73779", "#000004"]
   end
+
+  def fetch_cmap(cmap) when is_binary(cmap), do: cmap |> String.to_atom() |> fetch_cmap()
+
+  def fetch_cmap(cmap) do
+    apply(Colormap, cmap, []) |> make_colormap()
+  end
   def make_colormap(colors) do
     size = length(colors)
     colors
@@ -26,4 +32,6 @@ defmodule Matplotex.Colorscheme.Colormap do
     offset = idx / size * 100
     %__MODULE__{color: color, offset: offset}
   end
+
+
 end
