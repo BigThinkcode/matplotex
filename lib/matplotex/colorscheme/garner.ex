@@ -1,4 +1,5 @@
 defmodule Matplotex.Colorscheme.Garner do
+alias Matplotex.Colorscheme.Rgb
 alias Matplotex.Colorscheme.Blender
 alias Matplotex.InputError
 alias Matplotex.Colorscheme.Colormap
@@ -16,6 +17,7 @@ alias Matplotex.Colorscheme.Colormap
   defp fetch_from_cmap(cmap) do
     cmap
     |>Colormap.fetch_cmap()
+    |>to_rgb()
     |>place_edges()
   end
 
@@ -23,22 +25,26 @@ alias Matplotex.Colorscheme.Colormap
     %__MODULE__{garner | range: range, color_cue: cue}
   end
 
+  defp to_rgb(color_map) do
+    Enum.map(color_map, &Rgb.from_cmap!(&1))
+  end
+
   defp place_edges([preceeding, minor, major,final]) do
-    %__MODULE__{preceeding: preceeding, minor: minor, major: major, final: final}
+    %__MODULE__{preceeding: preceeding.color, minor: minor.color, major: major.color, final: final.color}
   end
   defp place_edges(_) do
     raise InputError, message: "Invalid colormap"
   end
 
   defp point_color(%__MODULE__{color_cue: cue, preceeding: preceeding, minor: minor}) when cue < minor do
-    Blender.mix(minor, preceeding, cue)
+   minor|> Blender.mix(preceeding, cue)|> Rgb.to_string()
   end
 
   defp point_color(%__MODULE__{color_cue: cue, minor: minor, major: major}) when cue < major do
-    Blender.mix(minor, major, cue)
+   major|> Blender.mix(minor, cue)|> Rgb.to_string()
   end
 
   defp point_color(%__MODULE__{color_cue: cue, major: major, final: final}) when cue >= major do
-    final
+    final|> Blender.mix(major)|> Rgb.to_string()
   end
  end

@@ -12,6 +12,7 @@ defmodule Matplotex.Figure.Areal.ScatterTest do
       assert %Figure{axes: %{data: {x, _y}, element: elements}} = Scatter.materialize(figure)
       assert Enum.count(elements, fn elem -> elem.type == "plot.marker" end) == length(x)
     end
+
   end
 
   describe "generate_ticks/2" do

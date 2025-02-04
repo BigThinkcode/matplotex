@@ -19,7 +19,7 @@ defmodule Matplotex.Colorscheme.Colormap do
   def fetch_cmap(cmap) when is_binary(cmap), do: cmap |> String.to_atom() |> fetch_cmap()
 
   def fetch_cmap(cmap) do
-    apply(Colormap, cmap, []) |> make_colormap()
+    apply(__MODULE__, cmap, []) |> make_colormap()
   end
   def make_colormap(colors) do
     size = length(colors)

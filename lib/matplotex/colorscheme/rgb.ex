@@ -1,6 +1,6 @@
 defmodule Matplotex.Colorscheme.Rgb do
   @moduledoc false
-
+alias Matplotex.Colorscheme.Colormap
   defstruct [
     red: 0.0, # 0-255
     green: 0.0, # 0-255
@@ -56,7 +56,27 @@ defmodule Matplotex.Colorscheme.Rgb do
   defp to_hex(value) when is_integer(value), do:
     Integer.to_string(value, 16)
 
+    def from_hex!(input) do
+      {:ok, color} = from_hex(input)
+      color
+    end
+
+    def from_cmap!(%Colormap{color: color} = cmap) do
+     %Colormap{cmap | color: from_hex!(color) }
+    end
+
+    def from_hex("#" <> <<r :: binary-size(2), g :: binary-size(2), b :: binary-size(2)>>) do
+      {:ok, rgb(parse_hex(r), parse_hex(g), parse_hex(b))}
+    end
+    def from_hex("#" <> <<r :: binary-size(1), g :: binary-size(1), b :: binary-size(1)>>) do
+      {:ok, rgb(parse_hex(r <> r), parse_hex(g <> g), parse_hex(b <> b))}
+    end
+
+    defp parse_hex(s), do: String.to_integer(s, 16)
+
+
 end
+
 
 defimpl String.Chars, for: CssColors.RGB do
 def to_string(struct) do
