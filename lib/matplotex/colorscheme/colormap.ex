@@ -28,6 +28,8 @@ defmodule Matplotex.Colorscheme.Colormap do
     |> Enum.map(&colormap(&1, size))
   end
 
+  def default_cmap(), do: viridis()
+
   defp colormap({color, idx}, size) do
     offset = idx / size * 100
     %__MODULE__{color: color, offset: offset}

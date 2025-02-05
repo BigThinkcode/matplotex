@@ -2,21 +2,19 @@ defmodule Matplotex.Colorscheme.Garner do
 alias Matplotex.Colorscheme.Rgb
 alias Matplotex.Colorscheme.Blender
 alias Matplotex.InputError
-alias Matplotex.Colorscheme.Colormap
 
   defstruct [:range, :color_cue,  :cmap, :preceeding, :minor, :major, :final]
 
   def garn_color({min, max} = range, point, cmap) when max != min do
     cue = (point - min) / (max - min)
     cmap
-    |> fetch_from_cmap()
+    |> make_from_cmap()
     |> put_range(range, cue)
     |> point_color()
   end
 
-  defp fetch_from_cmap(cmap) do
+  defp make_from_cmap(cmap) do
     cmap
-    |>Colormap.fetch_cmap()
     |>to_rgb()
     |>place_edges()
   end

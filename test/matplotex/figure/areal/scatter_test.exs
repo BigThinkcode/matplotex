@@ -12,7 +12,18 @@ defmodule Matplotex.Figure.Areal.ScatterTest do
       assert %Figure{axes: %{data: {x, _y}, element: elements}} = Scatter.materialize(figure)
       assert Enum.count(elements, fn elem -> elem.type == "plot.marker" end) == length(x)
     end
+    test "adds point with specific color with color scheme" do
+      x = [1, 3, 7, 4, 2, 5, 6]
+      y = [1, 3, 7, 4, 2, 5, 6]
+      colors = [1, 3, 7, 4, 2, 5, 6]
 
+    assert %Figure{axes: %{element: elements}} =   x
+    |> Matplotex.scatter(y, colors: colors)
+    |> Matplotex.figure(%{figsize: size, margin: margin})
+    |> Scatter.materialize()
+
+    assert elements|>Enum.filter(fn elem -> elem.type == "point.color" end)|>length()
+    end
   end
 
   describe "generate_ticks/2" do
