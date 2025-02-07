@@ -1,4 +1,5 @@
 defmodule Matplotex.Colorscheme.Colormap do
+@moduledoc false
   defstruct [:color, :offset, opacity: 1]
   def viridis do
     ["#fde725","#21918c","#3b528b","#440154"]

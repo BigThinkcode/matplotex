@@ -1,4 +1,5 @@
 defmodule Matplotex.Colorscheme.Garner do
+@moduledoc false
 alias Matplotex.Colorscheme.Rgb
 alias Matplotex.Colorscheme.Blender
 alias Matplotex.InputError

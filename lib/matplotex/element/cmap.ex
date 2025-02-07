@@ -1,4 +1,5 @@
 defmodule Matplotex.Element.Cmap do
+@moduledoc false
   alias Matplotex.Element.Rect
   alias Matplotex.Element
   use Element

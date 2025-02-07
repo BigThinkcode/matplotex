@@ -1,4 +1,5 @@
 defmodule Matplotex.Colorscheme.Blender do
+@moduledoc false
 alias Matplotex.Colorscheme.Rgb
 
   @rgb_fields [:red, :green, :blue, :alpha]
