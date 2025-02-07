@@ -266,18 +266,40 @@ defmodule Matplotex.Figure.Areal do
 
       def set_region_legend(
             %Figure{
-              axes:
-                %{
-                  show_legend: true,
-                  region_x: %Region{width: region_x_width} = region_x,
-                  region_title: %Region{height: region_title_height},
-                  region_legend: region_legend,
-                  size: {f_width, _f_height},
-                  border: {_lx, by, rx, ty}
-                } = axes,
-              rc_params: %RcParams{legend_width: legend_width}
+              axes: %{
+                show_legend: true
+              }
             } = figure
           ) do
+        configure_region_legend(figure)
+      end
+
+      def set_region_legend(
+            %Figure{
+              axes: %{
+                cmap: cmap
+              }
+            } = figure
+          )
+          when not is_nil(cmap) do
+        configure_region_legend(figure)
+      end
+
+      def set_region_legend(figure), do: figure
+
+      defp configure_region_legend(
+             %Figure{
+               axes:
+                 %{
+                   region_x: %Region{width: region_x_width} = region_x,
+                   region_title: %Region{height: region_title_height},
+                   region_legend: region_legend,
+                   size: {f_width, _f_height},
+                   border: {_lx, by, rx, ty}
+                 } = axes,
+               rc_params: %RcParams{legend_width: legend_width}
+             } = figure
+           ) do
         region_legend_width = f_width * legend_width
         region_x_width_after_legend = region_x_width - region_legend_width
 
@@ -302,8 +324,6 @@ defmodule Matplotex.Figure.Areal do
             }
         }
       end
-
-      def set_region_legend(figure), do: figure
 
       def set_region_content(
             %Figure{

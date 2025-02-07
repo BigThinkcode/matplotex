@@ -100,7 +100,8 @@ defmodule Matplotex.Blueprint.Frame do
                       show_x_ticks: @show_by_default,
                       show_y_ticks: @show_by_default,
                       show_ticks: @show_by_default,
-                      border: nil
+                      border: nil,
+                      cmap: nil
                     ]
                     |> Keyword.merge(opts)
                   )

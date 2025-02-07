@@ -7,6 +7,7 @@ defmodule Matplotex.Figure.RcParams do
   @line_style "_"
   @grid_color "#ddd"
   @grid_linestyle "--"
+  @default_cmap_width 0.2
 
   @legend_location "top right"
   @default_font_size 16
@@ -24,6 +25,7 @@ defmodule Matplotex.Figure.RcParams do
             y_tick_font: %Font{text_anchor: "start"},
             x_label_font: @font,
             y_label_font: @font,
+            cmap_tick_font: %Font{text_anchor: "start"},
             title_font: %Font{font_size: @default_title_font_size, dominant_baseline: "auto"},
             legend_font: %Font{text_anchor: "start"},
             slice_label_font: @font,
@@ -53,7 +55,8 @@ defmodule Matplotex.Figure.RcParams do
             legend_items_orientation: @default_legend_items_orientation,
             x_ticks_count: nil,
             y_ticks_count: nil,
-            concurrency: nil
+            concurrency: nil,
+            cmap_width: @default_cmap_width
 
   def get_rc(%__MODULE__{} = rc_param, get_func) do
     apply(__MODULE__, get_func, [rc_param])

@@ -1,5 +1,7 @@
 defmodule Matplotex.Figure.Cast do
   @moduledoc false
+  alias Matplotex.Element.Rect
+  alias Matplotex.Element.Cmap
   alias Matplotex.Figure.Lead
   alias Matplotex.Element.Legend
   alias Matplotex.Utils.Algebra
@@ -17,6 +19,7 @@ defmodule Matplotex.Figure.Cast do
   @ytick_type "figure.y_tick"
   @lowest_tick 0
   @zero_to_move 0
+  @cmap_id "colorGradient"
 
   def cast_spines_by_region(
         %Figure{
@@ -489,7 +492,107 @@ defmodule Matplotex.Figure.Cast do
     %Figure{figure | axes: %{axes | element: elements ++ legend_elements}}
   end
 
+  def cast_legends(
+        %Figure{
+          axes:
+            %{
+              dataset: datasets,
+              element: elements,
+              cmap: cmap,
+              region_legend: %Region{
+                x: x_region_legend,
+                y: y_region_legend,
+                width: width_region_legend
+              },
+              region_content: %Region{
+                height: height_region_content
+              }
+            } = axes,
+          rc_params: %RcParams{
+            cmap_width: cmap_width,
+            cmap_tick_font: cmap_tick_font,
+            tick_line_length: tick_line_length,
+            padding: padding
+          }
+        } = figure
+      )
+      when is_list(cmap) do
+    cmap_elements =
+      datasets
+      |> Enum.with_index()
+      |> Enum.map(fn {%Dataset{colors: colors, cmap: cmap}, idx} ->
+        cmap_padding = width_region_legend * padding * 4
+        {start, stop} = Enum.min_max(colors)
+        tick_labels = Nx.linspace(start, stop, n: 4) |> Nx.to_list()
+
+        {x_cmap, y_cmap} =
+          cmap_coords =
+          Algebra.transform_given_point(
+            x_region_legend,
+            y_region_legend,
+            idx * cmap_width,
+            0
+          )
+          |> Algebra.transform_given_point({cmap_padding, 0})
+
+        unit_size = height_region_content / 5
+
+        ticks =
+          tick_labels
+          |> Enum.with_index()
+          |> Enum.map(fn {tick, idx} ->
+            position_on_bar = (idx + 1) * unit_size
+
+            tick_coords =
+              {x_cmap_tick, y_cord_tick} =
+              {x_cmap, y_cmap}
+              |> Algebra.transform_given_point({cmap_width, position_on_bar})
+              |> Algebra.flip_y_coordinate()
+              |> Algebra.transform_given_point({0, height_region_content})
+
+            {x2_cmap_tick, _} = tick_x2 = Algebra.transform_given_point(tick_coords, {tick_line_length, 0})
+            {tick_label_x, _} = Algebra.transform_given_point(tick_x2, {tick_line_length, 0})
+            tick_label =
+              Label.cast_label(
+                %Label{type: "tick.cmap", x: tick_label_x, y: y_cord_tick, text: tick},
+                cmap_tick_font
+              )
+
+            %Tick{
+              type: "tick.cmap",
+              tick_line: %Line{
+                type: "tick.cmap",
+                x1: x_cmap_tick,
+                x2: x2_cmap_tick,
+                y1: y_cord_tick,
+                y2: y_cord_tick
+              },
+              label: tick_label
+            }
+          end)
+
+        {x_cmap, y_cmap} = Algebra.flip_y_coordinate(cmap_coords)
+
+        [
+          %Cmap{
+            id: @cmap_id,
+            cmap: cmap,
+            container: %Rect{
+              x: x_cmap,
+              y: y_cmap,
+              width: cmap_width,
+              height: height_region_content
+            }
+          }|>Cmap.color_gradient()
+        ] ++ ticks
+      end)
+      |> List.flatten()
+
+    %Figure{figure | axes: %{axes | element: elements ++ cmap_elements}}
+  end
+
   def cast_legends(figure), do: figure
+
 
   defp calculate_center(%Region{x: x, y: y, width: width}, :x) do
     {calculate_distance({x, y}, {x + width, y}) / 2 + x, y}

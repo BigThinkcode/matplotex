@@ -70,6 +70,18 @@ defmodule Matplotex.Figure.LeadTest do
       assert Enum.all?([rlx, rly, rlwidth, rlheight], &(&1 != 0))
     end
 
+    test "setting region for colormap", %{figure2: figure} do
+      figure = Matplotex.set_options(figure, cmap: "viridis")
+
+      assert %Figure{
+               axes: %{
+                 region_legend: %Region{x: rlx, y: rly, width: rlwidth, height: rlheight}
+               }
+             } = Lead.set_regions_areal(figure)
+
+      assert Enum.all?([rlx, rly, rlwidth, rlheight], &(&1 != 0))
+    end
+
     test "setting content takes the same width of x region and y region", %{figure2: figure} do
       assert %Figure{
                axes: %{

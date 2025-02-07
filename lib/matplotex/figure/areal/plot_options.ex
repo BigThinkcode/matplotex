@@ -1,5 +1,6 @@
 defmodule Matplotex.Figure.Areal.PlotOptions do
   @moduledoc false
+  alias Matplotex.Colorscheme.Colormap
   alias Matplotex.Figure
   alias Matplotex.Figure.TwoD
   alias Matplotex.Figure.RcParams
@@ -15,11 +16,11 @@ defmodule Matplotex.Figure.Areal.PlotOptions do
     :region_legend,
     :region_color_bar
   ]
+  @default_cmap :viridis
 
   @spec set_options_in_figure(Figure.t(), keyword()) :: Figure.t()
   def set_options_in_figure(%Figure{} = figure, opts) do
     opts = sanitize(opts)
-
     figure
     |> cast_figure(opts)
     |> cast_axes(opts)
@@ -31,11 +32,14 @@ defmodule Matplotex.Figure.Areal.PlotOptions do
   end
 
   defp cast_axes(%Figure{axes: axes} = figure, opts) do
+
     opts = Keyword.delete(opts, :label)
+    cmap = Keyword.get(opts, :cmap)
+    colors = Keyword.get(opts, :colors)
 
     %Figure{
       figure
-      | axes: axes |> struct(opts) |> cast_two_d_structs(opts)
+      | axes: axes |> struct(opts) |> cast_two_d_structs(opts)|> update_cmap(cmap, colors)
     }
   end
 
@@ -58,4 +62,14 @@ defmodule Matplotex.Figure.Areal.PlotOptions do
   defp sanitize(opts) do
     Keyword.drop(opts, @immutable_keys)
   end
+  defp update_cmap(axes, nil, colors) when is_list(colors) do
+
+    %{axes | cmap: Colormap.fetch_cmap(@default_cmap)}
+  end
+
+  defp update_cmap(axes, cmap, colors) when is_list(colors) do
+   %{axes | cmap: Colormap.fetch_cmap(cmap)}
+  end
+
+  defp update_cmap(figure, _, _), do: figure
 end
