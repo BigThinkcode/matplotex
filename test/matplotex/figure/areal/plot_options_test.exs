@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.Areal.PlotOptionsTest do
+  alias Matplotex.Figure
   use Matplotex.PlotCase
 
   setup do
@@ -26,6 +27,14 @@ defmodule Matplotex.Figure.Areal.PlotOptionsTest do
       refute figure.axes.region_title == nil
       refute figure.axes.element == nil
       refute figure.axes == nil
+    end
+    test "updates cmap as a list by its name" do
+    assert %Figure{axes: %{cmap: cmap}} =   [1, 2, 3, 4, 5, 6]
+      |> Matplotex.plot([1, 2, 3, 4, 5],
+        cmap: "viridis",
+        colors: [3, 4, 5, 6, 7, 3, 2, 4]
+      )
+      assert is_list(cmap)
     end
   end
 end

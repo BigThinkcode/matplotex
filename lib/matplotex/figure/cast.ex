@@ -1,7 +1,6 @@
 defmodule Matplotex.Figure.Cast do
   @moduledoc false
   alias Matplotex.Element.Rect
-  alias Matplotex.Colorscheme.Colormap
   alias Matplotex.Element.Cmap
   alias Matplotex.Figure.Lead
   alias Matplotex.Element.Legend
@@ -20,6 +19,7 @@ defmodule Matplotex.Figure.Cast do
   @ytick_type "figure.y_tick"
   @lowest_tick 0
   @zero_to_move 0
+  @cmap_id "colorGradient"
 
   def cast_spines_by_region(
         %Figure{
@@ -516,7 +516,7 @@ defmodule Matplotex.Figure.Cast do
           }
         } = figure
       )
-      when not is_nil(cmap) do
+      when is_list(cmap) do
     cmap_elements =
       datasets
       |> Enum.with_index()
@@ -575,8 +575,8 @@ defmodule Matplotex.Figure.Cast do
 
         [
           %Cmap{
-            id: "colorGradient",
-            cmap: Colormap.fetch_cmap(cmap),
+            id: @cmap_id,
+            cmap: cmap,
             container: %Rect{
               x: x_cmap,
               y: y_cmap,
