@@ -168,11 +168,11 @@ defmodule Matplotex.Figure.Areal.BarChart do
     @xmin_value |> Nx.linspace(nof_x, n: nof_x) |> Nx.to_list()
   end
 
-  defp bar_position(x, pos_factor) when pos_factor < 0 do
+  defp bar_position(x, pos_factor) do
     x + pos_factor
   end
 
-  defp bar_position(x, _pos_factor), do: x
+
 
   defp list_of_ticks(data, step) do
     1..length(data)

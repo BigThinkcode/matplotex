@@ -176,7 +176,6 @@ defmodule Matplotex do
     Generates a bar chart using the provided values and bar widths.
 
   ## Parameters
-
     - `values` (list of numbers): A list of numerical values representing the heights of the bars in the chart.
     - `width` (floatiung point number): The width of each bar in inches.
     - `opts` (keyword list): It will support all opts mentioned above, some bar specific options are there those are
@@ -226,6 +225,11 @@ defmodule Matplotex do
   ## Parameters
 
     - `figure` (%Figure{}): The figure to which the new dataset will be added.
+    - `pos` (floating point number) : In multi-dataset plots, the bar position is determined by a numerical offset.
+       - Positive values shift the bar to the right of the tick.
+       - Negative values shift the bar to the left of the tick.
+       - Zero keeps the bar centered on the tick.
+       This allows precise alignment and spacing between multiple datasets in a bar chart
     - `values` (list): A list of numerical values representing the heights of the bars in the new dataset.
     - `width` (float): The width of the bars in the dataset.
     - `opts` (keyword list, optional): A set of options for customizing the appearance of the new dataset, such as color and label.
@@ -240,10 +244,12 @@ defmodule Matplotex do
   categories = ["apple", "banana", "fig", "avocado"]
   values1 = [22, 33, 28, 34]
   values2 = [53, 63, 59, 60]
+  values3 = [53, 63, 59, 60]
   width = 0.22
 
-  Matplotex.bar(width, values1, width, label: "Dataset1", color: "#255199")
-  |> M.bar(width, values2, width, label: "Dataset2", color: "#D3D3D3")
+  Matplotex.bar(-width, values1, width, label: "Dataset1", color: "#255199")
+  |> M.bar(0, values2, width, label: "Dataset2", color: "#D3D3D3")
+  |> M.bar(width, values2, width, label: "Dataset3", color: "green")
   """
   def bar(%Figure{} = figure, pos, values, width, opts) do
     figure
