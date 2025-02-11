@@ -36,10 +36,11 @@ defmodule Matplotex.Figure.Areal.PlotOptions do
     opts = Keyword.delete(opts, :label)
     cmap = Keyword.get(opts, :cmap)
     colors = Keyword.get(opts, :colors)
+    bottom = Keyword.get(opts, :bottom)
 
     %Figure{
       figure
-      | axes: axes |> struct(opts) |> cast_two_d_structs(opts)|> update_cmap(cmap, colors)
+      | axes: axes |> struct(opts) |> cast_two_d_structs(opts)|> update_cmap(cmap, colors) |> update_type(bottom)
     }
   end
 
@@ -63,7 +64,6 @@ defmodule Matplotex.Figure.Areal.PlotOptions do
     Keyword.drop(opts, @immutable_keys)
   end
   defp update_cmap(axes, nil, colors) when is_list(colors) do
-
     %{axes | cmap: Colormap.fetch_cmap(@default_cmap)}
   end
 
@@ -71,5 +71,9 @@ defmodule Matplotex.Figure.Areal.PlotOptions do
    %{axes | cmap: Colormap.fetch_cmap(cmap)}
   end
 
-  defp update_cmap(figure, _, _), do: figure
+  defp update_cmap(axes, _, _), do: axes
+  defp update_type(axes, nil), do: axes
+  defp update_type(axes, bottom) when is_list(bottom) do
+    %{axes | type: "stacked"}
+  end
 end

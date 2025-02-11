@@ -24,7 +24,8 @@ defmodule Matplotex.Figure.Dataset do
     marker: @default_marker,
     linestyle: @default_linestyle,
     marker_size: @default_marker_size,
-    line_width: @line_width
+    line_width: @line_width,
+    bottom: nil
   ]
 
   def cast(dataset, values) do

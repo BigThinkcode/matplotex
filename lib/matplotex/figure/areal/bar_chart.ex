@@ -50,6 +50,51 @@ defmodule Matplotex.Figure.Areal.BarChart do
   def materialize(figure) do
     materialize_bars(figure)
   end
+  defp materialize_bars(
+         %Figure{
+           axes:
+             %{
+               dataset: datasets,
+               data: data,
+               limit: %{x: xlim, y: ylim},
+               type: "stacked",
+               region_content: %Region{
+                 x: x_region_content,
+                 y: y_region_content,
+                 width: width_region_content,
+                 height: height_region_content
+               },
+               element: elements
+             } = axes,
+           rc_params: %RcParams{
+             x_padding: x_padding,
+             white_space: white_space,
+             concurrency: concurrency
+           }
+         } = figure
+       ) do
+        x_padding_value = width_region_content * x_padding + white_space
+        shrinked_width_region_content = width_region_content - x_padding_value * 2
+
+        bar_elements =
+          datasets
+          |> Enum.map(fn dataset ->
+            dataset
+            |> do_transform(
+              xlim,
+              ylim,
+              shrinked_width_region_content,
+              height_region_content,
+              {x_region_content + x_padding_value, y_region_content}
+            )
+            |> capture(-y_region_content, concurrency)
+          end)
+          |> List.flatten()
+
+        elements_with_bar = elements ++ bar_elements
+
+        %Figure{figure | axes: %{axes | element: elements_with_bar}}
+       end
 
   defp materialize_bars(
          %Figure{
