@@ -36,7 +36,8 @@ defmodule Matplotex.Figure.Areal.BarChart do
     x = hypox(values)
     dataset = Dataset.cast(%Dataset{x: x, y: values, pos: pos, width: width}, opts)
     datasets = data ++ [dataset]
-    xydata = flatten_for_data(datasets)
+     bottom = Keyword.get(opts, :bottom)
+    xydata = flatten_for_data(datasets,data, bottom)
 
     %Figure{
       figure
@@ -55,7 +56,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
            axes:
              %{
                dataset: datasets,
-               data: data,
+               data: {_x, y},
                limit: %{x: xlim, y: ylim},
                type: "stacked",
                region_content: %Region{

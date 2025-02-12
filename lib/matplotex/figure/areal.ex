@@ -58,7 +58,6 @@ defmodule Matplotex.Figure.Areal do
       end
 
       def add_title(axes, title, opts) when is_binary(title) do
-        # title = Text.create_text(title, opts)
         %{axes | title: title, show_title: true}
       end
 
@@ -169,6 +168,17 @@ defmodule Matplotex.Figure.Areal do
         else
           data_with_label(data)
         end
+      end
+      # For stacked bar chart the flattening supposed to be the sumation of yaxis data
+      def flatten_for_data(datasets,_data, nil), do: flatten_for_data(datasets)
+      def flatten_for_data(_datasets,%{x: x, y: y} = _data, bottom) do
+      y =   bottom
+        |> Tuple.to_list()
+        |> Kernel.++(y)
+        |> Nx.tensor(names: [:x, :y])
+        |> Nx.sum(axes: [:x])
+        |> Nx.to_list()
+      {x, y}
       end
 
       def flatten_for_data(datasets) do
