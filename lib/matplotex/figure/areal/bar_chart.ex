@@ -1,6 +1,7 @@
 defmodule Matplotex.Figure.Areal.BarChart do
   @moduledoc false
   import Matplotex.Figure.Numer
+  alias Matplotex.Utils.Algebra
   alias Matplotex.Figure.Areal.PlotOptions
   alias Matplotex.Figure.Areal.Region
   alias Matplotex.Element.Legend
@@ -81,7 +82,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
           datasets
           |> Enum.map(fn dataset ->
             dataset
-            |> do_transform(
+            |> do_transform_with_bottom(
               xlim,
               ylim,
               shrinked_width_region_content,
@@ -208,7 +209,41 @@ defmodule Matplotex.Figure.Areal.BarChart do
   end
 
   def capture([], captured, _dataset, _bly), do: captured
+  defp capture_stacked([{x, y} | to_capture], captured,  %Dataset{
+    color: color,
+    width: width,
+    pos: pos_factor,
+    edge_color: edge_color,
+    alpha: alpha,
+    line_width: line_width
+  } = dataset, bly) do
+    {y, bottom_y} = if is_list(y) do
+      {Enum.sum(y), y|>tl()|>Enum.sum()}
+    else
+      {y, bly}
+    end
 
+
+    capture_stacked(
+      to_capture,
+      captured ++
+        [
+          %Rect{
+            type: "figure.bar",
+            x: bar_position(x, pos_factor),
+            y: y,
+            width: width,
+            height: bottom_y - y,
+            color: color,
+            stroke: edge_color || color,
+            fill_opacity: alpha,
+            stroke_opacity: alpha,
+            stroke_width: line_width
+          }
+        ],
+      dataset, bly
+    )
+  end
   defp hypox(y) do
     nof_x = length(y)
     @xmin_value |> Nx.linspace(nof_x, n: nof_x) |> Nx.to_list()
@@ -218,12 +253,38 @@ defmodule Matplotex.Figure.Areal.BarChart do
     x + pos_factor
   end
 
-
-
   defp list_of_ticks(data, step) do
     1..length(data)
     |> Enum.into([], fn d ->
       d * step
     end)
+  end
+
+  defp do_transform_with_bottom(%Dataset{x: x, y: y, bottom: bottom} = dataset, xlim, ylim, width, height, transition) do
+    y = [y | bottom]|> Nx.tensor() |> Nx.transpose()|> Nx.to_list()
+
+    transformed =
+      x
+      |> Enum.zip(y)
+      |> Enum.map(fn {x, y} ->
+        transform_with_bottom(x,y, xlim, ylim, width, height, transition)
+      end)
+
+    %Dataset{dataset | transformed: transformed}
+  end
+
+  defp transform_with_bottom(x, y, xlim, ylim, width, height, transition) when is_list(y) do
+   transformed = Enum.map(y, fn y_with_bottom ->
+     transformation(x, y_with_bottom, xlim, ylim, width, height, transition)
+     |> Algebra.flip_y_coordinate()
+   end)
+   |>Enum.unzip()
+
+   {transformed|>elem(0)|>hd, transformed|> elem(1)}
+  end
+
+  defp transform_with_bottom(x, y, xlim, ylim, width, height, transition) do
+    transformation(x, y, xlim, ylim, width, height, transition)
+    |> Algebra.flip_y_coordinate()
   end
 end
