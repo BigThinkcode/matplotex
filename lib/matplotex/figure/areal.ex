@@ -170,11 +170,11 @@ defmodule Matplotex.Figure.Areal do
         end
       end
       # For stacked bar chart the flattening supposed to be the sumation of yaxis data
-      def flatten_for_data(datasets,_data, nil), do: flatten_for_data(datasets)
-      def flatten_for_data(_datasets,%{x: x, y: y} = _data, bottom) do
-      y =   bottom
-        |> Tuple.to_list()
-        |> Kernel.++(y)
+      def flatten_for_data(datasets, nil), do: flatten_for_data(datasets)
+      def flatten_for_data([%{x: x, y: y}| _datasets], bottom) do
+
+      y= bottom
+        |> Kernel.++([y])
         |> Nx.tensor(names: [:x, :y])
         |> Nx.sum(axes: [:x])
         |> Nx.to_list()
@@ -214,6 +214,9 @@ defmodule Matplotex.Figure.Areal do
 
       def show_legend(%__MODULE__{} = axes) do
         %__MODULE__{axes | show_legend: true}
+      end
+      def hide_legend(%__MODULE__{} = axes) do
+        %__MODULE__{axes | show_legend: false}
       end
 
       def set_frame_size(%__MODULE__{} = axes, frame_size) do

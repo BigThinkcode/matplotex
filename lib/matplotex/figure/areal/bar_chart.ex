@@ -38,7 +38,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
     dataset = Dataset.cast(%Dataset{x: x, y: values, pos: pos, width: width}, opts)
     datasets = data ++ [dataset]
      bottom = Keyword.get(opts, :bottom)
-    xydata = flatten_for_data(datasets,data, bottom)
+    xydata = datasets|>Enum.reverse()|> flatten_for_data(bottom)
 
     %Figure{
       figure
@@ -57,7 +57,6 @@ defmodule Matplotex.Figure.Areal.BarChart do
            axes:
              %{
                dataset: datasets,
-               data: {_x, y},
                limit: %{x: xlim, y: ylim},
                type: "stacked",
                region_content: %Region{
@@ -70,14 +69,12 @@ defmodule Matplotex.Figure.Areal.BarChart do
              } = axes,
            rc_params: %RcParams{
              x_padding: x_padding,
-             white_space: white_space,
-             concurrency: concurrency
+             white_space: white_space
            }
          } = figure
        ) do
         x_padding_value = width_region_content * x_padding + white_space
         shrinked_width_region_content = width_region_content - x_padding_value * 2
-
         bar_elements =
           datasets
           |> Enum.map(fn dataset ->
@@ -89,7 +86,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
               height_region_content,
               {x_region_content + x_padding_value, y_region_content}
             )
-            |> capture(-y_region_content, concurrency)
+            |> capture_stacked(-y_region_content)
           end)
           |> List.flatten()
 
@@ -164,7 +161,6 @@ defmodule Matplotex.Figure.Areal.BarChart do
     step = (max - min) / (side * 2)
     {min..max |> Enum.into([], fn d -> d * round_to_best(step) end), lim}
   end
-
   def capture(%Dataset{transformed: transformed} = dataset, bly, concurrency) do
     if concurrency do
       process_concurrently(transformed, concurrency, [[], dataset, bly])
@@ -172,6 +168,37 @@ defmodule Matplotex.Figure.Areal.BarChart do
       capture(transformed, [], dataset, bly)
     end
   end
+
+  def capture([{{x, y}, bottom} | to_capture], captured, %Dataset{
+    color: color,
+    width: width,
+    pos: pos_factor,
+    edge_color: edge_color,
+    alpha: alpha,
+    line_width: line_width
+  } =  dataset) do
+    capture(
+      to_capture,
+      captured ++
+        [
+          %Rect{
+            type: "figure.bar",
+            x: bar_position(x, pos_factor),
+            y: y,
+            width: width,
+            height: bottom - y,
+            color: color,
+            stroke: edge_color || color,
+            fill_opacity: alpha,
+            stroke_opacity: alpha,
+            stroke_width: line_width
+          }
+        ],
+      dataset
+    )
+  end
+  def capture([], captured, _dataset), do: captured
+
 
   def capture(
         [{x, y} | to_capture],
@@ -209,40 +236,23 @@ defmodule Matplotex.Figure.Areal.BarChart do
   end
 
   def capture([], captured, _dataset, _bly), do: captured
-  defp capture_stacked([{x, y} | to_capture], captured,  %Dataset{
-    color: color,
-    width: width,
-    pos: pos_factor,
-    edge_color: edge_color,
-    alpha: alpha,
-    line_width: line_width
-  } = dataset, bly) do
-    {y, bottom_y} = if is_list(y) do
-      {Enum.sum(y), y|>tl()|>Enum.sum()}
-    else
-      {y, bly}
-    end
+  defp capture_stacked(%Dataset{transformed: transformed}=dataset, bly) do
+    capture_stacked(transformed, [],dataset, bly)
+  end
+  defp capture_stacked(to_capture, captured, dataset, bly) do
+    to_capture
+    |>Enum.map(fn point ->
+      calculate_point(point, bly)
+    end)
+    |>capture(captured, dataset)
+  end
 
+  defp calculate_point({x, y}, _bly) when is_list(y) do
+    {{x, Enum.sum(y)}, y|>tl()|>Enum.sum()}
+  end
 
-    capture_stacked(
-      to_capture,
-      captured ++
-        [
-          %Rect{
-            type: "figure.bar",
-            x: bar_position(x, pos_factor),
-            y: y,
-            width: width,
-            height: bottom_y - y,
-            color: color,
-            stroke: edge_color || color,
-            fill_opacity: alpha,
-            stroke_opacity: alpha,
-            stroke_width: line_width
-          }
-        ],
-      dataset, bly
-    )
+  defp calculate_point({x, y}, bly) do
+    {{x, y}, bly}
   end
   defp hypox(y) do
     nof_x = length(y)
@@ -260,7 +270,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
     end)
   end
 
-  defp do_transform_with_bottom(%Dataset{x: x, y: y, bottom: bottom} = dataset, xlim, ylim, width, height, transition) do
+  defp do_transform_with_bottom(%Dataset{x: x, y: y, bottom: bottom} = dataset, xlim, ylim, width, height, transition) when is_list(bottom) do
     y = [y | bottom]|> Nx.tensor() |> Nx.transpose()|> Nx.to_list()
 
     transformed =
@@ -271,6 +281,10 @@ defmodule Matplotex.Figure.Areal.BarChart do
       end)
 
     %Dataset{dataset | transformed: transformed}
+  end
+
+  defp do_transform_with_bottom(dataset, xlim, ylim, width, height, transition) do
+    do_transform(dataset, xlim, ylim, width, height, transition)
   end
 
   defp transform_with_bottom(x, y, xlim, ylim, width, height, transition) when is_list(y) do
