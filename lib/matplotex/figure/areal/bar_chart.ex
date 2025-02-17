@@ -242,16 +242,18 @@ defmodule Matplotex.Figure.Areal.BarChart do
   defp capture_stacked(to_capture, captured, dataset, bly) do
     to_capture
     |>Enum.map(fn point ->
-      calculate_point(point, bly)
+      format_point(point, bly)
     end)
     |>capture(captured, dataset)
   end
 
-  defp calculate_point({x, y}, _bly) when is_list(y) do
-    {{x, Enum.sum(y)}, y|>tl()|>Enum.sum()}
-  end
+  defp format_point({{_x, _y}, _y_bottom} = point, _bly), do: point
+  #   sum_of_tail = y |> Enum.sort()|>tl()|>Enum.sum
+  #   sum_of_second_tail = y|>tl()|>tl()|>Enum.sum()
+  #   {{x, y|>Enum.max()|>Kernel.-(sum_of_tail)}, y|>tl()|>Enum.max()|> Kernel.-(sum_of_second_tail)}
+  # end
 
-  defp calculate_point({x, y}, bly) do
+  defp format_point({x, y}, bly) do
     {{x, y}, bly}
   end
   defp hypox(y) do
@@ -288,13 +290,16 @@ defmodule Matplotex.Figure.Areal.BarChart do
   end
 
   defp transform_with_bottom(x, y, xlim, ylim, width, height, transition) when is_list(y) do
-   transformed = Enum.map(y, fn y_with_bottom ->
-     transformation(x, y_with_bottom, xlim, ylim, width, height, transition)
-     |> Algebra.flip_y_coordinate()
-   end)
-   |>Enum.unzip()
-
-   {transformed|>elem(0)|>hd, transformed|> elem(1)}
+  #  transformed = Enum.map(y, fn y_with_bottom ->
+  #    transformation(x, y_with_bottom, xlim, ylim, width, height, transition)
+  #    |> Algebra.flip_y_coordinate()
+  #  end)
+  #  |>Enum.unzip()
+   y_top = Enum.sum(y)
+   y_bottom = y|>tl()|>Enum.sum()
+   transformed  = transformation(x, y_top, xlim, ylim, width, height, transition) |> Algebra.flip_y_coordinate()
+   {_, transformed_y_bottom} = transformation(x, y_bottom, xlim, ylim, width, height,transition) |> Algebra.flip_y_coordinate()
+   {transformed, transformed_y_bottom}
   end
 
   defp transform_with_bottom(x, y, xlim, ylim, width, height, transition) do

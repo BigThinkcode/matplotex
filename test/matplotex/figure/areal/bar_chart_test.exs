@@ -28,9 +28,12 @@ defmodule Matplotex.Figure.Areal.BarChartTest do
       |> Matplotex.bar(values3, width, bottom: [values2, values1])
       expected_elements_count = values1  ++ values2 ++ values3 |> length()
       assert %Figure{axes: %{element: elements}} = Figure.materialize(bar)
-
-      assert Enum.filter(elements, fn x -> x.type == "figure.bar" end) |> length() ==
-        expected_elements_count
+      bar_elements = Enum.filter(elements, fn x -> x.type == "figure.bar" end)
+      assert bar_elements |> length() == expected_elements_count
+      assert Enum.all?(bar_elements, fn rect -> assert_valid_coords(rect) end)
     end
+  end
+  defp assert_valid_coords(rect) do
+    rect.x > 0 and rect.y > 0 and rect.width > 0 and rect.height > 0
   end
 end
