@@ -1,19 +1,17 @@
 defmodule Matplotex.Colorscheme.Blender do
-@moduledoc false
-alias Matplotex.Colorscheme.Rgb
+  @moduledoc false
+  alias Matplotex.Colorscheme.Rgb
 
   @rgb_fields [:red, :green, :blue, :alpha]
 
   @type color :: %Rgb{
-    red: :float,
-    green: :float,
-    blue: :float,
-    alpha: :float
-  }
-
+          red: :float,
+          green: :float,
+          blue: :float,
+          alpha: :float
+        }
 
   def mix(color1, color2, weight \\ 0.5) do
-
     p = weight
     w = p * 2 - 1
     a = color1.alpha - color2.alpha
@@ -30,9 +28,9 @@ alias Matplotex.Colorscheme.Rgb
     alpha = get_alpha(color1) * p + get_alpha(color2) * (1 - p)
     rgb(r, g, b, alpha)
   end
+
   defdelegate rgb(red, green, blue), to: Rgb
   defdelegate rgb(red, green, blue, alpha), to: Rgb
-
 
   @doc """
     Gets the `:red` property of the color.
@@ -87,6 +85,4 @@ alias Matplotex.Colorscheme.Rgb
   end
 
   defp cast_color_by_attribute(color, attribute) when attribute in @rgb_fields, do: color
-
-
 end

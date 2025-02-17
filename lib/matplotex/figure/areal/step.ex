@@ -1,5 +1,5 @@
 defmodule Matplotex.Figure.Areal.Step do
-@moduledoc false
+  @moduledoc false
   alias Matplotex.Figure.Areal.LinePlot
   alias Matplotex.Figure
   alias Matplotex.InputError

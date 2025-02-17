@@ -36,8 +36,8 @@ defmodule Matplotex.Figure.Areal.BarChart do
     x = hypox(values)
     dataset = Dataset.cast(%Dataset{x: x, y: values, pos: pos, width: width}, opts)
     datasets = data ++ [dataset]
-     bottom = Keyword.get(opts, :bottom)
-    xydata = datasets|>Enum.reverse()|> flatten_for_data(bottom)
+    bottom = Keyword.get(opts, :bottom)
+    xydata = datasets |> Enum.reverse() |> flatten_for_data(bottom)
 
     %Figure{
       figure
@@ -118,6 +118,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
     step = (max - min) / (side * 2)
     {min..max |> Enum.into([], fn d -> d * round_to_best(step) end), lim}
   end
+
   def capture(%Dataset{transformed: transformed} = dataset, bly, concurrency) do
     if concurrency do
       process_concurrently(transformed, concurrency, [[], dataset, bly])
@@ -126,14 +127,19 @@ defmodule Matplotex.Figure.Areal.BarChart do
     end
   end
 
-  def capture([{{x, y}, bottom} | to_capture], captured, %Dataset{
-    color: color,
-    width: width,
-    pos: pos_factor,
-    edge_color: edge_color,
-    alpha: alpha,
-    line_width: line_width
-  } =  dataset, bly) do
+  def capture(
+        [{{x, y}, bottom} | to_capture],
+        captured,
+        %Dataset{
+          color: color,
+          width: width,
+          pos: pos_factor,
+          edge_color: edge_color,
+          alpha: alpha,
+          line_width: line_width
+        } = dataset,
+        bly
+      ) do
     capture(
       to_capture,
       captured ++
@@ -155,7 +161,6 @@ defmodule Matplotex.Figure.Areal.BarChart do
       bly
     )
   end
-
 
   def capture(
         [{x, y} | to_capture],
@@ -193,6 +198,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
   end
 
   def capture([], captured, _dataset, _bly), do: captured
+
   defp hypox(y) do
     nof_x = length(y)
     @xmin_value |> Nx.linspace(nof_x, n: nof_x) |> Nx.to_list()
@@ -208,5 +214,4 @@ defmodule Matplotex.Figure.Areal.BarChart do
       d * step
     end)
   end
-
 end

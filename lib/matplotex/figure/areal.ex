@@ -169,16 +169,19 @@ defmodule Matplotex.Figure.Areal do
           data_with_label(data)
         end
       end
+
       # For stacked bar chart the flattening supposed to be the sumation of yaxis data
       def flatten_for_data(datasets, nil), do: flatten_for_data(datasets)
-      def flatten_for_data([%{x: x, y: y}| _datasets], bottom) do
 
-      y= bottom
-        |> Kernel.++([y])
-        |> Nx.tensor(names: [:x, :y])
-        |> Nx.sum(axes: [:x])
-        |> Nx.to_list()
-      {x, y}
+      def flatten_for_data([%{x: x, y: y} | _datasets], bottom) do
+        y =
+          bottom
+          |> Kernel.++([y])
+          |> Nx.tensor(names: [:x, :y])
+          |> Nx.sum(axes: [:x])
+          |> Nx.to_list()
+
+        {x, y}
       end
 
       def flatten_for_data(datasets) do
@@ -215,6 +218,7 @@ defmodule Matplotex.Figure.Areal do
       def show_legend(%__MODULE__{} = axes) do
         %__MODULE__{axes | show_legend: true}
       end
+
       def hide_legend(%__MODULE__{} = axes) do
         %__MODULE__{axes | show_legend: false}
       end
@@ -395,19 +399,27 @@ defmodule Matplotex.Figure.Areal do
     Algebra.transform_given_point(x, y, sx, sy, tx, ty)
   end
 
-
-  def do_transform(%Dataset{x: x, y: y, bottom: bottom} = dataset, xlim, ylim, width, height, transition) when is_list(bottom) do
-    y = [y | bottom]|> Nx.tensor() |> Nx.transpose()|> Nx.to_list()
+  def do_transform(
+        %Dataset{x: x, y: y, bottom: bottom} = dataset,
+        xlim,
+        ylim,
+        width,
+        height,
+        transition
+      )
+      when is_list(bottom) do
+    y = [y | bottom] |> Nx.tensor() |> Nx.transpose() |> Nx.to_list()
 
     transformed =
       x
       |> Enum.zip(y)
       |> Enum.map(fn {x, y} ->
-        transform_with_bottom(x,y, xlim, ylim, width, height, transition)
+        transform_with_bottom(x, y, xlim, ylim, width, height, transition)
       end)
 
     %Dataset{dataset | transformed: transformed}
   end
+
   def do_transform(%Dataset{x: x, y: y} = dataset, xlim, ylim, width, height, transition) do
     transformed =
       x
@@ -421,12 +433,18 @@ defmodule Matplotex.Figure.Areal do
     %Dataset{dataset | transformed: transformed}
   end
 
-
   defp transform_with_bottom(x, y, xlim, ylim, width, height, transition) when is_list(y) do
     y_top = Enum.sum(y)
-    y_bottom = y|>tl()|>Enum.sum()
-    transformed  = transformation(x, y_top, xlim, ylim, width, height, transition) |> Algebra.flip_y_coordinate()
-    {_, transformed_y_bottom} = transformation(x, y_bottom, xlim, ylim, width, height,transition) |> Algebra.flip_y_coordinate()
+    y_bottom = y |> tl() |> Enum.sum()
+
+    transformed =
+      transformation(x, y_top, xlim, ylim, width, height, transition)
+      |> Algebra.flip_y_coordinate()
+
+    {_, transformed_y_bottom} =
+      transformation(x, y_bottom, xlim, ylim, width, height, transition)
+      |> Algebra.flip_y_coordinate()
+
     {transformed, transformed_y_bottom}
-   end
+  end
 end

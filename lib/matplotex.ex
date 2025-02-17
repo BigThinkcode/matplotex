@@ -213,8 +213,6 @@ defmodule Matplotex do
     bar(pos, values, width, [])
   end
 
-
-
   @doc """
   Adds an additional dataset to a bar plot in the given `%Figure{}`.
 
@@ -255,12 +253,12 @@ defmodule Matplotex do
   def bar(pos, values, width, opts) do
     BarChart.create(%Figure{axes: %BarChart{}}, {pos, values, width}, opts)
   end
+
   def bar(%Figure{} = figure, pos, values, width, opts) do
     figure
     |> show_legend()
     |> BarChart.create({pos, values, width}, opts)
   end
-
 
   @doc """
   Creates a scatter plot based on the given `x` and `y` values, with optional customization provided via `opts`.
@@ -756,9 +754,11 @@ defmodule Matplotex do
   def show_legend(figure) do
     Figure.show_legend(figure)
   end
+
   def hide_legend(figure) do
     Figure.hide_legend(figure)
   end
+
   def set_options(figure, opts) do
     PlotOptions.set_options_in_figure(figure, opts)
   end

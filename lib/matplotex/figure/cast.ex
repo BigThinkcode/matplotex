@@ -550,8 +550,11 @@ defmodule Matplotex.Figure.Cast do
               |> Algebra.flip_y_coordinate()
               |> Algebra.transform_given_point({0, height_region_content})
 
-            {x2_cmap_tick, _} = tick_x2 = Algebra.transform_given_point(tick_coords, {tick_line_length, 0})
+            {x2_cmap_tick, _} =
+              tick_x2 = Algebra.transform_given_point(tick_coords, {tick_line_length, 0})
+
             {tick_label_x, _} = Algebra.transform_given_point(tick_x2, {tick_line_length, 0})
+
             tick_label =
               Label.cast_label(
                 %Label{type: "tick.cmap", x: tick_label_x, y: y_cord_tick, text: tick},
@@ -583,7 +586,8 @@ defmodule Matplotex.Figure.Cast do
               width: cmap_width,
               height: height_region_content
             }
-          }|>Cmap.color_gradient()
+          }
+          |> Cmap.color_gradient()
         ] ++ ticks
       end)
       |> List.flatten()
@@ -592,7 +596,6 @@ defmodule Matplotex.Figure.Cast do
   end
 
   def cast_legends(figure), do: figure
-
 
   defp calculate_center(%Region{x: x, y: y, width: width}, :x) do
     {calculate_distance({x, y}, {x + width, y}) / 2 + x, y}

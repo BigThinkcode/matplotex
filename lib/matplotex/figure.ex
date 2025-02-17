@@ -62,6 +62,7 @@ defmodule Matplotex.Figure do
 
   def show_legend(%__MODULE__{axes: %module{} = axes} = figure),
     do: %{figure | axes: module.show_legend(axes)}
+
   def hide_legend(%__MODULE__{axes: %module{} = axes} = figure),
     do: %{figure | axes: module.hide_legend(axes)}
 
