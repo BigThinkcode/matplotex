@@ -19,8 +19,6 @@ defmodule Matplotex.Figure.Sketch do
     end}"
   end
 
-
-
   defp wrap_with_tag(svg, width, height) do
     ~s(<svg width="#{width}"
       height="#{height}"

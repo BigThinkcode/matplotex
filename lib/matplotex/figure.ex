@@ -63,6 +63,9 @@ defmodule Matplotex.Figure do
   def show_legend(%__MODULE__{axes: %module{} = axes} = figure),
     do: %{figure | axes: module.show_legend(axes)}
 
+  def hide_legend(%__MODULE__{axes: %module{} = axes} = figure),
+    do: %{figure | axes: module.hide_legend(axes)}
+
   def set_figure_size(%__MODULE__{margin: margin, axes: axes} = figure, {fwidth, fheight} = fsize) do
     frame_size = {fwidth - fwidth * 2 * margin, fheight - fheight * 2 * margin}
 

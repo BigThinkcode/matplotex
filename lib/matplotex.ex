@@ -213,10 +213,6 @@ defmodule Matplotex do
     bar(pos, values, width, [])
   end
 
-  def bar(pos, values, width, opts) do
-    BarChart.create(%Figure{axes: %BarChart{}}, {pos, values, width}, opts)
-  end
-
   @doc """
   Adds an additional dataset to a bar plot in the given `%Figure{}`.
 
@@ -251,6 +247,13 @@ defmodule Matplotex do
   |> M.bar(0, values2, width, label: "Dataset2", color: "#D3D3D3")
   |> M.bar(width, values2, width, label: "Dataset3", color: "green")
   """
+
+  def bar(%Figure{} = figure, values, width, opts), do: bar(figure, width, values, width, opts)
+
+  def bar(pos, values, width, opts) do
+    BarChart.create(%Figure{axes: %BarChart{}}, {pos, values, width}, opts)
+  end
+
   def bar(%Figure{} = figure, pos, values, width, opts) do
     figure
     |> show_legend()
@@ -750,6 +753,10 @@ defmodule Matplotex do
 
   def show_legend(figure) do
     Figure.show_legend(figure)
+  end
+
+  def hide_legend(figure) do
+    Figure.hide_legend(figure)
   end
 
   def set_options(figure, opts) do

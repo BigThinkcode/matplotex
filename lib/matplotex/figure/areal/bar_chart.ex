@@ -36,7 +36,8 @@ defmodule Matplotex.Figure.Areal.BarChart do
     x = hypox(values)
     dataset = Dataset.cast(%Dataset{x: x, y: values, pos: pos, width: width}, opts)
     datasets = data ++ [dataset]
-    xydata = flatten_for_data(datasets)
+    bottom = Keyword.get(opts, :bottom)
+    xydata = datasets |> Enum.reverse() |> flatten_for_data(bottom)
 
     %Figure{
       figure
@@ -127,6 +128,41 @@ defmodule Matplotex.Figure.Areal.BarChart do
   end
 
   def capture(
+        [{{x, y}, bottom} | to_capture],
+        captured,
+        %Dataset{
+          color: color,
+          width: width,
+          pos: pos_factor,
+          edge_color: edge_color,
+          alpha: alpha,
+          line_width: line_width
+        } = dataset,
+        bly
+      ) do
+    capture(
+      to_capture,
+      captured ++
+        [
+          %Rect{
+            type: "figure.bar",
+            x: bar_position(x, pos_factor),
+            y: y,
+            width: width,
+            height: bottom - y,
+            color: color,
+            stroke: edge_color || color,
+            fill_opacity: alpha,
+            stroke_opacity: alpha,
+            stroke_width: line_width
+          }
+        ],
+      dataset,
+      bly
+    )
+  end
+
+  def capture(
         [{x, y} | to_capture],
         captured,
         %Dataset{
@@ -171,8 +207,6 @@ defmodule Matplotex.Figure.Areal.BarChart do
   defp bar_position(x, pos_factor) do
     x + pos_factor
   end
-
-
 
   defp list_of_ticks(data, step) do
     1..length(data)

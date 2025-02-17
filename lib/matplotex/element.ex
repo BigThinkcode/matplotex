@@ -17,7 +17,7 @@ defmodule Matplotex.Element do
 
       defimpl String.Chars, for: __MODULE__ do
         def to_string(%module{} = element) do
-        module.assemble(element)
+          module.assemble(element)
         end
       end
     end
