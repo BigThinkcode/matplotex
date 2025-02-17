@@ -1,7 +1,6 @@
 defmodule Matplotex.Figure.Areal.BarChart do
   @moduledoc false
   import Matplotex.Figure.Numer
-  alias Matplotex.Utils.Algebra
   alias Matplotex.Figure.Areal.PlotOptions
   alias Matplotex.Figure.Areal.Region
   alias Matplotex.Element.Legend
@@ -52,48 +51,6 @@ defmodule Matplotex.Figure.Areal.BarChart do
   def materialize(figure) do
     materialize_bars(figure)
   end
-  defp materialize_bars(
-         %Figure{
-           axes:
-             %{
-               dataset: datasets,
-               limit: %{x: xlim, y: ylim},
-               type: "stacked",
-               region_content: %Region{
-                 x: x_region_content,
-                 y: y_region_content,
-                 width: width_region_content,
-                 height: height_region_content
-               },
-               element: elements
-             } = axes,
-           rc_params: %RcParams{
-             x_padding: x_padding,
-             white_space: white_space
-           }
-         } = figure
-       ) do
-        x_padding_value = width_region_content * x_padding + white_space
-        shrinked_width_region_content = width_region_content - x_padding_value * 2
-        bar_elements =
-          datasets
-          |> Enum.map(fn dataset ->
-            dataset
-            |> do_transform_with_bottom(
-              xlim,
-              ylim,
-              shrinked_width_region_content,
-              height_region_content,
-              {x_region_content + x_padding_value, y_region_content}
-            )
-            |> capture_stacked(-y_region_content)
-          end)
-          |> List.flatten()
-
-        elements_with_bar = elements ++ bar_elements
-
-        %Figure{figure | axes: %{axes | element: elements_with_bar}}
-       end
 
   defp materialize_bars(
          %Figure{
@@ -176,7 +133,7 @@ defmodule Matplotex.Figure.Areal.BarChart do
     edge_color: edge_color,
     alpha: alpha,
     line_width: line_width
-  } =  dataset) do
+  } =  dataset, bly) do
     capture(
       to_capture,
       captured ++
@@ -194,10 +151,10 @@ defmodule Matplotex.Figure.Areal.BarChart do
             stroke_width: line_width
           }
         ],
-      dataset
+      dataset,
+      bly
     )
   end
-  def capture([], captured, _dataset), do: captured
 
 
   def capture(
@@ -236,26 +193,6 @@ defmodule Matplotex.Figure.Areal.BarChart do
   end
 
   def capture([], captured, _dataset, _bly), do: captured
-  defp capture_stacked(%Dataset{transformed: transformed}=dataset, bly) do
-    capture_stacked(transformed, [],dataset, bly)
-  end
-  defp capture_stacked(to_capture, captured, dataset, bly) do
-    to_capture
-    |>Enum.map(fn point ->
-      format_point(point, bly)
-    end)
-    |>capture(captured, dataset)
-  end
-
-  defp format_point({{_x, _y}, _y_bottom} = point, _bly), do: point
-  #   sum_of_tail = y |> Enum.sort()|>tl()|>Enum.sum
-  #   sum_of_second_tail = y|>tl()|>tl()|>Enum.sum()
-  #   {{x, y|>Enum.max()|>Kernel.-(sum_of_tail)}, y|>tl()|>Enum.max()|> Kernel.-(sum_of_second_tail)}
-  # end
-
-  defp format_point({x, y}, bly) do
-    {{x, y}, bly}
-  end
   defp hypox(y) do
     nof_x = length(y)
     @xmin_value |> Nx.linspace(nof_x, n: nof_x) |> Nx.to_list()
@@ -272,38 +209,4 @@ defmodule Matplotex.Figure.Areal.BarChart do
     end)
   end
 
-  defp do_transform_with_bottom(%Dataset{x: x, y: y, bottom: bottom} = dataset, xlim, ylim, width, height, transition) when is_list(bottom) do
-    y = [y | bottom]|> Nx.tensor() |> Nx.transpose()|> Nx.to_list()
-
-    transformed =
-      x
-      |> Enum.zip(y)
-      |> Enum.map(fn {x, y} ->
-        transform_with_bottom(x,y, xlim, ylim, width, height, transition)
-      end)
-
-    %Dataset{dataset | transformed: transformed}
-  end
-
-  defp do_transform_with_bottom(dataset, xlim, ylim, width, height, transition) do
-    do_transform(dataset, xlim, ylim, width, height, transition)
-  end
-
-  defp transform_with_bottom(x, y, xlim, ylim, width, height, transition) when is_list(y) do
-  #  transformed = Enum.map(y, fn y_with_bottom ->
-  #    transformation(x, y_with_bottom, xlim, ylim, width, height, transition)
-  #    |> Algebra.flip_y_coordinate()
-  #  end)
-  #  |>Enum.unzip()
-   y_top = Enum.sum(y)
-   y_bottom = y|>tl()|>Enum.sum()
-   transformed  = transformation(x, y_top, xlim, ylim, width, height, transition) |> Algebra.flip_y_coordinate()
-   {_, transformed_y_bottom} = transformation(x, y_bottom, xlim, ylim, width, height,transition) |> Algebra.flip_y_coordinate()
-   {transformed, transformed_y_bottom}
-  end
-
-  defp transform_with_bottom(x, y, xlim, ylim, width, height, transition) do
-    transformation(x, y, xlim, ylim, width, height, transition)
-    |> Algebra.flip_y_coordinate()
-  end
 end
