@@ -5,7 +5,7 @@ defmodule Matplotex.MixProject do
     [
       app: :matplotex,
       organization: :bigthinkcode,
-      version: "0.4.71",
+      version: "0.4.8",
       elixir: "~> 1.17",
       start_permanent: Mix.env() == :prod,
       elixirc_paths: elixirc_paths(Mix.env()),
