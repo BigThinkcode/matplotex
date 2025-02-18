@@ -190,10 +190,21 @@ defmodule Matplotex do
   ```elixir
 
       alias Matplotex as: M
-    categories = ["apple", "banana", "fig", "avocado"]
+    categories = ["lorem", "ipsum", "amet", "adore"]
       values1 = [22, 33, 28, 34]
       iex> Matplotex.bar(width, values1, width, label: "Dataset1", color: "#255199")
       %M.Figure{axes: %M.Figure.Areal.BarChart{...}, ...}
+    ```
+
+    - To draw a stacked bar chart
+    ```elixir
+    categories = ["lorem", "ipsum", "amet", "adore"]
+    values1 = [22, 33, 28, 34]
+    values2 = [12, 23, 18, 24]
+    values3 = [22, 33, 28, 34]
+    iex> Matplotex.bar(width, values1, width, label: "Dataset1", color: "#255199")
+        |> Matplotex.bar(width, values2, width, label: "Dataset2", color: "blue", bottom: values1)
+        |> Matplotex.bar(width, values3, width, label: "Dataset3", color: "green", bottom: [values1, values2])x
     ```
 
   This function takes a list of numerical `values` and a single `width` value to create a bar chart where:

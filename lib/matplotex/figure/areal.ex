@@ -1,5 +1,6 @@
 defmodule Matplotex.Figure.Areal do
   @moduledoc false
+  alias Matplotex.InputError
   alias Matplotex.Figure.Areal.Ticker
   alias Matplotex.Utils.Algebra
   alias Matplotex.Figure.Dataset
@@ -173,7 +174,7 @@ defmodule Matplotex.Figure.Areal do
       # For stacked bar chart the flattening supposed to be the sumation of yaxis data
       def flatten_for_data(datasets, nil), do: flatten_for_data(datasets)
 
-      def flatten_for_data([%{x: x, y: y} | _datasets], bottom) do
+      def flatten_for_data([%{x: x, y: y} | _datasets], bottom) when is_list(bottom) do
         y =
           bottom
           |> Kernel.++([y])
@@ -182,6 +183,9 @@ defmodule Matplotex.Figure.Areal do
           |> Nx.to_list()
 
         {x, y}
+      end
+      def flatten_for_data(_, _bottom) do
+        raise InputError, bottom: "Wrong data provided for opts bottom"
       end
 
       def flatten_for_data(datasets) do
