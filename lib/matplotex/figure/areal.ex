@@ -423,6 +423,29 @@ defmodule Matplotex.Figure.Areal do
 
     %Dataset{dataset | transformed: transformed}
   end
+#   def do_transform(
+#     %Dataset{x: x, y: y, sizes: sizes} = dataset,
+#     xlim,
+#     ylim,
+#     width,
+#     height,
+#     transition
+#   )
+#   when is_list(sizes) do
+
+
+#     transformed =
+#       x
+#       |> Enum.zip(y)
+#       |> Enum.map(fn {x, y} ->
+#         x
+#         |> transformation(y, xlim, ylim, width, height, transition)
+#         |> Algebra.flip_y_coordinate()
+#       end)
+
+
+# %Dataset{dataset | transformed: transformed}
+# end
 
   def do_transform(%Dataset{x: x, y: y} = dataset, xlim, ylim, width, height, transition) do
     transformed =

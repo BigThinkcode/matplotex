@@ -1,5 +1,7 @@
 defmodule Matplotex.Figure.Lead do
   @moduledoc false
+  alias Matplotex.InputError
+  alias Matplotex.Figure.Dataset
   alias Matplotex.Utils.Algebra
   alias Matplotex.Figure.Areal.XyRegion.Coords, as: XyCoords
   alias Matplotex.Figure.Font
@@ -44,6 +46,24 @@ defmodule Matplotex.Figure.Lead do
     ty = fig_height - fig_height * margin
     %Figure{figure | axes: %{axes | border: {lx, by, rx, ty}}}
   end
+  # def transform_sizes(%Figure{axes: %{dataset: dataset, region_content: %Region{width: width_region_content, height: height_region_content}}= axes} = figure) do
+  #   content_area = width_region_content * height_region_content
+  #   total_size = Enum.sum(dataset.sizes)
+  #   area_size_ratio =
+  #   if total_size > 0 do
+  #     content_area / total_size
+  #   else
+  #     raise InputError, message: "Invalid sizes for fractionizing area"
+  #   end
+
+  #   sizes =
+  #   dataset.sizes
+  #   |> Nx.tensor()
+  #   |> Nx.multiply(area_size_ratio)
+  #   |> Nx.to_list()
+
+  #   %Figure{figure | axes: %{axes | dataset: %Dataset{sizes: sizes}}}
+  # end
 
   defp set_frame_size(%Figure{margin: margin, figsize: {fwidth, fheight}, axes: axes} = figure) do
     frame_size = {fwidth - fwidth * 2 * margin, fheight - fheight * 2 * margin}

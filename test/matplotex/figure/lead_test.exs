@@ -1,4 +1,5 @@
 defmodule Matplotex.Figure.LeadTest do
+  alias Matplotex.Figure.Dataset
   alias Matplotex.Figure.TwoD
   alias Matplotex.Figure.Areal.Region
   alias Matplotex.Figure
@@ -257,6 +258,22 @@ defmodule Matplotex.Figure.LeadTest do
     test "sets origin to center of the figure", %{figure: figure} do
       assert %Figure{axes: %{center: %TwoD{x: cx, y: cy}}} = Lead.set_regions_radial(figure)
       assert cx != 0 && cy != 0
+    end
+  end
+
+  describe "transform_sizes/1" do
+    test "converts sizes to equivalent radius to the buble" do
+      x = [1,2,3,4,5]
+      y = [10, 20, 30, 40, 50]
+
+      figure = x|>Matplotex.scatter(y,figsize: {2, 2}, sizes: [1, 2, 3, 4])|> Lead.set_regions_areal()
+      IO.inspect(figure.axes.dataset, label: "Dataset")
+      IO.inspect(figure.axes.region_content, label: "Region content")
+      assert %Figure{axes: %{dataset: %Dataset{sizes: transformed_sizes}}} =
+               Lead.transform_sizes(figure)
+
+      assert is_list(transformed_sizes)
+      # assert with actual value
     end
   end
 end
