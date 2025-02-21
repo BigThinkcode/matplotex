@@ -46,24 +46,29 @@ defmodule Matplotex.Figure.Lead do
     ty = fig_height - fig_height * margin
     %Figure{figure | axes: %{axes | border: {lx, by, rx, ty}}}
   end
-  # def transform_sizes(%Figure{axes: %{dataset: dataset, region_content: %Region{width: width_region_content, height: height_region_content}}= axes} = figure) do
-  #   content_area = width_region_content * height_region_content
-  #   total_size = Enum.sum(dataset.sizes)
-  #   area_size_ratio =
-  #   if total_size > 0 do
-  #     content_area / total_size
-  #   else
-  #     raise InputError, message: "Invalid sizes for fractionizing area"
-  #   end
+  def transform_sizes(%Figure{axes: %{dataset: datasets} = axes} = figure) do
+    datasets = transform_dataset_sizes(figure, datasets, [])
+    %Figure{figure | axes: %{axes | dataset: datasets}}
+  end
+  defp transform_dataset_sizes(%Figure{axes: %{region_content: %Region{width: width_region_content, height: height_region_content}}}=figure, [%Dataset{sizes: sizes} = dataset | to_transorm], transformed) do
+    content_area = width_region_content * height_region_content
+    total_size = Enum.sum(sizes)
+    area_size_ratio =
+    if total_size > 0 do
+      (content_area / total_size) * 0.7
+    else
+      raise InputError, message: "Invalid sizes for fractionizing area"
+    end
 
-  #   sizes =
-  #   dataset.sizes
-  #   |> Nx.tensor()
-  #   |> Nx.multiply(area_size_ratio)
-  #   |> Nx.to_list()
+    sizes =
+    sizes
+    |> Nx.tensor()
+    |> Nx.multiply(area_size_ratio)
+    |> Nx.to_list()
+    transform_dataset_sizes(figure, to_transorm, [%Dataset{dataset | sizes: sizes} | transformed])
+  end
+  defp transform_dataset_sizes(_, [], transformed), do: transformed
 
-  #   %Figure{figure | axes: %{axes | dataset: %Dataset{sizes: sizes}}}
-  # end
 
   defp set_frame_size(%Figure{margin: margin, figsize: {fwidth, fheight}, axes: axes} = figure) do
     frame_size = {fwidth - fwidth * 2 * margin, fheight - fheight * 2 * margin}
