@@ -52,7 +52,8 @@ defmodule Matplotex.Figure.Lead do
     %Figure{figure | axes: %{axes | dataset: datasets}}
   end
 
-  defp transform_dataset_sizes(_figure, [%Dataset{sizes: nil}| _to_transorm] = datasets, _),do: datasets
+  defp transform_dataset_sizes(_figure, [%Dataset{sizes: nil} | _to_transorm] = datasets, _),
+    do: datasets
 
   defp transform_dataset_sizes(
          %Figure{
@@ -62,7 +63,8 @@ defmodule Matplotex.Figure.Lead do
          } = figure,
          [%Dataset{sizes: sizes} = dataset | to_transorm],
          transformed
-       ) when length(sizes) > 0 do
+       )
+       when length(sizes) > 0 do
     content_area = width_region_content * height_region_content
     total_size = Enum.sum(sizes)
 
@@ -81,8 +83,9 @@ defmodule Matplotex.Figure.Lead do
 
     transform_dataset_sizes(figure, to_transorm, [%Dataset{dataset | sizes: sizes} | transformed])
   end
-  defp transform_dataset_sizes(_figure, [%Dataset{sizes: []}| _to_transorm] = datasets, _), do: datasets
 
+  defp transform_dataset_sizes(_figure, [%Dataset{sizes: []} | _to_transorm] = datasets, _),
+    do: datasets
 
   defp transform_dataset_sizes(_, [], transformed), do: transformed
 
