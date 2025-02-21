@@ -423,29 +423,6 @@ defmodule Matplotex.Figure.Areal do
 
     %Dataset{dataset | transformed: transformed}
   end
-#   def do_transform(
-#     %Dataset{x: x, y: y, sizes: sizes} = dataset,
-#     xlim,
-#     ylim,
-#     width,
-#     height,
-#     transition
-#   )
-#   when is_list(sizes) do
-
-
-#     transformed =
-#       x
-#       |> Enum.zip(y)
-#       |> Enum.map(fn {x, y} ->
-#         x
-#         |> transformation(y, xlim, ylim, width, height, transition)
-#         |> Algebra.flip_y_coordinate()
-#       end)
-
-
-# %Dataset{dataset | transformed: transformed}
-# end
 
   def do_transform(%Dataset{x: x, y: y} = dataset, xlim, ylim, width, height, transition) do
     transformed =
@@ -456,9 +433,22 @@ defmodule Matplotex.Figure.Areal do
         |> transformation(y, xlim, ylim, width, height, transition)
         |> Algebra.flip_y_coordinate()
       end)
+      |> maybe_wrap_with_sizes(dataset)
+      |> maybe_wrap_with_colors()
 
     %Dataset{dataset | transformed: transformed}
   end
+
+  defp maybe_wrap_with_sizes(transformed, %Dataset{sizes: sizes} = dataset) when length(transformed) == length(sizes) do
+   {Enum.zip(transformed,sizes), dataset}
+  end
+  defp maybe_wrap_with_sizes(transformed, dataset) do
+    {transformed, dataset}
+  end
+  defp maybe_wrap_with_colors({transformed, %Dataset{colors: colors}}) when length(transformed) == length(colors) do
+    Enum.zip(transformed, colors)
+  end
+  defp maybe_wrap_with_colors({transformed, _dataset}), do: transformed
 
   defp transform_with_bottom(x, y, xlim, ylim, width, height, transition) when is_list(y) do
     y_top = Enum.sum(y)
