@@ -88,13 +88,37 @@ defmodule Matplotex.Figure.Areal.Scatter do
     elements = elements ++ line_elements
     %Figure{figure | axes: %{axes | element: elements}}
   end
-
   def capture(%Dataset{transformed: transformed} = dataset, concurrency) do
     if concurrency do
       process_concurrently(transformed, concurrency, [[], dataset])
     else
       capture(transformed, [], dataset)
     end
+  end
+  def capture([{{{x, y}, s},color}| to_capture],captured, %Dataset{
+    marker: marker,
+  }= dataset) do
+    capture(
+      to_capture,
+      captured ++
+        [
+          Marker.generate_marker(marker, x, y, color, s)
+        ],
+      dataset
+    )
+  end
+  def capture([{{x, y}, s}| to_capture],captured, %Dataset{
+    color: color,
+    marker: marker,
+  }= dataset) do
+    capture(
+      to_capture,
+      captured ++
+        [
+          Marker.generate_marker(marker, x, y, color, s)
+        ],
+      dataset
+    )
   end
 
   def capture(
@@ -115,6 +139,7 @@ defmodule Matplotex.Figure.Areal.Scatter do
       dataset
     )
   end
+
 
   def capture(_, captured, _), do: captured
 

@@ -442,6 +442,9 @@ defmodule Matplotex.Figure.Areal do
   defp maybe_wrap_with_sizes(transformed, %Dataset{sizes: sizes} = dataset) when length(transformed) == length(sizes) do
    {Enum.zip(transformed,sizes), dataset}
   end
+  defp maybe_wrap_with_sizes(transformed, %Dataset{colors: colors, marker_size: marker_size} = dataset) when length(transformed) == length(colors) do
+    {Enum.zip(transformed,List.duplicate(marker_size,length(transformed))),dataset }
+  end
   defp maybe_wrap_with_sizes(transformed, dataset) do
     {transformed, dataset}
   end
