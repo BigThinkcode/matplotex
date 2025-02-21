@@ -32,7 +32,7 @@ defmodule Matplotex.Figure.Areal.Scatter do
   def create(%Figure{axes: %__MODULE__{dataset: data} = axes} = figure, {x, y}, opts \\ []) do
     x = determine_numeric_value(x)
     y = determine_numeric_value(y)
-    dataset = Dataset.cast(%Dataset{x: x, y: y}, opts)|> Dataset.update_cmap()
+    dataset = Dataset.cast(%Dataset{x: x, y: y}, opts) |> Dataset.update_cmap()
     datasets = data ++ [dataset]
     xydata = flatten_for_data(datasets)
 
@@ -89,6 +89,7 @@ defmodule Matplotex.Figure.Areal.Scatter do
     elements = elements ++ line_elements
     %Figure{figure | axes: %{axes | element: elements}}
   end
+
   def capture(%Dataset{transformed: transformed} = dataset, concurrency) do
     if concurrency do
       process_concurrently(transformed, concurrency, [[], dataset])
@@ -96,12 +97,18 @@ defmodule Matplotex.Figure.Areal.Scatter do
       capture(transformed, [], dataset)
     end
   end
-  def capture([{{{x, y}, s},color}| to_capture],captured, %Dataset{
-    marker: marker,
-    colors: colors,
-    cmap: cmap
-  }= dataset) do
-    color = colors |> Enum.min_max()|>Garner.garn_color(color, cmap)
+
+  def capture(
+        [{{{x, y}, s}, color} | to_capture],
+        captured,
+        %Dataset{
+          marker: marker,
+          colors: colors,
+          cmap: cmap
+        } = dataset
+      ) do
+    color = colors |> Enum.min_max() |> Garner.garn_color(color, cmap)
+
     capture(
       to_capture,
       captured ++
@@ -111,10 +118,15 @@ defmodule Matplotex.Figure.Areal.Scatter do
       dataset
     )
   end
-  def capture([{{x, y}, s}| to_capture],captured, %Dataset{
-    color: color,
-    marker: marker,
-  }= dataset) do
+
+  def capture(
+        [{{x, y}, s} | to_capture],
+        captured,
+        %Dataset{
+          color: color,
+          marker: marker
+        } = dataset
+      ) do
     capture(
       to_capture,
       captured ++
@@ -143,7 +155,6 @@ defmodule Matplotex.Figure.Areal.Scatter do
       dataset
     )
   end
-
 
   def capture(_, captured, _), do: captured
 

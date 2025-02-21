@@ -37,5 +37,4 @@ defmodule Matplotex.Figure.Dataset do
   def update_cmap(%__MODULE__{cmap: cmap} = dataset) do
     %__MODULE__{dataset | cmap: Colormap.fetch_cmap(cmap)}
   end
-
 end

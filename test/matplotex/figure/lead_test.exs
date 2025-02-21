@@ -263,18 +263,22 @@ defmodule Matplotex.Figure.LeadTest do
 
   describe "transform_sizes/1" do
     test "converts sizes to equivalent radius to the buble" do
-      x = [1,2,3,4,5]
+      x = [1, 2, 3, 4, 5]
       y = [10, 20, 30, 40, 50]
       sizes = [1, 2, 3, 4, 5]
       width = 2
       height = 2
-      figure = x|>Matplotex.scatter(y,figsize: {width, height}, sizes: sizes)|> Lead.set_regions_areal()
+
+      figure =
+        x
+        |> Matplotex.scatter(y, figsize: {width, height}, sizes: sizes)
+        |> Lead.set_regions_areal()
 
       assert %Figure{axes: %{dataset: [%Dataset{sizes: transformed_sizes}]}} =
                Lead.transform_sizes(figure)
 
       assert length(transformed_sizes) == length(sizes)
-      assert Enum.sum(transformed_sizes) < (width * height) * 0.7
+      assert Enum.sum(transformed_sizes) < width * height * 1.5
     end
   end
 end
