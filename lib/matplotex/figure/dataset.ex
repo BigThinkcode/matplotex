@@ -1,5 +1,7 @@
 defmodule Matplotex.Figure.Dataset do
   @moduledoc false
+  alias Matplotex.Colorscheme.Colormap
+
   @default_color "blue"
   @default_marker "o"
   @default_linestyle "_"
@@ -30,5 +32,9 @@ defmodule Matplotex.Figure.Dataset do
 
   def cast(dataset, values) do
     struct(dataset, values)
+  end
+
+  def update_cmap(%__MODULE__{cmap: cmap} = dataset) do
+    %__MODULE__{dataset | cmap: Colormap.fetch_cmap(cmap)}
   end
 end

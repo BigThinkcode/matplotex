@@ -141,6 +141,7 @@ defmodule Matplotex.Figure.Areal do
       def materialized_by_region(figure) do
         figure
         |> Lead.set_regions_areal()
+        |> Lead.transform_sizes()
         |> Cast.cast_xticks_by_region()
         |> Cast.cast_yticks_by_region()
         |> Cast.cast_hgrids_by_region()
@@ -184,6 +185,7 @@ defmodule Matplotex.Figure.Areal do
 
         {x, y}
       end
+
       def flatten_for_data(_, _bottom) do
         raise InputError, bottom: "Wrong data provided for opts bottom"
       end
@@ -433,9 +435,35 @@ defmodule Matplotex.Figure.Areal do
         |> transformation(y, xlim, ylim, width, height, transition)
         |> Algebra.flip_y_coordinate()
       end)
+      |> maybe_wrap_with_sizes(dataset)
+      |> maybe_wrap_with_colors()
 
     %Dataset{dataset | transformed: transformed}
   end
+
+  defp maybe_wrap_with_sizes(transformed, %Dataset{sizes: sizes} = dataset)
+       when length(transformed) == length(sizes) do
+    {Enum.zip(transformed, sizes), dataset}
+  end
+
+  defp maybe_wrap_with_sizes(
+         transformed,
+         %Dataset{colors: colors, marker_size: marker_size} = dataset
+       )
+       when length(transformed) == length(colors) do
+    {Enum.zip(transformed, List.duplicate(marker_size, length(transformed))), dataset}
+  end
+
+  defp maybe_wrap_with_sizes(transformed, dataset) do
+    {transformed, dataset}
+  end
+
+  defp maybe_wrap_with_colors({transformed, %Dataset{colors: colors}})
+       when length(transformed) == length(colors) do
+    Enum.zip(transformed, colors)
+  end
+
+  defp maybe_wrap_with_colors({transformed, _dataset}), do: transformed
 
   defp transform_with_bottom(x, y, xlim, ylim, width, height, transition) when is_list(y) do
     y_top = Enum.sum(y)
