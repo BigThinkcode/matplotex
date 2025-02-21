@@ -1,5 +1,6 @@
 defmodule Matplotex.Figure.Areal.Scatter do
   @moduledoc false
+  alias Matplotex.Colorscheme.Garner
   alias Matplotex.Figure.Areal.PlotOptions
   alias Matplotex.Figure.Areal.Region
   alias Matplotex.Figure.Areal.Ticker
@@ -31,7 +32,7 @@ defmodule Matplotex.Figure.Areal.Scatter do
   def create(%Figure{axes: %__MODULE__{dataset: data} = axes} = figure, {x, y}, opts \\ []) do
     x = determine_numeric_value(x)
     y = determine_numeric_value(y)
-    dataset = Dataset.cast(%Dataset{x: x, y: y}, opts)
+    dataset = Dataset.cast(%Dataset{x: x, y: y}, opts)|> Dataset.update_cmap()
     datasets = data ++ [dataset]
     xydata = flatten_for_data(datasets)
 
@@ -97,7 +98,10 @@ defmodule Matplotex.Figure.Areal.Scatter do
   end
   def capture([{{{x, y}, s},color}| to_capture],captured, %Dataset{
     marker: marker,
+    colors: colors,
+    cmap: cmap
   }= dataset) do
+    color = colors |> Enum.min_max()|>Garner.garn_color(color, cmap)
     capture(
       to_capture,
       captured ++

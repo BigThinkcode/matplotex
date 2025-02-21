@@ -25,6 +25,22 @@ defmodule Matplotex.Figure.Areal.ScatterTest do
      refute Enum.all?(tail, fn x -> x == h end)
 
     end
+
+    test "generates elements with various saizes and colors if it passed a size and color attrbute" do
+      x = [1,2,3,4,5]
+      y = [10, 20, 30, 40, 50]
+      sizes = [1, 2, 3, 4, 5]
+      assert %Figure{axes: %{element: elements}} = x|>Matplotex.scatter(y, sizes: sizes, colors: sizes)|>Figure.materialize()
+     [h | tail] =  elements|>Enum.filter(fn x -> x.type == "plot.marker" end)|>Enum.map(fn x ->
+        x.r
+      end)
+
+     refute Enum.all?(tail, fn x -> x == h end)
+     [h | tail] =  elements|>Enum.filter(fn x -> x.type == "plot.marker" end)|>Enum.map(fn x ->
+      x.fill
+    end)
+    refute Enum.all?(tail, fn x -> x == h end)
+    end
   end
 
   describe "generate_ticks/2" do
