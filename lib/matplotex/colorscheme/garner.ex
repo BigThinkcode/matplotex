@@ -8,7 +8,6 @@ defmodule Matplotex.Colorscheme.Garner do
 
   def garn_color({min, max} = range, point, cmap) when max != min do
     cue = (point - min) / (max - min)
-
     cmap
     |> make_from_cmap()
     |> put_range(range, cue)
@@ -31,10 +30,10 @@ defmodule Matplotex.Colorscheme.Garner do
 
   defp place_edges([preceeding, minor, major, final]) do
     %__MODULE__{
-      preceeding: preceeding.color,
-      minor: minor.color,
-      major: major.color,
-      final: final.color
+      preceeding: {preceeding.color, preceeding.offset},
+      minor: {minor.color, minor.offset},
+      major: {major.color, major.offset},
+      final: {final.color, final.offset}
     }
   end
 
@@ -42,16 +41,26 @@ defmodule Matplotex.Colorscheme.Garner do
     raise InputError, message: "Invalid colormap"
   end
 
-  defp point_color(%__MODULE__{color_cue: cue, preceeding: preceeding, minor: minor})
-       when cue < minor do
-    minor |> Blender.mix(preceeding, cue) |> Rgb.to_string()
+  defp point_color(%__MODULE__{color_cue: cue, preceeding: {preceeding,preceeding_offset}, minor: {minor, minor_offset}})
+       when cue <= minor_offset do
+
+        cue = mix_perces(cue, preceeding_offset, minor_offset)
+    minor|> Blender.mix(preceeding, cue) |> Rgb.to_string()
   end
 
-  defp point_color(%__MODULE__{color_cue: cue, minor: minor, major: major}) when cue < major do
+  defp point_color(%__MODULE__{color_cue: cue, minor: {minor, minor_offset}, major: {major, major_offset}}) when cue <= major_offset do
+    cue = mix_perces(cue, minor_offset, major_offset)
     major |> Blender.mix(minor, cue) |> Rgb.to_string()
   end
 
-  defp point_color(%__MODULE__{color_cue: cue, major: major, final: final}) when cue >= major do
-    final |> Blender.mix(major) |> Rgb.to_string()
+  defp point_color(%__MODULE__{color_cue: cue, major: {major,major_offset}, final: {final,  final_offset}}) when cue > major_offset do
+  cue = mix_perces(cue, major_offset, final_offset)
+  final|> Blender.mix(major, cue) |> Rgb.to_string()
   end
+
+  defp mix_perces(cue, preceeding, postceeding) when preceeding != postceeding do
+    (cue - preceeding) / (postceeding - preceeding)
+  end
+  defp mix_perces(cue, _, _), do: cue
+
 end
