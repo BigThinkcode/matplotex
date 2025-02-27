@@ -557,7 +557,12 @@ defmodule Matplotex.Figure.Cast do
 
             tick_label =
               Label.cast_label(
-                %Label{type: "tick.cmap", x: tick_label_x, y: y_cord_tick, text: format_tick_label(tick)},
+                %Label{
+                  type: "tick.cmap",
+                  x: tick_label_x,
+                  y: y_cord_tick,
+                  text: format_tick_label(tick)
+                },
                 cmap_tick_font
               )
 

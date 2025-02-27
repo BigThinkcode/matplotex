@@ -3,7 +3,7 @@ defmodule Matplotex.Colorscheme.Colormap do
   defstruct [:color, :offset, opacity: 1]
 
   def viridis do
-    ["#FDE725","#6CCE59","#1F9E89", "#482777"]
+    ["#FDE725", "#6CCE59", "#1F9E89", "#482777"]
   end
 
   def plasma do
@@ -26,7 +26,8 @@ defmodule Matplotex.Colorscheme.Colormap do
 
   def make_colormap(colors) do
     size = length(colors)
-   offsets =  Nx.linspace(0, 1, n: size)|> Nx.to_list()
+    offsets = Nx.linspace(0, 1, n: size) |> Nx.to_list()
+
     colors
     |> Enum.zip(offsets)
     |> Enum.map(&colormap(&1))
