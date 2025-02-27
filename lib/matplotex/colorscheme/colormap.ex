@@ -3,7 +3,7 @@ defmodule Matplotex.Colorscheme.Colormap do
   defstruct [:color, :offset, opacity: 1]
 
   def viridis do
-    ["#fde725", "#21918c", "#3b528b", "#440154"]
+    ["#FDE725", "#6CCE59", "#1F9E89", "#482777"]
   end
 
   def plasma do
@@ -26,16 +26,16 @@ defmodule Matplotex.Colorscheme.Colormap do
 
   def make_colormap(colors) do
     size = length(colors)
+    offsets = Nx.linspace(0, 1, n: size) |> Nx.to_list()
 
     colors
-    |> Enum.with_index()
-    |> Enum.map(&colormap(&1, size))
+    |> Enum.zip(offsets)
+    |> Enum.map(&colormap(&1))
   end
 
   def default_cmap(), do: viridis()
 
-  defp colormap({color, idx}, size) do
-    offset = idx / size * 100
+  defp colormap({color, offset}) do
     %__MODULE__{color: color, offset: offset}
   end
 end

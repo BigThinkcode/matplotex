@@ -22,7 +22,7 @@ defmodule Matplotex.Element.Cmap do
   end
 
   def tag_stop(%{offset: offset, color: color, opacity: opacity}) do
-    ~s(<stop offset="#{offset}%" style="stop-color:#{color};stop-opacity:#{opacity}" />)
+    ~s(<stop offset="#{offset * 100}%" style="stop-color:#{color};stop-opacity:#{opacity}" />)
   end
 
   def color_gradient(%__MODULE__{container: container} = element) do
