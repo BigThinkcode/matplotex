@@ -161,6 +161,7 @@ defmodule Matplotex do
 
 
   """
+  alias Nx.Heatmap
   alias Matplotex.Figure.Areal.PlotOptions
   alias Matplotex.Figure.Areal.Spline
   alias Matplotex.Figure.Areal.Histogram
@@ -626,6 +627,10 @@ defmodule Matplotex do
   def step(x, y, opts), do: Matplotex.Figure.Areal.Step.create(x, y, opts)
   def step(figure, x, y, opts), do: Matplotex.Figure.Areal.Step.create(figure, x, y, opts)
 
+  # def heatmap(data, opts \\ []) do
+  #   Matplotex.Figure.Areal.Heatmap.create(%Figure{axes: , })
+
+  # end
   @doc """
   Sets X labels for the graph with given font details
 
