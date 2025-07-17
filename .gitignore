@@ -28,3 +28,6 @@ matplotex-*.tar
 /.github
 /samples
 /add_line.sh
+
+# Rust binary artifacts
+/target/

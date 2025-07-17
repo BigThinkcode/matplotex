@@ -43,7 +43,9 @@ defmodule Matplotex.MixProject do
       {:csv, "~> 3.2"},
       {:nx, "~> 0.7.3"},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
-      {:ex_doc, "~> 0.34", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.34", only: :dev, runtime: false},
+      {:rustler, "~> 0.36.2"},
+      {:rustler_precompiled, "~> 0.8.2"}
     ]
   end
 end
