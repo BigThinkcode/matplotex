@@ -1,0 +1,5 @@
+* X Label, Y label optional
+* Legends optional
+* Option to set x min, x max to move plots and ticks
+* Some errors in the plot generations
+* LiveComponent to render zoom in zoom out, live chart, visualise a streaming data
