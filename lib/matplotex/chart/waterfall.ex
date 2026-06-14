@@ -12,6 +12,19 @@ defmodule Matplotex.Chart.Waterfall do
   @bar_width_fraction 0.6
 
   @impl true
+  def stat_transform(%Dataset{y: y} = dataset, _opts) do
+    y_list = Nx.to_list(y)
+
+    {scale_values, _} =
+      Enum.reduce(y_list, {[0.0], 0.0}, fn delta, {acc, running} ->
+        top = running + delta
+        {acc ++ [top], top}
+      end)
+
+    %{dataset | y: Nx.tensor(scale_values, type: :f64)}
+  end
+
+  @impl true
   def to_geometry(%Dataset{x: x, y: y}, transform, %Frame{plot: plot}) do
     pw = Nx.to_number(plot[2])
     x_list = Nx.to_list(x)
@@ -45,7 +58,7 @@ defmodule Matplotex.Chart.Waterfall do
 
         {[px - half_w, min(py_top, py_base), bar_w, h], top >= base}
       end)
-      |> Enum.partition(fn {_, positive} -> positive end)
+      |> Enum.split_with(fn {_, positive} -> positive end)
 
     pos_rows = Enum.map(pos_rects, fn {r, _} -> r end)
     neg_rows = Enum.map(neg_rects, fn {r, _} -> r end)

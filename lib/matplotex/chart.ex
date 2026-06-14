@@ -123,10 +123,19 @@ defmodule Matplotex.Chart do
 
   # ── Scale computation ─────────────────────────────────────────────────────
 
-  defp compute_scales(%__MODULE__{axes: axes, datasets: datasets, canvas: canvas, frame: frame} = chart) do
+  defp compute_scales(%__MODULE__{type: type, axes: axes, datasets: datasets, canvas: canvas, frame: frame} = chart) do
+    module = chart_module(type)
+
+    scale_datasets =
+      if function_exported?(module, :stat_transform, 2) do
+        Enum.map(datasets, &module.stat_transform(&1, %{}))
+      else
+        datasets
+      end
+
     updated_axes =
       Enum.reduce(axes, %{}, fn {id, axis}, acc ->
-        axis = infer_and_set_scale(axis, id, datasets, canvas)
+        axis = infer_and_set_scale(axis, id, scale_datasets, canvas)
         axis = Axis.compute_tick_labels(axis)
         Map.put(acc, id, axis)
       end)
