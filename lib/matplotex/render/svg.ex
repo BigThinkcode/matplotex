@@ -25,6 +25,7 @@ defmodule Matplotex.Render.SVG do
         render_title(chart),
         render_grid(chart),
         render_axes(chart),
+        render_axis_spines(chart),
         render_geometry(chart)
       ]
       |> Enum.reject(&(&1 == ""))
@@ -61,8 +62,11 @@ defmodule Matplotex.Render.SVG do
 
   # ── Grid ──────────────────────────────────────────────────────────────────
 
+  defp render_grid(%Chart{canvas: %{grid_style: :none}}), do: ""
+
   defp render_grid(%Chart{axes: axes, frame: frame, canvas: canvas}) do
     plot = extract_plot(frame)
+    dash_attr = dasharray_attr(canvas.grid_style, :grid)
 
     lines =
       Enum.flat_map(axes, fn {axis_id, axis} ->
@@ -71,14 +75,48 @@ defmodule Matplotex.Render.SVG do
         Enum.map(pixels, fn px ->
           case axis.dimension do
             :x ->
-              ~s(<line x1="#{px}" y1="#{plot.y}" x2="#{px}" y2="#{plot.y + plot.h}" stroke="#{canvas.grid_color}" stroke-width="1"/>)
+              ~s(<line x1="#{px}" y1="#{plot.y}" x2="#{px}" y2="#{plot.y + plot.h}" stroke="#{canvas.grid_color}" stroke-width="#{canvas.grid_width}"#{dash_attr}/>)
             _ ->
-              ~s(<line x1="#{plot.x}" y1="#{px}" x2="#{plot.x + plot.w}" y2="#{px}" stroke="#{canvas.grid_color}" stroke-width="1"/>)
+              ~s(<line x1="#{plot.x}" y1="#{px}" x2="#{plot.x + plot.w}" y2="#{px}" stroke="#{canvas.grid_color}" stroke-width="#{canvas.grid_width}"#{dash_attr}/>)
           end
         end)
       end)
 
-    ~s(<g class="grid" stroke-dasharray="4 3">\n#{Enum.join(lines, "\n")}\n</g>)
+    ~s(<g class="grid">\n#{Enum.join(lines, "\n")}\n</g>)
+  end
+
+  # ── Axis spine lines ──────────────────────────────────────────────────────
+
+  defp render_axis_spines(%Chart{canvas: %{axis_line_style: :none}}), do: ""
+
+  defp render_axis_spines(%Chart{axes: axes, frame: frame, canvas: canvas}) do
+    plot = extract_plot(frame)
+    color = canvas.axis_line_color
+    sw = canvas.axis_line_width
+    dash_attr = dasharray_attr(canvas.axis_line_style, :axis)
+
+    spines =
+      axes
+      |> Map.values()
+      |> Enum.map(fn axis ->
+        case {axis.dimension, axis.position} do
+          {:x, :bottom} ->
+            y = plot.y + plot.h
+            ~s(<line x1="#{plot.x}" y1="#{y}" x2="#{plot.x + plot.w}" y2="#{y}" stroke="#{color}" stroke-width="#{sw}"#{dash_attr}/>)
+          {:x, :top} ->
+            ~s(<line x1="#{plot.x}" y1="#{plot.y}" x2="#{plot.x + plot.w}" y2="#{plot.y}" stroke="#{color}" stroke-width="#{sw}"#{dash_attr}/>)
+          {:y, :left} ->
+            ~s(<line x1="#{plot.x}" y1="#{plot.y}" x2="#{plot.x}" y2="#{plot.y + plot.h}" stroke="#{color}" stroke-width="#{sw}"#{dash_attr}/>)
+          {:y, :right} ->
+            x = plot.x + plot.w
+            ~s(<line x1="#{x}" y1="#{plot.y}" x2="#{x}" y2="#{plot.y + plot.h}" stroke="#{color}" stroke-width="#{sw}"#{dash_attr}/>)
+          _ ->
+            ""
+        end
+      end)
+      |> Enum.reject(&(&1 == ""))
+
+    ~s(<g class="axis-spines">\n#{Enum.join(spines, "\n")}\n</g>)
   end
 
   # ── Axes ──────────────────────────────────────────────────────────────────
@@ -301,4 +339,10 @@ defmodule Matplotex.Render.SVG do
       tensor -> Nx.to_list(tensor)
     end
   end
+
+  defp dasharray_attr(:solid, _),        do: ""
+  defp dasharray_attr(:dashed, :grid),   do: ~s( stroke-dasharray="4 3")
+  defp dasharray_attr(:dashed, :axis),   do: ~s( stroke-dasharray="8 4")
+  defp dasharray_attr(:dotted, _),       do: ~s( stroke-dasharray="1 4")
+  defp dasharray_attr(_, _),             do: ""
 end

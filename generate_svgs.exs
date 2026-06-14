@@ -1,11 +1,20 @@
-alias Matplotex.{Chart, Axis, Dataset}
+alias Matplotex.{Chart, Axis, Dataset, Canvas}
 alias Matplotex.Render.SVG
 
 out = "assets"
 
-# ── Line ─────────────────────────────────────────────────────────────────────
+# ── Line — dashed grid, thick colored axis spine ──────────────────────────────
 svg =
-  Chart.new(:line)
+  Chart.new(:line,
+    canvas: %Canvas{
+      grid_style: :dashed,
+      grid_color: "#c8d8e8",
+      grid_width: 1,
+      axis_line_color: "#4a6fa5",
+      axis_line_width: 2.0,
+      axis_line_style: :solid
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Month"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left, label: "Sales"})
   |> Chart.add_data(Enum.zip(1..12, [3, 5, 4, 8, 7, 9, 6, 10, 8, 11, 9, 12]),
@@ -18,9 +27,18 @@ svg =
 File.write!("#{out}/line.svg", svg)
 IO.puts("line.svg done")
 
-# ── Bar ──────────────────────────────────────────────────────────────────────
+# ── Bar — solid grid, standard dark axis ─────────────────────────────────────
 svg =
-  Chart.new(:bar)
+  Chart.new(:bar,
+    canvas: %Canvas{
+      grid_style: :solid,
+      grid_color: "#d4d4d4",
+      grid_width: 1,
+      axis_line_color: "#333333",
+      axis_line_width: 1.5,
+      axis_line_style: :solid
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Quarter"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left, label: "Revenue ($k)"})
   |> Chart.add_data([{1, 42}, {2, 58}, {3, 51}, {4, 73}], name: "Revenue", color: "#59a14f")
@@ -31,9 +49,18 @@ svg =
 File.write!("#{out}/bar.svg", svg)
 IO.puts("bar.svg done")
 
-# ── Scatter ───────────────────────────────────────────────────────────────────
+# ── Scatter — dotted grid, red accent axis ────────────────────────────────────
 svg =
-  Chart.new(:scatter)
+  Chart.new(:scatter,
+    canvas: %Canvas{
+      grid_style: :dotted,
+      grid_color: "#cccccc",
+      grid_width: 1,
+      axis_line_color: "#e15759",
+      axis_line_width: 2.0,
+      axis_line_style: :solid
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Height (cm)"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left, label: "Weight (kg)"})
   |> Chart.add_data(
@@ -49,9 +76,18 @@ svg =
 File.write!("#{out}/scatter.svg", svg)
 IO.puts("scatter.svg done")
 
-# ── Area ──────────────────────────────────────────────────────────────────────
+# ── Area — dashed grid, teal axis, no background ─────────────────────────────
 svg =
-  Chart.new(:area)
+  Chart.new(:area,
+    canvas: %Canvas{
+      grid_style: :dashed,
+      grid_color: "#b2dfdb",
+      grid_width: 1.5,
+      axis_line_color: "#00796b",
+      axis_line_width: 2.0,
+      axis_line_style: :solid
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Day"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left, label: "Visitors"})
   |> Chart.add_data(
@@ -64,9 +100,16 @@ svg =
 File.write!("#{out}/area.svg", svg)
 IO.puts("area.svg done")
 
-# ── Step ──────────────────────────────────────────────────────────────────────
+# ── Step — no grid, bold solid axis ──────────────────────────────────────────
 svg =
-  Chart.new(:step)
+  Chart.new(:step,
+    canvas: %Canvas{
+      grid_style: :none,
+      axis_line_color: "#222222",
+      axis_line_width: 2.5,
+      axis_line_style: :solid
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Time"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left, label: "State"})
   |> Chart.add_data(
@@ -78,9 +121,18 @@ svg =
 File.write!("#{out}/step.svg", svg)
 IO.puts("step.svg done")
 
-# ── Spline ────────────────────────────────────────────────────────────────────
+# ── Spline — dotted fine grid, purple axis ────────────────────────────────────
 svg =
-  Chart.new(:spline)
+  Chart.new(:spline,
+    canvas: %Canvas{
+      grid_style: :dotted,
+      grid_color: "#ddd8f0",
+      grid_width: 1,
+      axis_line_color: "#b07aa1",
+      axis_line_width: 2.0,
+      axis_line_style: :solid
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "x"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left, label: "f(x)"})
   |> Chart.add_data(
@@ -92,12 +144,21 @@ svg =
 File.write!("#{out}/spline.svg", svg)
 IO.puts("spline.svg done")
 
-# ── Histogram ─────────────────────────────────────────────────────────────────
+# ── Histogram — solid light grid, default axis ────────────────────────────────
 :rand.seed(:exsss, {1, 2, 3})
 samples = for _ <- 1..500, do: :rand.normal() * 15 + 100
 
 svg =
-  Chart.new(:histogram)
+  Chart.new(:histogram,
+    canvas: %Canvas{
+      grid_style: :solid,
+      grid_color: "#e8e8e8",
+      grid_width: 1,
+      axis_line_color: "#555555",
+      axis_line_width: 1.5,
+      axis_line_style: :solid
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Value"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left, label: "Count"})
   |> Chart.put_dataset(Dataset.from_columns(x: samples, y: samples, color: "#4e79a7"))
@@ -107,7 +168,7 @@ svg =
 File.write!("#{out}/histogram.svg", svg)
 IO.puts("histogram.svg done")
 
-# ── Bubble ────────────────────────────────────────────────────────────────────
+# ── Bubble — dashed grid, teal axis ──────────────────────────────────────────
 ds =
   Dataset.from_columns(
     x: [1.0, 2.0, 3.0, 4.0, 5.0],
@@ -118,7 +179,16 @@ ds =
   )
 
 svg =
-  Chart.new(:bubble)
+  Chart.new(:bubble,
+    canvas: %Canvas{
+      grid_style: :dashed,
+      grid_color: "#b2e0dc",
+      grid_width: 1,
+      axis_line_color: "#76b7b2",
+      axis_line_width: 2.0,
+      axis_line_style: :solid
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Market Share"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left, label: "Growth Rate"})
   |> Chart.put_dataset(ds)
@@ -128,7 +198,7 @@ svg =
 File.write!("#{out}/bubble.svg", svg)
 IO.puts("bubble.svg done")
 
-# ── Pie ───────────────────────────────────────────────────────────────────────
+# ── Pie — no grid (no cartesian axes) ────────────────────────────────────────
 ds =
   Dataset.from_columns(
     y: [40.0, 30.0, 20.0, 10.0],
@@ -136,7 +206,7 @@ ds =
   )
 
 svg =
-  Chart.new(:pie)
+  Chart.new(:pie, canvas: %Canvas{grid_style: :none, axis_line_style: :none})
   |> Chart.put_dataset(ds)
   |> Chart.set_title("Traffic Sources")
   |> Chart.compile()
@@ -144,7 +214,7 @@ svg =
 File.write!("#{out}/pie.svg", svg)
 IO.puts("pie.svg done")
 
-# ── Donut ─────────────────────────────────────────────────────────────────────
+# ── Donut — no grid ───────────────────────────────────────────────────────────
 ds =
   Dataset.from_columns(
     y: [55.0, 25.0, 20.0],
@@ -152,7 +222,7 @@ ds =
   )
 
 svg =
-  Chart.new(:donut)
+  Chart.new(:donut, canvas: %Canvas{grid_style: :none, axis_line_style: :none})
   |> Chart.put_dataset(ds)
   |> Chart.set_title("Project Status")
   |> Chart.compile()
@@ -160,7 +230,7 @@ svg =
 File.write!("#{out}/donut.svg", svg)
 IO.puts("donut.svg done")
 
-# ── Heatmap ───────────────────────────────────────────────────────────────────
+# ── Heatmap — solid grid, dark axis ──────────────────────────────────────────
 :rand.seed(:exsss, {4, 5, 6})
 
 {xs, ys, zs} =
@@ -172,7 +242,16 @@ IO.puts("donut.svg done")
 ds = Dataset.from_columns(x: xs, y: ys, z: zs)
 
 svg =
-  Chart.new(:heatmap)
+  Chart.new(:heatmap,
+    canvas: %Canvas{
+      grid_style: :solid,
+      grid_color: "#999999",
+      grid_width: 1.5,
+      axis_line_color: "#222222",
+      axis_line_width: 2.0,
+      axis_line_style: :solid
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Column"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left, label: "Row"})
   |> Chart.put_dataset(ds)
@@ -182,7 +261,7 @@ svg =
 File.write!("#{out}/heatmap.svg", svg)
 IO.puts("heatmap.svg done")
 
-# ── Box Plot ──────────────────────────────────────────────────────────────────
+# ── Box Plot — dashed grid, default axis ─────────────────────────────────────
 :rand.seed(:exsss, {7, 8, 9})
 group_xs = List.duplicate(1, 50) ++ List.duplicate(2, 50)
 
@@ -193,7 +272,16 @@ group_ys =
 ds = Dataset.from_columns(x: group_xs, y: group_ys)
 
 svg =
-  Chart.new(:box)
+  Chart.new(:box,
+    canvas: %Canvas{
+      grid_style: :dashed,
+      grid_color: "#e0e0e0",
+      grid_width: 1,
+      axis_line_color: "#555555",
+      axis_line_width: 1.5,
+      axis_line_style: :solid
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Group"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left, label: "Value"})
   |> Chart.put_dataset(ds)
@@ -203,7 +291,7 @@ svg =
 File.write!("#{out}/box.svg", svg)
 IO.puts("box.svg done")
 
-# ── Violin ────────────────────────────────────────────────────────────────────
+# ── Violin — dotted grid, green axis ─────────────────────────────────────────
 :rand.seed(:exsss, {10, 11, 12})
 group_xs = List.duplicate(1, 100) ++ List.duplicate(2, 100)
 
@@ -214,7 +302,16 @@ group_ys =
 ds = Dataset.from_columns(x: group_xs, y: group_ys, color: "#59a14f")
 
 svg =
-  Chart.new(:violin)
+  Chart.new(:violin,
+    canvas: %Canvas{
+      grid_style: :dotted,
+      grid_color: "#c8e6c9",
+      grid_width: 1,
+      axis_line_color: "#388e3c",
+      axis_line_width: 2.0,
+      axis_line_style: :solid
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Group"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left, label: "Samples"})
   |> Chart.put_dataset(ds)
@@ -224,7 +321,7 @@ svg =
 File.write!("#{out}/violin.svg", svg)
 IO.puts("violin.svg done")
 
-# ── Radar ─────────────────────────────────────────────────────────────────────
+# ── Radar — no grid (uses its own polar grid), no axis spine ─────────────────
 ds =
   Dataset.from_columns(
     y: [0.8, 0.6, 0.9, 0.4, 0.7, 0.85],
@@ -234,7 +331,7 @@ ds =
   )
 
 svg =
-  Chart.new(:radar)
+  Chart.new(:radar, canvas: %Canvas{grid_style: :none, axis_line_style: :none})
   |> Chart.put_dataset(ds)
   |> Chart.set_title("Player Stats")
   |> Chart.compile()
@@ -242,7 +339,7 @@ svg =
 File.write!("#{out}/radar.svg", svg)
 IO.puts("radar.svg done")
 
-# ── Candlestick ───────────────────────────────────────────────────────────────
+# ── Candlestick — solid fine grid, bold dark axis ─────────────────────────────
 times = [1, 2, 3, 4, 5]
 closes = [100.0, 103.0, 101.0, 106.0, 104.0]
 opens = [99.0, 100.0, 104.0, 102.0, 105.0]
@@ -260,7 +357,16 @@ ds =
   end)
 
 svg =
-  Chart.new(:candlestick)
+  Chart.new(:candlestick,
+    canvas: %Canvas{
+      grid_style: :solid,
+      grid_color: "#eeeeee",
+      grid_width: 1,
+      axis_line_color: "#111111",
+      axis_line_width: 2.0,
+      axis_line_style: :solid
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Time"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left, label: "Price ($)"})
   |> Chart.put_dataset(ds)
@@ -270,9 +376,18 @@ svg =
 File.write!("#{out}/candlestick.svg", svg)
 IO.puts("candlestick.svg done")
 
-# ── Waterfall ─────────────────────────────────────────────────────────────────
+# ── Waterfall — dashed grid, orange accent axis ───────────────────────────────
 svg =
-  Chart.new(:waterfall)
+  Chart.new(:waterfall,
+    canvas: %Canvas{
+      grid_style: :dashed,
+      grid_color: "#ffe0cc",
+      grid_width: 1,
+      axis_line_color: "#f28e2b",
+      axis_line_width: 2.0,
+      axis_line_style: :solid
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Category"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left, label: "Amount ($k)"})
   |> Chart.add_data(
@@ -284,7 +399,7 @@ svg =
 File.write!("#{out}/waterfall.svg", svg)
 IO.puts("waterfall.svg done")
 
-# ── Funnel ────────────────────────────────────────────────────────────────────
+# ── Funnel — no grid, no axis (shape chart) ───────────────────────────────────
 ds =
   Dataset.from_columns(
     y: [1000.0, 750.0, 400.0, 200.0, 80.0],
@@ -292,7 +407,7 @@ ds =
   )
 
 svg =
-  Chart.new(:funnel)
+  Chart.new(:funnel, canvas: %Canvas{grid_style: :none, axis_line_style: :none})
   |> Chart.put_dataset(ds)
   |> Chart.set_title("Sales Funnel")
   |> Chart.compile()
