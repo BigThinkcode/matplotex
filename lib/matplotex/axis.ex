@@ -9,6 +9,8 @@ defmodule Matplotex.Axis do
 
   @type scale_type :: :linear | :log10 | :log2 | :sqrt | :time
 
+  @type rotation :: :horizontal | :inclined | :vertical | number()
+
   @type t :: %__MODULE__{
           id: atom(),
           dimension: :x | :y | :z,
@@ -19,7 +21,8 @@ defmodule Matplotex.Axis do
           scale_type: scale_type(),
           scale: map() | nil,
           tick_labels: [String.t()],
-          limits: {number(), number()} | nil
+          limits: {number(), number()} | nil,
+          tick_label_rotation: rotation()
         }
 
   defstruct id: :x1,
@@ -31,7 +34,8 @@ defmodule Matplotex.Axis do
             scale_type: :linear,
             scale: nil,
             tick_labels: [],
-            limits: nil
+            limits: nil,
+            tick_label_rotation: :horizontal
 
   @doc "Sets scale domain from an Nx tensor column. Respects `origin_at_zero`."
   def set_scale(%__MODULE__{} = axis, tensor, opts \\ []) do

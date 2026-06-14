@@ -95,12 +95,81 @@ Chart.put_dataset(chart, ds)
 
 ```elixir
 %Axis{
-  dimension:   :x | :y | :z,                    # which data column maps to this axis
-  position:    :bottom | :top | :left | :right,  # where the axis is drawn
-  label:       "Axis label",                     # optional title
-  tick_count:  5,                                # approximate number of ticks
-  tick_format: &Float.to_string/1               # optional custom formatter
+  dimension:          :x | :y | :z,                    # which data column maps to this axis
+  position:           :bottom | :top | :left | :right,  # where the axis is drawn
+  label:              "Axis label",                     # optional title
+  tick_count:         5,                                # approximate number of ticks
+  tick_format:        &Float.to_string/1,               # optional custom formatter
+  tick_label_rotation: :horizontal                      # see "Tick Label Rotation" below
 }
+```
+
+### Tick Label Rotation
+
+Use `tick_label_rotation` on any x-axis to rotate tick labels when they are long or tightly packed. The option only applies to x-axes (`:bottom` and `:top` positions); y-axis labels are already vertical.
+
+| Value | Angle | Anchor | When to use |
+|---|---|---|---|
+| `:horizontal` | 0° (default) | center | Short labels with plenty of space |
+| `:inclined` | −45° | end | Medium-length labels, the most common fix for overlapping ticks |
+| `:vertical` | −90° | end | Very long labels or many ticks |
+| any `number` | custom (degrees) | end if negative, start if positive | Fine-grained control |
+
+**Inclined (−45°)** — most common fix for crowded labels:
+
+```elixir
+alias Matplotex.{Chart, Axis, Canvas}
+alias Matplotex.Render.SVG
+
+months = ["January", "February", "March", "April", "May", "June",
+          "July", "August", "September", "October", "November", "December"]
+
+Chart.new(:bar, canvas: %Canvas{grid_style: :dashed})
+|> Chart.put_axis(:x1, %Axis{
+     dimension: :x, position: :bottom, label: "Month",
+     tick_count: 12,
+     tick_label_rotation: :inclined
+   })
+|> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left, label: "Sales"})
+|> Chart.add_data(Enum.zip(1..12, [42,38,55,61,49,70,65,80,74,68,77,90]),
+     name: "2024", color: "#4e79a7")
+|> Chart.set_title("Monthly Sales — Inclined Labels")
+|> Chart.compile()
+|> SVG.to_svg()
+```
+
+**Vertical (−90°)** — for very long category names:
+
+```elixir
+categories = ["Product Alpha", "Product Beta", "Product Gamma",
+              "Product Delta", "Product Epsilon"]
+
+Chart.new(:bar, canvas: %Canvas{grid_style: :solid, grid_color: "#e0e0e0"})
+|> Chart.put_axis(:x1, %Axis{
+     dimension: :x, position: :bottom,
+     tick_count: 5,
+     tick_label_rotation: :vertical
+   })
+|> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left, label: "Units Sold"})
+|> Chart.add_data(Enum.zip(1..5, [120, 95, 142, 88, 110]),
+     name: "Q3", color: "#59a14f")
+|> Chart.set_title("Sales by Product — Vertical Labels")
+|> Chart.compile()
+|> SVG.to_svg()
+```
+
+**Custom angle** — fine-grained control:
+
+```elixir
+Chart.new(:line)
+|> Chart.put_axis(:x1, %Axis{
+     dimension: :x, position: :bottom,
+     tick_label_rotation: -30   # degrees; negative = counter-clockwise
+   })
+|> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left})
+|> Chart.add_data(Enum.zip(1..8, [3,5,4,8,7,9,6,10]), name: "Series")
+|> Chart.compile()
+|> SVG.to_svg()
 ```
 
 ### Canvas

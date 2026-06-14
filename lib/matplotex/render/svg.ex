@@ -147,9 +147,10 @@ defmodule Matplotex.Render.SVG do
       Enum.zip(pixels, axis.tick_labels)
       |> Enum.flat_map(fn {px, label} ->
         label_y = tick_y + tick_dir * canvas.tick_font_size * 1.5
+        text_el = render_x_tick_label(px, label_y, label, canvas.tick_font_size, axis.tick_label_rotation)
         [
           ~s(<line x1="#{px}" y1="#{tick_y}" x2="#{px}" y2="#{tick_y + tick_dir * 5}" stroke="#777" stroke-width="1"/>),
-          ~s(<text x="#{px}" y="#{label_y}" text-anchor="middle" font-size="#{canvas.tick_font_size}" fill="#444">#{label}</text>)
+          text_el
         ]
       end)
 
@@ -199,6 +200,23 @@ defmodule Matplotex.Render.SVG do
   end
 
   defp render_one_axis(_, _, _, _, _), do: []
+
+  defp render_x_tick_label(px, label_y, label, fs, :horizontal) do
+    ~s[<text x="#{px}" y="#{label_y}" text-anchor="middle" font-size="#{fs}" fill="#444">#{label}</text>]
+  end
+
+  defp render_x_tick_label(px, label_y, label, fs, :inclined) do
+    ~s[<text x="#{px}" y="#{label_y}" text-anchor="end" font-size="#{fs}" fill="#444" transform="rotate(-45,#{px},#{label_y})">#{label}</text>]
+  end
+
+  defp render_x_tick_label(px, label_y, label, fs, :vertical) do
+    ~s[<text x="#{px}" y="#{label_y}" text-anchor="end" font-size="#{fs}" fill="#444" transform="rotate(-90,#{px},#{label_y})">#{label}</text>]
+  end
+
+  defp render_x_tick_label(px, label_y, label, fs, deg) when is_number(deg) do
+    anchor = if deg < 0, do: "end", else: "start"
+    ~s[<text x="#{px}" y="#{label_y}" text-anchor="#{anchor}" font-size="#{fs}" fill="#444" transform="rotate(#{deg},#{px},#{label_y})">#{label}</text>]
+  end
 
   # ── Geometry ──────────────────────────────────────────────────────────────
 
