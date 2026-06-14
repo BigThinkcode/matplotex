@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="768.0" height="480.0" style="font-family: sans-serif;">
+<text x="384.0" y="45.599999999999994" text-anchor="middle" font-size="18" font-weight="bold" fill="#222">Quarterly Revenue</text>
+<g class="grid" stroke-dasharray="4 3">
+<line x1="109.5999984741211" y1="60.0" x2="109.5999984741211" y2="402.8" stroke="#e0e0e0" stroke-width="1"/>
+<line x1="264.6000061035156" y1="60.0" x2="264.6000061035156" y2="402.8" stroke="#e0e0e0" stroke-width="1"/>
+<line x1="419.6000061035156" y1="60.0" x2="419.6000061035156" y2="402.8" stroke="#e0e0e0" stroke-width="1"/>
+<line x1="574.5999755859375" y1="60.0" x2="574.5999755859375" y2="402.8" stroke="#e0e0e0" stroke-width="1"/>
+<line x1="729.5999755859375" y1="60.0" x2="729.5999755859375" y2="402.8" stroke="#e0e0e0" stroke-width="1"/>
+<line x1="109.60000000000001" y1="402.79998779296875" x2="729.5999999999999" y2="402.79998779296875" stroke="#e0e0e0" stroke-width="1"/>
+<line x1="109.60000000000001" y1="317.0999755859375" x2="729.5999999999999" y2="317.0999755859375" stroke="#e0e0e0" stroke-width="1"/>
+<line x1="109.60000000000001" y1="231.39999389648438" x2="729.5999999999999" y2="231.39999389648438" stroke="#e0e0e0" stroke-width="1"/>
+<line x1="109.60000000000001" y1="145.70001220703125" x2="729.5999999999999" y2="145.70001220703125" stroke="#e0e0e0" stroke-width="1"/>
+<line x1="109.60000000000001" y1="60.0" x2="729.5999999999999" y2="60.0" stroke="#e0e0e0" stroke-width="1"/>
+</g>
+<g class="axes">
+<line x1="109.5999984741211" y1="402.8" x2="109.5999984741211" y2="407.8" stroke="#777" stroke-width="1"/>
+<text x="109.5999984741211" y="420.8" text-anchor="middle" font-size="12" fill="#444">0</text>
+<line x1="264.6000061035156" y1="402.8" x2="264.6000061035156" y2="407.8" stroke="#777" stroke-width="1"/>
+<text x="264.6000061035156" y="420.8" text-anchor="middle" font-size="12" fill="#444">1</text>
+<line x1="419.6000061035156" y1="402.8" x2="419.6000061035156" y2="407.8" stroke="#777" stroke-width="1"/>
+<text x="419.6000061035156" y="420.8" text-anchor="middle" font-size="12" fill="#444">2</text>
+<line x1="574.5999755859375" y1="402.8" x2="574.5999755859375" y2="407.8" stroke="#777" stroke-width="1"/>
+<text x="574.5999755859375" y="420.8" text-anchor="middle" font-size="12" fill="#444">3</text>
+<line x1="729.5999755859375" y1="402.8" x2="729.5999755859375" y2="407.8" stroke="#777" stroke-width="1"/>
+<text x="729.5999755859375" y="420.8" text-anchor="middle" font-size="12" fill="#444">4</text>
+<text x="419.59999999999997" y="456.0" text-anchor="middle" font-size="14" fill="#333">Quarter</text>
+<line x1="109.60000000000001" y1="402.79998779296875" x2="104.60000000000001" y2="402.79998779296875" stroke="#777" stroke-width="1"/>
+<text x="101.60000000000001" y="406.79998779296875" text-anchor="end" font-size="12" fill="#444">0</text>
+<line x1="109.60000000000001" y1="317.0999755859375" x2="104.60000000000001" y2="317.0999755859375" stroke="#777" stroke-width="1"/>
+<text x="101.60000000000001" y="321.0999755859375" text-anchor="end" font-size="12" fill="#444">18.25</text>
+<line x1="109.60000000000001" y1="231.39999389648438" x2="104.60000000000001" y2="231.39999389648438" stroke="#777" stroke-width="1"/>
+<text x="101.60000000000001" y="235.39999389648438" text-anchor="end" font-size="12" fill="#444">36.5</text>
+<line x1="109.60000000000001" y1="145.70001220703125" x2="104.60000000000001" y2="145.70001220703125" stroke="#777" stroke-width="1"/>
+<text x="101.60000000000001" y="149.70001220703125" text-anchor="end" font-size="12" fill="#444">54.75</text>
+<line x1="109.60000000000001" y1="60.0" x2="104.60000000000001" y2="60.0" stroke="#777" stroke-width="1"/>
+<text x="101.60000000000001" y="64.0" text-anchor="end" font-size="12" fill="#444">73</text>
+<text x="52.400000000000006" y="231.4" transform="rotate(-90,52.400000000000006,231.4)" text-anchor="middle" font-size="14" fill="#333">Revenue ($k)</text>
+</g>
+<g class="series-0">
+<rect x="210.34999999999997" y="205.57260273972605" width="108.49999999999997" height="197.22739726027396" fill="#59a14f" opacity="1.0"/>
+<rect x="365.34999999999997" y="130.4383561643836" width="108.49999999999997" height="272.3616438356164" fill="#59a14f" opacity="1.0"/>
+<rect x="520.3499999999999" y="163.30958904109593" width="108.49999999999997" height="239.49041095890408" fill="#59a14f" opacity="1.0"/>
+<rect x="675.3499999999999" y="60.00000000000006" width="108.49999999999997" height="342.79999999999995" fill="#59a14f" opacity="1.0"/>
+</g>
+</svg>

@@ -22,7 +22,7 @@ defmodule Matplotex.Chart.Funnel do
     bar_h = ph / max(n, 1)
     cx    = px + pw / 2.0
 
-    @default_colors = [
+    default_colors = [
       "#4e79a7", "#f28e2b", "#e15759", "#76b7b2", "#59a14f",
       "#edc948", "#b07aa1", "#ff9da7", "#9c755f", "#bab0ac"
     ]
@@ -39,7 +39,7 @@ defmodule Matplotex.Chart.Funnel do
     fills =
       Enum.with_index(values)
       |> Enum.map(fn {_, i} ->
-        color || Enum.at(@default_colors, rem(i, length(@default_colors)))
+        color || Enum.at(default_colors, rem(i, length(default_colors)))
       end)
 
     xywh = rects_data |> Nx.tensor(type: :f64) |> Nx.transpose()

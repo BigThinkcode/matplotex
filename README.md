@@ -2,6 +2,25 @@
 
 A comprehensive charting library for Elixir. All coordinate math runs through [Nx](https://github.com/elixir-nx/nx) tensor operations. Charts compile to SVG strings.
 
+## Gallery
+
+| | | |
+|:---:|:---:|:---:|
+| ![Line](assets/line.svg) | ![Bar](assets/bar.svg) | ![Scatter](assets/scatter.svg) |
+| Line | Bar | Scatter |
+| ![Area](assets/area.svg) | ![Step](assets/step.svg) | ![Spline](assets/spline.svg) |
+| Area | Step | Spline |
+| ![Histogram](assets/histogram.svg) | ![Bubble](assets/bubble.svg) | ![Heatmap](assets/heatmap.svg) |
+| Histogram | Bubble | Heatmap |
+| ![Box](assets/box.svg) | ![Violin](assets/violin.svg) | ![Radar](assets/radar.svg) |
+| Box Plot | Violin | Radar |
+| ![Pie](assets/pie.svg) | ![Donut](assets/donut.svg) | ![Funnel](assets/funnel.svg) |
+| Pie | Donut | Funnel |
+| ![Candlestick](assets/candlestick.svg) | ![Waterfall](assets/waterfall.svg) | |
+| Candlestick | Waterfall | |
+
+---
+
 ## Installation
 
 Add `matplotex` to your dependencies in `mix.exs`:
@@ -114,6 +133,8 @@ Chart.set_viewport(chart, %Matplotex.Viewport{
 
 Continuous path connecting `{x, y}` points. Points are auto-sorted by x. Supports multiple series.
 
+![Line Chart](assets/line.svg)
+
 ```elixir
 alias Matplotex.{Chart, Axis}
 alias Matplotex.Render.SVG
@@ -137,6 +158,8 @@ svg =
 
 Vertical bars from a baseline of `y=0`. x values are treated as category indices.
 
+![Bar Chart](assets/bar.svg)
+
 ```elixir
 svg =
   Chart.new(:bar)
@@ -153,6 +176,8 @@ svg =
 ### Scatter
 
 One circle per `{x, y}` point. Use `color` per dataset to distinguish groups.
+
+![Scatter Chart](assets/scatter.svg)
 
 ```elixir
 svg =
@@ -176,6 +201,8 @@ svg =
 
 Filled region between a baseline and the `y` values. Ideal for showing volume over time.
 
+![Area Chart](assets/area.svg)
+
 ```elixir
 svg =
   Chart.new(:area)
@@ -194,6 +221,8 @@ svg =
 ### Step
 
 Staircase line — horizontal segment first, then vertical. Good for discrete state changes.
+
+![Step Chart](assets/step.svg)
 
 ```elixir
 svg =
@@ -214,6 +243,8 @@ svg =
 
 Smooth Catmull-Rom curve through `{x, y}` points. Same API as line.
 
+![Spline Chart](assets/spline.svg)
+
 ```elixir
 svg =
   Chart.new(:spline)
@@ -232,6 +263,8 @@ svg =
 ### Histogram
 
 Auto-bins a list of samples using Sturges' rule. Pass raw values to `x` (the `y` column is computed).
+
+![Histogram](assets/histogram.svg)
 
 ```elixir
 alias Matplotex.Dataset
@@ -253,6 +286,8 @@ svg =
 ### Scatter with Bubble (Bubble Chart)
 
 Like scatter, but the `z` column controls each point's radius. Area is proportional to `z`.
+
+![Bubble Chart](assets/bubble.svg)
 
 ```elixir
 ds = Dataset.from_columns(
@@ -279,6 +314,8 @@ svg =
 
 Circular slices sized by `y` values. Pass slice names in `labels`.
 
+![Pie Chart](assets/pie.svg)
+
 ```elixir
 ds = Dataset.from_columns(
   y:      [40, 30, 20, 10],
@@ -299,6 +336,8 @@ svg =
 
 Same as pie with a hollow centre. Useful when you want to annotate the centre.
 
+![Donut Chart](assets/donut.svg)
+
 ```elixir
 ds = Dataset.from_columns(
   y:      [55, 25, 20],
@@ -318,6 +357,8 @@ svg =
 ### Heatmap
 
 Colored grid where `x` = column index, `y` = row index, `z` = intensity. Colors use the viridis scale.
+
+![Heatmap](assets/heatmap.svg)
 
 ```elixir
 # Build a 5×5 grid
@@ -352,6 +393,8 @@ svg =
 
 Five-number summary (min, Q1, median, Q3, max) per group. Pass raw samples with their group index.
 
+![Box Plot](assets/box.svg)
+
 ```elixir
 # Group 1 (x=1) and Group 2 (x=2)
 group_xs = List.duplicate(1, 50) ++ List.duplicate(2, 50)
@@ -377,6 +420,8 @@ svg =
 
 Mirrored KDE density per group. Same data format as box plot.
 
+![Violin Plot](assets/violin.svg)
+
 ```elixir
 group_xs = List.duplicate(1, 100) ++ List.duplicate(2, 100)
 group_ys =
@@ -401,6 +446,8 @@ svg =
 
 N-dimensional data on radial axes. `y` = values, `labels` = axis names. Multiple datasets overlay as polygons.
 
+![Radar Chart](assets/radar.svg)
+
 ```elixir
 ds = Dataset.from_columns(
   y:      [0.8, 0.6, 0.9, 0.4, 0.7, 0.85],
@@ -422,6 +469,8 @@ svg =
 ### Candlestick
 
 OHLC bars for financial data. `x` = time, `y` = close price. Open, high, and low go in `extra`.
+
+![Candlestick Chart](assets/candlestick.svg)
 
 ```elixir
 times  = [1, 2, 3, 4, 5]
@@ -458,6 +507,8 @@ Bullish candles (close ≥ open) render green; bearish candles render red.
 
 Cumulative bars where each bar starts where the previous ended. Positive increments are green, negative red.
 
+![Waterfall Chart](assets/waterfall.svg)
+
 ```elixir
 svg =
   Chart.new(:waterfall)
@@ -476,6 +527,8 @@ svg =
 ### Funnel
 
 Horizontal bars centred on the axis, each narrower than the one above. Pass stage values largest-first in `y`.
+
+![Funnel Chart](assets/funnel.svg)
 
 ```elixir
 ds = Dataset.from_columns(

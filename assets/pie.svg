@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="768.0" height="480.0" style="font-family: sans-serif;">
+<text x="384.0" y="45.599999999999994" text-anchor="middle" font-size="18" font-weight="bold" fill="#222">Traffic Sources</text>
+<g class="grid" stroke-dasharray="4 3">
+
+</g>
+<g class="axes">
+
+</g>
+<g class="series-0">
+<path d="M 384.0 258.0 L 552.3 258.0 A 168.29999999999998 168.29999999999998 0 0 1 247.84243984669638 356.92425796082324 Z" fill="#4e79a7" stroke="white" stroke-width="2"/>
+<path d="M 384.0 258.0 L 247.84243984669638 356.92425796082324 A 168.29999999999998 168.29999999999998 0 0 1 331.99243984669636 97.93718830752567 Z" fill="#f28e2b" stroke="white" stroke-width="2"/>
+<path d="M 384.0 258.0 L 331.99243984669636 97.93718830752567 A 168.29999999999998 168.29999999999998 0 0 1 520.1575601533036 159.07574203917676 Z" fill="#e15759" stroke="white" stroke-width="2"/>
+<path d="M 384.0 258.0 L 520.1575601533036 159.07574203917676 A 168.29999999999998 168.29999999999998 0 0 1 552.3 257.99999999999994 Z" fill="#76b7b2" stroke="white" stroke-width="2"/>
+</g>
+</svg>
