@@ -186,6 +186,7 @@ svg =
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left,   label: "Revenue ($k)"})
   |> Chart.add_data([{1, 42}, {2, 58}, {3, 51}, {4, 73}], name: "Revenue", color: "#59a14f")
   |> Chart.set_title("Quarterly Revenue")
+  |> Chart.set_axis_limits(:x1, 0.5, 4.5)
   |> Chart.compile()
   |> SVG.to_svg()
 ```
@@ -210,6 +211,7 @@ svg =
        [{155, 50}, {165, 60}, {172, 68}, {178, 75}],
        name: "Group B", color: "#f28e2b")
   |> Chart.set_title("Height vs Weight")
+  |> Chart.set_axis_limits(:x1, 150.0, 190.0)
   |> Chart.compile()
   |> SVG.to_svg()
 ```
@@ -231,6 +233,7 @@ svg =
        Enum.zip(1..7, [120, 180, 150, 210, 195, 240, 230]),
        name: "Unique Visitors", color: "#76b7b2")
   |> Chart.set_title("Weekly Traffic")
+  |> Chart.set_axis_limits(:x1, 1.0, 7.0)
   |> Chart.compile()
   |> SVG.to_svg()
 ```
