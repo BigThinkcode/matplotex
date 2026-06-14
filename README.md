@@ -36,10 +36,17 @@ end
 ## Quick Start
 
 ```elixir
-alias Matplotex.{Chart, Axis, Dataset}
+alias Matplotex.{Chart, Axis, Canvas, Dataset}
 alias Matplotex.Render.SVG
 
-Chart.new(:line)
+Chart.new(:line,
+  canvas: %Canvas{
+    grid_style:      :dashed,
+    grid_color:      "#c8d8e8",
+    axis_line_color: "#4a6fa5",
+    axis_line_width: 2.0
+  }
+)
 |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Month"})
 |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left,   label: "Revenue"})
 |> Chart.add_data(Enum.zip(1..12, [3,5,4,8,7,9,6,10,8,11,9,12]), name: "2024")
@@ -162,11 +169,19 @@ Continuous path connecting `{x, y}` points. Points are auto-sorted by x. Support
 ![Line Chart](assets/line.svg)
 
 ```elixir
-alias Matplotex.{Chart, Axis}
+alias Matplotex.{Chart, Axis, Canvas}
 alias Matplotex.Render.SVG
 
 svg =
-  Chart.new(:line)
+  Chart.new(:line,
+    canvas: %Canvas{
+      grid_style:      :dashed,
+      grid_color:      "#c8d8e8",
+      grid_width:      1,
+      axis_line_color: "#4a6fa5",
+      axis_line_width: 2.0
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Month"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left,   label: "Sales"})
   |> Chart.add_data(Enum.zip(1..12, [3,5,4,8,7,9,6,10,8,11,9,12]),
@@ -189,8 +204,18 @@ Vertical bars from a baseline of `y=0`. x values are treated as category indices
 ![Bar Chart](assets/bar.svg)
 
 ```elixir
+alias Matplotex.Canvas
+
 svg =
-  Chart.new(:bar)
+  Chart.new(:bar,
+    canvas: %Canvas{
+      grid_style:      :solid,
+      grid_color:      "#d4d4d4",
+      grid_width:      1,
+      axis_line_color: "#333333",
+      axis_line_width: 1.5
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Quarter"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left,   label: "Revenue ($k)"})
   |> Chart.add_data([{1, 42}, {2, 58}, {3, 51}, {4, 73}], name: "Revenue", color: "#59a14f")
@@ -210,7 +235,15 @@ One circle per `{x, y}` point. Use `color` per dataset to distinguish groups.
 
 ```elixir
 svg =
-  Chart.new(:scatter)
+  Chart.new(:scatter,
+    canvas: %Canvas{
+      grid_style:      :dotted,
+      grid_color:      "#cccccc",
+      grid_width:      1,
+      axis_line_color: "#e15759",
+      axis_line_width: 2.0
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Height (cm)"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left,   label: "Weight (kg)"})
   |> Chart.add_data(
@@ -235,7 +268,15 @@ Filled region between a baseline and the `y` values. Ideal for showing volume ov
 
 ```elixir
 svg =
-  Chart.new(:area)
+  Chart.new(:area,
+    canvas: %Canvas{
+      grid_style:      :dashed,
+      grid_color:      "#b2dfdb",
+      grid_width:      1.5,
+      axis_line_color: "#00796b",
+      axis_line_width: 2.0
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Day"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left,   label: "Visitors"})
   |> Chart.add_data(
@@ -257,7 +298,13 @@ Staircase line — horizontal segment first, then vertical. Good for discrete st
 
 ```elixir
 svg =
-  Chart.new(:step)
+  Chart.new(:step,
+    canvas: %Canvas{
+      grid_style:      :none,
+      axis_line_color: "#222222",
+      axis_line_width: 2.5
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Time"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left,   label: "State"})
   |> Chart.add_data(
@@ -280,7 +327,15 @@ Smooth Catmull-Rom curve through `{x, y}` points. Same API as line.
 
 ```elixir
 svg =
-  Chart.new(:spline)
+  Chart.new(:spline,
+    canvas: %Canvas{
+      grid_style:      :dotted,
+      grid_color:      "#ddd8f0",
+      grid_width:      1,
+      axis_line_color: "#b07aa1",
+      axis_line_width: 2.0
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "x"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left,   label: "f(x)"})
   |> Chart.add_data(
@@ -302,12 +357,20 @@ Auto-bins a list of samples using Sturges' rule. Pass raw values to `x` (the `y`
 ![Histogram](assets/histogram.svg)
 
 ```elixir
-alias Matplotex.Dataset
+alias Matplotex.{Canvas, Dataset}
 
 samples = for _ <- 1..2000, do: :rand.normal() * 15 + 100
 
 svg =
-  Chart.new(:histogram)
+  Chart.new(:histogram,
+    canvas: %Canvas{
+      grid_style:      :solid,
+      grid_color:      "#e8e8e8",
+      grid_width:      1,
+      axis_line_color: "#555555",
+      axis_line_width: 1.5
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Value"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left,   label: "Count"})
   |> Chart.put_dataset(Dataset.from_columns(x: samples, y: samples, color: "#4e79a7"))
@@ -334,7 +397,15 @@ ds = Dataset.from_columns(
 )
 
 svg =
-  Chart.new(:bubble)
+  Chart.new(:bubble,
+    canvas: %Canvas{
+      grid_style:      :dashed,
+      grid_color:      "#b2e0dc",
+      grid_width:      1,
+      axis_line_color: "#76b7b2",
+      axis_line_width: 2.0
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Market Share"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left,   label: "Growth Rate"})
   |> Chart.put_dataset(ds)
@@ -360,7 +431,7 @@ ds = Dataset.from_columns(
 )
 
 svg =
-  Chart.new(:pie)
+  Chart.new(:pie, canvas: %Canvas{grid_style: :none, axis_line_style: :none})
   |> Chart.put_dataset(ds)
   |> Chart.set_title("Traffic Sources")
   |> Chart.compile()
@@ -382,7 +453,7 @@ ds = Dataset.from_columns(
 )
 
 svg =
-  Chart.new(:donut)
+  Chart.new(:donut, canvas: %Canvas{grid_style: :none, axis_line_style: :none})
   |> Chart.put_dataset(ds)
   |> Chart.set_title("Project Status")
   |> Chart.compile()
@@ -408,7 +479,15 @@ Colored grid where `x` = column index, `y` = row index, `z` = intensity. Colors 
 ds = Dataset.from_columns(x: xs, y: ys, z: zs)
 
 svg =
-  Chart.new(:heatmap)
+  Chart.new(:heatmap,
+    canvas: %Canvas{
+      grid_style:      :solid,
+      grid_color:      "#999999",
+      grid_width:      1.5,
+      axis_line_color: "#222222",
+      axis_line_width: 2.0
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Column"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left,   label: "Row"})
   |> Chart.put_dataset(ds)
@@ -435,7 +514,15 @@ group_ys =
 ds = Dataset.from_columns(x: group_xs, y: group_ys)
 
 svg =
-  Chart.new(:box)
+  Chart.new(:box,
+    canvas: %Canvas{
+      grid_style:      :dashed,
+      grid_color:      "#e0e0e0",
+      grid_width:      1,
+      axis_line_color: "#555555",
+      axis_line_width: 1.5
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Group"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left,   label: "Value"})
   |> Chart.put_dataset(ds)
@@ -462,7 +549,15 @@ group_ys =
 ds = Dataset.from_columns(x: group_xs, y: group_ys, color: "#59a14f")
 
 svg =
-  Chart.new(:violin)
+  Chart.new(:violin,
+    canvas: %Canvas{
+      grid_style:      :dotted,
+      grid_color:      "#c8e6c9",
+      grid_width:      1,
+      axis_line_color: "#388e3c",
+      axis_line_width: 2.0
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Group"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left,   label: "Samples"})
   |> Chart.put_dataset(ds)
@@ -489,7 +584,7 @@ ds = Dataset.from_columns(
 )
 
 svg =
-  Chart.new(:radar)
+  Chart.new(:radar, canvas: %Canvas{grid_style: :none, axis_line_style: :none})
   |> Chart.put_dataset(ds)
   |> Chart.set_title("Player Stats")
   |> Chart.compile()
@@ -522,7 +617,15 @@ ds =
   end)
 
 svg =
-  Chart.new(:candlestick)
+  Chart.new(:candlestick,
+    canvas: %Canvas{
+      grid_style:      :solid,
+      grid_color:      "#eeeeee",
+      grid_width:      1,
+      axis_line_color: "#111111",
+      axis_line_width: 2.0
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Time"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left,   label: "Price ($)"})
   |> Chart.put_dataset(ds)
@@ -545,7 +648,15 @@ Cumulative bars where each bar starts where the previous ended. Positive increme
 
 ```elixir
 svg =
-  Chart.new(:waterfall)
+  Chart.new(:waterfall,
+    canvas: %Canvas{
+      grid_style:      :dashed,
+      grid_color:      "#ffe0cc",
+      grid_width:      1,
+      axis_line_color: "#f28e2b",
+      axis_line_width: 2.0
+    }
+  )
   |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Category"})
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left,   label: "Amount ($k)"})
   |> Chart.add_data(
@@ -573,7 +684,7 @@ ds = Dataset.from_columns(
 )
 
 svg =
-  Chart.new(:funnel)
+  Chart.new(:funnel, canvas: %Canvas{grid_style: :none, axis_line_style: :none})
   |> Chart.put_dataset(ds)
   |> Chart.set_title("Sales Funnel")
   |> Chart.compile()
