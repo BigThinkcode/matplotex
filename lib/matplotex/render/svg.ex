@@ -19,6 +19,9 @@ defmodule Matplotex.Render.SVG do
     canvas_w = Nx.to_number(frame.canvas_px[0])
     canvas_h = Nx.to_number(frame.canvas_px[1])
 
+    plot = extract_plot(chart.frame)
+    clip_id = "plot-clip"
+
     body =
       [
         render_background(chart),
@@ -26,7 +29,8 @@ defmodule Matplotex.Render.SVG do
         render_grid(chart),
         render_axes(chart),
         render_axis_spines(chart),
-        render_geometry(chart)
+        ~s(<defs><clipPath id="#{clip_id}"><rect x="#{plot.x}" y="#{plot.y}" width="#{plot.w}" height="#{plot.h}"/></clipPath></defs>),
+        render_geometry(chart, clip_id)
       ]
       |> Enum.reject(&(&1 == ""))
       |> Enum.join("\n")
@@ -198,11 +202,11 @@ defmodule Matplotex.Render.SVG do
 
   # ── Geometry ──────────────────────────────────────────────────────────────
 
-  defp render_geometry(%Chart{geometry: geometry}) do
+  defp render_geometry(%Chart{geometry: geometry}, clip_id) do
     Enum.with_index(geometry)
     |> Enum.map_join("\n", fn {geom_list, idx} ->
       inner = Enum.map_join(geom_list, "\n", &render_geom/1)
-      ~s(<g class="series-#{idx}">\n#{inner}\n</g>)
+      ~s{<g class="series-#{idx}" clip-path="url(##{clip_id})">\n#{inner}\n</g>}
     end)
   end
 

@@ -40,14 +40,15 @@
 <line x1="109.60000000000001" y1="402.8" x2="729.5999999999999" y2="402.8" stroke="#e15759" stroke-width="2.0"/>
 <line x1="109.60000000000001" y1="60.0" x2="109.60000000000001" y2="402.8" stroke="#e15759" stroke-width="2.0"/>
 </g>
-<g class="series-0">
+<defs><clipPath id="plot-clip"><rect x="109.60000000000001" y="60.0" width="619.9999999999999" height="342.8"/></clipPath></defs>
+<g class="series-0" clip-path="url(#plot-clip)">
 <circle cx="264.5999999999999" cy="180.98823529411766" r="5.0" fill="#4e79a7" opacity="0.8"/>
 <circle cx="419.5999999999999" cy="140.65882352941173" r="5.0" fill="#4e79a7" opacity="0.8"/>
 <circle cx="497.0999999999999" cy="112.42823529411766" r="5.0" fill="#4e79a7" opacity="0.8"/>
 <circle cx="574.5999999999999" cy="80.16470588235296" r="5.0" fill="#4e79a7" opacity="0.8"/>
 <circle cx="652.0999999999999" cy="60.0" r="5.0" fill="#4e79a7" opacity="0.8"/>
 </g>
-<g class="series-1">
+<g class="series-1" clip-path="url(#plot-clip)">
 <circle cx="187.0999999999999" cy="201.1529411764706" r="5.0" fill="#f28e2b" opacity="0.8"/>
 <circle cx="342.0999999999999" cy="160.8235294117647" r="5.0" fill="#f28e2b" opacity="0.8"/>
 <circle cx="450.5999999999999" cy="128.56" r="5.0" fill="#f28e2b" opacity="0.8"/>

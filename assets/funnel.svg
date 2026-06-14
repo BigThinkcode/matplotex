@@ -3,7 +3,8 @@
 <g class="axes">
 
 </g>
-<g class="series-0">
+<defs><clipPath id="plot-clip"><rect x="38.400000000000006" y="60.0" width="691.1999999999999" height="396.0"/></clipPath></defs>
+<g class="series-0" clip-path="url(#plot-clip)">
 <rect x="38.400000000000034" y="60.0" width="691.1999999999999" height="71.28" fill="#4e79a7" opacity="1.0"/>
 <rect x="124.80000000000001" y="139.2" width="518.4" height="71.28" fill="#4e79a7" opacity="1.0"/>
 <rect x="245.76000000000002" y="218.4" width="276.47999999999996" height="71.28" fill="#4e79a7" opacity="1.0"/>

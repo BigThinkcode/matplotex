@@ -40,7 +40,8 @@
 <line x1="109.60000000000001" y1="402.8" x2="729.5999999999999" y2="402.8" stroke="#111111" stroke-width="2.0"/>
 <line x1="109.60000000000001" y1="60.0" x2="109.60000000000001" y2="402.8" stroke="#111111" stroke-width="2.0"/>
 </g>
-<g class="series-0">
+<defs><clipPath id="plot-clip"><rect x="109.60000000000001" y="60.0" width="619.9999999999999" height="342.8"/></clipPath></defs>
+<g class="series-0" clip-path="url(#plot-clip)">
 <rect x="444.4" y="66.46792452830192" width="74.39999999999998" height="9.701886792452797" fill="#ef5350" opacity="1.0"/>
 <rect x="692.3999999999999" y="63.23396226415093" width="74.39999999999998" height="3.233962264150989" fill="#ef5350" opacity="1.0"/>
 <rect x="196.4" y="79.40377358490565" width="74.39999999999998" height="3.233962264150989" fill="#26a69a" opacity="1.0"/>

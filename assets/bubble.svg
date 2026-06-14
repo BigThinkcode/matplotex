@@ -40,7 +40,8 @@
 <line x1="109.60000000000001" y1="402.8" x2="729.5999999999999" y2="402.8" stroke="#76b7b2" stroke-width="2.0"/>
 <line x1="109.60000000000001" y1="60.0" x2="109.60000000000001" y2="402.8" stroke="#76b7b2" stroke-width="2.0"/>
 </g>
-<g class="series-0">
+<defs><clipPath id="plot-clip"><rect x="109.60000000000001" y="60.0" width="619.9999999999999" height="342.8"/></clipPath></defs>
+<g class="series-0" clip-path="url(#plot-clip)">
 <circle cx="233.6" cy="265.68" r="4.0" fill="#76b7b2" opacity="0.7"/>
 <circle cx="357.59999999999997" cy="128.56" r="33.39387691339814" fill="#76b7b2" opacity="0.7"/>
 <circle cx="481.59999999999997" cy="334.24" r="18.69693845669907" fill="#76b7b2" opacity="0.7"/>
