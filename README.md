@@ -98,17 +98,24 @@ Chart.put_dataset(chart, ds)
 
 ### Canvas
 
-Control physical size, fonts, and grid color:
+Control physical size, fonts, grid, and axis appearance:
 
 ```elixir
 canvas = %Matplotex.Canvas{
-  figsize:         {10, 6},   # width × height in inches
-  dpi:             96,
-  margin:          0.05,      # fraction of canvas on each side
-  title_font_size: 18,
-  tick_font_size:  12,
-  label_font_size: 14,
-  grid_color:      "#e0e0e0"
+  figsize:          {10, 6},      # width × height in inches
+  dpi:              96,
+  margin:           0.05,         # fraction of canvas on each side
+  background:       "#ffffff",    # SVG background fill (nil = transparent)
+  title_font_size:  18,
+  tick_font_size:   12,
+  label_font_size:  14,
+  grid_color:       "#e0e0e0",
+  grid_style:       :dashed,      # :solid | :dashed | :dotted | :none
+  grid_width:       1,
+  axis_line_color:  "#555555",
+  axis_line_width:  1.5,
+  axis_line_style:  :solid,       # :solid | :dashed | :none
+  origin_at_zero:   true          # force axis min to 0 when all data is positive
 }
 
 Chart.new(:line, canvas: canvas)
@@ -167,6 +174,8 @@ svg =
   |> Chart.add_data(Enum.zip(1..12, [2,4,6,5,9,8,7,11,9,12,10,13]),
        name: "2024", color: "#e15759")
   |> Chart.set_title("Monthly Sales")
+  |> Chart.set_axis_limits(:x1, 0.0, 13.0)
+  |> Chart.set_axis_limits(:y1, 0.0, 15.0)
   |> Chart.compile()
   |> SVG.to_svg()
 ```
@@ -255,6 +264,8 @@ svg =
        [{0, 0}, {1, 1}, {2, 1}, {3, 0}, {4, 2}, {5, 2}, {6, 0}],
        name: "Signal", color: "#e15759")
   |> Chart.set_title("Signal Over Time")
+  |> Chart.set_axis_limits(:x1, -0.5, 6.5)
+  |> Chart.set_axis_limits(:y1, -0.5, 3.0)
   |> Chart.compile()
   |> SVG.to_svg()
 ```
@@ -276,6 +287,8 @@ svg =
        Enum.zip(0..9, [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]),
        name: "x²", color: "#b07aa1")
   |> Chart.set_title("Smooth Curve")
+  |> Chart.set_axis_limits(:x1, 0.0, 10.0)
+  |> Chart.set_axis_limits(:y1, 0.0, 90.0)
   |> Chart.compile()
   |> SVG.to_svg()
 ```
@@ -326,6 +339,8 @@ svg =
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left,   label: "Growth Rate"})
   |> Chart.put_dataset(ds)
   |> Chart.set_title("Product Portfolio")
+  |> Chart.set_axis_limits(:x1, 0.0, 6.0)
+  |> Chart.set_axis_limits(:y1, 0.0, 6.0)
   |> Chart.compile()
   |> SVG.to_svg()
 ```
@@ -383,14 +398,7 @@ Colored grid where `x` = column index, `y` = row index, `z` = intensity. Colors 
 ![Heatmap](assets/heatmap.svg)
 
 ```elixir
-# Build a 5×5 grid
-{xs, ys, zs} =
-  for row <- 0..4, col <- 0..4 do
-    {col * 1.0, row * 1.0, :rand.uniform() * 100}
-  end
-  |> Enum.unzip3()
-
-# Enum.unzip3 doesn't exist — use reduce instead
+# Build a 5×5 grid of {col, row, intensity} triples
 {xs, ys, zs} =
   for(row <- 0..4, col <- 0..4, do: {col * 1.0, row * 1.0, :rand.uniform() * 100})
   |> Enum.reduce({[], [], []}, fn {x, y, z}, {xs, ys, zs} ->
@@ -432,6 +440,7 @@ svg =
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left,   label: "Value"})
   |> Chart.put_dataset(ds)
   |> Chart.set_title("Box Plot by Group")
+  |> Chart.set_axis_limits(:x1, 0.5, 2.5)
   |> Chart.compile()
   |> SVG.to_svg()
 ```
@@ -458,6 +467,7 @@ svg =
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left,   label: "Samples"})
   |> Chart.put_dataset(ds)
   |> Chart.set_title("Violin Plot by Group")
+  |> Chart.set_axis_limits(:x1, 0.5, 2.5)
   |> Chart.compile()
   |> SVG.to_svg()
 ```
@@ -517,6 +527,8 @@ svg =
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left,   label: "Price ($)"})
   |> Chart.put_dataset(ds)
   |> Chart.set_title("AAPL — 5-Day OHLC")
+  |> Chart.set_axis_limits(:x1, 0.5, 5.5)
+  |> Chart.set_axis_limits(:y1, 95.0, 110.0)
   |> Chart.compile()
   |> SVG.to_svg()
 ```
@@ -540,6 +552,8 @@ svg =
        [{1, 50}, {2, -20}, {3, 30}, {4, -10}, {5, 40}],
        name: "Cash Flow")
   |> Chart.set_title("Cash Flow Waterfall")
+  |> Chart.set_axis_limits(:x1, 0.5, 5.5)
+  |> Chart.set_axis_limits(:y1, 0.0, 100.0)
   |> Chart.compile()
   |> SVG.to_svg()
 ```
