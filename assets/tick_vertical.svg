@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="768.0" height="480.0" style="font-family: sans-serif;">
+<text x="384.0" y="45.599999999999994" text-anchor="middle" font-size="18" font-weight="bold" fill="#222">Sales by Product — Vertical Labels</text>
+<g class="grid">
+<line x1="109.5999984741211" y1="60.0" x2="109.5999984741211" y2="428.0" stroke="#e0e0e0" stroke-width="1"/>
+<line x1="264.6000061035156" y1="60.0" x2="264.6000061035156" y2="428.0" stroke="#e0e0e0" stroke-width="1"/>
+<line x1="419.6000061035156" y1="60.0" x2="419.6000061035156" y2="428.0" stroke="#e0e0e0" stroke-width="1"/>
+<line x1="574.5999755859375" y1="60.0" x2="574.5999755859375" y2="428.0" stroke="#e0e0e0" stroke-width="1"/>
+<line x1="729.5999755859375" y1="60.0" x2="729.5999755859375" y2="428.0" stroke="#e0e0e0" stroke-width="1"/>
+<line x1="109.60000000000001" y1="428.0" x2="729.5999999999999" y2="428.0" stroke="#e0e0e0" stroke-width="1"/>
+<line x1="109.60000000000001" y1="336.0" x2="729.5999999999999" y2="336.0" stroke="#e0e0e0" stroke-width="1"/>
+<line x1="109.60000000000001" y1="244.0" x2="729.5999999999999" y2="244.0" stroke="#e0e0e0" stroke-width="1"/>
+<line x1="109.60000000000001" y1="152.0" x2="729.5999999999999" y2="152.0" stroke="#e0e0e0" stroke-width="1"/>
+<line x1="109.60000000000001" y1="60.0" x2="729.5999999999999" y2="60.0" stroke="#e0e0e0" stroke-width="1"/>
+</g>
+<g class="axes">
+<line x1="109.5999984741211" y1="428.0" x2="109.5999984741211" y2="433.0" stroke="#777" stroke-width="1"/>
+<text x="109.5999984741211" y="446.0" text-anchor="end" font-size="12" fill="#444" transform="rotate(-90,109.5999984741211,446.0)">Product Alpha</text>
+<line x1="264.6000061035156" y1="428.0" x2="264.6000061035156" y2="433.0" stroke="#777" stroke-width="1"/>
+<text x="264.6000061035156" y="446.0" text-anchor="end" font-size="12" fill="#444" transform="rotate(-90,264.6000061035156,446.0)">Product Beta</text>
+<line x1="419.6000061035156" y1="428.0" x2="419.6000061035156" y2="433.0" stroke="#777" stroke-width="1"/>
+<text x="419.6000061035156" y="446.0" text-anchor="end" font-size="12" fill="#444" transform="rotate(-90,419.6000061035156,446.0)">Product Gamma</text>
+<line x1="574.5999755859375" y1="428.0" x2="574.5999755859375" y2="433.0" stroke="#777" stroke-width="1"/>
+<text x="574.5999755859375" y="446.0" text-anchor="end" font-size="12" fill="#444" transform="rotate(-90,574.5999755859375,446.0)">Product Delta</text>
+<line x1="729.5999755859375" y1="428.0" x2="729.5999755859375" y2="433.0" stroke="#777" stroke-width="1"/>
+<text x="729.5999755859375" y="446.0" text-anchor="end" font-size="12" fill="#444" transform="rotate(-90,729.5999755859375,446.0)">Product Epsilon</text>
+<line x1="109.60000000000001" y1="428.0" x2="104.60000000000001" y2="428.0" stroke="#777" stroke-width="1"/>
+<text x="101.60000000000001" y="432.0" text-anchor="end" font-size="12" fill="#444">0</text>
+<line x1="109.60000000000001" y1="336.0" x2="104.60000000000001" y2="336.0" stroke="#777" stroke-width="1"/>
+<text x="101.60000000000001" y="340.0" text-anchor="end" font-size="12" fill="#444">35.5</text>
+<line x1="109.60000000000001" y1="244.0" x2="104.60000000000001" y2="244.0" stroke="#777" stroke-width="1"/>
+<text x="101.60000000000001" y="248.0" text-anchor="end" font-size="12" fill="#444">71</text>
+<line x1="109.60000000000001" y1="152.0" x2="104.60000000000001" y2="152.0" stroke="#777" stroke-width="1"/>
+<text x="101.60000000000001" y="156.0" text-anchor="end" font-size="12" fill="#444">106.5</text>
+<line x1="109.60000000000001" y1="60.0" x2="104.60000000000001" y2="60.0" stroke="#777" stroke-width="1"/>
+<text x="101.60000000000001" y="64.0" text-anchor="end" font-size="12" fill="#444">142</text>
+<text x="52.400000000000006" y="244.0" transform="rotate(-90,52.400000000000006,244.0)" text-anchor="middle" font-size="14" fill="#333">Units Sold</text>
+</g>
+<g class="axis-spines">
+<line x1="109.60000000000001" y1="428.0" x2="729.5999999999999" y2="428.0" stroke="#555555" stroke-width="1.5"/>
+<line x1="109.60000000000001" y1="60.0" x2="109.60000000000001" y2="428.0" stroke="#555555" stroke-width="1.5"/>
+</g>
+<defs><clipPath id="plot-clip"><rect x="109.60000000000001" y="60.0" width="619.9999999999999" height="368.0"/></clipPath></defs>
+<g class="series-0" clip-path="url(#plot-clip)">
+<rect x="66.20000000000002" y="117.01408450704224" width="86.79999999999997" height="310.98591549295776" fill="#59a14f" opacity="1.0"/>
+<rect x="221.2" y="181.80281690140845" width="86.79999999999997" height="246.19718309859155" fill="#59a14f" opacity="1.0"/>
+<rect x="376.19999999999993" y="60.0" width="86.79999999999997" height="368.0" fill="#59a14f" opacity="1.0"/>
+<rect x="531.1999999999999" y="199.94366197183098" width="86.79999999999997" height="228.05633802816902" fill="#59a14f" opacity="1.0"/>
+<rect x="686.1999999999999" y="142.92957746478874" width="86.79999999999997" height="285.07042253521126" fill="#59a14f" opacity="1.0"/>
+</g>
+</svg>

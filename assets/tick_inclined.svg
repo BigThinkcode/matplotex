@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="768.0" height="480.0" style="font-family: sans-serif;">
+<text x="384.0" y="45.599999999999994" text-anchor="middle" font-size="18" font-weight="bold" fill="#222">Monthly Sales — Inclined Labels</text>
+<g class="grid">
+<line x1="109.5999984741211" y1="60.0" x2="109.5999984741211" y2="402.8" stroke="#c8d8e8" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="165.96363830566406" y1="60.0" x2="165.96363830566406" y2="402.8" stroke="#c8d8e8" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="222.3272705078125" y1="60.0" x2="222.3272705078125" y2="402.8" stroke="#c8d8e8" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="278.69091796875" y1="60.0" x2="278.69091796875" y2="402.8" stroke="#c8d8e8" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="335.0545349121094" y1="60.0" x2="335.0545349121094" y2="402.8" stroke="#c8d8e8" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="391.4181823730469" y1="60.0" x2="391.4181823730469" y2="402.8" stroke="#c8d8e8" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="447.7818298339844" y1="60.0" x2="447.7818298339844" y2="402.8" stroke="#c8d8e8" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="504.14544677734375" y1="60.0" x2="504.14544677734375" y2="402.8" stroke="#c8d8e8" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="560.5090942382812" y1="60.0" x2="560.5090942382812" y2="402.8" stroke="#c8d8e8" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="616.8727416992188" y1="60.0" x2="616.8727416992188" y2="402.8" stroke="#c8d8e8" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="673.236328125" y1="60.0" x2="673.236328125" y2="402.8" stroke="#c8d8e8" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="729.5999755859375" y1="60.0" x2="729.5999755859375" y2="402.8" stroke="#c8d8e8" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="109.60000000000001" y1="402.79998779296875" x2="729.5999999999999" y2="402.79998779296875" stroke="#c8d8e8" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="109.60000000000001" y1="317.0999755859375" x2="729.5999999999999" y2="317.0999755859375" stroke="#c8d8e8" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="109.60000000000001" y1="231.39999389648438" x2="729.5999999999999" y2="231.39999389648438" stroke="#c8d8e8" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="109.60000000000001" y1="145.70001220703125" x2="729.5999999999999" y2="145.70001220703125" stroke="#c8d8e8" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="109.60000000000001" y1="60.0" x2="729.5999999999999" y2="60.0" stroke="#c8d8e8" stroke-width="1" stroke-dasharray="4 3"/>
+</g>
+<g class="axes">
+<line x1="109.5999984741211" y1="402.8" x2="109.5999984741211" y2="407.8" stroke="#777" stroke-width="1"/>
+<text x="109.5999984741211" y="420.8" text-anchor="end" font-size="12" fill="#444" transform="rotate(-45,109.5999984741211,420.8)">Jan</text>
+<line x1="165.96363830566406" y1="402.8" x2="165.96363830566406" y2="407.8" stroke="#777" stroke-width="1"/>
+<text x="165.96363830566406" y="420.8" text-anchor="end" font-size="12" fill="#444" transform="rotate(-45,165.96363830566406,420.8)">Feb</text>
+<line x1="222.3272705078125" y1="402.8" x2="222.3272705078125" y2="407.8" stroke="#777" stroke-width="1"/>
+<text x="222.3272705078125" y="420.8" text-anchor="end" font-size="12" fill="#444" transform="rotate(-45,222.3272705078125,420.8)">Mar</text>
+<line x1="278.69091796875" y1="402.8" x2="278.69091796875" y2="407.8" stroke="#777" stroke-width="1"/>
+<text x="278.69091796875" y="420.8" text-anchor="end" font-size="12" fill="#444" transform="rotate(-45,278.69091796875,420.8)">Apr</text>
+<line x1="335.0545349121094" y1="402.8" x2="335.0545349121094" y2="407.8" stroke="#777" stroke-width="1"/>
+<text x="335.0545349121094" y="420.8" text-anchor="end" font-size="12" fill="#444" transform="rotate(-45,335.0545349121094,420.8)">May</text>
+<line x1="391.4181823730469" y1="402.8" x2="391.4181823730469" y2="407.8" stroke="#777" stroke-width="1"/>
+<text x="391.4181823730469" y="420.8" text-anchor="end" font-size="12" fill="#444" transform="rotate(-45,391.4181823730469,420.8)">Jun</text>
+<line x1="447.7818298339844" y1="402.8" x2="447.7818298339844" y2="407.8" stroke="#777" stroke-width="1"/>
+<text x="447.7818298339844" y="420.8" text-anchor="end" font-size="12" fill="#444" transform="rotate(-45,447.7818298339844,420.8)">Jul</text>
+<line x1="504.14544677734375" y1="402.8" x2="504.14544677734375" y2="407.8" stroke="#777" stroke-width="1"/>
+<text x="504.14544677734375" y="420.8" text-anchor="end" font-size="12" fill="#444" transform="rotate(-45,504.14544677734375,420.8)">Aug</text>
+<line x1="560.5090942382812" y1="402.8" x2="560.5090942382812" y2="407.8" stroke="#777" stroke-width="1"/>
+<text x="560.5090942382812" y="420.8" text-anchor="end" font-size="12" fill="#444" transform="rotate(-45,560.5090942382812,420.8)">Sep</text>
+<line x1="616.8727416992188" y1="402.8" x2="616.8727416992188" y2="407.8" stroke="#777" stroke-width="1"/>
+<text x="616.8727416992188" y="420.8" text-anchor="end" font-size="12" fill="#444" transform="rotate(-45,616.8727416992188,420.8)">Oct</text>
+<line x1="673.236328125" y1="402.8" x2="673.236328125" y2="407.8" stroke="#777" stroke-width="1"/>
+<text x="673.236328125" y="420.8" text-anchor="end" font-size="12" fill="#444" transform="rotate(-45,673.236328125,420.8)">Nov</text>
+<line x1="729.5999755859375" y1="402.8" x2="729.5999755859375" y2="407.8" stroke="#777" stroke-width="1"/>
+<text x="729.5999755859375" y="420.8" text-anchor="end" font-size="12" fill="#444" transform="rotate(-45,729.5999755859375,420.8)">Dec</text>
+<text x="419.59999999999997" y="456.0" text-anchor="middle" font-size="14" fill="#333">Month</text>
+<line x1="109.60000000000001" y1="402.79998779296875" x2="104.60000000000001" y2="402.79998779296875" stroke="#777" stroke-width="1"/>
+<text x="101.60000000000001" y="406.79998779296875" text-anchor="end" font-size="12" fill="#444">0</text>
+<line x1="109.60000000000001" y1="317.0999755859375" x2="104.60000000000001" y2="317.0999755859375" stroke="#777" stroke-width="1"/>
+<text x="101.60000000000001" y="321.0999755859375" text-anchor="end" font-size="12" fill="#444">22.5</text>
+<line x1="109.60000000000001" y1="231.39999389648438" x2="104.60000000000001" y2="231.39999389648438" stroke="#777" stroke-width="1"/>
+<text x="101.60000000000001" y="235.39999389648438" text-anchor="end" font-size="12" fill="#444">45</text>
+<line x1="109.60000000000001" y1="145.70001220703125" x2="104.60000000000001" y2="145.70001220703125" stroke="#777" stroke-width="1"/>
+<text x="101.60000000000001" y="149.70001220703125" text-anchor="end" font-size="12" fill="#444">67.5</text>
+<line x1="109.60000000000001" y1="60.0" x2="104.60000000000001" y2="60.0" stroke="#777" stroke-width="1"/>
+<text x="101.60000000000001" y="64.0" text-anchor="end" font-size="12" fill="#444">90</text>
+<text x="52.400000000000006" y="231.4" transform="rotate(-90,52.400000000000006,231.4)" text-anchor="middle" font-size="14" fill="#333">Sales</text>
+</g>
+<g class="axis-spines">
+<line x1="109.60000000000001" y1="402.8" x2="729.5999999999999" y2="402.8" stroke="#4a6fa5" stroke-width="1.5"/>
+<line x1="109.60000000000001" y1="60.0" x2="109.60000000000001" y2="402.8" stroke="#4a6fa5" stroke-width="1.5"/>
+</g>
+<defs><clipPath id="plot-clip"><rect x="109.60000000000001" y="60.0" width="619.9999999999999" height="342.8"/></clipPath></defs>
+<g class="series-0" clip-path="url(#plot-clip)">
+<rect x="91.51666666666668" y="242.82666666666665" width="36.16666666666666" height="159.97333333333336" fill="#4e79a7" opacity="1.0"/>
+<rect x="147.88030303030303" y="258.0622222222222" width="36.16666666666666" height="144.7377777777778" fill="#4e79a7" opacity="1.0"/>
+<rect x="204.2439393939394" y="193.3111111111111" width="36.16666666666666" height="209.4888888888889" fill="#4e79a7" opacity="1.0"/>
+<rect x="260.6075757575758" y="170.45777777777778" width="36.16666666666666" height="232.34222222222223" fill="#4e79a7" opacity="1.0"/>
+<rect x="316.9712121212121" y="216.16444444444443" width="36.16666666666666" height="186.63555555555558" fill="#4e79a7" opacity="1.0"/>
+<rect x="373.33484848484846" y="136.17777777777775" width="36.16666666666666" height="266.62222222222226" fill="#4e79a7" opacity="1.0"/>
+<rect x="429.6984848484848" y="155.2222222222222" width="36.16666666666666" height="247.5777777777778" fill="#4e79a7" opacity="1.0"/>
+<rect x="486.06212121212116" y="98.0888888888889" width="36.16666666666666" height="304.7111111111111" fill="#4e79a7" opacity="1.0"/>
+<rect x="542.4257575757575" y="120.9422222222222" width="36.16666666666666" height="281.8577777777778" fill="#4e79a7" opacity="1.0"/>
+<rect x="598.7893939393938" y="143.79555555555555" width="36.16666666666666" height="259.00444444444446" fill="#4e79a7" opacity="1.0"/>
+<rect x="655.1530303030302" y="109.51555555555552" width="36.16666666666666" height="293.2844444444445" fill="#4e79a7" opacity="1.0"/>
+<rect x="711.5166666666665" y="60.0" width="36.16666666666666" height="342.8" fill="#4e79a7" opacity="1.0"/>
+</g>
+</svg>

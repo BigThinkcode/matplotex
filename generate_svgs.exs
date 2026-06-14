@@ -415,4 +415,66 @@ svg =
 File.write!("#{out}/funnel.svg", svg)
 IO.puts("funnel.svg done")
 
+# ── Tick Label Rotation — inclined (−45°), monthly bar ───────────────────────
+months = ~w[Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec]
+
+svg =
+  Chart.new(:bar,
+    canvas: %Canvas{
+      grid_style: :dashed,
+      grid_color: "#c8d8e8",
+      grid_width: 1,
+      axis_line_color: "#4a6fa5",
+      axis_line_width: 1.5,
+      axis_line_style: :solid
+    }
+  )
+  |> Chart.put_axis(:x1, %Axis{
+       dimension: :x, position: :bottom, label: "Month",
+       tick_count: 12,
+       tick_format: fn x -> Enum.at(months, round(x) - 1) end,
+       tick_label_rotation: :inclined
+     })
+  |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left, label: "Sales"})
+  |> Chart.add_data(
+       Enum.zip(1..12, [42, 38, 55, 61, 49, 70, 65, 80, 74, 68, 77, 90]),
+       name: "2024", color: "#4e79a7")
+  |> Chart.set_title("Monthly Sales — Inclined Labels")
+  |> Chart.set_axis_limits(:x1, 1.0, 12.0)
+  |> Chart.compile()
+  |> SVG.to_svg()
+File.write!("#{out}/tick_inclined.svg", svg)
+IO.puts("tick_inclined.svg done")
+
+# ── Tick Label Rotation — vertical (−90°), long product names ─────────────────
+products = ["Product Alpha", "Product Beta", "Product Gamma", "Product Delta", "Product Epsilon"]
+
+svg =
+  Chart.new(:bar,
+    canvas: %Canvas{
+      grid_style: :solid,
+      grid_color: "#e0e0e0",
+      grid_width: 1,
+      axis_line_color: "#555555",
+      axis_line_width: 1.5,
+      axis_line_style: :solid
+    }
+  )
+  |> Chart.put_axis(:x1, %Axis{
+       dimension: :x, position: :bottom,
+       tick_count: 5,
+       tick_format: fn x -> Enum.at(products, round(x) - 1) end,
+       tick_label_rotation: :vertical
+     })
+  |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left, label: "Units Sold"})
+  |> Chart.add_data(
+       Enum.zip(1..5, [120, 95, 142, 88, 110]),
+       name: "Q3", color: "#59a14f")
+  |> Chart.set_title("Sales by Product — Vertical Labels")
+  |> Chart.set_axis_limits(:x1, 1.0, 5.0)
+  |> Chart.compile()
+  |> SVG.to_svg()
+File.write!("#{out}/tick_vertical.svg", svg)
+IO.puts("tick_vertical.svg done")
+
 IO.puts("\nAll SVGs written to #{out}/")

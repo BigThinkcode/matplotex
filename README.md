@@ -18,6 +18,8 @@ A comprehensive charting library for Elixir. All coordinate math runs through [N
 | Pie | Donut | Funnel |
 | ![Candlestick](assets/candlestick.svg) | ![Waterfall](assets/waterfall.svg) | |
 | Candlestick | Waterfall | |
+| ![Inclined Labels](assets/tick_inclined.svg) | ![Vertical Labels](assets/tick_vertical.svg) | |
+| Inclined Labels | Vertical Labels | |
 
 ---
 
@@ -117,43 +119,50 @@ Use `tick_label_rotation` on any x-axis to rotate tick labels when they are long
 
 **Inclined (−45°)** — most common fix for crowded labels:
 
+![Inclined Labels](assets/tick_inclined.svg)
+
 ```elixir
 alias Matplotex.{Chart, Axis, Canvas}
 alias Matplotex.Render.SVG
 
-months = ["January", "February", "March", "April", "May", "June",
-          "July", "August", "September", "October", "November", "December"]
+months = ~w[Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec]
 
-Chart.new(:bar, canvas: %Canvas{grid_style: :dashed})
+Chart.new(:bar, canvas: %Canvas{grid_style: :dashed, grid_color: "#c8d8e8"})
 |> Chart.put_axis(:x1, %Axis{
      dimension: :x, position: :bottom, label: "Month",
      tick_count: 12,
+     tick_format: fn x -> Enum.at(months, round(x) - 1) end,
      tick_label_rotation: :inclined
    })
 |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left, label: "Sales"})
 |> Chart.add_data(Enum.zip(1..12, [42,38,55,61,49,70,65,80,74,68,77,90]),
      name: "2024", color: "#4e79a7")
 |> Chart.set_title("Monthly Sales — Inclined Labels")
+|> Chart.set_axis_limits(:x1, 1.0, 12.0)
 |> Chart.compile()
 |> SVG.to_svg()
 ```
 
 **Vertical (−90°)** — for very long category names:
 
+![Vertical Labels](assets/tick_vertical.svg)
+
 ```elixir
-categories = ["Product Alpha", "Product Beta", "Product Gamma",
-              "Product Delta", "Product Epsilon"]
+products = ["Product Alpha", "Product Beta", "Product Gamma",
+            "Product Delta", "Product Epsilon"]
 
 Chart.new(:bar, canvas: %Canvas{grid_style: :solid, grid_color: "#e0e0e0"})
 |> Chart.put_axis(:x1, %Axis{
      dimension: :x, position: :bottom,
      tick_count: 5,
+     tick_format: fn x -> Enum.at(products, round(x) - 1) end,
      tick_label_rotation: :vertical
    })
 |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left, label: "Units Sold"})
 |> Chart.add_data(Enum.zip(1..5, [120, 95, 142, 88, 110]),
      name: "Q3", color: "#59a14f")
 |> Chart.set_title("Sales by Product — Vertical Labels")
+|> Chart.set_axis_limits(:x1, 1.0, 5.0)
 |> Chart.compile()
 |> SVG.to_svg()
 ```
@@ -285,7 +294,10 @@ svg =
       axis_line_width: 1.5
     }
   )
-  |> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Quarter"})
+  |> Chart.put_axis(:x1, %Axis{
+       dimension: :x, position: :bottom, label: "Quarter",
+       tick_label_rotation: :inclined
+     })
   |> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left,   label: "Revenue ($k)"})
   |> Chart.add_data([{1, 42}, {2, 58}, {3, 51}, {4, 73}], name: "Revenue", color: "#59a14f")
   |> Chart.set_title("Quarterly Revenue")
