@@ -114,6 +114,25 @@ canvas = %Matplotex.Canvas{
 Chart.new(:line, canvas: canvas)
 ```
 
+### Axis Limits (xmin / xmax / ymin / ymax)
+
+By default, axis domains are inferred from the data. Use `set_axis_limits/4` to pin them explicitly — useful for zooming into a region, keeping consistent scales across charts, or padding beyond the data range.
+
+```elixir
+Chart.new(:line)
+|> Chart.put_axis(:x1, %Axis{dimension: :x, position: :bottom, label: "Month"})
+|> Chart.put_axis(:y1, %Axis{dimension: :y, position: :left,   label: "Revenue"})
+|> Chart.add_data(Enum.zip(1..12, [3,5,4,8,7,9,6,10,8,11,9,12]), name: "2024")
+|> Chart.set_axis_limits(:x1, 0.0, 15.0)   # x from 0 to 15 regardless of data
+|> Chart.set_axis_limits(:y1, 0.0, 20.0)   # y from 0 to 20 regardless of data
+|> Chart.compile()
+|> SVG.to_svg()
+```
+
+- Limits apply per axis — you can fix one axis while leaving the other auto-scaled.
+- Tick labels and tick pixel positions are computed from the explicit limits.
+- The guard `min < max` is enforced at call time; swapped values raise `FunctionClauseError`.
+
 ### Viewport (Zoom & Pan)
 
 ```elixir

@@ -97,4 +97,81 @@ defmodule Matplotex.ChartCompileTest do
       assert MapSet.member?(updated.dirty, :scales)
     end
   end
+
+  describe "set_axis_limits/4" do
+    test "overrides x-axis domain instead of inferring from data" do
+      compiled =
+        sample_line_chart()
+        |> Chart.set_axis_limits(:x1, 0.0, 20.0)
+        |> Chart.compile()
+
+      assert compiled.axes[:x1].scale.domain_min == 0.0
+      assert compiled.axes[:x1].scale.domain_max == 20.0
+    end
+
+    test "overrides y-axis domain instead of inferring from data" do
+      compiled =
+        sample_line_chart()
+        |> Chart.set_axis_limits(:y1, -50.0, 200.0)
+        |> Chart.compile()
+
+      assert compiled.axes[:y1].scale.domain_min == -50.0
+      assert compiled.axes[:y1].scale.domain_max == 200.0
+    end
+
+    test "tick labels are generated from the explicit limits" do
+      compiled =
+        sample_line_chart()
+        |> Chart.set_axis_limits(:x1, 0.0, 100.0)
+        |> Chart.compile()
+
+      labels = compiled.axes[:x1].tick_labels
+      assert length(labels) == 5
+      assert List.first(labels) == "0"
+      assert List.last(labels) == "100"
+    end
+
+    test "limits stored on axis struct" do
+      chart =
+        sample_line_chart()
+        |> Chart.set_axis_limits(:x1, 5.0, 15.0)
+
+      assert chart.axes[:x1].limits == {5.0, 15.0}
+    end
+
+    test "marks scales and geometry dirty" do
+      compiled = Chart.compile(sample_line_chart())
+      updated = Chart.set_axis_limits(compiled, :y1, 0.0, 100.0)
+      assert MapSet.member?(updated.dirty, :scales)
+      assert MapSet.member?(updated.dirty, :geometry)
+    end
+
+    test "does not affect the other axis" do
+      compiled =
+        sample_line_chart()
+        |> Chart.set_axis_limits(:x1, 0.0, 50.0)
+        |> Chart.compile()
+
+      # y1 still inferred from data
+      assert compiled.axes[:y1].scale.domain_max == 60.0
+    end
+
+    test "raises when min >= max" do
+      assert_raise FunctionClauseError, fn ->
+        sample_line_chart()
+        |> Chart.set_axis_limits(:x1, 10.0, 5.0)
+      end
+    end
+
+    test "builds a valid transform matrix with explicit limits" do
+      compiled =
+        sample_line_chart()
+        |> Chart.set_axis_limits(:x1, 0.0, 20.0)
+        |> Chart.set_axis_limits(:y1, 0.0, 100.0)
+        |> Chart.compile()
+
+      assert Map.has_key?(compiled.frame.transforms, {:x1, :y1})
+      assert Nx.shape(compiled.frame.transforms[{:x1, :y1}]) == {3, 3}
+    end
+  end
 end

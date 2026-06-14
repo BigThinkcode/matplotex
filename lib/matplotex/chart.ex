@@ -86,6 +86,19 @@ defmodule Matplotex.Chart do
     %{chart | viewport: vp, dirty: mark(:geometry, chart.dirty)}
   end
 
+  @doc """
+  Sets explicit domain limits for an axis, overriding data-inferred bounds.
+
+      Chart.set_axis_limits(chart, :x1, 0.0, 100.0)
+      Chart.set_axis_limits(chart, :y1, -10.0, 50.0)
+  """
+  def set_axis_limits(%__MODULE__{axes: axes} = chart, axis_id, min, max)
+      when is_number(min) and is_number(max) and min < max do
+    axis = Map.get(axes, axis_id, %Axis{id: axis_id})
+    updated_axis = %{axis | limits: {min * 1.0, max * 1.0}}
+    %{chart | axes: Map.put(axes, axis_id, updated_axis), dirty: mark(:scales, chart.dirty)}
+  end
+
   # ── Compile pipeline ──────────────────────────────────────────────────────
 
   @doc """
@@ -145,8 +158,11 @@ defmodule Matplotex.Chart do
     %{chart | axes: updated_axes, frame: updated_frame}
   end
 
+  defp infer_and_set_scale(%Axis{limits: {min, max}} = axis, _axis_id, _datasets, _canvas) do
+    %{axis | scale: Scale.axis_scale(min, max, axis.scale_type)}
+  end
+
   defp infer_and_set_scale(axis, axis_id, datasets, canvas) do
-    # Collect all data for this axis across datasets
     column =
       case axis.dimension do
         :x -> collect_column(datasets, :x, axis_id, :x_axis_id)
@@ -226,6 +242,9 @@ defmodule Matplotex.Chart do
 
   defp mark(:frame, dirty),
     do: dirty |> MapSet.put(:frame) |> MapSet.put(:scales) |> MapSet.put(:geometry)
+
+  defp mark(:scales, dirty),
+    do: dirty |> MapSet.put(:scales) |> MapSet.put(:geometry)
 
   defp mark(:geometry, dirty),
     do: MapSet.put(dirty, :geometry)

@@ -18,7 +18,8 @@ defmodule Matplotex.Axis do
           tick_format: (number() -> String.t()) | nil,
           scale_type: scale_type(),
           scale: map() | nil,
-          tick_labels: [String.t()]
+          tick_labels: [String.t()],
+          limits: {number(), number()} | nil
         }
 
   defstruct id: :x1,
@@ -29,7 +30,8 @@ defmodule Matplotex.Axis do
             tick_format: nil,
             scale_type: :linear,
             scale: nil,
-            tick_labels: []
+            tick_labels: [],
+            limits: nil
 
   @doc "Sets scale domain from an Nx tensor column. Respects `origin_at_zero`."
   def set_scale(%__MODULE__{} = axis, tensor, opts \\ []) do
