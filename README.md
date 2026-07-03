@@ -2,6 +2,33 @@
 
 A comprehensive charting library for Elixir. All coordinate math runs through [Nx](https://github.com/elixir-nx/nx) tensor operations. Charts compile to SVG strings.
 
+> ## 🚀 Release v0.5.0
+>
+> This release is a ground-up rewrite: every coordinate calculation now runs on [Nx](https://github.com/elixir-nx/nx) tensors, and charts are built through a new composable `Chart` / `Axis` / `Canvas` / `Dataset` API that compiles straight to SVG strings.
+>
+> **11 new chart types** (up from 6 in v0.4.8):
+>
+> - **Area** — filled line charts
+> - **Step** — stepped line charts
+> - **Bubble** — scatter with sized points
+> - **Heatmap** — color-mapped grids
+> - **Box Plot** — quartile/whisker distributions
+> - **Violin** — density distributions
+> - **Radar** — multi-axis polar charts
+> - **Donut** — ring charts
+> - **Funnel** — stage/conversion charts
+> - **Candlestick** — OHLC financial charts
+> - **Waterfall** — cumulative running-total charts
+>
+> Carried over and rebuilt on the new engine: **Line, Bar, Pie, Spline, Histogram, Scatter**.
+>
+> **Other features added in this release:**
+>
+> - Inclined and vertical tick labels for dense axes
+> - Configurable axis limits (x/y min & max) to pan and clip plots
+> - Grid styling controls (dashed grids, grid color, axis line color & width)
+> - Optional axis labels and legends
+
 ## Gallery
 
 | | | |
